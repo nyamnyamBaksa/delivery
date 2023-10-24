@@ -13,4 +13,16 @@
 		where mid = #{mid}
 	</update>
 	
+	<select id="follow" parameterType="String" resultType="Map">
+		select (select count(*) from follow where fdel = 1 AND (follower = (select mno from member where mid = #{id}) or
+			 followee = (select mno from member where mid = #{id})))
+			as friend
+		,(select count(*) from follow where followee = (select mno from member where mid = #{id}) and fdel = 0) as friendreq
+	</select>
+	
+	<select id="boardlist" parameterType="String" resultType="Map">
+		select bno, bcontent, blike, bdate, commentcount
+		from boardview where mid = #{id}
+	</select>
+	
 </mapper>

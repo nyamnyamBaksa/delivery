@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,14 +31,15 @@ public class MyPageController {
 	
 	@GetMapping({"/", "/main"})
 	public String main(Model model, HttpSession session) {
-		//session.setAttribute("mid", "aaaa");// 나중에 수정
-		//session.setAttribute("mgrade", 1);// 나중에 수정
+		session.setAttribute("mid", "aaaa");// 나중에 수정
+		session.setAttribute("mgrade", 1);// 나중에 수정
 		
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			String id = (String) session.getAttribute("mid");
 			Map<String, Object> result = myPageService.profile(id);
+			Map<String, Object> follow = myPageService.follow(id);
 			model.addAttribute("result", result);
-			System.out.println(result);
+			model.addAttribute("follow", follow);
 			return "/mypage/main";
 		} else {
 			return "/login";
@@ -78,6 +80,21 @@ public class MyPageController {
 	    } else {
 	        return "redirect:/login"; // 로그인되지 않았거나 권한이 부족한 경우 로그인 페이지로 리다이렉트
 	    }
+	}
+	
+	@GetMapping("/diary")
+	public String diary(Model model, HttpSession session) {
+		session.setAttribute("mid", "aaaa");// 나중에 수정
+		session.setAttribute("mgrade", 1);// 나중에 수정
+		
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String id = (String) session.getAttribute("mid");
+			List<Map<String, Object>> list = myPageService.boardlist(id);
+			model.addAttribute("list", list);
+			return "/mypage/diary";
+		} else {
+			return "/login";
+		}
 	}
 	
 	@GetMapping({"/cart"})

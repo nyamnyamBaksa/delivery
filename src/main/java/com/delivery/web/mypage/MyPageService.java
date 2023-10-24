@@ -1,5 +1,6 @@
 package com.delivery.web.mypage;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,5 +18,13 @@ public class MyPageService {
 
 	public void updateProfileImg(Map<String, Object> map) {
 		myPageDAO.updateProfileImg(map);
+	}
+
+	public Map<String, Object> follow(String id) {
+		return myPageDAO.follow(id);
+	}
+
+	public List<Map<String, Object>> boardlist(String id) {
+		return myPageDAO.boardlist(id);
 	}
 }

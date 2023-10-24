@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="../css/mypage_main.css">
+<title>냠냠박사</title>
+<link rel="stylesheet" href="../css/mypage-main.css">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 </head>
@@ -16,10 +16,17 @@
 	</div>
     <c:if test="${sessionScope.mid ne null}">
         <div class="profile" onclick="popup('${sessionScope.mid}')"><!-- 작은 따옴표로 감싸기 -->
-            <img class="profile-image" src="/img/profileImg/${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage" style="border-radius: 70%;"/>
+            <img class="profile-image" src="/img/profileImg/${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
         </div>
-        <div class="nickname">${result.mname }&nbsp;<img src="/img/profileImg/arrow_right.png"></div>
-        <button class="follow">+ 밥 친구 추가</button>
+        <div class="nickname">${result.mname }&nbsp;<img src="/img/profileImg/arrow_right.png" onclick=""></div>
+        <button class="follow" onclick="">+ 밥 친구 추가</button>
+        <div class="HowManyfollow">밥 친구&nbsp;${follow.friend } &nbsp;|&nbsp; 친구 요청&nbsp;${follow.friendreq }</div>
+        <div class="diary"><a href="./diary"><img src="/img/profileImg/diary.png" onclick=""></a><p>냠냠 다이어리</p></div>
+        <div class="zzim"><img src="/img/profileImg/heart.png" onclick=""><p>나의 찜</p></div>
+        <div class="review"><img src="/img/profileImg/review.png" onclick=""><p>리뷰관리</p></div>
+        <div class="coupon"><img src="/img/profileImg/coupon.png" onclick=""><p>쿠폰함</p></div>
+        <div class="pay"><img src="/img/profileImg/credit_card.png" onclick=""><p>냠냠페이</p></div>
+        <div class="favoriteStore">${result.mname }님의 최애 맛집은?</div>
     </c:if>
     <!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"

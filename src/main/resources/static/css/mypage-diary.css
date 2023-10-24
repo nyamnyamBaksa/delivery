@@ -1,0 +1,192 @@
+@charset "UTF-8";
+
+/* div.title-left */
+.title{
+	box-sizing: border-box;
+	
+	position: absolute;
+	left: 7.78%;
+	right: 10.42%;
+	top: 5.47%;
+	bottom: 89.94%;
+	
+	border-bottom: 3px solid #000000;
+	
+}
+
+
+/* Heading 3 → Shipping Method */
+.titleFont{
+	position: absolute;
+	height: 22px;
+	left: 2px;
+	top: 5px;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 32px;
+	line-height: 22px;
+	/* identical to box height, or 68% */
+	display: flex;
+	align-items: center;
+	
+	color: #1F1F1F;
+	
+}
+
+
+
+/* Component 13 */
+.board{
+	position: absolute;
+	width: 1178px;
+	top: 403px;
+	box-sizing: border-box;
+	border-bottom: black solid 1px;
+	flex-direction: column; /* 요소들을 수직으로 나열 */
+	text-align: center;
+}
+
+
+
+/* {엽기떡볶이 강남역점} 맛있음... */
+.bcontent{
+	position: absolute;
+	left: 3.23%;
+	right: 23.09%;
+	top: 12.16%;
+	bottom: 32.16%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 32px;
+	line-height: 22px;
+	/* or 68% */
+	display: flex;
+	align-items: center;
+	
+	color: #000000;
+	
+}
+
+
+
+/* 2023-10-08 */
+.bdate{
+	position: absolute;
+	left: 79.46%;
+	right: 4.41%;
+	top: 34.9%;
+	bottom: 44.71%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 22px;
+	/* or 108% */
+	display: flex;
+	align-items: center;
+	
+	color: #000000;
+	
+}
+
+
+
+/* 🦆 icon "heart" */
+.heart{
+	position: absolute;
+	left: 3.23%;
+	right: 93.04%;
+	top: 71.76%;
+	bottom: 13.33%;
+	
+}
+
+
+
+/* 0 */
+.heartCount{
+	position: absolute;
+	left: 8.4%;
+	right: 88.54%;
+	top: 71.37%;
+	bottom: 16.08%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 22px;
+	/* or 108% */
+	display: flex;
+	align-items: center;
+	
+	color: #000000;
+	
+}
+
+
+
+/* 2 */
+.commentCount{
+	position: absolute;
+	left: 20.29%;
+	right: 76.66%;
+	top: 71.37%;
+	bottom: 15.29%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 22px;
+	/* or 108% */
+	display: flex;
+	align-items: center;
+	
+	color: #000000;
+	
+}
+
+
+
+/* 🦆 icon "message circle outline" */
+.comment{
+	position: absolute;
+	width: 52px;
+	height: 50px;
+	left: 162px;
+	top: 71.76%;
+	
+}
+
+
+
+/* Link */
+.write{
+	position: absolute;
+	left: 8.06%;
+	right: 78.26%;
+	top: 79.1%;
+	bottom: 15.62%;
+	
+	background: #EB5757;
+	border-radius: 50px;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 20px;
+	line-height: 27px;
+	/* or 135% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #FFFFFF;
+	
+}
