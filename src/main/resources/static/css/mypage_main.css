@@ -1,0 +1,652 @@
+@charset "UTF-8";
+
+/* 닉네임 */
+.nickname{
+	position: absolute;
+	left: 17.5%;
+	right: 75.42%;
+	top: 9.38%;
+	bottom: 82.91%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+}
+
+
+
+/* 🦆 icon "heart" */
+.heartIcon{
+	position: absolute;
+	left: 47.78%;
+	right: 49.17%;
+	top: 28.71%;
+	bottom: 67.58%;
+}
+
+
+
+/* Vector */
+.heartVector{
+	position: absolute;
+	left: 47.78%;
+	right: 49.17%;
+	top: 28.71%;
+	bottom: 67.58%;
+	
+	border: 5px solid #EB5757;
+}
+
+
+/* 냠냠 다이어리 */
+.diary{
+	position: absolute;
+	left: 16.46%;
+	right: 76.04%;
+	top: 32.52%;
+	bottom: 64.84%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+	/* identical to box height, or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+}
+
+
+
+/* 나의 찜 */
+.zzim{
+	position: absolute;
+	left: 46.74%;
+	right: 47.99%;
+	top: 32.52%;
+	bottom: 64.84%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+	/* identical to box height, or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+}
+
+
+
+/* 리뷰관리 */
+.review{
+	position: absolute;
+	left: 75%;
+	right: 19.72%;
+	top: 33.11%;
+	bottom: 64.26%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+	/* identical to box height, or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+}
+
+
+
+/* profile */
+.profile{
+	position: absolute;
+	left: 8.61%;
+	right: 83.54%;
+	top: 7.91%;
+	bottom: 81.45%;
+	
+	background: url(profile.png);
+	border-radius: 50px;
+}
+
+
+/* 쿠폰함 */
+.coupon{
+	position: absolute;
+	left: 17.5%;
+	right: 77.22%;
+	top: 51.66%;
+	bottom: 45.7%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+	/* identical to box height, or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+}
+
+
+
+/* 냠냠페이 */
+.pay{
+	position: absolute;
+	left: 46.46%;
+	right: 48.26%;
+	top: 51.66%;
+	bottom: 45.7%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+	/* identical to box height, or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+}
+
+
+
+/* + 밥친구 추가 네모 */
+.follow {
+	position: absolute;
+	left: 28.06%;
+	right: 58.26%;
+	top: 11.23%;
+	bottom: 84.77%;
+	
+	background: #EB5757;
+	border-radius: 50px;
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 20px;
+	line-height: 27px;
+	/* or 135% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	 justify-content: center; /* 텍스트를 수평으로 가운데 정렬하기 위해 추가 */
+     color: #FFFFFF;
+     border: none; /* border를 제거하기 위해 추가 */
+}
+
+
+/* 밥친구 6 | 친구 요청 10 */
+.HowManyfollow{
+	position: absolute;
+	left: 45.97%;
+	right: 32.08%;
+	top: 10.55%;
+	bottom: 84.77%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+}
+
+
+
+/* {닉네임}님의 최애 맛집은? */
+.favoriteStore{
+	position: absolute;
+	left: 14.44%;
+	right: 62.43%;
+	top: 60.25%;
+	bottom: 35.64%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+}
+
+
+
+/* 최애맛집 */
+.favoriteStoreComponent{
+	position: absolute;
+	width: 420px;
+	height: 50px;
+	left: 181px;
+	top: 687px;
+	
+	border-radius: 10px;
+}
+
+
+/* Rectangle 5 */
+.favoriteStoreComponentRectangle{
+	position: absolute;
+	left: 0%;
+	right: 0%;
+	top: 0%;
+	bottom: 0%;
+	
+	background: #FF9C41;
+	border-radius: 10px;
+}
+
+
+/* 메가커피 강남점 */
+.favoriteStoreComponentFont{
+	position: absolute;
+	left: 15.95%;
+	right: 40.71%;
+	top: 18%;
+	bottom: 12%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+}
+
+
+
+/* 8회 주문 */
+.favoriteStoreComponentTrade{
+	position: absolute;
+	left: 63.1%;
+	right: 9.05%;
+	top: 16%;
+	bottom: 18%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #263238;
+	
+}
+
+
+
+/* 728972_gold_medal_award_badge_prize_icon 1 */
+.favoriteStoreComponentMedal{
+	position: absolute;
+	left: 5.48%;
+	right: 86.9%;
+	top: 18%;
+	bottom: 18%;
+	
+	background: url(728972_gold_medal_award_badge_prize_icon.png);
+	
+}
+
+
+/* {닉네임}님은 카페/디저트 러버! */
+.favoriteCate{
+	position: absolute;
+	left: 55.76%;
+	right: 21.11%;
+	top: 59.57%;
+	bottom: 36.33%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+	
+}
+
+
+
+/* image 3 */
+.favoriteCateGoogleChart{
+	position: absolute;
+	width: 296px;
+	height: 278px;
+	left: 822px;
+	top: 664px;
+	
+	background: url(image.png);
+	
+}
+
+
+
+/* 마이페이지 */
+.mypage{
+	box-sizing: border-box;
+	
+	position: absolute;
+	left: 5.49%;
+	right: 12.71%;
+	top: 2.73%;
+	bottom: 92.68%;
+	
+	border-bottom: 3px solid #000000;
+	
+}
+
+
+/* Heading 3 → Shipping Method */
+.mypageFont{
+	position: absolute;
+	width: 164px;
+	height: 22px;
+	left: 2px;
+	top: 5px;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 32px;
+	line-height: 22px;
+	/* identical to box height, or 68% */
+	display: flex;
+	align-items: center;
+	
+	color: #1F1F1F;
+	
+}
+
+
+
+/* 🦆 icon "credit card" */
+.creditCardIcon{
+	position: absolute;
+	width: 52px;
+	height: 39px;
+	left: 685px;
+	top: 445px;
+	
+}
+
+
+
+/* Vector */
+.creditCardVector{
+	position: absolute;
+	left: 47.57%;
+	right: 48.82%;
+	top: 43.46%;
+	bottom: 52.73%;
+	
+	background: #EB5757;
+	
+}
+
+
+/* 🦆 icon "gift outline" */
+.couponIcon{
+	position: absolute;
+	width: 64px;
+	height: 61px;
+	left: 256px;
+	top: 437px;
+	
+}
+
+
+
+/* Vector
+.couponVector{
+	position: absolute;
+	left: 22.22%;
+	right: 73.33%;
+	top: 48.63%;
+	bottom: 45.41%;
+	
+	background: #FFFFFF;
+	opacity: 0;
+	transform: rotate(180deg);
+	
+}
+
+
+/* Vector 
+
+position: absolute;
+left: 18.33%;
+right: 78.33%;
+top: 43.42%;
+bottom: 52.11%;
+
+background: #EB5757;*/
+
+
+/* 🦆 icon "group" */
+.diaryIcon{
+	position: absolute;
+	width: 66px;
+	height: 49px;
+	left: 252px;
+	top: 276px;
+	
+}
+
+
+
+/* Vector */
+.diaryVector{
+	position: absolute;
+	left: 17.5%;
+	right: 79.58%;
+	top: 29.49%;
+	bottom: 68.26%;
+	
+	border: 5px solid #EB5757;
+	
+}
+
+
+/* Vector
+
+position: absolute;
+left: 20%;
+right: 77.92%;
+top: 28.64%;
+bottom: 69.81%;
+
+border: 5px solid #EB5757;
+
+
+Vector
+
+position: absolute;
+left: 18.12%;
+right: 80.21%;
+top: 27.23%;
+bottom: 70.51%;
+
+border: 5px solid #EB5757;
+
+
+Vector
+
+position: absolute;
+left: 20.42%;
+right: 78.33%;
+top: 26.95%;
+bottom: 71.36%;
+
+border: 5px solid #EB5757; */
+
+
+/* 🦆 icon "edit pencil" */
+.editPencilIcon{
+	position: absolute;
+	width: 27px;
+	height: 29.5px;
+	left: 207.5px;
+	top: 166.5px;
+	
+}
+
+
+
+/* Vector */
+.editPencilVector{
+	position: absolute;
+	left: 14.41%;
+	right: 83.72%;
+	top: 16.26%;
+	bottom: 80.86%;
+	
+	border: 3px solid #000000;
+	
+}
+
+
+/* 🦆 icon "thumbs up" */
+.thumbsUpIcon{
+	position: absolute;
+	width: 35px;
+	height: 33px;
+	left: -1094px;
+	top: 3062px;
+	
+}
+
+
+
+/* Vector
+.thumbsUpVector{
+	position: absolute;
+	left: -75.97%;
+	right: 173.54%;
+	top: 299.02%;
+	bottom: -202.25%;
+	
+	border: 5px solid #EB5757;
+	
+}
+
+
+/* Vector 
+
+position: absolute;
+left: -75.47%;
+right: 175.47%;
+top: 300.19%;
+bottom: -202.25%;
+
+border: 5px solid #EB5757;*/
+
+
+/* 🦆 icon "message" */
+.reviewIcon{
+	position: absolute;
+	width: 48px;
+	height: 41px;
+	left: 1091px;
+	top: 292px;
+	
+}
+
+
+
+/* Vector */
+.reviewVector{
+	position: absolute;
+	left: 75.76%;
+	right: 20.9%;
+	top: 28.52%;
+	bottom: 67.48%;
+	
+	border: 5px solid #EB5757;
+	
+}
+
+
+/* 🦆 icon "arrow ios forward" */
+.arrowForwardIcon{
+	position: absolute;
+	width: 45px;
+	height: 43px;
+	left: 320px;
+	top: 115px;
+	
+}
+
+
+
+/* Vector
+.arrowForwardVector{
+	position: absolute;
+	left: 22.22%;
+	right: 74.79%;
+	top: 15.43%;
+	bottom: 80.18%;
+	
+	background: #FFFFFF;
+	opacity: 0;
+	transform: rotate(-90deg);
+	
+}
+
+
+/* Vector 
+
+position: absolute;
+left: 23.39%;
+right: 75.69%;
+top: 12.1%;
+bottom: 85.44%;
+
+background: #231F20;*/

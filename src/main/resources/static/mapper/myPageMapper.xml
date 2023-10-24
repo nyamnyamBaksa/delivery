@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.delivery.web.mypage.MyPageDAO">
+	
+	<select id="profile" parameterType="String" resultType="Map">
+		select mname, mprofile
+		FROM member
+		WHERE mid = #{id}
+	</select>
+	
+	<update id="updateProfileImg" parameterType="Map">
+		update member set mprofile = #{file}
+		where mid = #{mid}
+	</update>
+	
+</mapper>
