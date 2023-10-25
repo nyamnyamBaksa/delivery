@@ -1,69 +1,95 @@
 @charset "UTF-8";
 
-.loginBox{
-	position: absolute;
-	left: 28.61%;
-	right: 33.06%;
-	top: 21.78%;
-	bottom: 25.39%;
-	
-	background: #FFFFFF;
-}
 .id{
-position: absolute;
-left: 34.44%;
-right: 39.86%;
-top: 27.83%;
-bottom: 67.48%;
-
-background: #FFFFFF;
-border: 4px solid #EB5757;
-border-radius: 10px;
-}
-.pw{
 	position: absolute;
-	left: 34.44%;
 	right: 39.86%;
-	top: 37.3%;
-	bottom: 58.01%;
+	bottom: 67.48%;
+	height:48px;
+	width:370px;
 	
 	background: #FFFFFF;
 	border: 4px solid #EB5757;
-	border-radius: 10px;;
+	border-radius: 10px; 
+}
+
+
+.pw{
+	position: absolute;
+	right: 39.86%;
+	bottom: 58.01%;
+	height:48px;
+	width:370px;
+	
+	background: #FFFFFF;
+	border: 4px solid #EB5757;
+	border-radius: 10px;
 }
 .loginBtn{
-	/* Link */
-	
 	position: absolute;
-	left: 34.44%;
 	right: 39.86%;
-	top: 52.73%;
 	bottom: 41.6%;
-	
+	width: 380px;
+	height: 58px;
+
 	background: #EB5757;
 	border-radius: 10px;
-	
-	
-	/* 로그인 */
-	
-	position: absolute;
-	width: 269px;
-	height: 27px;
-	left: calc(50% - 269px/2 + 3.5px);
-	top: calc(50% - 27px/2 + 1.5px);
-	
+
 	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 600;
 	font-size: 35px;
 	line-height: 27px;
-	/* identical to box height, or 77% */
-	display: flex;
+
 	align-items: center;
 	text-align: center;
 	
 	color: #FFFFFF;
+	border:#EB5757;
+	cursor: pointer;
+}
 
+.joinBtn{
+	position: absolute;
+	right: 39.86%;
+	bottom: 31.6%;
+	width: 380px;
+	height: 58px;
 
+	background: #EB5757;
+	border-radius: 10px;
+
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 600;
+	font-size: 35px;
+	line-height: 27px;
+
+	align-items: center;
+	text-align: center;
 	
+	color: #FFFFFF;
+	border:#EB5757;
+	cursor: pointer;
+}
+.autologin{
+	position: fixed;
+	left: 42.86%;
+	bottom: 50.8%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 22px;
+	
+	background: #FFFFFF;
+	border :#FFFFFF;
+	cursor: pointer;
+}
+.checkimg img {
+	position: relative;
+    width: 33.94px;
+    height: 33.94px;
+    left: 40.86%;
+    top: 360px;
 }
