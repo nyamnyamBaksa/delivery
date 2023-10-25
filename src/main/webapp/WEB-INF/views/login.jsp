@@ -28,7 +28,9 @@
 			<button type="button" class="loginBtn">로그인</button>
 		</div>
 		<div>
-			<button type="button" class="joinBtn">회원가입</button>
+		 <a href="join">
+			<button type="button" class="joinBtn" >회원가입</button>
+			</a>
 		</div>
 	</div>
 
