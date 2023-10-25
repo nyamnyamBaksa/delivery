@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +19,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 @Controller
 @RequestMapping("/mypage")
@@ -92,6 +96,50 @@ public class MyPageController {
 			List<Map<String, Object>> list = myPageService.boardlist(id);
 			model.addAttribute("list", list);
 			return "/mypage/diary";
+		} else {
+			return "/login";
+		}
+	}
+	
+	@PostMapping("/bdelete")
+	public String bdelete(Model model, HttpSession session,
+			@RequestParam(value = "bno", required = true, defaultValue = "0") int bno) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			myPageService.bdelete(bno);
+			return "/mypage/diary";
+		} else {
+			return "/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateLike")
+	public String updateLike(Model model, HttpSession session, @RequestParam Map<String, Object> map) {
+		// System.out.println(map);// {bno=2, i=0}
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String id = (String) session.getAttribute("mid");
+			map.put("id", id);
+			myPageService.updateLike(map);
+			int blike = myPageService.mylike(map);
+			JSONObject json = new JSONObject();
+			json.put("blike", blike);
+			return json.toString();
+		} else {
+			return "/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/comment")
+	public String detail(@RequestParam(value = "bno", required = true, defaultValue = "0") int bno, HttpSession session) 
+			throws JsonProcessingException {
+		// System.out.println(bno);
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			List<Map<String, Object>> comment = myPageService.comment(bno);
+			JSONObject json = new JSONObject();
+			json.put("comment", comment);
+			System.out.println(comment);
+			return json.toString();
 		} else {
 			return "/login";
 		}

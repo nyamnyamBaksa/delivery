@@ -27,4 +27,21 @@ public class MyPageService {
 	public List<Map<String, Object>> boardlist(String id) {
 		return myPageDAO.boardlist(id);
 	}
+
+	public void bdelete(int bno) {
+		myPageDAO.bdelete(bno);
+	}
+
+	public void updateLike(Map<String, Object> map) {
+		myPageDAO.updateLike(map);
+	}
+
+	public int mylike(Map<String, Object> map) {
+		return myPageDAO.mylike(map);
+	}
+
+	public List<Map<String, Object>> comment(int bno) {
+		return myPageDAO.comment(bno);
+	}
+
 }

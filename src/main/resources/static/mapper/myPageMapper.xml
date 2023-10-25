@@ -21,8 +21,38 @@
 	</select>
 	
 	<select id="boardlist" parameterType="String" resultType="Map">
-		select bno, bcontent, blike, bdate, commentcount
-		from boardview where mid = #{id}
+		SELECT b.bno, b.bcontent, COALESCE(COUNT(l.lno), 0) AS mylike, b.bdate, b.commentcount, b.blike
+		FROM boardview b LEFT JOIN bblike l
+			ON b.bno = l.bno AND b.mno = l.mno
+		WHERE b.mid = #{id}
+		GROUP BY b.bno, b.bcontent, b.bdate, b.commentcount, b.blike
+	</select>
+	
+	<update id="bdelete" parameterType="Integer">
+		update board set bdel = 0
+		where bno = #{bno}
+	</update>
+	
+	<update id="updateLike" parameterType="Map">
+		 <choose>
+	        <when test="i == 0">
+	            insert into bblike (mno, bno)
+	            values ((select mno from member where mid = #{id}), #{bno})
+	        </when>
+	        <otherwise>
+	            delete from bblike where bno = #{bno} and mno = (select mno from member where mid = #{id})
+	        </otherwise>
+	    </choose>
+	</update>
+	
+	<select id="mylike" parameterType="Map" resultType="Integer">
+		select blike from boardview where bno = #{bno}
+	</select>
+	
+	<select id="comment" parameterType="Integer" resultType="Map">
+		select c.cmno, c.cmcontent, c.cmdate, m.mid, m.mname
+		FROM comment c join member m on c.mno = m.mno
+		where c.bno = #{bno} and c.cmdel = 1
 	</select>
 	
 </mapper>
