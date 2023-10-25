@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,24 +34,33 @@ public class MyPageController {
 	@Autowired
 	private MyPageService myPageService;
 	
-	@GetMapping({"/", "/main"})
-	public String main(Model model, HttpSession session) {
+	// 나중에 수정
+	@GetMapping("/sample")
+	public String sample(HttpSession session){
+		session.setAttribute("mid", "bbbb");// 나중에 수정
+		session.setAttribute("mgrade", 1);// 나중에 수정
+		return "/mypage/sample";
+	}
+	
+	@GetMapping("/{id}")
+	public String main(@PathVariable("id") String id, Model model, HttpSession session) {
 		session.setAttribute("mid", "aaaa");// 나중에 수정
 		session.setAttribute("mgrade", 1);// 나중에 수정
 		
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
-			String id = (String) session.getAttribute("mid");
+			// System.out.println(id);
 			Map<String, Object> result = myPageService.profile(id);
 			Map<String, Object> follow = myPageService.follow(id);
 			model.addAttribute("result", result);
 			model.addAttribute("follow", follow);
+			model.addAttribute("id", id);
 			return "/mypage/main";
 		} else {
-			return "/login";
+			return "redirect:/login";
 		}
 	}
 	
-	@PostMapping("/updateProfileImg")
+	@PostMapping("/updateProfileImg")// 본인만 프로필 사진 바꿀 수 있음
 	public String updateProfileImg(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> map, HttpSession session) {
 		if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
 	        if (file != null && !file.isEmpty()) {
@@ -79,25 +89,24 @@ public class MyPageController {
 				myPageService.updateProfileImg(map);
 	        }
 
-	        return "redirect:/mypage/main"; // 업로드 후 마이페이지 또는 다른 적절한 경로로 리다이렉트
+	        return "redirect:/mypage/main";
 
 	    } else {
-	        return "redirect:/login"; // 로그인되지 않았거나 권한이 부족한 경우 로그인 페이지로 리다이렉트
+	        return "redirect:/login";
 	    }
 	}
 	
-	@GetMapping("/diary")
-	public String diary(Model model, HttpSession session) {
+	@GetMapping("/diary/{id}")
+	public String diary(@PathVariable("id") String id, Model model, HttpSession session) {
 		session.setAttribute("mid", "aaaa");// 나중에 수정
 		session.setAttribute("mgrade", 1);// 나중에 수정
 		
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
-			String id = (String) session.getAttribute("mid");
 			List<Map<String, Object>> list = myPageService.boardlist(id);
 			model.addAttribute("list", list);
 			return "/mypage/diary";
 		} else {
-			return "/login";
+			return "redirect:/login";
 		}
 	}
 	
@@ -108,7 +117,7 @@ public class MyPageController {
 			myPageService.bdelete(bno);
 			return "/mypage/diary";
 		} else {
-			return "/login";
+			return "redirect:/login";
 		}
 	}
 	
@@ -125,7 +134,7 @@ public class MyPageController {
 			json.put("blike", blike);
 			return json.toString();
 		} else {
-			return "/login";
+			return "redirect:/login";
 		}
 	}
 	
@@ -141,7 +150,7 @@ public class MyPageController {
 			System.out.println(comment);
 			return json.toString();
 		} else {
-			return "/login";
+			return "redirect:/login";
 		}
 	}
 	

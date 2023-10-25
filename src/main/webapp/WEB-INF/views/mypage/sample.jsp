@@ -37,6 +37,7 @@
 </style>
 </head>
 <body>
+	<h1><a href="/mypage/${sessionScope.mid}">프로필 사진</a></h1>
 	<div id="map" style="width: 100%; height: 350px;"></div>
 	<p>
 		<em>지도를 클릭해주세요!</em>

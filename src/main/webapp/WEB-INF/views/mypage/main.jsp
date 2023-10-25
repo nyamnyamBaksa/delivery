@@ -15,18 +15,24 @@
 		<div class="mypageFont">마이페이지</div>
 	</div>
     <c:if test="${sessionScope.mid ne null}">
-        <div class="profile" onclick="popup('${sessionScope.mid}')"><!-- 작은 따옴표로 감싸기 -->
+    	<div class="myid" style="display: none;">${sessionScope.mid }</div>
+    	<div class="id" style="display: none;">${id }</div>
+        <div class="profile"><!-- onclick="popup('${sessionScope.mid}')" 작은 따옴표로 감싸기 -->
             <img class="profile-image" src="/img/profileImg/${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
         </div>
-        <div class="nickname">${result.mname }&nbsp;<img src="/img/profileImg/arrow_right.png" onclick=""></div>
-        <button class="follow" onclick="">+ 밥 친구 추가</button>
-        <div class="HowManyfollow">밥 친구&nbsp;${follow.friend } &nbsp;|&nbsp; 친구 요청&nbsp;${follow.friendreq }</div>
+        <div class="nickname">${result.mname }&nbsp;<c:if test="${sessionScope.mid eq id }"><img src="/img/profileImg/arrow_right.png" onclick=""></c:if></div>
+        <c:if test="${sessionScope.mid ne id }">
+        	<button class="follow" onclick="">+ 밥 친구 추가</button>
+        </c:if>
+        <div class="HowManyfollow">밥 친구&nbsp;${follow.friend } &nbsp;<c:if test="${sessionScope.mid eq id }">|&nbsp; 친구 요청&nbsp;${follow.friendreq }</c:if></div>
         <div class="diary"><a href="./diary"><img src="/img/profileImg/diary.png" onclick=""></a><p>냠냠 다이어리</p></div>
         <div class="zzim"><img src="/img/profileImg/heart.png" onclick=""><p>나의 찜</p></div>
         <div class="review"><img src="/img/profileImg/review.png" onclick=""><p>리뷰관리</p></div>
-        <div class="coupon"><img src="/img/profileImg/coupon.png" onclick=""><p>쿠폰함</p></div>
-        <div class="pay"><img src="/img/profileImg/credit_card.png" onclick=""><p>냠냠페이</p></div>
-        <div class="favoriteStore">${result.mname }님의 최애 맛집은?</div>
+        <c:if test="${sessionScope.mid eq id }">
+	        <div class="coupon"><img src="/img/profileImg/coupon.png" onclick=""><p>쿠폰함</p></div>
+	        <div class="pay"><img src="/img/profileImg/credit_card.png" onclick=""><p>냠냠페이</p></div>
+        </c:if>
+        <div class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
     </c:if>
     <!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -55,8 +61,12 @@
 	<script src="../js/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-	function popup(mid){
-		$("#exampleModal").modal("show");
+	$(document).on("click", ".profile", function() {
+		var myid = $(".myid").text();
+		var id = $(".id").text();
+		if(myid == id){
+			$("#exampleModal").modal("show");
+		}
 		
 		// 파일 선택(input)의 변경 이벤트 리스너
 	    $('#profileImageInput').on('change', function () {
@@ -88,7 +98,7 @@
 	    $('.notok').on('click', function() {
             $('#exampleModal').modal('hide');
         });
-	}
+	});
 
 	</script>
 </body>
