@@ -171,13 +171,33 @@
 
 
 /* + 밥친구 추가 네모 */
-.follow, .unfollow1, .followAccept, .unfollow3, .followAcceptModal {
+.follow, .unfollow1, .followAccept, .unfollow3 {
 	position: absolute;
 	left: 28.06%;
 	right: 58.26%;
 	top: 11.23%;
 	bottom: 84.77%;
 	
+	background: #EB5757;
+	border-radius: 50px;
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 20px;
+	line-height: 27px;
+	/* or 135% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	 justify-content: center; /* 텍스트를 수평으로 가운데 정렬하기 위해 추가 */
+     color: #FFFFFF;
+     border: none; /* border를 제거하기 위해 추가 */
+}
+
+.followAcceptModal{
+	margin-top: 30px;
+	height: 33px;
 	background: #EB5757;
 	border-radius: 50px;
 	font-family: 'Dosis';

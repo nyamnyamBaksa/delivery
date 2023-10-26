@@ -43,7 +43,12 @@
 	        </c:choose>
         </c:if>
         <div class="HowManyfollow">밥 친구&nbsp;${follow.friend } &nbsp;<c:if test="${id eq null || sessionScope.mid eq id }">|&nbsp; <span class="followAsk">친구 요청&nbsp;${follow.friendreq }</span></c:if></div>
-        <div class="diary"><a href="./diary"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
+        <c:if test="${id eq null || sessionScope.mid eq id }">
+        	<div class="diary"><a href="/mypage/diary"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
+        </c:if>
+        <c:if test="${sessionScope.mid ne id }">
+        	<div class="diary"><a href="/mypage/diary/${id }"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
+        </c:if>
         <div class="zzim"><img src="/img/profileImg/heart.png" onclick=""><p>나의 찜</p></div>
         <div class="review"><img src="/img/profileImg/review.png" onclick=""><p>리뷰관리</p></div>
         <c:if test="${id eq null || sessionScope.mid eq id }">
@@ -84,7 +89,7 @@
 	$(document).on("click", ".profile", function() {
 		var myid = $(".myid").text();
 		var id = $(".id").text();
-		if(myid == id){
+		if(myid == id || id == ''){
 			$("#exampleModal").modal("show");
 		}
 		
@@ -138,9 +143,10 @@
 		});
 	}
 	
-	$(document).on("click", ".follow, .unfollow1, .followAccept, .unfollow3", function() {
+	$(document).on("click", ".follow, .unfollow1, .followAccept, .unfollow3 , .followAcceptModal", function() {
 		var myid = $(".myid").text();
 		var id = $('.id').text();
+		var modal = $('.followerMid').text();
 		let i = 0;
 	    let $icon = $(this);
 	    if ($icon.hasClass('follow')) {
@@ -149,14 +155,20 @@
 	    	i = 1;
 	    } else if ($icon.hasClass('followAccept')) {
 	    	i = 2;
+	    } else if ($icon.hasClass('followAcceptModal')){
+	    	i = 4;
 	    } else {
 	    	i = 3;
+	    }
+	    
+	    if(id == ''){
+	    	id = 'String';
 	    }
 	    
 		$.ajax({
             url: '/mypage/updateFollow',
             type: 'post',
-            data: {myid:myid, id:id, i:i},
+            data: {myid:myid, id:id, i:i, modal:modal},
             dataType:'json',
             success: function (data) {
             	if(data.result == 1){
@@ -166,6 +178,13 @@
             			swal('', '밥친구 신청을 취소했어요.', "success");
             		} else if(data.i == 2){
             			swal('', '밥친구가 되었어요.', "success");
+            		} else if(data.i == 4){
+            			swal('', '밥친구가 되었어요.', "success");
+                        $("#exampleModal").modal("hide");
+            			// HowManyfollow 업데이트
+                        var $howManyFollow = $(".HowManyfollow");
+                        $howManyFollow.html('밥 친구 ' + data.follow.friend + ' ');
+                        $howManyFollow.append('|&nbsp;<span class="followAsk">친구 요청 ' + data.follow.friendreq + '</span>');
             		} else {
             			swal('', '밥친구를 취소했어요.', "success");
             		}
@@ -188,7 +207,8 @@
                         button.addClass('unfollow3');
                         button.text('+ 밥 친구 취소');
                     }
-            		
+                    
+                    
             	}
             },
             error: function () {
@@ -209,26 +229,22 @@
 	            modalContent.empty();
 
 	            $.each(data.list, function (index, row) {
-	                var newContent = '<div class="modal-header" style="background-color: #E6E6FA;">' +
-	                    '<h5 class="modal-title" id="exampleModalLabel"><img class="profile-image-follow" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" />' + row.mname + '님이 밥친구를 요청했어요.</h5>' +
-	                    '</div>' +
-	                    '<div class="modal-body">' +
-	                    '<div class="detail">' +
-	                    '<div class="detail-date-read">' +
-	                    '<div class="detail-date"><button class="followAcceptModal">+ 밥 친구 신청 수락</button></div>' +
-	                    '</div>' +
-	                    '</div>' +
-	                    '</div>';
+	                var newContent = '<div class="modal-header">' +
+	                    '<h5 class="modal-title" id="exampleModalLabel"><img class="profile-image-follow" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" />' + row.mname + '</h5>' +
+	                    '<div class="modal-body"><div class="detail">' +
+	                    '<div class="detail-date-read"><div class="detail"><button class="followAcceptModal">+ 밥 친구 신청 수락</button><div>' +
+	                    '</div></div></div>' +
+	                    '<div class="followerMid" style="display: none;">' + row.mid + '</div>';
 	                modalContent.append(newContent);
 	            });
 	            $("#exampleModal").modal("show");
 	        },
 	        error: function () {
-	            alert('서버와 통신 중 오류 발생');
+	        	swal('', '서버와 통신 중 오류 발생', "error");
 	        }
 	    });
 	});
-
+	
 	
 	</script>
 </body>

@@ -19,11 +19,6 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-<style type="text/css">
-.comment{
-	background-color: #F0F8FF;
-}
-</style>
 </head>
 <body>
 	<div class="title">
@@ -125,7 +120,7 @@
 			 		        var table = $(".table");
 			 		        table.empty();
 							
-			 		       // 업데이트된 데이터로 표 채우기, <c:choose>쓰면 안됨 
+			 		       // 업데이트된 데이터로 표 채우기
 			 		        $.each(data.list, function (index, row) {
 			 		            var newRow = '<tr style="height: 200px;">' +
 			 		                '<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;">' + row.bcontent + '</td>' +
@@ -223,23 +218,24 @@
 	 			data:{bno:bno},
 	 			dataType:'json',
 	 			success:function(data){
-	 		        var modal-content = $(".modal-content");
-	 		        modal-content.empty();
+	 				if(data.comment.length == 0){
+	 					return;
+	 				}
+	 		        var modalcontent = $(".modal-content");
+	 		        modalcontent.empty();
 					
 	 		       $.each(data.comment, function (index, row) {
-	 		            var newContent = '<div class="modal-header" style="background-color: #E6E6FA;">' +
-	 		                '<h5 class="modal-title" id="exampleModalLabel">' + row.cmcontent + '</h5>' +
-	 		                '</div>' +
-	 		                '<div class="modal-body">' +
-	 		                '<div class="detail">' +
-	 		                '<div class="detail-date-read">' +
-	 		                '<div class="detail-date">' + row.cmdate + '</div>' +
-	 		                '<div class="detail-read">' + row.mid + '</div>' +
-	 		                '</div>' +
-	 		                '<div style="font-weight: bold; font-size: larger;" class="detail-content">본문내용</div>' +
-	 		                '</div>' +
-	 		                '</div>';
-			 		        modalContent.append(newContent);
+	 		            var newContent =  '<div class="modal-body" style="display: flex; justify-content: space-between;">' +
+		 	                '<div class="detail">' +
+		 	                '<div class="detail-date-read">' +
+		 	                '<div class="detail-read">' + row.mname + '&nbsp;('+ row.cmdate +')</div>' +
+		 	                '</div>' +
+		 	                '</div>' +
+		 	                '</div>' +
+		 	                '<div class="modal-header" style="background-color: #E6E6FA;">' +
+		 	                '<h5 class="modal-title" id="exampleModalLabel" style="font-weight: bolder;">' + row.cmcontent + '</h5>' +
+		 	                '</div>';
+			 		        modalcontent.append(newContent);
 	 		       		});
 	 				$("#exampleModal").modal("show");
 	 			},

@@ -42,7 +42,7 @@ public class MyPageController {
 		return "/mypage/sample";
 	}
 	
-	@GetMapping({"/","/{id}"})
+	@GetMapping({"/main","/main/{id}"})
 	public String main(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
 		session.setAttribute("mid", "aaaa");// 나중에 수정
 		session.setAttribute("mgrade", 1);// 나중에 수정
@@ -180,17 +180,23 @@ public class MyPageController {
 	@PostMapping("/updateFollow")
 	public String updateFollow(@RequestParam Map<String, Object> map, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			// System.out.println(map);// {myid=aaaa, id=String, i=4, modal=bbbb}
 			String myid = (String) map.get("myid");
 			String id = (String) map.get("id");
 			int iIs3 = myPageService.iIs3(map);
 			map.put("iIs3", iIs3);
-			System.out.println("iIs3 : " + iIs3);
+			// System.out.println("iIs3 : " + iIs3);
+			if("4".equals(map.get("i"))) {
+				map.put("id", (String)map.get("modal"));
+			}
 			int result = myPageService.updateFollow(map);
 			int babfriend = myPageService.babfriend(myid, id);
+			Map<String, Object> follow = myPageService.follow(myid);
 			JSONObject json = new JSONObject();
 			json.put("result", result);
 			json.put("i", map.get("i"));
 			json.put("babfriend", babfriend);
+			json.put("follow", follow);
 			return json.toString();
 		} else {
 			return "redirect:/login";
@@ -202,7 +208,7 @@ public class MyPageController {
 	public String followAsk(@RequestParam Map<String, Object> map, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			List<Map<String, Object>> list = myPageService.followAsk(map);
-			System.out.println(list);
+			// System.out.println(list);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
 			return json.toString();

@@ -133,14 +133,7 @@
 	            where follower = (select mno from member where mid = #{myid})
 	            and followee = (select mno from member where mid = #{id})
 	        </when>
-	        <when test="i == 2">
-	            update follow set fdel = 1
-	            where (follower = (select mno from member where mid = #{id})
-	            	and followee = (select mno from member where mid = #{myid}))
-	            or (follower = (select mno from member where mid = #{myid})
-	            	and followee = (select mno from member where mid = #{id}))
-	        </when>
-	        <otherwise>
+	        <when test="i == 3">
 	            <if test="iIs3 == 1">
 		        	update follow set fdel = 0
 		            where follower = (select mno from member where mid = #{id})
@@ -160,12 +153,19 @@
 		        	where follower = (select mno from member where mid = #{myid})
 		            and followee = (select mno from member where mid = #{id});
 			    </if>
+	        </when>
+	        <otherwise>
+	            update follow set fdel = 1
+	            where (follower = (select mno from member where mid = #{id})
+	            	and followee = (select mno from member where mid = #{myid}))
+	            or (follower = (select mno from member where mid = #{myid})
+	            	and followee = (select mno from member where mid = #{id}))
 	        </otherwise>
 	    </choose>
 	</update>
 	
 	<select id="followAsk" parameterType="Map" resultType="Map">
-		SELECT m1.mid as mid, m1.mname as mname, m1.mprofile as mprofile
+		SELECT m1.mno as mno, m1.mid as mid, m1.mname as mname, m1.mprofile as mprofile
 	    FROM follow f
 		    JOIN member m1 ON f.follower = m1.mno
 		    JOIN member m2 ON f.followee = m2.mno
