@@ -19,6 +19,10 @@ public class MyPageService {
 	public void updateProfileImg(Map<String, Object> map) {
 		myPageDAO.updateProfileImg(map);
 	}
+	
+	public String profileImg(Map<String, Object> map) {
+		return myPageDAO.profileImg(map);
+	}
 
 	public Map<String, Object> follow(String id) {
 		return myPageDAO.follow(id);
@@ -43,5 +47,26 @@ public class MyPageService {
 	public List<Map<String, Object>> comment(int bno) {
 		return myPageDAO.comment(bno);
 	}
+
+	public int updateFollow(Map<String, Object> map) {
+		return myPageDAO.updateFollow(map);
+	}
+
+	public int babfriend(String myid, String id) {
+		return myPageDAO.babfriend(myid, id);
+	}
+
+	public int iIs3(Map<String, Object> map) {
+		return myPageDAO.iIs3(map);
+	}
+
+	public int iIs3update(Map<String, Object> map) {
+		return myPageDAO.iIs3update(map);
+	}
+
+	public List<Map<String, Object>> followAsk(Map<String, Object> map) {
+		return myPageDAO.followAsk(map);
+	}
+
 
 }

@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface MyPageDAO {
 
-	Map<String, Object> profile(String id);
+	Map<String, Object> profile(String targetId);
 
 	void updateProfileImg(Map<String, Object> map);
 
@@ -23,5 +24,17 @@ public interface MyPageDAO {
 	int mylike(Map<String, Object> map);
 
 	List<Map<String, Object>> comment(int bno);
+
+	String profileImg(Map<String, Object> map);
+
+	int updateFollow(Map<String, Object> map);
+
+	int babfriend(@Param("myid") String myid, @Param("id") String id);
+
+	int iIs3(Map<String, Object> map);
+
+	int iIs3update(Map<String, Object> map);
+
+	List<Map<String, Object>> followAsk(Map<String, Object> map);
 
 }

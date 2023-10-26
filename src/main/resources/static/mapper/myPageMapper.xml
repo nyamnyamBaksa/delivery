@@ -13,11 +13,38 @@
 		where mid = #{mid}
 	</update>
 	
+	<select id="profileImg" parameterType="Map" resultType="String">
+		select mprofile from member where mid = #{mid}
+	</select>
+	
 	<select id="follow" parameterType="String" resultType="Map">
 		select (select count(*) from follow where fdel = 1 AND (follower = (select mno from member where mid = #{id}) or
 			 followee = (select mno from member where mid = #{id})))
 			as friend
 		,(select count(*) from follow where followee = (select mno from member where mid = #{id}) and fdel = 0) as friendreq
+	</select>
+	
+	<select id="babfriend"  parameterType="Map" resultType="Integer">
+		SELECT
+		    CASE
+		        WHEN NOT EXISTS (SELECT 1 FROM follow)
+		        THEN 0
+		        WHEN (
+		            EXISTS (SELECT 1 FROM follow WHERE (follower = (SELECT mno FROM member WHERE MID = #{myid}) AND followee = (SELECT mno FROM member WHERE MID = #{id}) AND fdel = 0))
+		        )
+		        THEN 1
+		        WHEN (
+		            EXISTS (SELECT 1 FROM follow WHERE (follower = (SELECT mno FROM member WHERE MID = #{id}) AND followee = (SELECT mno FROM member WHERE MID = #{myid}) AND fdel = 0))
+		        )
+		        THEN 2
+		        WHEN (
+		            EXISTS (SELECT 1 FROM follow WHERE (follower = (SELECT mno FROM member WHERE MID = #{myid}) AND followee = (SELECT mno FROM member WHERE MID = #{id}) AND fdel = 1))
+		            OR
+		            EXISTS (SELECT 1 FROM follow WHERE (follower = (SELECT mno FROM member WHERE MID = #{id}) AND followee = (SELECT mno FROM member WHERE MID = #{myid}) AND fdel = 1))
+		        )
+		        THEN 3
+		        ELSE 0
+		    END AS friend
 	</select>
 	
 	<select id="boardlist" parameterType="String" resultType="Map">
@@ -50,9 +77,99 @@
 	</select>
 	
 	<select id="comment" parameterType="Integer" resultType="Map">
-		select c.cmno, c.cmcontent, c.cmdate, m.mid, m.mname
-		FROM comment c join member m on c.mno = m.mno
-		where c.bno = #{bno} and c.cmdel = 1
+		select cmno, cmcontent, mid, mname, cmdate
+		FROM commentview
+		where bno = #{bno}
+	</select>
+	
+	<select id="iIs3" parameterType="Map" resultType="Integer">
+	    select 
+	        CASE
+	            WHEN (
+	                NOT EXISTS (
+	                    SELECT 1 FROM follow
+	                    WHERE (follower = (SELECT mno FROM member WHERE mid = #{myid})
+	                        AND followee = (SELECT mno FROM member WHERE mid = #{id}) and fdel = 1)
+	                ) and EXISTS (
+	                    SELECT 1 FROM follow
+	                    WHERE (follower = (SELECT mno FROM member WHERE mid = #{id})
+	                        AND followee = (SELECT mno FROM member WHERE mid = #{myid}) and fdel = 1)
+	                )
+	            ) THEN 1
+	            WHEN (
+	                EXISTS (
+	                    SELECT 1 FROM follow
+	                    WHERE (follower = (SELECT mno FROM member WHERE mid = #{myid})
+	                        AND followee = (SELECT mno FROM member WHERE mid = #{id}) and fdel = 1)
+	              ) and NOT EXISTS (
+	                    SELECT 1 FROM follow
+	                    WHERE (follower = (SELECT mno FROM member WHERE mid = #{id})
+	                        AND followee = (SELECT mno FROM member WHERE mid = #{myid}) and fdel = 1)
+	                )
+	            ) THEN 2
+	            WHEN (
+	            	EXISTS (
+	                    SELECT 1 FROM follow
+	                    WHERE (follower = (SELECT mno FROM member WHERE mid = #{myid})
+	                        AND followee = (SELECT mno FROM member WHERE mid = #{id}) and fdel = 1)
+	                ) and EXISTS (
+	                    SELECT 1 FROM follow
+	                    WHERE (follower = (SELECT mno FROM member WHERE mid = #{id})
+	                        AND followee = (SELECT mno FROM member WHERE mid = #{myid}) and fdel = 1)
+	                )
+	            ) THEN 3
+	            ELSE 0
+	        END AS iIs3
+	</select>
+	
+	<update id="updateFollow" parameterType="Map">
+		<choose>
+	        <when test="i == 0">
+	            insert into follow(follower, followee)
+				values ((select mno from member where mid = #{myid}), (select mno from member where mid = #{id}))
+	        </when>
+	        <when test="i == 1">
+	            delete from follow
+	            where follower = (select mno from member where mid = #{myid})
+	            and followee = (select mno from member where mid = #{id})
+	        </when>
+	        <when test="i == 2">
+	            update follow set fdel = 1
+	            where (follower = (select mno from member where mid = #{id})
+	            	and followee = (select mno from member where mid = #{myid}))
+	            or (follower = (select mno from member where mid = #{myid})
+	            	and followee = (select mno from member where mid = #{id}))
+	        </when>
+	        <otherwise>
+	            <if test="iIs3 == 1">
+		        	update follow set fdel = 0
+		            where follower = (select mno from member where mid = #{id})
+		            	and followee = (select mno from member where mid = #{myid});
+			    </if>
+	            <if test="iIs3 == 2">
+		        	delete from follow
+		        	where follower = (select mno from member where mid = #{myid})
+		            and followee = (select mno from member where mid = #{id});
+			    </if>
+	            <if test="iIs3 == 3">
+	            	update follow set fdel = 0
+		            where follower = (select mno from member where mid = #{id})
+		            	and followee = (select mno from member where mid = #{myid});
+		            	
+		        	delete from follow
+		        	where follower = (select mno from member where mid = #{myid})
+		            and followee = (select mno from member where mid = #{id});
+			    </if>
+	        </otherwise>
+	    </choose>
+	</update>
+	
+	<select id="followAsk" parameterType="Map" resultType="Map">
+		SELECT m1.mid as mid, m1.mname as mname, m1.mprofile as mprofile
+	    FROM follow f
+		    JOIN member m1 ON f.follower = m1.mno
+		    JOIN member m2 ON f.followee = m2.mno
+	    WHERE m2.mno = (SELECT mno FROM member WHERE MID = #{myid}) AND f.fdel = 0;
 	</select>
 	
 </mapper>

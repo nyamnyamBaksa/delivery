@@ -42,24 +42,32 @@ public class MyPageController {
 		return "/mypage/sample";
 	}
 	
-	@GetMapping("/{id}")
-	public String main(@PathVariable("id") String id, Model model, HttpSession session) {
+	@GetMapping({"/","/{id}"})
+	public String main(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
 		session.setAttribute("mid", "aaaa");// 나중에 수정
 		session.setAttribute("mgrade", 1);// 나중에 수정
 		
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
-			// System.out.println(id);
+			if(id == null) {// 본인 계정
+				id = (String) session.getAttribute("mid");
+			} else {// 다른 사람 계정 or 본인 계정
+				String myid = (String) session.getAttribute("mid");
+				model.addAttribute("id", id);
+				int babfriend = myPageService.babfriend(myid, id);
+				model.addAttribute("babfriend", babfriend);
+				System.out.println(babfriend);
+			}
 			Map<String, Object> result = myPageService.profile(id);
-			Map<String, Object> follow = myPageService.follow(id);
-			model.addAttribute("result", result);
-			model.addAttribute("follow", follow);
-			model.addAttribute("id", id);
-			return "/mypage/main";
+            Map<String, Object> follow = myPageService.follow(id);
+            model.addAttribute("result", result);
+            model.addAttribute("follow", follow);
+            return "/mypage/main";
 		} else {
 			return "redirect:/login";
 		}
 	}
 	
+	@ResponseBody
 	@PostMapping("/updateProfileImg")// 본인만 프로필 사진 바꿀 수 있음
 	public String updateProfileImg(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> map, HttpSession session) {
 		if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
@@ -87,35 +95,51 @@ public class MyPageController {
 				map.put("mid", session.getAttribute("mid"));
 				map.put("file", realFileName);
 				myPageService.updateProfileImg(map);
+				String profileImg = myPageService.profileImg(map);
+				JSONObject json = new JSONObject();
+				json.put("profileImg", profileImg);
+				return json.toString();
+	        } else {
+	        	return "redirect:/mypage/main";
 	        }
-
-	        return "redirect:/mypage/main";
-
 	    } else {
 	        return "redirect:/login";
 	    }
 	}
 	
-	@GetMapping("/diary/{id}")
-	public String diary(@PathVariable("id") String id, Model model, HttpSession session) {
+	@GetMapping({"/diary", "/diary/{id}"})
+	public String diary(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
 		session.setAttribute("mid", "aaaa");// 나중에 수정
 		session.setAttribute("mgrade", 1);// 나중에 수정
-		
+		System.out.println(id);
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
-			List<Map<String, Object>> list = myPageService.boardlist(id);
-			model.addAttribute("list", list);
-			return "/mypage/diary";
+			if(id == null) {// 본인 계정
+				id = (String) session.getAttribute("mid");
+				List<Map<String, Object>> list = myPageService.boardlist(id);
+				model.addAttribute("list", list);
+				return "/mypage/diary";
+			} else {// 다른 사람 계정
+				List<Map<String, Object>> list = myPageService.boardlist(id);
+				model.addAttribute("list", list);
+				model.addAttribute("id", id);
+				return "/mypage/diary";
+			}
 		} else {
 			return "redirect:/login";
 		}
 	}
 	
+	@ResponseBody
 	@PostMapping("/bdelete")
 	public String bdelete(Model model, HttpSession session,
 			@RequestParam(value = "bno", required = true, defaultValue = "0") int bno) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			myPageService.bdelete(bno);
-			return "/mypage/diary";
+			String id = (String) session.getAttribute("mid");
+			List<Map<String, Object>> list = myPageService.boardlist(id);
+			JSONObject json = new JSONObject();
+			json.put("list", list);
+			return json.toString();
 		} else {
 			return "redirect:/login";
 		}
@@ -124,10 +148,8 @@ public class MyPageController {
 	@ResponseBody
 	@PostMapping("/updateLike")
 	public String updateLike(Model model, HttpSession session, @RequestParam Map<String, Object> map) {
-		// System.out.println(map);// {bno=2, i=0}
+		// System.out.println(map);// {bno=2, i=0, id=aaaa}
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
-			String id = (String) session.getAttribute("mid");
-			map.put("id", id);
 			myPageService.updateLike(map);
 			int blike = myPageService.mylike(map);
 			JSONObject json = new JSONObject();
@@ -147,12 +169,48 @@ public class MyPageController {
 			List<Map<String, Object>> comment = myPageService.comment(bno);
 			JSONObject json = new JSONObject();
 			json.put("comment", comment);
-			System.out.println(comment);
+			// System.out.println(comment);
 			return json.toString();
 		} else {
 			return "redirect:/login";
 		}
 	}
+	
+	@ResponseBody
+	@PostMapping("/updateFollow")
+	public String updateFollow(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String myid = (String) map.get("myid");
+			String id = (String) map.get("id");
+			int iIs3 = myPageService.iIs3(map);
+			map.put("iIs3", iIs3);
+			System.out.println("iIs3 : " + iIs3);
+			int result = myPageService.updateFollow(map);
+			int babfriend = myPageService.babfriend(myid, id);
+			JSONObject json = new JSONObject();
+			json.put("result", result);
+			json.put("i", map.get("i"));
+			json.put("babfriend", babfriend);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/followAsk")
+	public String followAsk(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			List<Map<String, Object>> list = myPageService.followAsk(map);
+			System.out.println(list);
+			JSONObject json = new JSONObject();
+			json.put("list", list);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
 	
 	@GetMapping({"/cart"})
 	public String cart() {

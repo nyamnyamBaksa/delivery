@@ -171,7 +171,7 @@
 
 
 /* + 밥친구 추가 네모 */
-.follow {
+.follow, .unfollow1, .followAccept, .unfollow3, .followAcceptModal {
 	position: absolute;
 	left: 28.06%;
 	right: 58.26%;
