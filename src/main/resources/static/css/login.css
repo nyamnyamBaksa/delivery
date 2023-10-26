@@ -71,7 +71,7 @@
 	border:#EB5757;
 	cursor: pointer;
 }
-.autologin{
+/* .autologin{
 	position: fixed;
 	left: 42.86%;
 	bottom: 50.8%;
@@ -85,11 +85,16 @@
 	background: #FFFFFF;
 	border :#FFFFFF;
 	cursor: pointer;
+} */
+.autologin{
+	position: absolute;
+	left: 40.86%;
+	bottom: 50.8%;
 }
-.checkimg img {
-	position: relative;
-    width: 33.94px;
-    height: 33.94px;
-    left: 40.86%;
-    top: 360px;
+#autologinCheckbox{
+	width: 30px;
+    height: 30px;
+}
+#autologinCheckbox + label {
+    font-weight: bold;
 }
