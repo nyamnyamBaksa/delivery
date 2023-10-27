@@ -37,4 +37,14 @@ public interface MyPageDAO {
 
 	List<Map<String, Object>> followAsk(Map<String, Object> map);
 
+	List<Map<String, Object>> coupon(String mid);
+
+	List<Map<String, Object>> pay(String mid);
+
+	int findById(String id);
+
+	void charge(Map<String, Object> map);
+
+	List<Map<String, Object>> reviewlist(String id);
+
 }

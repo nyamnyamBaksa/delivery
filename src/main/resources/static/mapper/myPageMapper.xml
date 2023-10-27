@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.delivery.web.mypage.MyPageDAO">
 	
+	<select id="findById" parameterType="String" resultType="Integer">
+		select count(*)
+		from member
+		where mid = #{id} and mgrade = 1
+	</select>
+	
 	<select id="profile" parameterType="String" resultType="Map">
 		select mname, mprofile
 		FROM member
@@ -170,6 +176,35 @@
 		    JOIN member m1 ON f.follower = m1.mno
 		    JOIN member m2 ON f.followee = m2.mno
 	    WHERE m2.mno = (SELECT mno FROM member WHERE MID = #{myid}) AND f.fdel = 0;
+	</select>
+	
+	<select id="coupon" parameterType="String" resultType="Map">
+		select cpno, cpid, cpname, date_format(cpedate, '%Y-%m-%d') as cpedate, cpprice,
+			(select count(*) from coupon where mno = (select mno from member where mid = #{mid}) and cpdel = 0) as count
+		from coupon
+		where mno = (select mno from member where mid = #{mid}) and cpdel = 0
+	</select>
+	
+	<select id="pay" parameterType="String" resultType="Map">
+	    select p.pno, p.pcharge, p.pbalance, p.puse, t.tgroup, t.sname, t.tdate, 
+	    SUM(p.puse) OVER (PARTITION BY t.tgroup) AS total,
+	    date_format(p.pcdate, '%Y-%m-%d') as pcdate
+	    from point p LEFT join tradeview t
+	    ON p.tno = t.tno
+	    WHERE p.mno = (SELECT mno FROM member where mid = #{mid})
+	    ORDER BY p.pno desc;
+	</select>
+	
+	<insert id="charge" parameterType="Map">
+		insert into point (pcharge, pbalance, mno)
+		values (#{pcharge}, #{pbalance}, (select mno from member where mid = #{mid}))
+	</insert>
+	
+	<select id="reviewlist" parameterType="String" resultType="Map">
+		SELECT rno, rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, mnname
+		FROM review r, tradeview t
+		WHERE r.tno = t.tno AND r.mno = (SELECT mno FROM member WHERE MID = #{id})
+			AND rdel = 1
 	</select>
 	
 </mapper>

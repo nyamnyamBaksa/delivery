@@ -34,6 +34,9 @@ public class MyPageController {
 	@Autowired
 	private MyPageService myPageService;
 	
+	@Autowired
+	private Util util;
+	
 	// 나중에 수정
 	@GetMapping("/sample")
 	public String sample(HttpSession session){
@@ -55,7 +58,10 @@ public class MyPageController {
 				model.addAttribute("id", id);
 				int babfriend = myPageService.babfriend(myid, id);
 				model.addAttribute("babfriend", babfriend);
-				System.out.println(babfriend);
+			}
+			int findById = myPageService.findById(id);
+			if(findById == 0) {
+				return "redirect:/";
 			}
 			Map<String, Object> result = myPageService.profile(id);
             Map<String, Object> follow = myPageService.follow(id);
@@ -111,19 +117,20 @@ public class MyPageController {
 	public String diary(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
 		session.setAttribute("mid", "aaaa");// 나중에 수정
 		session.setAttribute("mgrade", 1);// 나중에 수정
-		System.out.println(id);
+		
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			if(id == null) {// 본인 계정
 				id = (String) session.getAttribute("mid");
-				List<Map<String, Object>> list = myPageService.boardlist(id);
-				model.addAttribute("list", list);
-				return "/mypage/diary";
-			} else {// 다른 사람 계정
-				List<Map<String, Object>> list = myPageService.boardlist(id);
-				model.addAttribute("list", list);
+			} else {// 다른 사람 계정 or 본인 계정
 				model.addAttribute("id", id);
-				return "/mypage/diary";
 			}
+			int findById = myPageService.findById(id);
+			if(findById == 0) {
+				return "redirect:/";
+			}
+			List<Map<String, Object>> list = myPageService.boardlist(id);
+			model.addAttribute("list", list);
+			return "/mypage/diary";
 		} else {
 			return "redirect:/login";
 		}
@@ -212,6 +219,71 @@ public class MyPageController {
 			JSONObject json = new JSONObject();
 			json.put("list", list);
 			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@GetMapping("/coupon")
+	public String coupon(Model model, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String mid = (String) session.getAttribute("mid");
+			List<Map<String, Object>> list = myPageService.coupon(mid);
+			model.addAttribute("list", list);
+			return "/mypage/coupon";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@GetMapping("/pay")
+	public String pay(Model model, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String mid = (String) session.getAttribute("mid");
+			List<Map<String, Object>> list = myPageService.pay(mid);
+			model.addAttribute("list", list);
+			return "/mypage/pay";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/charge")
+	public String charge(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			// System.out.println(map);// {pcharge=10000, pbalance=14500}
+			map.put("pbalance", util.strToInt((String)map.get("pbalance"))  + util.strToInt((String)map.get("pcharge")));
+			String mid = (String) session.getAttribute("mid");
+			map.put("mid", mid);
+			myPageService.charge(map);
+			List<Map<String, Object>> list = myPageService.pay(mid);
+			JSONObject json = new JSONObject();
+			json.put("list", list);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@GetMapping({"/review", "/review/{id}"})
+	public String review(@PathVariable(name = "id", required = false) String id,Model model, HttpSession session) {
+		session.setAttribute("mid", "aaaa");// 나중에 수정
+		session.setAttribute("mgrade", 1);// 나중에 수정
+		
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			if(id == null) {// 본인 계정
+				id = (String) session.getAttribute("mid");
+			} else {// 다른 사람 계정 or 본인 계정
+				model.addAttribute("id", id);
+			}
+			int findById = myPageService.findById(id);
+			if(findById == 0) {
+				return "redirect:/";
+			}
+			List<Map<String, Object>> list = myPageService.reviewlist(id);
+			model.addAttribute("list", list);
+			return "/mypage/review";
 		} else {
 			return "redirect:/login";
 		}

@@ -232,7 +232,7 @@
 		 	                '</div>' +
 		 	                '</div>' +
 		 	                '</div>' +
-		 	                '<div class="modal-header" style="background-color: #E6E6FA;">' +
+		 	                '<div class="modal-header" style="background-color: #FF9C41;">' +
 		 	                '<h5 class="modal-title" id="exampleModalLabel" style="font-weight: bolder;">' + row.cmcontent + '</h5>' +
 		 	                '</div>';
 			 		        modalcontent.append(newContent);

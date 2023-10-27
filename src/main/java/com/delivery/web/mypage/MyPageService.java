@@ -68,5 +68,25 @@ public class MyPageService {
 		return myPageDAO.followAsk(map);
 	}
 
+	public List<Map<String, Object>> coupon(String mid) {
+		return myPageDAO.coupon(mid);
+	}
+
+	public List<Map<String, Object>> pay(String mid) {
+		return myPageDAO.pay(mid);
+	}
+
+	public int findById(String id) {
+		return myPageDAO.findById(id);
+	}
+
+	public void charge(Map<String, Object> map) {
+		myPageDAO.charge(map);
+	}
+
+	public List<Map<String, Object>> reviewlist(String id) {
+		return myPageDAO.reviewlist(id);
+	}
+
 
 }

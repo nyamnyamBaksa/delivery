@@ -15,10 +15,11 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 <body>
-	<div class="mypage">
-		<div class="mypageFont">마이페이지</div>
-	</div>
     <c:if test="${sessionScope.mid ne null}">
+		<div class="mypage">
+			<div class="mypageFont">마이페이지</div>
+		</div>
+		
     	<div class="myid" style="display: none;">${sessionScope.mid }</div><!-- 내 아이디 -->
     	<div class="id" style="display: none;">${id }</div><!-- 방문자 아이디 -->
     	<div class="babfriend" style="display: none;">${babfriend }</div><!-- 밥친구 -->
@@ -42,7 +43,7 @@
 	        	</c:when>
 	        </c:choose>
         </c:if>
-        <div class="HowManyfollow">밥 친구&nbsp;${follow.friend } &nbsp;<c:if test="${id eq null || sessionScope.mid eq id }">|&nbsp; <span class="followAsk">친구 요청&nbsp;${follow.friendreq }</span></c:if></div>
+        <div class="HowManyfollow">밥 친구&nbsp;${follow.friend } &nbsp;<c:if test="${id eq null || sessionScope.mid eq id }">|&nbsp; <span style="cursor: pointer;" class="followAsk">친구 요청&nbsp;${follow.friendreq }</span></c:if></div>
         <c:if test="${id eq null || sessionScope.mid eq id }">
         	<div class="diary"><a href="/mypage/diary"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
         </c:if>
@@ -50,10 +51,10 @@
         	<div class="diary"><a href="/mypage/diary/${id }"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
         </c:if>
         <div class="zzim"><img src="/img/profileImg/heart.png" onclick=""><p>나의 찜</p></div>
-        <div class="review"><img src="/img/profileImg/review.png" onclick=""><p>리뷰관리</p></div>
+        <div class="review"><a href="/mypage/review"><img src="/img/profileImg/review.png" onclick=""></a><p>리뷰관리</p></div>
         <c:if test="${id eq null || sessionScope.mid eq id }">
-	        <div class="coupon"><img src="/img/profileImg/coupon.png" onclick=""><p>쿠폰함</p></div>
-	        <div class="pay"><img src="/img/profileImg/credit_card.png" onclick=""><p>냠냠페이</p></div>
+	        <div class="coupon"><a href="/mypage/coupon"><img src="/img/profileImg/coupon.png"></a><p>쿠폰함</p></div>
+	        <div class="pay"><a href="/mypage/pay"><img src="/img/profileImg/credit_card.png" onclick=""></a><p>냠냠페이</p></div>
         </c:if>
         <div class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
     </c:if>
