@@ -47,4 +47,6 @@ public interface MyPageDAO {
 
 	List<Map<String, Object>> reviewlist(String id);
 
+	int rdelete(Map<String, Object> map);
+
 }

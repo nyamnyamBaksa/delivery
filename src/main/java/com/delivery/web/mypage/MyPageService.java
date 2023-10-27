@@ -88,5 +88,9 @@ public class MyPageService {
 		return myPageDAO.reviewlist(id);
 	}
 
+	public int rdelete(Map<String, Object> map) {
+		return myPageDAO.rdelete(map);
+	}
+
 
 }

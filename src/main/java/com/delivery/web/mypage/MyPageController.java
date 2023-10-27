@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -284,6 +285,24 @@ public class MyPageController {
 			List<Map<String, Object>> list = myPageService.reviewlist(id);
 			model.addAttribute("list", list);
 			return "/mypage/review";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/rdelete")
+	public String rdelete(@RequestParam(value="valueArr") String[] del, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			JSONObject json = new JSONObject();
+			Map<String, Object> map = new HashMap<String, Object>();
+			for (int i = 0; i < del.length; i++) {
+				map.put("del", del[i]);
+				map.put("mid", session.getAttribute("mid"));
+				int result = myPageService.rdelete(map);
+				json.put("result", result);
+			}
+			return json.toString();
 		} else {
 			return "redirect:/login";
 		}

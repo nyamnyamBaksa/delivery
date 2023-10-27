@@ -51,7 +51,9 @@
 		<div class="cart-box-main">
 			<div class="container">
 			<c:if test="${id eq null || sessionScope.mid eq id }">
-				<input class="allCheck" name="allCheck" type="checkbox">&nbsp;<button class="del" style="width: 70px;height: 40px;">삭제</button>
+				<input style="float: left;margin-top: 15px; margin-right: 15px;" class="allCheck" name="allCheck" type="checkbox">
+				<span class="review"></span> / ${list[0].count }
+				&nbsp;<button class="delbtn" style="width: 70px;height: 40px;float:left;">삭제</button>
 			</c:if>
 				<div class="col-lg-12">
 					<table class="table">
@@ -111,6 +113,19 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     
 	<script type="text/javascript">
+		var confirm = function(msg, title, bno) {
+			swal({
+				title : title,
+				text : msg,
+				type : "warning",
+				showCancelButton : true,
+				confirmButtonClass : "btn-danger",
+				confirmButtonText : "예",
+				cancelButtonText : "아니오",
+				closeOnConfirm : false,
+				closeOnCancel : true
+			});
+		}
 		$(document).ready(function() {
 		    $('.star-rating').each(function() {
 		        var rating = parseFloat($(this).data('rating'));
@@ -128,6 +143,106 @@
 		        });
 		    });
 		});
+		
+		var check = document.getElementsByName("rowCheck");
+		var checkCnt = check.length;
+		$('.review').text('0');
+
+		$('input[name="allCheck"]').click(function() {
+			var checkList = $('input[name="rowCheck"]');
+			for (var i = 0; i < checkList.length; i++) {
+				checkList[i].checked = this.checked;
+			}
+		});
+
+		$('input[name="rowCheck"]').click(function() {
+			if ($('input[name="rowCheck"]:checked').length == checkCnt) {
+				$('input[name="allCheck"]')[0].checked = true;
+			} else {
+				$('input[name="allCheck"]')[0].checked = false;
+			}
+		});
+
+		// 모든 체크박스 요소를 가져오기
+		var allCheckCb = document.querySelector('input[name="allCheck"]');
+		var rowCheckCb = document
+				.querySelectorAll('input[name="rowCheck"]');
+
+		// "찜한 상품" 옆 체크박스의 변경 이벤트 처리
+		allCheckCb.addEventListener('change', function() {
+			var checkedCount = 0;
+			if (allCheckCb.checked) {
+				// "찜한 상품" 체크박스가 체크되면 모든 상품 체크박스도 체크
+				rowCheckCb.forEach(function(checkbox) {
+					checkbox.checked = true;
+					checkedCount++;
+				});
+			} else {
+				// "찜한 상품" 체크박스가 해제되면 모든 상품 체크박스도 해제
+				rowCheckCb.forEach(function(checkbox) {
+					checkbox.checked = false;
+				});
+			}
+
+			// 총 선택된 상품 개수를 업데이트
+			updateTotalCount(checkedCount);
+		});
+
+		// 각 상품 옆 체크박스의 변경 이벤트 처리
+		rowCheckCb.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				var checkedCount = 0;
+				rowCheckCb.forEach(function(checkbox) {
+					if (checkbox.checked) {
+						checkedCount++;
+					}
+				});
+
+				// 총 선택된 상품 개수를 업데이트
+				updateTotalCount(checkedCount);
+			});
+		});
+
+		// 총 선택된 상품 개수를 업데이트하는 함수
+		function updateTotalCount(count) {
+			var zzimTotalElement = document.querySelector('.review');
+			zzimTotalElement.textContent = count;
+		}
+
+		$('.delbtn').click(function() {
+			deleteValue();
+		});
+
+		function deleteValue() {
+			var valueArr = new Array();
+			var list = $('input[name="rowCheck"]');
+			for (var i = 0; i < list.length; i++) {
+				if (list[i].checked) {
+					valueArr.push(list[i].value);
+				}
+			}
+			// alert("valueArr: " + valueArr);
+			if (valueArr.length == 0) {
+				swal("", "선택한 리뷰가 없습니다.", "error");
+				return false;
+			} else {
+				var chk = confirm('정말 삭제하시겠습니까?');
+				$.ajax({
+					url : './rdelete',
+					type : 'post',
+					traditional : true,// valueArr=[1, 2, 3] > valueArr=1&valueArr=2&valueArr=3
+					data : {
+						valueArr : valueArr
+					},
+					success : function(data) {
+						swal("", "리뷰를 삭제했습니다.", "success");
+					},
+					error : function(error) {
+						swal("실패", "작업수행에 실패하였습니다.", "error");
+					}
+				});
+			}
+		}
 	</script>
 </body>
 </html>
