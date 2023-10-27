@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.delivery.web.JoindDAO">
+<mapper namespace="com.delivery.web.join.JoinDAO">
 
-
+	<insert id="join" parameterType="MAP">
+	    INSERT INTO member(mid, mpw, mname,mnickname, maddr, mphone)
+	    VALUES(#{mid}, #{mpw}, #{mname}, #{mnickname}, #{maddr}, #{mphone})
+	</insert>
 </mapper>

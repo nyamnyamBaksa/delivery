@@ -8,4 +8,10 @@
 		WHERE mid=#{id} AND mpw=#{pw}
 	</select>
 
+	<update id="autologinCheckbox" parameterType="Map">
+		UPDATE member
+		SET auto = 1
+		WHERE mid=#{mid}
+	</update>
+	
 </mapper>

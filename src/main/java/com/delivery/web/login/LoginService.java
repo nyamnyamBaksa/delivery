@@ -14,4 +14,8 @@ public class LoginService {
 	public Map<String, Object> login(Map<String, Object> map) {
 		return loginDAO.login(map);
 	}
+
+	public int autologinCheckbox(Map<String, Object> result) {
+		return loginDAO.autologinCheckbox(result);
+	}
 }

@@ -1,10 +1,14 @@
 package com.delivery.web.join;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
+import java.util.Map;
 
-@Repository
+import org.apache.ibatis.annotations.Mapper;
+
+
 @Mapper
-public class JoinDAO {
+public interface JoinDAO {
+
+	public Map<String, Object> join(Map<String, Object> map);
+	
 
 }
