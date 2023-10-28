@@ -28,8 +28,8 @@ public class MyPageService {
 		return myPageDAO.follow(id);
 	}
 
-	public List<Map<String, Object>> boardlist(String id) {
-		return myPageDAO.boardlist(id);
+	public List<Map<String, Object>> boardlist(String mid, String id) {
+		return myPageDAO.boardlist(mid, id);
 	}
 
 	public void bdelete(int bno) {
@@ -90,6 +90,14 @@ public class MyPageService {
 
 	public int rdelete(Map<String, Object> map) {
 		return myPageDAO.rdelete(map);
+	}
+
+	public void dwrite(Map<String, Object> map) {
+		myPageDAO.dwrite(map);
+	}
+
+	public void cwrite(Map<String, Object> map) {
+		myPageDAO.cwrite(map);
 	}
 
 

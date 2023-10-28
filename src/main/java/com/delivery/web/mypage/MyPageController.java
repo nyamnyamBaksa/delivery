@@ -120,6 +120,7 @@ public class MyPageController {
 		session.setAttribute("mgrade", 1);// 나중에 수정
 		
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String mid = (String) session.getAttribute("mid");
 			if(id == null) {// 본인 계정
 				id = (String) session.getAttribute("mid");
 			} else {// 다른 사람 계정 or 본인 계정
@@ -129,7 +130,7 @@ public class MyPageController {
 			if(findById == 0) {
 				return "redirect:/";
 			}
-			List<Map<String, Object>> list = myPageService.boardlist(id);
+			List<Map<String, Object>> list = myPageService.boardlist(mid, id);
 			model.addAttribute("list", list);
 			return "/mypage/diary";
 		} else {
@@ -143,8 +144,9 @@ public class MyPageController {
 			@RequestParam(value = "bno", required = true, defaultValue = "0") int bno) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			myPageService.bdelete(bno);
+			String mid = (String) session.getAttribute("mid");
 			String id = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = myPageService.boardlist(id);
+			List<Map<String, Object>> list = myPageService.boardlist(mid, id);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
 			return json.toString();
@@ -158,6 +160,7 @@ public class MyPageController {
 	public String updateLike(Model model, HttpSession session, @RequestParam Map<String, Object> map) {
 		// System.out.println(map);// {bno=2, i=0, id=aaaa}
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("id", (String)session.getAttribute("mid"));
 			myPageService.updateLike(map);
 			int blike = myPageService.mylike(map);
 			JSONObject json = new JSONObject();
@@ -170,7 +173,7 @@ public class MyPageController {
 	
 	@ResponseBody
 	@PostMapping("/comment")
-	public String detail(@RequestParam(value = "bno", required = true, defaultValue = "0") int bno, HttpSession session) 
+	public String comment(@RequestParam(value = "bno", required = true, defaultValue = "0") int bno, HttpSession session) 
 			throws JsonProcessingException {
 		// System.out.println(bno);
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
@@ -302,6 +305,42 @@ public class MyPageController {
 				int result = myPageService.rdelete(map);
 				json.put("result", result);
 			}
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@GetMapping("/dwrite")
+	public String dwrite(HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			return "/mypage/dwrite";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@PostMapping("/dwrite")
+	public String dwrite(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("id", (String)session.getAttribute("mid"));
+			myPageService.dwrite(map);
+			return "redirect:/mypage/diary";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/cwrite")
+	public String cwrite(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("id", (String)session.getAttribute("mid"));
+			myPageService.cwrite(map);
+			int bno = util.strToInt((String)map.get("bno"));
+			List<Map<String, Object>> comment = myPageService.comment(bno);
+			JSONObject json = new JSONObject();
+			json.put("comment", comment);
 			return json.toString();
 		} else {
 			return "redirect:/login";

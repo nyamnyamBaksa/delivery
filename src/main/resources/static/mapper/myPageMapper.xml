@@ -53,11 +53,11 @@
 		    END AS friend
 	</select>
 	
-	<select id="boardlist" parameterType="String" resultType="Map">
+	<select id="boardlist" parameterType="Map" resultType="Map">
 		SELECT b.bno, b.bcontent, COALESCE(COUNT(l.lno), 0) AS mylike, b.bdate, b.commentcount, b.blike
 		FROM boardview b LEFT JOIN bblike l
-			ON b.bno = l.bno AND b.mno = l.mno
-		WHERE b.mid = #{id}
+			ON b.bno = l.bno
+		WHERE b.mid = #{id} AND l.mno = (SELECT mno FROM member WHERE MID = #{mid})
 		GROUP BY b.bno, b.bcontent, b.bdate, b.commentcount, b.blike
 	</select>
 	
@@ -208,9 +208,19 @@
 			AND rdel = 1
 	</select>
 	
-	<delete id="rdelete" parameterType="Map">
-		delete from review
-		where rno = #{del} and mid= #{mid}
-	</delete>
+	<update id="rdelete" parameterType="Map">
+		update review set rdel = 0
+		where rno = #{del} 
+	</update>
+	
+	<insert id="dwrite" parameterType="Map">
+		insert into board (bcontent, mno)
+		values (#{content}, (select mno from member where mid = #{id}))
+	</insert>
+	
+	<insert id="cwrite" parameterType="Map">
+		insert into comment (cmcontent, mno, bno)
+		values (#{cwrite}, (select mno from member where mid = #{id}), #{bno})
+	</insert>
 	
 </mapper>

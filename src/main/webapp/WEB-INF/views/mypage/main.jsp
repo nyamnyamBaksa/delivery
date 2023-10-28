@@ -119,7 +119,7 @@
 	                $("#userProfileImage").attr('src', newImageSrc);
 	            },
 	            error: function () {
-	                alert('서버와 통신 중 오류 발생');
+	            	swal('', '서버와 통신 중 오류 발생', "error");
 	            }
 	        });
 		

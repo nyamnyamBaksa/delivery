@@ -19,26 +19,24 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-<style type="text/css">
-	.star-rating {
-	    display: inline-block;
-	    font-size: 0; /* Remove whitespace between inline-block elements */
-	}
-	
-	.star-icon {
-	    display: inline-block;
-	    width: 20px; /* Adjust the width of each star icon as needed */
-	    overflow: hidden;
-	}
-	
-	.star-icon i {
-	    color: yellow; /* Star color */
-	    clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
-	}
-	
-	.star-icon.partial-star i {
-	    clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
-	}
+<style>
+  .star-rating {
+    width: 100px; /* You can adjust the width as needed */
+  }
+  .star-rating, .star-rating span {
+    display: inline-block;
+    height: 20px; /* You can adjust the height as needed */
+    overflow: hidden;
+    background: url(star.png) no-repeat;
+  }
+  .star-rating span {
+    background-position: left bottom;
+    line-height: 0;
+    vertical-align: top;
+  }
+  .filled-star {
+    background-position: left top;
+  }
 </style>
 
 </head>
@@ -50,11 +48,13 @@
 	<div style="margin-top: 100px;"></div>
 		<div class="cart-box-main">
 			<div class="container">
-			<c:if test="${id eq null || sessionScope.mid eq id }">
-				<input style="float: left;margin-top: 15px; margin-right: 15px;" class="allCheck" name="allCheck" type="checkbox">
-				<span class="review"></span> / ${list[0].count }
-				&nbsp;<button class="delbtn" style="width: 70px;height: 40px;float:left;">삭제</button>
-			</c:if>
+				<div class="col-lg-12"><h2>총 리뷰 개수 : ${list[0].count }</h2>
+					<c:if test="${id eq null || sessionScope.mid eq id }">
+						<input style="float: left;margin-top: 15px; margin-right: 15px;" class="allCheck" name="allCheck" type="checkbox">
+						<span style="float: left; font-size: larger; font-weight: bolder; margin-top: 5px;margin-right: 5px;"><span class="review"></span> / ${list[0].count }</span>
+						&nbsp;<button class="delbtn" style="width: 70px;height: 40px;float:left;">삭제</button>
+					</c:if>
+				</div>
 				<div class="col-lg-12">
 					<table class="table">
 						<c:forEach items="${list }" var="row">
@@ -72,10 +72,11 @@
 							                    <i class="fa fa-star"></i>
 							                </span>
 							            </c:forEach>
+							            <span class="filled-star" style="width: ${row.rscore * 20}%;"></span>
 							        </div>
 							        &nbsp;${row.rdate}
 							    </td>
-							</tr>	
+							</tr>
 							<tr>
 								<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed;">${row.rcomment}</td>
 							</tr>
@@ -126,25 +127,8 @@
 				closeOnCancel : true
 			});
 		}
-		$(document).ready(function() {
-		    $('.star-rating').each(function() {
-		        var rating = parseFloat($(this).data('rating'));
-		        var $starIcons = $(this).find('.star-icon');
-	
-		        $starIcons.each(function(index) {
-		            if (index < rating) {
-		                $(this).find('i').removeClass('partial-star');
-		            } else if (index === Math.floor(rating) && rating % 1 !== 0) {
-		                var width = (rating % 1) * 100;
-		                alert(width);
-		                $(this).find('i').css('clip-path', `polygon(0 0, 0 100%, ${width}% 100%, ${width}% 0)`);
-		                $(this).addClass('partial-star');
-		            }
-		        });
-		    });
-		});
 		
-		var check = document.getElementsByName("rowCheck");
+		var check = document.getElementsByName("rowCheck");// var check = $(".rowCheck");
 		var checkCnt = check.length;
 		$('.review').text('0');
 
@@ -156,7 +140,7 @@
 		});
 
 		$('input[name="rowCheck"]').click(function() {
-			if ($('input[name="rowCheck"]:checked').length == checkCnt) {
+			if ($('input[name="rowCheck"]:checked').length == checkCnt) {// $('.rowCheck:checked').length
 				$('input[name="allCheck"]')[0].checked = true;
 			} else {
 				$('input[name="allCheck"]')[0].checked = false;
@@ -164,21 +148,21 @@
 		});
 
 		// 모든 체크박스 요소를 가져오기
-		var allCheckCb = document.querySelector('input[name="allCheck"]');
+		var allCheckCb = document.querySelector('input[name="allCheck"]');// var allCheckCb = $('input[name="allCheck"]');
 		var rowCheckCb = document
-				.querySelectorAll('input[name="rowCheck"]');
+				.querySelectorAll('input[name="rowCheck"]');// var rowCheckCb = $('input[name="rowCheck"]');
 
-		// "찜한 상품" 옆 체크박스의 변경 이벤트 처리
+		// 맨 위의 체크박스의 변경 이벤트 처리
 		allCheckCb.addEventListener('change', function() {
 			var checkedCount = 0;
 			if (allCheckCb.checked) {
-				// "찜한 상품" 체크박스가 체크되면 모든 상품 체크박스도 체크
+				// 맨 위의 체크박스가 체크되면 모든 상품 체크박스도 체크
 				rowCheckCb.forEach(function(checkbox) {
 					checkbox.checked = true;
 					checkedCount++;
 				});
 			} else {
-				// "찜한 상품" 체크박스가 해제되면 모든 상품 체크박스도 해제
+				// 맨 위의 체크박스가 해제되면 모든 상품 체크박스도 해제
 				rowCheckCb.forEach(function(checkbox) {
 					checkbox.checked = false;
 				});
@@ -223,14 +207,14 @@
 			}
 			// alert("valueArr: " + valueArr);
 			if (valueArr.length == 0) {
-				swal("", "선택한 리뷰가 없습니다.", "error");
+				// swal("", "선택한 리뷰가 없습니다.", "error");
 				return false;
 			} else {
 				var chk = confirm('정말 삭제하시겠습니까?');
 				$.ajax({
 					url : './rdelete',
 					type : 'post',
-					traditional : true,// valueArr=[1, 2, 3] > valueArr=1&valueArr=2&valueArr=3
+					traditional : true,// valueArr=[1, 2, 3] -> valueArr=1&valueArr=2&valueArr=3
 					data : {
 						valueArr : valueArr
 					},
@@ -243,6 +227,11 @@
 				});
 			}
 		}
+		/* jQuery 1.4 이전의 버전과의 하위 호환성을 유지하거나 특정 서버 요구 사항을 충족시키기 위해 필요한 경우에 유용
+		1. 기본적으로 traditional 속성은 false로 설정한다. ex) valueArr[]=1&valueArr[]=2&valueArr[]=3
+			이 경우 jQuery는 배열 데이터를 전송할 때, 배열 이름에 대괄호([])를 추가하여 데이터를 직렬화한다.
+		2. traditional 속성을 true로 설정하면 jQuery는 배열 데이터를 직렬화할 때 대괄호([])를 사용하지 않으며, 배열 요소를 반복적으로 전송
+			ex)valueArr=1&valueArr=2&valueArr=3 */
 	</script>
 </body>
 </html>
