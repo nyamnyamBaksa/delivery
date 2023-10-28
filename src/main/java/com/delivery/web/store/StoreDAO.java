@@ -1,6 +1,7 @@
 package com.delivery.web.store;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -8,6 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface StoreDAO {
 
 	List<StoreDTO> list();
+
+	Map<String, Object> detail(int sno);
 
 	
 

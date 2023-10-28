@@ -6,4 +6,19 @@
 		SELECT * FROM storeview
 	</select>
 
+	<select id="detail" parameterType="Integer" resultType="Map">
+		SELECT s.store_name, s.average_rating, s.review_count, s.store_image, m.mnname, m.mnprice, m.mnimg
+		FROM storeview s
+		LEFT JOIN menu m ON s.sno = m.sno
+		WHERE s.sno=#{sno}
+	</select>
+
+
+
+
+
+
+
+
+
 </mapper>

@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>상세카테고리</title>
-<link rel="stylesheet" href="./css/categorylist.css">
+<link rel="stylesheet" href="./css/storelist.css">
 
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
@@ -44,8 +44,8 @@ body {
 	justify-content: center;
 	align-items: center;
 }
-
 </style>
+
 </head>
 
 <body>
@@ -101,8 +101,6 @@ body {
 	<c:forEach items="${list}" var="l">
 	<div style="display: flex; align-items: center;">
 		<table border="1" width="50%" style="text-align:left; margin-right: 10px;">
-		
-		
 			<tr>
 				<td rowspan="3" style="width: 200px; text-align: center;">${l.store_image}</td>
 				<td>${l.store_name}</td>
@@ -115,12 +113,10 @@ body {
 			</tr>
 			
 		</table>
-		<button type="button" onclick="location.href='./'">주문하러가기</button>
+		<button type="button" onclick="location.href='./storedetail?sno=${l.sno}'">주문하러가기</button>
 		</div>
 		</c:forEach>
 	</div>
-
-
 
 
 	<!-- Swiper JS -->

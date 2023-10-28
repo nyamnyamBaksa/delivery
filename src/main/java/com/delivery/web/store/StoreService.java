@@ -10,11 +10,15 @@ import org.springframework.stereotype.Service;
 public class StoreService {
 	
 	@Autowired
-	private StoreDAO categorylistDAO;
+	private StoreDAO storeDAO;
 
 	public List<StoreDTO> list() {
-		
-		return categorylistDAO.list();
+		return storeDAO.list();
+	}
+
+
+	public Map<String, Object> detail(int sno) {
+		return storeDAO.detail(sno);
 	}
 
 	
