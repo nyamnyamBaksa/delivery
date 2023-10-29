@@ -206,6 +206,7 @@
 		FROM review r, tradeview t
 		WHERE r.tno = t.tno AND r.mno = (SELECT mno FROM member WHERE MID = #{id})
 			AND rdel = 1
+		order by rno desc
 	</select>
 	
 	<update id="rdelete" parameterType="Map">
@@ -222,5 +223,10 @@
 		insert into comment (cmcontent, mno, bno)
 		values (#{cwrite}, (select mno from member where mid = #{id}), #{bno})
 	</insert>
+	
+	<update id="updateReview" parameterType="Map">
+		update review set rcomment = #{rcomment}, rscore = #{rscore}
+		where rno = #{rno}
+	</update>
 	
 </mapper>

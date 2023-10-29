@@ -57,8 +57,10 @@ public class MyPageController {
 			} else {// 다른 사람 계정 or 본인 계정
 				String myid = (String) session.getAttribute("mid");
 				model.addAttribute("id", id);
-				int babfriend = myPageService.babfriend(myid, id);
-				model.addAttribute("babfriend", babfriend);
+				if(myid != id) {
+					int babfriend = myPageService.babfriend(myid, id);
+					model.addAttribute("babfriend", babfriend);
+				}
 			}
 			int findById = myPageService.findById(id);
 			if(findById == 0) {
@@ -124,7 +126,15 @@ public class MyPageController {
 			if(id == null) {// 본인 계정
 				id = (String) session.getAttribute("mid");
 			} else {// 다른 사람 계정 or 본인 계정
+				String myid = (String) session.getAttribute("mid");
 				model.addAttribute("id", id);
+				if(myid != id) {
+					int babfriend = myPageService.babfriend(myid, id);
+					model.addAttribute("babfriend", babfriend);
+					if(babfriend != 3) {
+						return "redirect:/main/{id}";
+					}
+				}
 			}
 			int findById = myPageService.findById(id);
 			if(findById == 0) {
@@ -294,6 +304,21 @@ public class MyPageController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/reviewStar")
+	public String reviewStar(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String id = (String) map.get("id");
+			List<Map<String, Object>> list = myPageService.reviewlist(id);
+			JSONObject json = new JSONObject();
+			json.put("score", util.strToInt((String) map.get("score")));
+			json.put("list", list);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
 	@PostMapping("/rdelete")
 	public String rdelete(@RequestParam(value="valueArr") String[] del, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
@@ -305,6 +330,18 @@ public class MyPageController {
 				int result = myPageService.rdelete(map);
 				json.put("result", result);
 			}
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateReview")
+	public String updateReview(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			JSONObject json = new JSONObject();
+			myPageService.updateReview(map);
 			return json.toString();
 		} else {
 			return "redirect:/login";

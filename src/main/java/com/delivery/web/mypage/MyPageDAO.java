@@ -53,4 +53,6 @@ public interface MyPageDAO {
 
 	void cwrite(Map<String, Object> map);
 
+	void updateReview(Map<String, Object> map);
+
 }

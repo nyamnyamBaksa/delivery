@@ -100,5 +100,9 @@ public class MyPageService {
 		myPageDAO.cwrite(map);
 	}
 
+	public void updateReview(Map<String, Object> map) {
+		myPageDAO.updateReview(map);
+	}
+
 
 }

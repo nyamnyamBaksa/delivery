@@ -20,25 +20,33 @@
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <style>
-  .star-rating {
-    width: 100px; /* You can adjust the width as needed */
-  }
-  .star-rating, .star-rating span {
-    display: inline-block;
-    height: 20px; /* You can adjust the height as needed */
-    overflow: hidden;
-    background: url(star.png) no-repeat;
-  }
-  .star-rating span {
-    background-position: left bottom;
-    line-height: 0;
-    vertical-align: top;
-  }
-  .filled-star {
-    background-position: left top;
-  }
+  .star-ratings {
+  color: #aaa9a9; 
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+}
+ 
+.star-ratings-fill {
+  color: #fff58c;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
+}
+ 
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
+}
 </style>
-
 </head>
 <body>
 	<c:if test="${sessionScope.mid ne null}">
@@ -52,7 +60,8 @@
 					<c:if test="${id eq null || sessionScope.mid eq id }">
 						<input style="float: left;margin-top: 15px; margin-right: 15px;" class="allCheck" name="allCheck" type="checkbox">
 						<span style="float: left; font-size: larger; font-weight: bolder; margin-top: 5px;margin-right: 5px;"><span class="review"></span> / ${list[0].count }</span>
-						&nbsp;<button class="delbtn" style="width: 70px;height: 40px;float:left;">삭제</button>
+						&nbsp;<button class="editbtn" style="width: 70px;height: 40px;float:left;margin-left:10px;margin-right:10px;">수정</button>
+						<button class="delbtn" style="width: 70px;height: 40px;float:left;">삭제</button>
 					</c:if>
 				</div>
 				<div class="col-lg-12">
@@ -60,27 +69,30 @@
 						<c:forEach items="${list }" var="row">
 							<tr>
 								<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;">
-									<input class="rowCheck" name="rowCheck" type="checkbox" value="${row.rno }">
+									<input class="rowCheck rno" name="rowCheck" type="checkbox" value="${row.rno }">
 									&nbsp;${row.sname }
+									<span class="star-ratings rdate">&nbsp;${row.rdate}</span>
 								</td>
 							</tr>
 							<tr>
-							    <td class="name-pr" style="font-size: large; font-weight: bold; border: 0; border-style: dashed;">
-							        <div class="star-rating" data-rating="${row.rscore}">
-							            <c:forEach var="i" begin="1" end="5">
-							                <span class="star-icon" style="color: yellow;">
-							                    <i class="fa fa-star"></i>
-							                </span>
-							            </c:forEach>
-							            <span class="filled-star" style="width: ${row.rscore * 20}%;"></span>
-							        </div>
-							        &nbsp;${row.rdate}
+							    <td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">
+							        <div class="star-ratings">
+							        	<div class="id" style="display: none;">${id }</div>
+							        	<div class="rscore" style="display: none;">${row.rscore }</div>
+										<div class="star-ratings-fill space-x-2 text-lg" style="width: ${score}%;">
+										    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+										</div>
+										<div class="star-ratings-base space-x-2 text-lg">
+											<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+										</div>
+									</div>
 							    </td>
 							</tr>
 							<tr>
 								<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed;">${row.rcomment}</td>
 							</tr>
 							<tr style="border-bottom: 1px solid black;">
+								<td class="name-pr" style="border: 0; border-style: dashed;">${row.mnname}</td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -113,8 +125,37 @@
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     
-	<script type="text/javascript">
-		var confirm = function(msg, title, bno) {
+    <script type="text/javascript">
+    
+	    var id = $('.id').text();
+	
+	    $('.rscore').each(function() {
+	        var scoreElement = $(this);
+	        var score = parseFloat(scoreElement.text());
+	        score = score * 20;
+	        
+	        var starRatings = scoreElement.closest('.star-ratings');
+	
+	        $.ajax({
+	            url: '/mypage/reviewStar',
+	            type: 'post',
+	            data: { score: score, id: id },
+	            dataType: 'json',
+	            success: function(data) {
+	                starRatings.find('.id').text(id);
+	                starRatings.find('.rscore').text(score);
+	                var starRatingsFill = starRatings.find('.star-ratings-fill');
+	                starRatingsFill.css('width', score + '%');
+	            },
+	            error: function(error) {
+	                swal("실패", "작업수행에 실패하였습니다.", "error");
+	            }
+	        });
+	    });
+
+    
+	
+		var confirm = function(msg, title, valueArr) {
 			swal({
 				title : title,
 				text : msg,
@@ -125,6 +166,24 @@
 				cancelButtonText : "아니오",
 				closeOnConfirm : false,
 				closeOnCancel : true
+			},
+			function(isConfirm) {
+				if (isConfirm) {
+					$.ajax({
+						url : '/mypage/rdelete',
+						type : 'post',
+						traditional : true,// valueArr=[1, 2, 3] -> valueArr=1&valueArr=2&valueArr=3
+						data : {
+							valueArr : valueArr
+						},
+						success : function(data) {
+							swal("", "리뷰를 삭제했습니다.", "success");
+						},
+						error : function(error) {
+							swal("실패", "작업수행에 실패하였습니다.", "error");
+						}
+					});
+				}
 			});
 		}
 		
@@ -193,9 +252,41 @@
 			zzimTotalElement.textContent = count;
 		}
 
-		$('.delbtn').click(function() {
-			deleteValue();
+		$(document).on("click", ".editbtn, .delbtn", function(){
+			var rno = $('.rno').val();
+			let $icon = $(this);
+			if ($icon.hasClass('editbtn')) {
+				updateReview(rno);
+			} else {
+				deleteValue();
+			}
 		});
+		
+		function updateReview(rno){
+			var rdate = $('.rdate').text();
+			var today = new Date();
+			var rdateDate = new Date(rdate);
+			
+			var threeDaysAgo = new Date();
+		    threeDaysAgo.setDate(today.getDate() - 3);
+		    
+		    if (rdateDate > threeDaysAgo) {
+		        return;
+		    } else {
+		    	$.ajax({
+					url : '/mypage/updateReview',
+					type : 'post',
+					data : {rno : rno},
+					dataType : 'json',
+					success : function(data) {
+						swal("", "리뷰를 수정했습니다.", "success");
+					},
+					error : function(error) {
+						swal("실패", "작업수행에 실패하였습니다.", "error");
+					}
+				});
+		    }
+		}
 
 		function deleteValue() {
 			var valueArr = new Array();
@@ -205,26 +296,12 @@
 					valueArr.push(list[i].value);
 				}
 			}
-			// alert("valueArr: " + valueArr);
+			
 			if (valueArr.length == 0) {
 				// swal("", "선택한 리뷰가 없습니다.", "error");
 				return false;
 			} else {
-				var chk = confirm('정말 삭제하시겠습니까?');
-				$.ajax({
-					url : './rdelete',
-					type : 'post',
-					traditional : true,// valueArr=[1, 2, 3] -> valueArr=1&valueArr=2&valueArr=3
-					data : {
-						valueArr : valueArr
-					},
-					success : function(data) {
-						swal("", "리뷰를 삭제했습니다.", "success");
-					},
-					error : function(error) {
-						swal("실패", "작업수행에 실패하였습니다.", "error");
-					}
-				});
+				var chk = confirm('', '정말 삭제하시겠습니까?', valueArr);
 			}
 		}
 		/* jQuery 1.4 이전의 버전과의 하위 호환성을 유지하거나 특정 서버 요구 사항을 충족시키기 위해 필요한 경우에 유용
