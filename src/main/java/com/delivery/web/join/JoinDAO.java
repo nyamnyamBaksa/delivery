@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface JoinDAO {
 
 	public Map<String, Object> join(Map<String, Object> map);
+
+	public int checkID(String mid);
 	
 
 }
