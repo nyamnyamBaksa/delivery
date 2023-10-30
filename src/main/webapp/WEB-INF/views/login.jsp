@@ -105,7 +105,7 @@
 </head>
 <body>
 	<h1>login</h1>
-
+	<hr class="hr">
 
 	<div class="loginBox">
 		<form action="./login" method="post">
