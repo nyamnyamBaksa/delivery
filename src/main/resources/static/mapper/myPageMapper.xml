@@ -225,8 +225,51 @@
 	</insert>
 	
 	<update id="updateReview" parameterType="Map">
-		update review set rcomment = #{rcomment}, rscore = #{rscore}
+		update review set rcomment = #{redit}, rscore = #{starRating}
 		where rno = #{rno}
+	</update>
+	
+	<select id="findReviewByRno" parameterType="Map" resultType="Map">
+		SELECT rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, mnname
+		FROM review r, tradeview t
+		WHERE r.tno = t.tno AND rno = #{rno}
+	</select>
+	
+	<select id="info" parameterType="String" resultType="Map">
+		select mid, mname, mnickname, maddr, mphone
+		from member
+		where mid = #{mid}
+	</select>
+	
+	<update id="out" parameterType="String">
+		update member set mgrade = 0
+		where mid = #{mid}
+	</update>
+	
+	<select id="idchk" parameterType="Map" resultType="Integer">
+		select count(*)
+		from member
+		where mid = #{id} and mgrade = 1
+	</select>
+	
+	<update id="idUpdate" parameterType="Map">
+		update member set mid = #{id}
+		where mno = #{mno}
+	</update>
+	
+	<update id="pwUpdate" parameterType="Map">
+		update member set mpw = #{pw}
+		where mno = #{mno}
+	</update>
+	
+	<update id="addrUpdate" parameterType="Map">
+		update member set maddr = #{addr}
+		where mno = #{mno}
+	</update>
+	
+	<update id="phoneUpdate" parameterType="Map">
+		update member set mphone = #{phone}
+		where mno = #{mno}
 	</update>
 	
 </mapper>

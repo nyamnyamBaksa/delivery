@@ -26,7 +26,7 @@
         <div class="profile"><!-- onclick="popup('${sessionScope.mid}')" 작은 따옴표로 감싸기 -->
             <img class="profile-image" src="/img/profileImg/${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
         </div>
-        <div class="nickname">${result.mname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><img src="/img/profileImg/arrow_right.png" onclick=""></c:if></div>
+        <div class="nickname">${result.mname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><img src="/img/profileImg/arrow_right.png"></a></c:if></div>
         <c:if test="${sessionScope.mid ne id }">
 	        <c:choose>
 	        	<c:when test="${babfriend eq 0 }">
@@ -43,19 +43,23 @@
 	        	</c:when>
 	        </c:choose>
         </c:if>
-        <div class="HowManyfollow">밥 친구&nbsp;${follow.friend } &nbsp;<c:if test="${id eq null || sessionScope.mid eq id }">|&nbsp; <span style="cursor: pointer;" class="followAsk">친구 요청&nbsp;${follow.friendreq }</span></c:if></div>
+        
+        <div class="HowManyfollow">밥 친구&nbsp;${follow.friend }&nbsp;
+        	<c:if test="${id eq null || sessionScope.mid eq id }">|&nbsp; <span style="cursor: pointer;" class="followAsk">친구 요청&nbsp;${follow.friendreq }</span></c:if>
+        </div>
         <c:if test="${id eq null || sessionScope.mid eq id }">
         	<div class="diary"><a href="/mypage/diary"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
+        	<div class="zzim"><a href="/wishlist"><img src="/img/profileImg/heart.png"></a><p>나의 찜</p></div>
+        	<div class="review"><a href="/mypage/review"><img src="/img/profileImg/review.png"></a><p>리뷰관리</p></div>
+        	<div class="coupon"><a href="/mypage/coupon"><img src="/img/profileImg/coupon.png"></a><p>쿠폰함</p></div>
+	        <div class="pay"><a href="/mypage/pay"><img src="/img/profileImg/credit_card.png"></a><p>냠냠페이</p></div>
         </c:if>
         <c:if test="${sessionScope.mid ne id }">
         	<div class="diary"><a href="/mypage/diary/${id }"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
+        	<div class="zzim"><a href="/wishlist/${id }"><img src="/img/profileImg/heart.png"></a><p>나의 찜</p></div>
+        	<div class="review"><a href="/mypage/review/${id }"><img src="/img/profileImg/review.png"></a><p>리뷰관리</p></div>
         </c:if>
-        <div class="zzim"><img src="/img/profileImg/heart.png" onclick=""><p>나의 찜</p></div>
-        <div class="review"><a href="/mypage/review"><img src="/img/profileImg/review.png" onclick=""></a><p>리뷰관리</p></div>
-        <c:if test="${id eq null || sessionScope.mid eq id }">
-	        <div class="coupon"><a href="/mypage/coupon"><img src="/img/profileImg/coupon.png"></a><p>쿠폰함</p></div>
-	        <div class="pay"><a href="/mypage/pay"><img src="/img/profileImg/credit_card.png" onclick=""></a><p>냠냠페이</p></div>
-        </c:if>
+        
         <div class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
     </c:if>
     <!-- Modal -->
@@ -226,6 +230,9 @@
 	        data: { myid: myid },
 	        dataType: 'json',
 	        success: function (data) {
+	        	if(data.list.length == 0){
+	        		return;
+	        	}
 	            var modalContent = $(".modal-content");
 	            modalContent.empty();
 

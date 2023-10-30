@@ -195,7 +195,7 @@
      border: none; /* border를 제거하기 위해 추가 */
 }
 
-.followAcceptModal{
+.followAcceptModal, .cartbtn, .qtyChange{
 	margin-top: 30px;
 	height: 33px;
 	background: #EB5757;
@@ -206,7 +206,6 @@
 	font-size: 20px;
 	line-height: 27px;
 	/* or 135% */
-	display: flex;
 	align-items: center;
 	text-align: center;
 	

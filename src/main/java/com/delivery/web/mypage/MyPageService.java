@@ -104,5 +104,37 @@ public class MyPageService {
 		myPageDAO.updateReview(map);
 	}
 
+	public Map<String, Object> findReviewByRno(Map<String, Object> map) {
+		return myPageDAO.findReviewByRno(map);
+	}
+
+	public Map<String, Object> info(String mid) {
+		return myPageDAO.info(mid);
+	}
+
+	public void out(String mid) {
+		myPageDAO.out(mid);
+	}
+
+	public int idchk(Map<String, Object> map) {
+		return myPageDAO.idchk(map);
+	}
+
+	public void idUpdate(Map<String, Object> map) {
+		myPageDAO.idUpdate(map);
+	}
+
+	public void pwUpdate(Map<String, Object> map) {
+		myPageDAO.pwUpdate(map);
+	}
+
+	public void addrUpdate(Map<String, Object> map) {
+		myPageDAO.addrUpdate(map);
+	}
+
+	public void phoneUpdate(Map<String, Object> map) {
+		myPageDAO.phoneUpdate(map);
+	}
+
 
 }

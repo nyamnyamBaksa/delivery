@@ -298,7 +298,7 @@
 				+ '</div>'
 				+ '<div class="modal-header">'
 				+ '<div class="bbbno" style="display:none;">' + bno + '</div>'
-				+ '<input class="modal-title cwrite" id="exampleModalLabel" style="width:800px;height:100px;font-weight: bolder;">'
+				+ '<input placeholder="댓글을 작성하세요" class="modal-title cwrite" id="exampleModalLabel" style="width:800px;height:100px;font-weight: bolder;">'
 				+ '</div>'
 				+ '<div class="modal-header">'
 				+ '<button class="modal-title cbtn" style="width:100px;height:35px;cursor:pointer;">댓글쓰기</button>'

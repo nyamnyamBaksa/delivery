@@ -38,6 +38,9 @@ public class MyPageController {
 	@Autowired
 	private Util util;
 	
+	@Autowired
+	private SmsUtil smsUtil;
+	
 	// 나중에 수정
 	@GetMapping("/sample")
 	public String sample(HttpSession session){
@@ -132,7 +135,7 @@ public class MyPageController {
 					int babfriend = myPageService.babfriend(myid, id);
 					model.addAttribute("babfriend", babfriend);
 					if(babfriend != 3) {
-						return "redirect:/main/{id}";
+						return "redirect:/mypage/main/{id}";
 					}
 				}
 			}
@@ -341,6 +344,19 @@ public class MyPageController {
 	public String updateReview(@RequestParam Map<String, Object> map, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			JSONObject json = new JSONObject();
+			Map<String, Object> review = myPageService.findReviewByRno(map);
+			json.put("review", review);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/editReview")
+	public String editReview(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			JSONObject json = new JSONObject();
 			myPageService.updateReview(map);
 			return json.toString();
 		} else {
@@ -384,9 +400,119 @@ public class MyPageController {
 		}
 	}
 	
-	
-	@GetMapping({"/cart"})
-	public String cart() {
-		return "/mypage/cart";
+	@GetMapping("/info")
+	public String info(Model model, HttpSession session) {
+		session.setAttribute("mno", 2);// 나중에 수정
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String mid = (String) session.getAttribute("mid");
+			Map<String, Object> info = myPageService.info(mid);
+			model.addAttribute("info", info);
+			return "/mypage/info";
+		} else {
+			return "redirect:/login";
+		}
 	}
+	
+	@GetMapping("/out")
+	public String out(HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String mid = (String) session.getAttribute("mid");
+			myPageService.out(mid);
+			session.invalidate();
+			return "redirect:/";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			session.invalidate();
+			return "redirect:/";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/idchk")
+	public String idchk(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			int idchk = myPageService.idchk(map);
+			JSONObject json = new JSONObject();
+			json.put("idchk", idchk);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/idUpdate")
+	public String idUpdate(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("mno", session.getAttribute("mno"));
+			myPageService.idUpdate(map);
+			session.setAttribute("mid", map.get("id"));
+			JSONObject json = new JSONObject();
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/pwUpdate")
+	public String pwUpdate(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("mno", session.getAttribute("mno"));
+			myPageService.pwUpdate(map);
+			JSONObject json = new JSONObject();
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/addrUpdate")
+	public String addrUpdate(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("mno", session.getAttribute("mno"));
+			myPageService.addrUpdate(map);
+			JSONObject json = new JSONObject();
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/phoneCheck")// 휴대폰 문자보내기
+	public String sendSMS(@RequestParam(name="phone", required = false) String phone, HttpSession session) {
+		if(session.getAttribute("mid") != null) {
+			System.out.println(phone);
+			int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
+	
+			smsUtil.sendOne(phone, randomNumber);
+			return String.valueOf(randomNumber);
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/phoneUpdate")
+	public String phoneUpdate(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("mno", session.getAttribute("mno"));
+			myPageService.phoneUpdate(map);
+			JSONObject json = new JSONObject();
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
 }

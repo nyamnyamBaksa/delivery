@@ -55,4 +55,20 @@ public interface MyPageDAO {
 
 	void updateReview(Map<String, Object> map);
 
+	Map<String, Object> findReviewByRno(Map<String, Object> map);
+
+	Map<String, Object> info(String mid);
+
+	void out(String mid);
+
+	int idchk(Map<String, Object> map);
+
+	void idUpdate(Map<String, Object> map);
+
+	void pwUpdate(Map<String, Object> map);
+
+	void addrUpdate(Map<String, Object> map);
+
+	void phoneUpdate(Map<String, Object> map);
+
 }
