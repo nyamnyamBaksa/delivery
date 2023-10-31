@@ -29,12 +29,34 @@
 		<div class="title">
 			<div class="titleFont">냠냠페이</div>
 		</div>
-		<div style="margin-top: 100px;"></div>
+		<div style="margin-top: 50px;"></div>
 		<div class="cart-box-main">
 			<div class="container">
 				<div class="col-lg-12">
+					<c:if test="${param.pbalance eq 'charge' }">
+			       		<div class="col-sm-8 col-sm-offset-3">
+			       			<button class="againpurchase">결제페이지로</button>
+			       		</div>
+			       	</c:if>
+			       	<div class="count">
+			       		<select class="cate" id="cate">
+							<option selected="selected" value="0">전체 보기</option>
+							<option value="1">최근 1개월</option>
+							<option value="3">최근 3개월</option>
+							<option value="6">최근 6개월</option>
+						</select>
+			       	</div>
 					<div class="count">
-						<div class="h2"><h2 style="font-weight: bolder;float: left;">보유금액&nbsp;:&nbsp;${list[0].pbalance }원</h2></div>&nbsp;
+						<div class="h2">
+							<h2 style="font-weight: bolder;float: left;">
+								<c:if test="${list[0].pbalance eq null }">
+								보유금액&nbsp;:&nbsp;0원
+								</c:if>
+								<c:if test="${list[0].pbalance ne null }">
+									보유금액&nbsp;:&nbsp;${list[0].pbalance }원
+								</c:if>
+							</h2>
+						</div>&nbsp;
 							<select class="pcharge">
 								<option selected="selected" value="10000">10,000원</option>
 								<option value="30000">30,000원</option>
@@ -53,19 +75,18 @@
 					<table class="table">
 						<c:forEach items="${list }" var="row">
 							<tr style="border-bottom: 1px solid #EB5757;">
+								<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">${row.pcdate }</td>
 								<c:if test="${row.pcharge ne null }">
-									<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">${row.pcdate }</td>
 									<td class="name-pr"
 										style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;"></td>
 									<td class="name-pr"
 										style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder; color: #EB5757;">${row.pcharge }원 충전</td>
 								</c:if>
-								<c:if test="${loop.first || row.tgroup ne list[loop.index - 1].tgroup}">
-									<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">${row.tdate }</td>
+								<c:if test="${row.tgroup ne null}">
 									<td class="name-pr"
 										style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;">${row.sname }</td>
 									<td class="name-pr"
-										style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;">${row.total }원 차감</td>
+										style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;">${row.puse }원 차감</td>
 								</c:if>
 							</tr>
 						</c:forEach>
@@ -81,6 +102,10 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 	<script type="text/javascript">
 	
+		$(document).on("click",".againpurchase", function(){
+			location.href="/purchase";
+		});
+	
 		var confirm = function(msg, title, bno) {
 			swal({
 				title : title,
@@ -94,6 +119,35 @@
 				closeOnCancel : true
 			});
 		}
+		
+		function getParameterByName(name, url) {
+	    	const urlParams = new URL(location.href).searchParams;
+	    	return urlParams.get(name);
+	    }
+		
+		// URL에서 cate 매개변수를 가져와서 기본값으로 설정
+	    var defaultCate = getParameterByName('cate');
+	    $('#cate').val(defaultCate);
+		
+	    $('#cate').on('change', function(){
+			var cate = $('#cate').val();
+			$.ajax({
+				url:'/mypage/cateChange',
+				type:'post',
+				data:{cate:cate},
+				dataType:'json',
+				success:function(data){
+					// 표의 내용을 삭제
+	 		        var table = $(".table");
+	 		        table.empty();
+					// 테이블 업데이트
+		            updateTable(data.list);
+				},
+				error:function(error){
+					swal("실패", "작업수행에 실패하였습니다.", "error");
+				}
+			});
+		});
 		
 		$(document).on('change', '.pcharge', function(){
 			var selectedValue = $(this).val();
@@ -158,15 +212,14 @@
 		    var tableHtml = '<table class="table">';
 		    $.each(list, function (index, row) {
 		        tableHtml += '<tr style="border-bottom: 1px solid #EB5757;">';
+		        tableHtml += '<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">' + row.pcdate + '</td>';
 		        if (row.pcharge != null) {
-		            tableHtml += '<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">' + row.pcdate + '</td>';
 		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;"></td>';
 		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder; color: #EB5757;">' + row.pcharge + '원 충전</td>';
 		        }
-		        if (row.total != null && (index == 0 || row.tgroup != list[index - 1].tgroup)) {
-		            tableHtml += '<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">' + row.tdate + '</td>';
+		        if (row.tgroup != null) {
 		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;">' + row.sname + '</td>';
-		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;">' + row.total + '원 차감</td>';
+		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;">' + row.puse + '원 차감</td>';
 		        }
 		        tableHtml += '</tr>';
 		    });

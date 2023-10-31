@@ -19,4 +19,59 @@
 		where cno = #{cno}
 	</delete>
 	
+	<select id="coupon" parameterType="String" resultType="Map">
+		select cpno, cpid, cpname, cpprice
+		from coupon
+		where mno = (select mno from member where mid = #{mid}) and cpdel = 0
+			and DATE_FORMAT(cpedate, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d')
+	</select>
+	
+	<select id="findByCpno" parameterType="Integer" resultType="Integer">
+		select cpprice
+		from coupon
+		where cpno = #{cpno}
+	</select>
+	
+	<select id="point" parameterType="String" resultType="Integer">
+		select COALESCE(pbalance, 0)
+		from point
+		where mno = (select mno from member where MID = #{mid})
+		order by pno desc
+		limit 1
+	</select>
+	
+	<insert id="purchase" parameterType="Map">
+		<choose>
+			<when test="cpno == 0">
+				INSERT INTO trade (mnno, tamount, ttotal, mno, toowner, torider)
+					SELECT mnno, camount, ctotal, mno, #{toowner}, #{riderAsk}
+					FROM cart	
+					WHERE mno = (SELECT mno FROM member WHERE MID = #{mid});
+			</when>
+			<otherwise>
+				INSERT INTO trade (mnno, tamount, ttotal, mno, toowner, torider, cpno)
+					SELECT mnno, camount, ctotal, mno, #{toowner}, #{riderAsk}, #{cpno}
+					FROM cart	
+					WHERE mno = (SELECT mno FROM member WHERE MID = #{mid});
+			</otherwise>
+		</choose>
+		
+		delete from cart
+		where mno = (SELECT mno FROM member WHERE MID = #{mid});
+		
+		insert into point (mno, puse, tgroup, cpno, pbalance)
+			SELECT mno, #{realtotal}, tgroup, cpno, #{pbalance}
+			FROM trade	
+			WHERE mno = (SELECT mno FROM member WHERE MID = #{mid}) AND tno = (SELECT MAX(tno) FROM trade);
+		
+		update coupon set cpdel = 1
+		where cpno = #{cpno}
+	</insert>
+	
+	<select id="tgroup" parameterType="Map" resultType="String">
+		select tgroup
+		from trade
+		where mno = (SELECT mno FROM member WHERE MID = #{mid}) and tno = (SELECT MAX(tno) FROM trade)
+	</select>
+	
 </mapper>

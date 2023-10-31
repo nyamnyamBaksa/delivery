@@ -8,6 +8,15 @@
 		where mid = #{id} and mgrade = 1
 	</select>
 	
+	<select id="toplist" parameterType="String" resultType="Map">
+		SELECT sname, COUNT(*) AS count
+		from tradeview
+		where MID = #{id}
+		group by sname
+		ORDER BY COUNT desc
+		LIMIT 3
+	</select>
+	
 	<select id="profile" parameterType="String" resultType="Map">
 		select mname, mprofile
 		FROM member
@@ -186,13 +195,23 @@
 	</select>
 	
 	<select id="pay" parameterType="String" resultType="Map">
-	    select p.pno, p.pcharge, p.pbalance, p.puse, t.tgroup, t.sname, t.tdate, 
-	    SUM(p.puse) OVER (PARTITION BY t.tgroup) AS total,
-	    date_format(p.pcdate, '%Y-%m-%d') as pcdate
-	    from point p LEFT join tradeview t
-	    ON p.tno = t.tno
-	    WHERE p.mno = (SELECT mno FROM member where mid = #{mid})
-	    ORDER BY p.pno desc;
+	    select pno, pcharge, pbalance, puse, tgroup,
+	    	(SELECT sname FROM tradeview WHERE tgroup = point.tgroup LIMIT 1) AS sname,
+	    date_format(pcdate, '%Y-%m-%d') as pcdate
+	    from point
+	    WHERE mno = (SELECT mno FROM member where MID = #{mid})
+	    <choose>
+		    <when test="cate == 1">
+		        AND DATE_FORMAT(pcdate, '%y-%m-%d') BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 MONTH), '%y-%m-%d') AND DATE_FORMAT(NOW(), '%y-%m-%d')
+		    </when>
+		    <when test="cate == 3">
+		        AND DATE_FORMAT(pcdate, '%y-%m-%d') BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 3 MONTH), '%y-%m-%d') AND DATE_FORMAT(NOW(), '%y-%m-%d')
+		    </when>
+		    <when test="cate == 6">
+		        AND DATE_FORMAT(pcdate, '%y-%m-%d') BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 6 MONTH), '%y-%m-%d') AND DATE_FORMAT(NOW(), '%y-%m-%d')
+		    </when>
+		</choose>
+	    ORDER BY pno desc;
 	</select>
 	
 	<insert id="charge" parameterType="Map">

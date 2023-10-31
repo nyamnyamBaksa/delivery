@@ -1,6 +1,5 @@
 package com.delivery.web.pay;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,8 +27,6 @@ public class PayController {
 
 	@GetMapping("/cart")
 	public String cart(Model model, HttpSession session) {
-		session.setAttribute("mid", "aaaa");// 나중에 수정
-		session.setAttribute("mgrade", 1);// 나중에 수정
 		if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
 			String mid = (String) session.getAttribute("mid");
 			List<Map<String, Object>> list = payService.cartlist(mid);
@@ -59,14 +56,31 @@ public class PayController {
 		}
 	}
 	
+	@ResponseBody
+	@PostMapping("/cartdel")
+	public String cartdel(@RequestParam("cno") int cno, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			payService.cartdel(cno);
+			JSONObject json = new JSONObject();
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
 	@GetMapping("/purchase")
 	public String purchase(Model model, HttpSession session) {
-		session.setAttribute("mid", "aaaa");// 나중에 수정
-		session.setAttribute("mgrade", 1);// 나중에 수정
 		if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
 			String mid = (String) session.getAttribute("mid");
 			List<Map<String, Object>> list = payService.cartlist(mid);
+			if(list.size() == 0) {
+				return "redirect:/";
+			}
+			List<Map<String, Object>> coupon = payService.coupon(mid);
+			int pbalance = payService.point(mid);
 			model.addAttribute("list", list);
+			model.addAttribute("coupon", coupon);
+			model.addAttribute("pbalance", pbalance);
 			return "/purchase";
 		} else {
 			return "redirect:/login";
@@ -74,11 +88,29 @@ public class PayController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/cartdel")
-	public String cartdel(@RequestParam("cno") int cno, HttpSession session) {
+	@PostMapping("/findByCpno")
+	public String findByCpno(@RequestParam("cpno") int cpno, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
-			payService.cartdel(cno);
+			int cpprice = payService.findByCpno(cpno);
 			JSONObject json = new JSONObject();
+			json.put("cpprice", cpprice);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/purchase")
+	public String purchase(@RequestParam Map<String, Object> map, Model model, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			// System.out.println(map);
+			String mid = (String) session.getAttribute("mid");
+			map.put("mid", mid);
+			payService.purchase(map);
+			String tgroup = payService.tgroup(map);
+			JSONObject json = new JSONObject();
+			json.put("tgroup", tgroup);
 			return json.toString();
 		} else {
 			return "redirect:/login";

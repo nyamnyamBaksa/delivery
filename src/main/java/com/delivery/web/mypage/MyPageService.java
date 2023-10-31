@@ -72,8 +72,8 @@ public class MyPageService {
 		return myPageDAO.coupon(mid);
 	}
 
-	public List<Map<String, Object>> pay(String mid) {
-		return myPageDAO.pay(mid);
+	public List<Map<String, Object>> pay(String mid, int cate) {
+		return myPageDAO.pay(mid, cate);
 	}
 
 	public int findById(String id) {
@@ -134,6 +134,10 @@ public class MyPageService {
 
 	public void phoneUpdate(Map<String, Object> map) {
 		myPageDAO.phoneUpdate(map);
+	}
+
+	public List<Map<String, Object>> toplist(String id) {
+		return myPageDAO.toplist(id);
 	}
 
 

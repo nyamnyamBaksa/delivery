@@ -29,7 +29,11 @@
 		<div class="cart-box-main">
 			<div class="container">
 				<div class="col-lg-12">
-				<div class="count"><h3>보유쿠폰 ${list[0].count }장</h3></div><br>
+				<c:if test="${list[0].count eq null }">
+					<h1 style="text-align: center;">보유쿠폰이 없습니다.</h1>
+				</c:if>
+				<c:if test="${list[0].count ne null }">
+					<div class="count"><h3>보유쿠폰 ${list[0].count }장</h3></div><br>
 					<table class="table">
 						<c:forEach items="${list }" var="row">
 							<tr style="border-top: 3px solid #EB5757;">
@@ -42,6 +46,7 @@
 							</tr>
 						</c:forEach>
 					</table>
+				</c:if>
 				</div>
 			</div>
 		</div>

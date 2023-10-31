@@ -23,4 +23,25 @@ public class PayService {
 	public void cartdel(int cno) {
 		payDAO.cartdel(cno);
 	}
+
+	public List<Map<String, Object>> coupon(String mid) {
+		return payDAO.coupon(mid);
+	}
+
+	public int findByCpno(int cpno) {
+		return payDAO.findByCpno(cpno);
+	}
+
+	public int point(String mid) {
+		return payDAO.point(mid);
+	}
+
+	public void purchase(Map<String, Object> map) {
+		payDAO.purchase(map);
+	}
+
+	public String tgroup(Map<String, Object> map) {
+		return payDAO.tgroup(map);
+	}
+
 }

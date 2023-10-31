@@ -39,7 +39,7 @@ public interface MyPageDAO {
 
 	List<Map<String, Object>> coupon(String mid);
 
-	List<Map<String, Object>> pay(String mid);
+	List<Map<String, Object>> pay(@Param("mid") String mid, @Param("cate") int cate);
 
 	int findById(String id);
 
@@ -70,5 +70,7 @@ public interface MyPageDAO {
 	void addrUpdate(Map<String, Object> map);
 
 	void phoneUpdate(Map<String, Object> map);
+
+	List<Map<String, Object>> toplist(String id);
 
 }

@@ -32,6 +32,10 @@
 	</div>
     <!-- Start Cart  -->
     <div class="cart-box-main">
+    <c:if test="${list[0].sname eq null }">
+    	<h1 style="text-align: center;">장바구니가 비었어요</h1>
+    </c:if>
+    <c:if test="${list[0].sname ne null }">
         <div class="container">
             <div class="row">
             	<div class="col-lg-12"><h1>${list[0].sname }</h1></div>
@@ -75,6 +79,10 @@
                                 </c:forEach>
                             </tbody>
                         </table>
+                        <hr style="border: 1px solid black;">
+                        <div>
+                        	<h2 onclick="location.href='/storelist/${list[0].sname}'" style="font-weight:bold;text-align: center;cursor: pointer;">+ 더 담으러 가기</h2>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,6 +111,7 @@
             </div>
 
         </div>
+    </c:if>
     </div>
     <!-- End Cart -->
 </c:if>

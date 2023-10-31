@@ -14,4 +14,14 @@ public interface PayDAO {
 
 	void cartdel(int cno);
 
+	List<Map<String, Object>> coupon(String mid);
+
+	int findByCpno(int cpno);
+
+	int point(String mid);
+
+	void purchase(Map<String, Object> map);
+
+	String tgroup(Map<String, Object> map);
+
 }

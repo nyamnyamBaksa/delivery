@@ -61,6 +61,13 @@
         </c:if>
         
         <div class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
+        <c:forEach items="${toplist }" var="row">
+	        <div class="favoriteStoreComponent">
+	        	<i class="bi bi-trophy-fill"></i>&nbsp;
+	        	<span style="">${row.sname }</span>
+	        	<span style="float:right;">${row.count }회 주문</span>
+	        </div>
+	    </c:forEach>    
     </c:if>
     <!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"

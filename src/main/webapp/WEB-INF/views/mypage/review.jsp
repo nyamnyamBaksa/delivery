@@ -99,10 +99,14 @@
 						<c:forEach items="${list }" var="row">
 							<tr>
 								<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;">
-									<input class="rowCheck rno" name="rowCheck" type="checkbox" value="${row.rno }">
+									<c:if test="${id eq null || sessionScope.mid eq id }">
+										<input class="rowCheck rno" name="rowCheck" type="checkbox" value="${row.rno }">
+									</c:if>
 									&nbsp;${row.sname }
 									<span class="star-ratings rdate">&nbsp;${row.rdate}</span>
-									<button class="editbtn" style="width: 70px;height: 40px;float:right;margin-left:10px;margin-right:10px;">수정</button>
+									<c:if test="${id eq null || sessionScope.mid eq id }">
+										<button class="editbtn" style="width: 70px;height: 40px;float:right;margin-left:10px;margin-right:10px;">수정</button>
+									</c:if>
 								</td>
 							</tr>
 							<tr>

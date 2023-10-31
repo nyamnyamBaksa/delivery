@@ -44,16 +44,11 @@ public class MyPageController {
 	// 나중에 수정
 	@GetMapping("/sample")
 	public String sample(HttpSession session){
-		session.setAttribute("mid", "bbbb");// 나중에 수정
-		session.setAttribute("mgrade", 1);// 나중에 수정
 		return "/mypage/sample";
 	}
 	
 	@GetMapping({"/main","/main/{id}"})
 	public String main(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
-		session.setAttribute("mid", "aaaa");// 나중에 수정
-		session.setAttribute("mgrade", 1);// 나중에 수정
-		
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			if(id == null) {// 본인 계정
 				id = (String) session.getAttribute("mid");
@@ -71,8 +66,10 @@ public class MyPageController {
 			}
 			Map<String, Object> result = myPageService.profile(id);
             Map<String, Object> follow = myPageService.follow(id);
+            List<Map<String, Object>> toplist = myPageService.toplist(id);
             model.addAttribute("result", result);
             model.addAttribute("follow", follow);
+            model.addAttribute("toplist", toplist);
             return "/mypage/main";
 		} else {
 			return "redirect:/login";
@@ -121,9 +118,6 @@ public class MyPageController {
 	
 	@GetMapping({"/diary", "/diary/{id}"})
 	public String diary(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
-		session.setAttribute("mid", "aaaa");// 나중에 수정
-		session.setAttribute("mgrade", 1);// 나중에 수정
-		
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			String mid = (String) session.getAttribute("mid");
 			if(id == null) {// 본인 계정
@@ -254,10 +248,11 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/pay")
-	public String pay(Model model, HttpSession session) {
+	public String pay(Model model, HttpSession session,
+			@RequestParam(name="cate", required = false, defaultValue = "0") int cate) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			String mid = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = myPageService.pay(mid);
+			List<Map<String, Object>> list = myPageService.pay(mid, cate);
 			model.addAttribute("list", list);
 			return "/mypage/pay";
 		} else {
@@ -266,15 +261,34 @@ public class MyPageController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/cateChange")
+	public String cateChange( HttpSession session, @RequestParam(name="cate", required = false, defaultValue = "0") int cate) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String mid = (String) session.getAttribute("mid");
+			List<Map<String, Object>> list = myPageService.pay(mid, cate);
+			JSONObject json = new JSONObject();
+			json.put("list", list);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
 	@PostMapping("/charge")
-	public String charge(@RequestParam Map<String, Object> map, HttpSession session) {
+	public String charge(@RequestParam Map<String, Object> map, HttpSession session,
+			@RequestParam(name="cate", required = false, defaultValue = "0") int cate) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			// System.out.println(map);// {pcharge=10000, pbalance=14500}
-			map.put("pbalance", util.strToInt((String)map.get("pbalance"))  + util.strToInt((String)map.get("pcharge")));
+			if(map.get("pbalance") == null || map.get("pbalance").equals("")) {
+				map.put("pbalance", util.strToInt((String)map.get("pcharge")));
+			} else {
+				map.put("pbalance", util.strToInt((String)map.get("pbalance"))  + util.strToInt((String)map.get("pcharge")));
+			}
 			String mid = (String) session.getAttribute("mid");
 			map.put("mid", mid);
 			myPageService.charge(map);
-			List<Map<String, Object>> list = myPageService.pay(mid);
+			List<Map<String, Object>> list = myPageService.pay(mid, cate);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
 			return json.toString();
@@ -285,9 +299,6 @@ public class MyPageController {
 	
 	@GetMapping({"/review", "/review/{id}"})
 	public String review(@PathVariable(name = "id", required = false) String id,Model model, HttpSession session) {
-		session.setAttribute("mid", "aaaa");// 나중에 수정
-		session.setAttribute("mgrade", 1);// 나중에 수정
-		
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			if(id == null) {// 본인 계정
 				id = (String) session.getAttribute("mid");
@@ -402,7 +413,6 @@ public class MyPageController {
 	
 	@GetMapping("/info")
 	public String info(Model model, HttpSession session) {
-		session.setAttribute("mno", 2);// 나중에 수정
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			String mid = (String) session.getAttribute("mid");
 			Map<String, Object> info = myPageService.info(mid);
