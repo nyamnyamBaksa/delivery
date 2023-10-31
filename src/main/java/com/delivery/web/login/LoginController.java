@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,4 +66,17 @@ public class LoginController {
 	 * 
 	 * json.put("auto", auto); return json.toString(); }
 	 */
+	
+	// 네이버 로그인
+	@GetMapping("/login/naver")
+	public String naverLogin(@RequestParam(required = false) String code, HttpSession session, Model model) {
+		
+		//System.out.println(code);
+		
+		String Naccess_Token = loginService.getNaverToken(code);
+		
+		return "redirect:/";
+	}
+			
+	
 }

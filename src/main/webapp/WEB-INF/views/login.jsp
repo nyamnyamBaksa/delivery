@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="css/login.css" rel="stylesheet">
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -102,6 +103,11 @@
 	});
 	});
 </script>
+<script type="text/javascript">
+function naverLogin(){
+	location.href="https://nid.naver.com/oauth2.0/authorize?client_id=59vsSNIzNRQBcSk4rubJ&redirect_uri=http://localhost/login/naver&response_type=code";
+}
+</script>
 </head>
 <body>
 	<h1>login</h1>
@@ -129,6 +135,14 @@
 			</div>
 		</form>
 	</div>
-
+	
+	<div class="loginAPI">
+		<div id="kbtnBox">
+			<img src="img/login/login_kakaoBtn.png" alt="kakaoBtn" id="kakao" onclick="kakaoLogin()">
+		</div>
+		<div id="nbtnBox">
+			<img src="img/login/login_naverBtn.png" alt="naverBtn" id="naver" onclick="naverLogin()">
+		</div>
+	</div>
 </body>
 </html>

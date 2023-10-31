@@ -87,3 +87,6 @@
 .hr{
 	border-top: 3px solid black;
 }
+#kakao, #naver{
+	cursor: pointer;
+}
