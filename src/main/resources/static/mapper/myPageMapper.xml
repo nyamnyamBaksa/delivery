@@ -17,6 +17,27 @@
 		LIMIT 3
 	</select>
 	
+	<select id="favoritecate" parameterType="String" resultType="Map">
+	    SELECT
+	        (CASE
+	            WHEN mncate = '1' THEN '한식'
+	            WHEN mncate = '2' THEN '일식'
+	            WHEN mncate = '3' THEN '중식'
+	            WHEN mncate = '4' THEN '양식'
+	            WHEN mncate = '5' THEN '분식'
+	            WHEN mncate = '6' THEN '아시안'
+	            WHEN mncate = '7' THEN '패스트푸드'
+	            ELSE '카페/디저트'
+	        END) AS mncatename, mncate,
+	        COUNT(*) AS COUNT,
+	        (SELECT COUNT(*) FROM tradeview WHERE MID = #{id}) AS total
+	    FROM tradeview t, menu m
+	    WHERE t.mnno = m.mnno AND mid = #{id}
+	    GROUP BY mncate
+	    ORDER BY COUNT DESC
+	    LIMIT 3
+	</select>
+	
 	<select id="profile" parameterType="String" resultType="Map">
 		select mname, mprofile
 		FROM member

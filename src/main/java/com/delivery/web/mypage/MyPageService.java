@@ -140,5 +140,9 @@ public class MyPageService {
 		return myPageDAO.toplist(id);
 	}
 
+	public List<Map<String, Object>> favoritecate(String id) {
+		return myPageDAO.favoritecate(id);
+	}
+
 
 }

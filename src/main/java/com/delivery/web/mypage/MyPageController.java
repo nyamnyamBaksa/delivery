@@ -67,9 +67,11 @@ public class MyPageController {
 			Map<String, Object> result = myPageService.profile(id);
             Map<String, Object> follow = myPageService.follow(id);
             List<Map<String, Object>> toplist = myPageService.toplist(id);
+            List<Map<String, Object>> favoritecate = myPageService.favoritecate(id);
             model.addAttribute("result", result);
             model.addAttribute("follow", follow);
             model.addAttribute("toplist", toplist);
+            model.addAttribute("favoritecate", favoritecate);
             return "/mypage/main";
 		} else {
 			return "redirect:/login";

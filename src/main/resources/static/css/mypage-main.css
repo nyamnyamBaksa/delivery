@@ -264,10 +264,10 @@
 /* 최애맛집 */
 .favoriteStoreComponent{
 	position: relative;
-	width: 420px;
+	width: 350px;
 	height: 50px;
 	left: 181px;
-	top: 687px;
+	top: 550px;
 	margin:1px;
 	background: #FF9C41;
 	border-radius: 10px;
@@ -334,7 +334,7 @@
 	position: absolute;
 	left: 55.76%;
 	right: 21.11%;
-	top: 59.57%;
+	top: 70%;
 	bottom: 36.33%;
 	
 	font-family: 'Dosis';

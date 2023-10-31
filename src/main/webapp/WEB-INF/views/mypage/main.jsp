@@ -13,6 +13,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+	<!-- Google Charts 라이브러리 로드 -->
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
     <c:if test="${sessionScope.mid ne null}">
@@ -61,13 +63,24 @@
         </c:if>
         
         <div class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
-        <c:forEach items="${toplist }" var="row">
+        <c:forEach items="${toplist }" var="row" varStatus="loopStatus">
 	        <div class="favoriteStoreComponent">
-	        	<i class="bi bi-trophy-fill"></i>&nbsp;
-	        	<span style="">${row.sname }</span>
-	        	<span style="float:right;">${row.count }회 주문</span>
+	        	&nbsp;<i class="bi bi-trophy-fill" style="color:
+		            <c:choose>
+		                <c:when test="${loopStatus.index % 3 == 0}"> gold </c:when>
+		                <c:when test="${loopStatus.index % 3 == 1}"> silver </c:when>
+		                <c:when test="${loopStatus.index % 3 == 2}"> #cd7f32 </c:when>
+		            </c:choose>
+		        "></i>&nbsp;
+	        	<span style="font-size:large;font-weight:bold;">${row.sname }</span>
+	        	<span style="float:right;font-size:large;font-weight:bold;">${row.count }회 주문</span>
 	        </div>
-	    </c:forEach>    
+	    </c:forEach>
+	    
+	    <div class="favoriteCate">
+	    	'${result.mname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
+	    </div>
+	    <div id="donutchart" style="width: 900px; height: 500px;"></div>    
     </c:if>
     <!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -98,6 +111,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 	
 	<script type="text/javascript">
+	
 	$(document).on("click", ".profile", function() {
 		var myid = $(".myid").text();
 		var id = $(".id").text();
@@ -260,6 +274,33 @@
 	    });
 	});
 	
+		 // 차트
+		 google.charts.load("current", {packages:["corechart"]});
+	     google.charts.setOnLoadCallback(drawChart);
+	     
+	     function drawChart() {
+	    	 
+	    	 
+	       var data = google.visualization.arrayToDataTable();
+	       data.addColumn("string", "카테고리");
+	       data.addColumn("number", "수");
+	       
+	       var favoritecate = ${favoritecate};
+
+	       for (var i = 0; i < favoritecate.length; i++) {
+	         var mncatename = favoritecate[i].mncatename;
+	         var count = favoritecate[i].count;
+	         data.addRow([mncatename, count]);
+	       }
+	
+	       var options = {
+	         title: '',
+	         pieHole: 0.4,
+	       };
+	
+	       var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+	       chart.draw(data, options);
+	     }
 	
 	</script>
 </body>

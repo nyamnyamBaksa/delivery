@@ -73,4 +73,6 @@ public interface MyPageDAO {
 
 	List<Map<String, Object>> toplist(String id);
 
+	List<Map<String, Object>> favoritecate(String id);
+
 }
