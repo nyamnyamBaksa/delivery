@@ -1,0 +1,100 @@
+@charset "UTF-8";
+
+.id{
+	position: absolute;
+	right: 39.86%;
+	bottom: 67.48%;
+	height:48px;
+	width:370px;
+	
+	background: #FFFFFF;
+	border: 4px solid #EB5757;
+	border-radius: 10px; 
+}
+
+
+.pw{
+	position: absolute;
+	right: 39.86%;
+	bottom: 58.01%;
+	height:48px;
+	width:370px;
+	
+	background: #FFFFFF;
+	border: 4px solid #EB5757;
+	border-radius: 10px;
+}
+.loginBtn{
+	position: absolute;
+	right: 39.86%;
+	bottom: 41.6%;
+	width: 380px;
+	height: 58px;
+
+	background: #EB5757;
+	border-radius: 10px;
+
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 600;
+	font-size: 35px;
+	line-height: 27px;
+
+	align-items: center;
+	text-align: center;
+	
+	color: #FFFFFF;
+	border:#EB5757;
+	cursor: pointer;
+}
+
+.joinBtn{
+	position: absolute;
+	right: 39.86%;
+	bottom: 31.6%;
+	width: 380px;
+	height: 58px;
+
+	background: #EB5757;
+	border-radius: 10px;
+
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 600;
+	font-size: 35px;
+	line-height: 27px;
+
+	align-items: center;
+	text-align: center;
+	
+	color: #FFFFFF;
+	border:#EB5757;
+	cursor: pointer;
+}
+/* .autologin{
+	position: fixed;
+	left: 42.86%;
+	bottom: 50.8%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 22px;
+	
+	background: #FFFFFF;
+	border :#FFFFFF;
+	cursor: pointer;
+} */
+.autologin{
+	position: absolute;
+	left: 40.86%;
+	bottom: 50.8%;
+}
+#autologinCheckbox{
+	width: 30px;
+    height: 30px;
+}
+#autologinCheckbox + label {
+    font-weight: bold;
+}

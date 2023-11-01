@@ -1,0 +1,422 @@
+@charset "UTF-8";
+/* profile */
+.profile{
+	position: absolute;
+	left: 8.61%;
+	right: 83.54%;
+	top: 7.91%;
+	bottom: 81.45%;
+	
+}
+
+.profile-image{
+	width: 128px;
+	height: 128px;
+	border-radius: 60px;
+}
+
+
+/* 닉네임 */
+.nickname{
+	position: absolute;
+	left: 17.5%;
+	right: 75.42%;
+	top: 9.38%;
+	bottom: 82.91%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+}
+
+
+
+/* 냠냠 다이어리 */
+.diary{
+	position: absolute;
+	left: 16.46%;
+	right: 76.04%;
+	top: 25%;
+	bottom: 64.84%;
+	display: flex;
+    flex-direction: column; /* 요소 내의 요소들을 수직으로 나열합니다. */
+    align-items: center; /* 요소를 수직으로 중앙 정렬합니다. */
+    text-align: center;
+	
+}
+
+.diary p {
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+	/* identical to box height, or 150% */
+	
+	color: #000000;
+}
+
+
+
+/* 나의 찜 */
+.zzim{
+	position: absolute;
+	left: 46.74%;
+	right: 47.99%;
+	top: 25%;
+	bottom: 64.84%;
+	display: flex;
+    flex-direction: column; /* 요소 내의 요소들을 수직으로 나열합니다. */
+    align-items: center; /* 요소를 수직으로 중앙 정렬합니다. */
+    text-align: center;
+	
+}
+
+.zzim p{
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+	/* identical to box height, or 150% */
+	
+	color: #000000;
+}
+
+
+
+/* 리뷰관리 */
+.review{
+	position: absolute;
+	left: 75%;
+	right: 19.72%;
+	top: 25%;
+	bottom: 64.26%;
+	
+	/* identical to box height, or 150% */
+	display: flex;
+	flex-direction: column; /* 요소 내의 요소들을 수직으로 나열합니다. */
+    align-items: center; /* 요소를 수직으로 중앙 정렬합니다. */
+    text-align: center;
+	
+}
+
+.review p{
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+}
+
+
+
+/* 쿠폰함 */
+.coupon{
+	position: absolute;
+	left: 17.5%;
+	right: 77.22%;
+	top: 45%;
+	bottom: 45.7%;
+	
+	/* identical to box height, or 150% */
+	display: flex;
+	flex-direction: column; /* 요소 내의 요소들을 수직으로 나열합니다. */
+    align-items: center; /* 요소를 수직으로 중앙 정렬합니다. */
+    text-align: center;
+}
+
+.coupon p{
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+}
+
+
+
+/* 냠냠페이 */
+.pay{
+	position: absolute;
+	left: 46.46%;
+	right: 48.26%;
+	top: 45%;
+	bottom: 45.7%;
+	
+	
+	/* identical to box height, or 150% */
+	display: flex;
+	flex-direction: column; /* 요소 내의 요소들을 수직으로 나열합니다. */
+    align-items: center; /* 요소를 수직으로 중앙 정렬합니다. */
+    text-align: center;
+}
+
+.pay p{
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+}
+
+
+
+/* + 밥친구 추가 네모 */
+.follow, .unfollow1, .followAccept, .unfollow3 {
+	position: absolute;
+	left: 28.06%;
+	right: 58.26%;
+	top: 11.23%;
+	bottom: 84.77%;
+	
+	background: #EB5757;
+	border-radius: 50px;
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 20px;
+	line-height: 27px;
+	/* or 135% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	 justify-content: center; /* 텍스트를 수평으로 가운데 정렬하기 위해 추가 */
+     color: #FFFFFF;
+     border: none; /* border를 제거하기 위해 추가 */
+}
+
+.followAcceptModal{
+	margin-top: 30px;
+	height: 33px;
+	background: #EB5757;
+	border-radius: 50px;
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 20px;
+	line-height: 27px;
+	/* or 135% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	 justify-content: center; /* 텍스트를 수평으로 가운데 정렬하기 위해 추가 */
+     color: #FFFFFF;
+     border: none; /* border를 제거하기 위해 추가 */
+}
+
+
+/* 밥친구 6 | 친구 요청 10 */
+.HowManyfollow{
+	position: absolute;
+	left: 45.97%;
+	right: 32.08%;
+	top: 10.55%;
+	bottom: 84.77%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+}
+
+
+
+/* {닉네임}님의 최애 맛집은? */
+.favoriteStore{
+	position: absolute;
+	left: 14.44%;
+	right: 62.43%;
+	top: 70%;
+	bottom: 35.64%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+}
+
+
+
+/* 최애맛집 */
+.favoriteStoreComponent{
+	position: absolute;
+	width: 420px;
+	height: 50px;
+	left: 181px;
+	top: 687px;
+	
+	border-radius: 10px;
+}
+
+
+/* Rectangle 5 */
+.favoriteStoreComponentRectangle{
+	position: absolute;
+	left: 0%;
+	right: 0%;
+	top: 0%;
+	bottom: 0%;
+	
+	background: #FF9C41;
+	border-radius: 10px;
+}
+
+
+/* 메가커피 강남점 */
+.favoriteStoreComponentFont{
+	position: absolute;
+	left: 15.95%;
+	right: 40.71%;
+	top: 18%;
+	bottom: 12%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+}
+
+
+
+/* 8회 주문 */
+.favoriteStoreComponentTrade{
+	position: absolute;
+	left: 63.1%;
+	right: 9.05%;
+	top: 16%;
+	bottom: 18%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #263238;
+	
+}
+
+
+
+/* 728972_gold_medal_award_badge_prize_icon 1 */
+.favoriteStoreComponentMedal{
+	position: absolute;
+	left: 5.48%;
+	right: 86.9%;
+	top: 18%;
+	bottom: 18%;
+	
+	background: url(728972_gold_medal_award_badge_prize_icon.png);
+	
+}
+
+
+/* {닉네임}님은 카페/디저트 러버! */
+.favoriteCate{
+	position: absolute;
+	left: 55.76%;
+	right: 21.11%;
+	top: 59.57%;
+	bottom: 36.33%;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+	
+}
+
+
+
+/* image 3 */
+.favoriteCateGoogleChart{
+	position: absolute;
+	width: 296px;
+	height: 278px;
+	left: 822px;
+	top: 664px;
+	
+	background: url(image.png);
+	
+}
+
+
+
+/* 마이페이지 */
+.mypage{
+	box-sizing: border-box;
+	
+	position: absolute;
+	left: 5.49%;
+	right: 12.71%;
+	top: 2.73%;
+	bottom: 92.68%;
+	
+	border-bottom: 3px solid #000000;
+	
+}
+
+
+/* Heading 3 → Shipping Method */
+.mypageFont{
+	position: absolute;
+	width: 164px;
+	height: 22px;
+	left: 2px;
+	top: 5px;
+	
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 32px;
+	line-height: 22px;
+	/* identical to box height, or 68% */
+	display: flex;
+	align-items: center;
+	
+	color: #1F1F1F;
+	
+}

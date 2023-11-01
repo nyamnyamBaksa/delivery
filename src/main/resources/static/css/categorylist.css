@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+h1 {
+	text-align: center;
+	height: 50px;
+	background-color: #fff4aa;
+}
+
+a {
+  text-decoration: none;
+  color:black;
+}
+
+
+#list-option {
+	font-weight: bold;
+	
+}
+
+
+.restraunt-list {
+	text-align:center;
+	width:100%;
+	height:70%;
+	background-color: #a9ea99;
+}
+form {
+	background-color: #ffc6f3;
+}
+
+button {
+	width: 130px;
+	height: 40px;
+	border-radius: 20px;
+	border:none;
+	font-weight:bold;
+	font-size:15px;
+	color: #ffffff;
+	background-color: #EB5757;
+	
+}
+table {
+	font-weight: bold;
+	border-spacing: 10px;
+}
