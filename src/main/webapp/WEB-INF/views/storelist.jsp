@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-<<<<<<< HEAD
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -9,7 +8,6 @@
 </head>
 <body>
 
-=======
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -162,6 +160,5 @@ body {
 			return direction;
 		}
 	</script>
->>>>>>> branch 'master' of https://github.com/nyamnyamBaksa/delivery
 </body>
 </html>
