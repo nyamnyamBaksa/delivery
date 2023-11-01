@@ -49,38 +49,37 @@ body {
 </head>
 
 <body>
-	<h1>로고</h1>
-	
+	<h1 style="text-align: center;">냠냠박사</h1>
+
 	<i class="xi-cart-o xi-2x" style="float: right;"></i>
 	<br>
-
 
 	<!-- Swiper -->
 	<div class="swiper">
 		<div class="swiper-wrapper">
 			<div class="swiper-slide">
-				<a href="./">한식</a>
+				<a href="./1">한식</a>
 			</div>
 			<div class="swiper-slide">
-				<a href="./">중식</a>
+				<a href="./2">중식</a>
 			</div>
 			<div class="swiper-slide">
-				<a href="./">일식</a>
+				<a href="./3">일식</a>
 			</div>
 			<div class="swiper-slide">
-				<a href="./">양식</a>
+				<a href="./4">양식</a>
 			</div>
 			<div class="swiper-slide">
-				<a href="./">분식</a>
+				<a href="./5">분식</a>
 			</div>
 			<div class="swiper-slide">
-				<a href="./">아시안</a>
+				<a href="./6">아시안</a>
 			</div>
 			<div class="swiper-slide">
-				<a href="./">패스트푸드</a>
+				<a href="./7">패스트푸드</a>
 			</div>
 			<div class="swiper-slide">
-				<a href="./">카페/디저트</a>
+				<a href="./8">카페/디저트</a>
 			</div>
 		</div>
 		<!--  <div class="swiper-button-next"></div>
@@ -98,23 +97,25 @@ body {
 	<br>
 
 	<div class="restraunt-list" style="">
-	<c:forEach items="${list}" var="l">
-	<div style="display: flex; align-items: center;">
-		<table border="1" width="50%" style="text-align:left; margin-right: 10px;">
-			<tr>
-				<td rowspan="3" style="width: 200px; text-align: center;">${l.store_image}</td>
-				<td>${l.store_name}</td>
-			</tr>
-			<tr>
-				<td><i class="xi-star xi-x" style="color:#ffe11c;"></i>${l.average_rating }(${l.review_count})</td>
-			</tr>
-			<tr>
-				<td>최소주문 9,000원</td>
-			</tr>
-			
-		</table>
-		<button type="button" onclick="location.href='./storedetail?sno=${l.sno}'">주문하러가기</button>
-		</div>
+		<c:forEach items="${list}" var="l">
+			<div style="display: flex; align-items: center;">
+				<table border="1" width="50%"
+					style="text-align: left; margin-right: 10px;">
+					<tr>
+						<td rowspan="3" style="width: 200px; text-align: center;">${l.store_image}</td>
+						<td>${l.store_name}</td>
+					</tr>
+					<tr>
+						<td><i class="xi-star xi-x" style="color: #ffe11c;"></i>${l.average_rating }(${l.review_count})</td>
+					</tr>
+					<tr>
+						<td>최소주문 9,000원</td>
+					</tr>
+
+				</table>
+				<button type="button"
+					onclick="location.href='./storedetail?sno=${l.sno}'">주문하러가기</button>
+			</div>
 		</c:forEach>
 	</div>
 

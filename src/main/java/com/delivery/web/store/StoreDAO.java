@@ -8,16 +8,22 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface StoreDAO {
 
-	List<StoreDTO> list();
+	List<StoreDTO> list(int mncate);
 
-	Map<String, Object> detail(int sno);
+	StoreDTO detail(int sno);
 
+	List<MenuDTO> getMenuList(int sno);
+
+	List<StoreDTO> storeinfo(int sno);
+
+	List<Map<String, Object>> category(int mncate);
+
+	List<Map<String, Object>> foodcategory();
+
+	List<Map<String, Object>> foodlist();
+
+	List<MenuDTO> menudetail(int mnno);
 	
 
-	
-
-	
-	
-	
 
 }

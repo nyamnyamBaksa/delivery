@@ -11,16 +11,43 @@ public class StoreService {
 	
 	@Autowired
 	private StoreDAO storeDAO;
+	
 
-	public List<StoreDTO> list() {
-		return storeDAO.list();
+	public List<StoreDTO> list(int mncate) {
+		return storeDAO.list(mncate);
 	}
 
 
-	public Map<String, Object> detail(int sno) {
-		return storeDAO.detail(sno);
+	public StoreDTO detail(int sno) {
+		
+		StoreDTO storeDTO = storeDAO.detail(sno);
+		List<MenuDTO> menulist = storeDAO.getMenuList(sno);
+		
+		storeDTO.setMenuList(menulist);
+		
+		return storeDTO;
 	}
+
+
+	public List<MenuDTO> getmenulist(int sno) {
+		
+		return storeDAO.getMenuList(sno);
+	}
+
+
+	public List<StoreDTO> storeinfo(int sno) {
+		
+		return storeDAO.storeinfo(sno);
+	}
+
+
+	public List<MenuDTO> menudetail(int mnno) {
+		
+		return storeDAO.menudetail(mnno);
+	}
+
 
 	
+
 
 }
