@@ -11,4 +11,6 @@ public interface LoginDAO {
 
 	public int autologinCheckbox(Map<String, Object> result);
 
+	public int hasNaverUser(Map<String, Object> nUser);
+
 }

@@ -14,4 +14,10 @@
 		WHERE mid=#{mid}
 	</update>
 	
+	<select id="hasNaverUser" parameterType="Map" resultType="Integer">
+		SELECT count(*)  
+		FROM member
+		WHERE mname=#{Nname}
+	</select>
+	
 </mapper>

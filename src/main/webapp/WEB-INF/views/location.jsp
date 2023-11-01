@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <title>좌표로 주소를 얻어내기</title>
-    <style>
+<style>
     .map_wrap {position:relative;width:100%;height:350px;}
     .title {font-weight:bold;display:block;}
     .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}

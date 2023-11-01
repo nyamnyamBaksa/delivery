@@ -74,6 +74,13 @@ public class LoginController {
 		//System.out.println(code);
 		
 		String Naccess_Token = loginService.getNaverToken(code);
+		Map<String, Object> nUser = loginService.getNaverUser(Naccess_Token); // 서비스에서 리턴한 Nmap값을 nUser로 받음.
+		
+		System.out.println(nUser);
+		
+		//네이버 로그인 db 저장 여부
+		int result = loginService.hasNaverUser(nUser); //0 or 1
+		System.out.println(result);
 		
 		return "redirect:/";
 	}

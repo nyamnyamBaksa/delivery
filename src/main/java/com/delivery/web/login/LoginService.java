@@ -82,7 +82,7 @@ public class LoginService {
 	          Nrefresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
 
 	         //System.out.println("Naccess_token : " + Naccess_Token);	
-	         //System.out.println("Nrefresh_token : " + Nrefresh_Token);
+	         System.out.println("Nrefresh_token : " + Nrefresh_Token);
 	          
 	          Nbr.close();
 	          bw.close();
@@ -93,5 +93,70 @@ public class LoginService {
 
 	      return Naccess_Token;
 	}
+	// 네이버에 토큰전송 & 사용자정보받기
+	   public  Map<String, Object> getNaverUser(String Naccess_token){
 
+		   Map<String, Object> Nmap = new HashMap<>();
+		   
+	        String reqURL = "https://openapi.naver.com/v1/nid/me";
+	        String id="";
+	        String email = "";
+	        String nickname = "";
+	        String mobile = "";
+
+	        //access_token을 이용하여 사용자 정보 조회
+	        try {
+	            URL url = new URL(reqURL);
+	            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+	            conn.setRequestMethod("POST");
+	            conn.setDoOutput(true);
+	            conn.setRequestProperty("Authorization", "Bearer " + Naccess_token); //전송할 header 작성, access_token전송
+
+	            //결과 코드가 200이라면 성공
+	            int responseCode = conn.getResponseCode();
+	            System.out.println("responseCode : " + responseCode);
+
+	            //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+	            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	            String line = "";
+	            String result = "";
+
+	            while ((line = br.readLine()) != null) {
+	                result += line;
+	            }
+	            //System.out.println("response body : " + result);
+	            //response body : {"resultcode":"00","message":"success",
+
+	            // 네이버 유저정보 받아오기
+	            Gson gson = new Gson();
+	            JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
+	            JsonElement element = jsonObject.get("response");
+	            
+	            // 받아올값 : id, nickname, email, mobile
+	            id = element.getAsJsonObject().get("id").getAsString().substring(0, 5);
+	            email = element.getAsJsonObject().get("email").getAsString();
+	            nickname = element.getAsJsonObject().get("nickname").getAsString();
+	            mobile = element.getAsJsonObject().get("mobile").getAsString();
+	            
+	            // Map에 담기
+	            Type type = new TypeToken<Map<String, Object>>() {}.getType();
+	            Nmap = gson.fromJson(element, type);
+
+	            Nmap.put("Nid", id);
+	          	Nmap.put("Nemail", email);
+	          	Nmap.put("Nname", nickname);
+	          	Nmap.put("Nphone", mobile);
+	            
+	            br.close();
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return Nmap;
+	    }
+
+	public int hasNaverUser(Map<String, Object> nUser) {
+		return loginDAO.hasNaverUser(nUser);
+	}
 }

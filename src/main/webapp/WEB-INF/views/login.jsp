@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="css/login.css" rel="stylesheet">
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -108,6 +107,13 @@ function naverLogin(){
 	location.href="https://nid.naver.com/oauth2.0/authorize?client_id=59vsSNIzNRQBcSk4rubJ&redirect_uri=http://localhost/login/naver&response_type=code";
 }
 </script>
+<style>
+    .map_wrap {position:relative;width:100%;height:350px;}
+    .title {font-weight:bold;display:block;}
+    .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
+    #centerAddr {display:block;margin-top:2px;font-weight: normal;}
+    .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+</style>
 </head>
 <body>
 	<h1>login</h1>
