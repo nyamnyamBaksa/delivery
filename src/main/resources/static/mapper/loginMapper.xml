@@ -3,16 +3,16 @@
 <mapper namespace="com.delivery.web.login.LoginDAO">
 
 	<select id="login" parameterType="Map" resultType="Map">
-		SELECT count(*) as count, mid, mname, mgrade, mno
+		SELECT count(*) as count, mid, mname, mgrade, mno, maddr
 		FROM member
 		WHERE mid=#{id} AND mpw=#{pw}
 	</select>
 
-	<update id="autologinCheckbox" parameterType="Map">
+<!-- 	<update id="autologinCheckbox" parameterType="Map">
 		UPDATE member
 		SET auto = 1
 		WHERE mid=#{mid}
-	</update>
+	</update> -->
 	
 	<select id="hasNaverUser" parameterType="Map" resultType="Integer">
 		SELECT count(*)  

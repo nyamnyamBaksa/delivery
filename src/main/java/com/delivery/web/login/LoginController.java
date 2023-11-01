@@ -37,6 +37,7 @@ public class LoginController {
 			session.setAttribute("mname", result.get("mname"));
 			session.setAttribute("mgrade", result.get("mgrade"));
 			session.setAttribute("mno", result.get("mno"));
+			session.setAttribute("maddr", result.get("maddr"));
 			return "redirect:/";
 		}
 		return "redirect:/login";
@@ -82,7 +83,20 @@ public class LoginController {
 		int result = loginService.hasNaverUser(nUser); //0 or 1
 		System.out.println(result);
 		
-		return "redirect:/";
+		if(result == 1) { //로그인 진행
+			session.setAttribute("mname", nUser.get("Nname"));
+			return "redirect:/";
+		} else {
+			//db에 정보 넣기
+			session.setAttribute("mname", nUser.get("Nname"));
+			
+			model.addAttribute("mname", nUser.get("Nname"));
+			model.addAttribute("mname", nUser.get("Nname"));
+			model.addAttribute("mname", nUser.get("Nname"));
+			
+		}
+		
+		return "redirect:/login";
 	}
 			
 	
