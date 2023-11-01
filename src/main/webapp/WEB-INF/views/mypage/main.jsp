@@ -105,6 +105,9 @@
 	</div>
 	<!-- ALL JS FILES -->
 	<script src="/js/jquery-3.2.1.min.js"></script>
+	<script src="/js/mcore.extends.js"></script>
+	<script src="/js/mcore.min.js"></script>
+	<script src="/js/wnInterface.js"></script>
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
@@ -120,8 +123,39 @@
 			$("#exampleModal").modal("show");
 		}
 		
+		M.media.picker({
+		    mode: "SINGLE",
+		    media: "PHOTO",
+		    path: "/media",
+		    column: 3,
+		    callback: function( status, result ) {
+		        console.log( status + ", " + JSON.stringify(result) );
+		    }
+		});
+		
+		// 파일 다운로드 후 미디어 정보확인
+		M.net.http.download({
+		    url: 'http://localhost/mypage/main.jsp',
+		    directory: '/img/profileImg',
+		    indicator: true,
+		    overwrite: true,
+		    progress: function(total, current) {},
+		    finish: function( statusCode, header, fileInfo, status, error ) {
+		        console.log( statusCode, header, fileInfo, status, error );
+	
+		        if ( status !== "SUCCESS" ) {
+		            console.error( error );
+		            return;
+		        }
+	
+		        var mediaInfo = M.media.get(fileInfo.path);
+		        M.tool.log( mediaInfo );
+		        alert( JSON.stringify(mediaInfo) );
+		    }
+		});
+		
 		// 파일 선택(input)의 변경 이벤트 리스너
-	    $('#profileImageInput').on('change', function () {
+	    /*$('#profileImageInput').on('change', function () {
 	        let selectedFile = this.files[0];
 
 	        if (!selectedFile) {
@@ -149,7 +183,7 @@
 	            }
 	        });
 		
-		});
+		});*/
 		
 	    $('.notok').on('click', function() {
             $('#exampleModal').modal('hide');
