@@ -44,11 +44,14 @@
 								<td class="quantity-box"
 									style="border: 0; border-style: dashed; width: 100px;">${row.bdate }</td>
 								<td class="bbno" style="display: none;">${row.bno }</td>
-								<td class="remove-pr" style="border: 0; border-style: dashed;">
-									<c:if test="${id eq null || sessionScope.mid eq id }">
-										<i style="cursor: pointer;" class="fas fa-times"></i>
-									</c:if>
-								</td>
+								<c:if test="${id eq null || sessionScope.mid eq id }">
+									<td style="border: 0; border-style: dashed;">
+										<a href="/mypage/dedit/${row.bno}"><button class="dedit" style="width:100px;height:35px;cursor:pointer;">수정</button></a>
+									</td>
+									<td class="remove-pr" style="border: 0; border-style: dashed;">
+										<i style="cursor: pointer;align-items: center;" class="fas fa-times"></i>
+									</td>
+								</c:if>
 							</tr>
 							<tr style="border-bottom: 1px solid black;">
 								<td class="name-pr"

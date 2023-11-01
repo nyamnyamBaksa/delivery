@@ -75,4 +75,8 @@ public interface MyPageDAO {
 
 	List<Map<String, Object>> favoritecate(String id);
 
+	Map<String, Object> diaryDetail(int bno);
+
+	void dupdate(Map<String, Object> map);
+
 }

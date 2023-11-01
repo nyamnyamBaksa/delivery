@@ -397,6 +397,32 @@ public class MyPageController {
 		}
 	}
 	
+	@GetMapping({"/dedit/{bno}", "/dedit"})
+	public String dedit(@PathVariable(value = "bno", required = false) Integer bno, Model model, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			if(bno == null) {
+				return "redirect:/";
+			}
+			Map<String, Object> result = myPageService.diaryDetail(bno);
+			model.addAttribute("result", result);
+			model.addAttribute("bno", bno);
+			return "/mypage/dedit";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@PostMapping("/dedit")
+	public String dedit(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("id", (String)session.getAttribute("mid"));
+			myPageService.dupdate(map);
+			return "redirect:/mypage/diary";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
 	@ResponseBody
 	@PostMapping("/cwrite")
 	public String cwrite(@RequestParam Map<String, Object> map, HttpSession session) {

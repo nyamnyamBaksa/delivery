@@ -13,8 +13,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-	<!-- Google Charts 라이브러리 로드 -->
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	
 </head>
 <body>
     <c:if test="${sessionScope.mid ne null}">
@@ -80,7 +79,7 @@
 	    <div class="favoriteCate">
 	    	'${result.mname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
 	    </div>
-	    <div id="donutchart" style="width: 900px; height: 500px;"></div>    
+	    <div class="favoriteCateGoogleChart" id="donutchart" style="width: 700px; height: 300px;"></div>    
     </c:if>
     <!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -109,6 +108,8 @@
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<!-- Google Charts 라이브러리 로드 -->
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	
 	<script type="text/javascript">
 	
@@ -274,34 +275,31 @@
 	    });
 	});
 	
+	
 		 // 차트
 		 google.charts.load("current", {packages:["corechart"]});
 	     google.charts.setOnLoadCallback(drawChart);
-	     
+	    
 	     function drawChart() {
-	    	 
-	    	 
-	       var data = google.visualization.arrayToDataTable();
-	       data.addColumn("string", "카테고리");
-	       data.addColumn("number", "수");
-	       
-	       var favoritecate = ${favoritecate};
+	   	 
+	     
+    	 var data = google.visualization.arrayToDataTable([
+    	      ['카테고리', '횟수'],
+    	      <c:forEach items="${favoritecate}" var="item" varStatus="loop">
+    	        ['${item.mncatename}', ${item.count}]<c:if test="${not loop.last}">,</c:if>
+    	      </c:forEach>
+    	 ]);
 
-	       for (var i = 0; i < favoritecate.length; i++) {
-	         var mncatename = favoritecate[i].mncatename;
-	         var count = favoritecate[i].count;
-	         data.addRow([mncatename, count]);
-	       }
 	
-	       var options = {
-	         title: '',
-	         pieHole: 0.4,
-	       };
+	      var options = {
+	        title: '',
+	        pieHole: 0.5,
+	        colors: ['#FF7518', '#FFA36D', '#ED9121', '#FFD073'],
+	      };
 	
-	       var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-	       chart.draw(data, options);
-	     }
-	
-	</script>
+	      var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+	      chart.draw(data, options);
+	    }
+    </script>
 </body>
 </html>

@@ -144,5 +144,13 @@ public class MyPageService {
 		return myPageDAO.favoritecate(id);
 	}
 
+	public Map<String, Object> diaryDetail(int bno) {
+		return myPageDAO.diaryDetail(bno);
+	}
+
+	public void dupdate(Map<String, Object> map) {
+		myPageDAO.dupdate(map);
+	}
+
 
 }

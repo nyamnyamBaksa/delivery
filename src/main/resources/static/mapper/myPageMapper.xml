@@ -28,14 +28,38 @@
 	            WHEN mncate = '6' THEN '아시안'
 	            WHEN mncate = '7' THEN '패스트푸드'
 	            ELSE '카페/디저트'
-	        END) AS mncatename, mncate,
-	        COUNT(*) AS COUNT,
-	        (SELECT COUNT(*) FROM tradeview WHERE MID = #{id}) AS total
+	        END) AS mncatename,
+	        COUNT(*) AS count
 	    FROM tradeview t, menu m
 	    WHERE t.mnno = m.mnno AND mid = #{id}
 	    GROUP BY mncate
-	    ORDER BY COUNT DESC
-	    LIMIT 3
+	    ORDER BY count DESC
+	    limit 3;
+	    
+	    SELECT 
+		    '그 외' AS mncatename,
+		    SUM(count) AS count
+		FROM (
+		    SELECT 
+		        (CASE
+		            WHEN mncate = '1' THEN '한식'
+		            WHEN mncate = '2' THEN '일식'
+		            WHEN mncate = '3' THEN '중식'
+		            WHEN mncate = '4' THEN '양식'
+		            WHEN mncate = '5' THEN '분식'
+		            WHEN mncate = '6' THEN '아시안'
+		            WHEN mncate = '7' THEN '패스트푸드'
+		            ELSE '카페/디저트'
+		        END) AS mncatename,
+		        mncate,
+		        COUNT(*) AS count
+		    FROM tradeview t
+		    JOIN menu m ON t.mnno = m.mnno
+		    WHERE t.MID = 'aaaa'
+		    GROUP BY mncate
+		    ORDER BY count DESC
+		    LIMIT 3
+		) AS subquery;
 	</select>
 	
 	<select id="profile" parameterType="String" resultType="Map">
@@ -86,8 +110,8 @@
 	<select id="boardlist" parameterType="Map" resultType="Map">
 		SELECT b.bno, b.bcontent, COALESCE(COUNT(l.lno), 0) AS mylike, b.bdate, b.commentcount, b.blike
 		FROM boardview b LEFT JOIN bblike l
-			ON b.bno = l.bno
-		WHERE b.mid = #{id} AND l.mno = (SELECT mno FROM member WHERE MID = #{mid})
+			ON b.bno = l.bno AND l.mno = (SELECT mno FROM member WHERE MID = #{mid})
+		WHERE b.mid = #{id}
 		GROUP BY b.bno, b.bcontent, b.bdate, b.commentcount, b.blike
 	</select>
 	
@@ -258,6 +282,15 @@
 		insert into board (bcontent, mno)
 		values (#{content}, (select mno from member where mid = #{id}))
 	</insert>
+	
+	<select id="diaryDetail" parameterType="Integer" resultType="Map">
+		select bcontent from board where bno = #{bno}
+	</select>
+	
+	<update id="dupdate" parameterType="Map">
+		update board set bcontent = #{content}
+		where bno = #{bno}
+	</update>
 	
 	<insert id="cwrite" parameterType="Map">
 		insert into comment (cmcontent, mno, bno)
