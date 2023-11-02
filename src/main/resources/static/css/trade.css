@@ -1,0 +1,52 @@
+@charset "UTF-8";
+.hr{
+	border-top: 3px solid black;
+}
+.serch{
+	position: absolute;
+	left: 9.86%;
+	right: 4.38%;
+	top: 11.62%;
+	bottom: 83.69%;
+	
+	background: #EB5757;
+	border: 1px solid #E8E8E8;
+	border-radius: 50px;
+}
+.serch::placeholder {
+	font-weight: 700;
+	font-size: 25px;
+	line-height: 1px;
+	/* or 68% */
+	display: flex;
+	align-items: center;
+	vertical-align: middle;
+	color: #FFFFFF;
+}
+/* 
+Vector
+
+position: absolute;
+left: 0.81%;
+right: 97.25%;
+top: 16.67%;
+bottom: 18.75%;
+
+background: #FFFFFF; */
+
+/* 
+주문했던 메뉴와 가게를 검색해 보세요
+
+position: absolute;
+left: 3.72%;
+right: 41.38%;
+top: -8.33%;
+bottom: 0%;
+
+font-family: 'Dosis';
+font-style: normal;
+font-weight: 700;
+font-size: 32px;
+line-height: 22px;
+ */
+	

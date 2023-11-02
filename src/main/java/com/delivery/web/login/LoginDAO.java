@@ -9,8 +9,5 @@ public interface LoginDAO {
 
 	public Map<String, Object> login(Map<String, Object> map);
 
-	public int autologinCheckbox(Map<String, Object> result);
-
-	public int hasNaverUser(Map<String, Object> nUser);
 
 }

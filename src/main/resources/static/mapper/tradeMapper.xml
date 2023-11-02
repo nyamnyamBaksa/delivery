@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.delivery.web.trade.TradeDAO">
+
+	<select id="trade" resultType="java.util.Map">
+		select  * FROM tradeview where mid=#{id}
+	</select>
+	
+	<select id="tradegroup" resultType="MAP">
+		SELECT tgroup, tdate, mnname, tamount, sname, total, SUM(total) OVER (PARTITION BY tgroup) AS realtotal
+		FROM tradeview WHERE MID = #{id}
+	</select>
+	
+	<select id="tradedetail" resultType="Map" parameterType="String">
+		SELECT tgroup, tamount, mnname, sname, sname, total, tdate, SUM(total) OVER (PARTITION BY tgroup) AS realtotal
+		FROM tradeview 
+		WHERE tgroup=#{tgroup}
+	</select>
+</mapper>
