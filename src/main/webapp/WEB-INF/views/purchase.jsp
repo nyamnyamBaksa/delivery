@@ -21,11 +21,9 @@
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/custom.css">
 <!-- sweetalert -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-<!-- 아이콘 -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="/css/sweetalert.css" />
+	<!-- 아이콘 -->
+	<link rel="stylesheet" href="/css/bootstrap-icons.css">
 
 </head>
 
@@ -209,8 +207,7 @@
 	<script src="/js/form-validator.min.js"></script>
 	<script src="/js/contact-form-script.js"></script>
 	<script src="/js/custom.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<script src="/js/sweetalert.min.js"></script>
 		
 	<script type="text/javascript">
 		var point = $('.point').text();
@@ -293,7 +290,7 @@
 					 	delCookie("toowner");
 					 	delCookie("setY");
 					}
-					location.href="./orderDetail?tgroup=" + data.tgroup;// 주문상세내역
+					location.href="./tradedetail?tgroup=" + data.tgroup;// 주문상세내역
 				},
 				error : function(error) {
 					swal("실패", "작업수행에 실패하였습니다.", "error");

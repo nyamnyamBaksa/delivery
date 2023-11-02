@@ -16,9 +16,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/custom.css">
     <!-- sweetalert -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+	<link rel="stylesheet" href="/css/sweetalert.min.css" />
 	<!-- 아이콘 -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="/css/bootstrap-icons.css">
 </head>
 <body>
 	<div class="title">
@@ -34,7 +34,7 @@
 				</c:if>
 				<c:if test="${list[0].count ne null }">
 					<div class="count"><h3>보유쿠폰 ${list[0].count }장</h3></div><br>
-					<table class="table">
+					<table class="table" style="border-left: 3px solid #EB5757;border-right: 3px solid #EB5757;">
 						<c:forEach items="${list }" var="row">
 							<tr style="border-top: 3px solid #EB5757;">
 								<td class="name-pr" style="font-size: large; font-weight: bold;border: 0; border-style: dashed; width: 800px;">${row.cpid }</td>
@@ -74,7 +74,7 @@
 	<script src="/js/jquery-3.2.1.min.js"></script>
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<script src="/js/sweetalert.min.js"></script>
     
 	<script type="text/javascript">
 

@@ -10,9 +10,9 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<!-- sweetalert -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+	<link rel="stylesheet" href="/css/sweetalert.min.css" />
 	<!-- 아이콘 -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="/css/bootstrap-icons.css">
 	
 </head>
 <body>
@@ -79,7 +79,9 @@
 	    <div class="favoriteCate">
 	    	'${result.mname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
 	    </div>
-	    <div class="favoriteCateGoogleChart" id="donutchart" style="width: 700px; height: 300px;"></div>    
+	    <div class="favoriteCateGoogleChart" style="width: 700px; height: 300px;">
+        <canvas id="donutChart"></canvas>
+    </div>    
     </c:if>
     <!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -110,9 +112,9 @@
 	<script src="/js/wnInterface.js"></script>
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-	<!-- Google Charts 라이브러리 로드 -->
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="/js/sweetalert.min.js"></script>
+	<!-- 차트 라이브러리 로드 -->
+	<script src="/js/chart.js"></script>
 	
 	<script type="text/javascript">
 	
@@ -120,39 +122,8 @@
 		var myid = $(".myid").text();
 		var id = $(".id").text();
 		if(myid == id || id == ''){
-			$("#exampleModal").modal("show");
+			confirm('', '프로필 사진을 바꾸시겠습니까?', 'question');
 		}
-		
-		M.media.picker({
-		    mode: "SINGLE",
-		    media: "PHOTO",
-		    path: "/media",
-		    column: 3,
-		    callback: function( status, result ) {
-		        console.log( status + ", " + JSON.stringify(result) );
-		    }
-		});
-		
-		// 파일 다운로드 후 미디어 정보확인
-		M.net.http.download({
-		    url: 'http://localhost/mypage/main.jsp',
-		    directory: '/img/profileImg',
-		    indicator: true,
-		    overwrite: true,
-		    progress: function(total, current) {},
-		    finish: function( statusCode, header, fileInfo, status, error ) {
-		        console.log( statusCode, header, fileInfo, status, error );
-	
-		        if ( status !== "SUCCESS" ) {
-		            console.error( error );
-		            return;
-		        }
-	
-		        var mediaInfo = M.media.get(fileInfo.path);
-		        M.tool.log( mediaInfo );
-		        alert( JSON.stringify(mediaInfo) );
-		    }
-		});
 		
 		// 파일 선택(input)의 변경 이벤트 리스너
 	    /*$('#profileImageInput').on('change', function () {
@@ -181,13 +152,8 @@
 	            error: function () {
 	            	swal('', '서버와 통신 중 오류 발생', "error");
 	            }
-	        });
+	        });*/
 		
-		});*/
-		
-	    $('.notok').on('click', function() {
-            $('#exampleModal').modal('hide');
-        });
 	});
 	
 	var confirm = function(msg, title, bno) {
@@ -201,6 +167,37 @@
 			cancelButtonText : "아니오",
 			closeOnConfirm : false,
 			closeOnCancel : true
+		},
+		function(isConfirm) {
+			if (isConfirm) {
+				
+				M.media.picker({
+				    mode: "SINGLE",
+				    media: "PHOTO",
+				    path: "/media",
+				    column: 3,
+				    callback: function( status, result ) {
+				        console( status + ", " + JSON.stringify(result) );
+				        $.ajax({
+				            url: '/mypage/updateProfileImg',
+				            type: 'POST',
+				            data: result,
+				            contentType: 'json',
+				            dataType:'json',
+				            processData: false,
+				            success: function (data) {
+				            	$("#exampleModal").modal("hide");
+				            	// 이미지를 업데이트
+				                var newImageSrc = '/img/profileImg/' + data.profileImg;
+				                $("#userProfileImage").attr('src', newImageSrc);
+				            },
+				            error: function () {
+				            	swal('', '서버와 통신 중 오류 발생', "error");
+				            }
+				        });
+				    }
+				});
+			}
 		});
 	}
 	
@@ -309,31 +306,33 @@
 	    });
 	});
 	
+		// 데이터
+	    var data = {
+	        labels: [],
+	        datasets: [{
+	            data: [],
+	            backgroundColor: ['#FF7518', '#FFA36D', '#ED9121', '#FFD073']
+	        }]
+	    };
 	
-		 // 차트
-		 google.charts.load("current", {packages:["corechart"]});
-	     google.charts.setOnLoadCallback(drawChart);
-	    
-	     function drawChart() {
-	   	 
-	     
-    	 var data = google.visualization.arrayToDataTable([
-    	      ['카테고리', '횟수'],
-    	      <c:forEach items="${favoritecate}" var="item" varStatus="loop">
-    	        ['${item.mncatename}', ${item.count}]<c:if test="${not loop.last}">,</c:if>
-    	      </c:forEach>
-    	 ]);
-
+	    // 데이터 추가
+	    <c:forEach items="${favoritecate}" var="item">
+	        data.labels.push('${item.mncatename}');
+	        data.datasets[0].data.push(${item.count});
+	    </c:forEach>
 	
-	      var options = {
-	        title: '',
-	        pieHole: 0.5,
-	        colors: ['#FF7518', '#FFA36D', '#ED9121', '#FFD073'],
-	      };
-	
-	      var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-	      chart.draw(data, options);
-	    }
+	    // 차트 생성
+	    var ctx = document.getElementById('donutChart').getContext('2d');
+	    var myChart = new Chart(ctx, {
+	        type: 'doughnut',
+	        data: data,
+	        options: {
+	            cutoutPercentage: 50, // 도넛 차트로 만들기 위해 구멍 크기를 조절합니다.
+	            title: {
+	                display: false, // 제목 숨김
+	            },
+	        }
+	    });
     </script>
 </body>
 </html>

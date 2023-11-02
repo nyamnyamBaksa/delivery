@@ -237,6 +237,7 @@
 			(select count(*) from coupon where mno = (select mno from member where mid = #{mid}) and cpdel = 0) as count
 		from coupon
 		where mno = (select mno from member where mid = #{mid}) and cpdel = 0
+			and DATE_FORMAT(cpedate, '%y-%m-%d') >= DATE_FORMAT(NOW(), '%y-%m-%d')
 	</select>
 	
 	<select id="pay" parameterType="String" resultType="Map">

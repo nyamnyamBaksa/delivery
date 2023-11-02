@@ -17,12 +17,10 @@
     <link rel="stylesheet" href="/css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/custom.css">
-    <!-- sweetalert -->
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+	<!-- sweetalert -->
+	<link rel="stylesheet" href="/css/sweetalert.css" />
 	<!-- 아이콘 -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
+	<link rel="stylesheet" href="/css/bootstrap-icons.css">
 </head>
 
 <body>
@@ -33,7 +31,7 @@
     <!-- Start Cart  -->
     <div class="cart-box-main">
     <c:if test="${list[0].sname eq null }">
-    	<h1 style="text-align: center;">장바구니가 비었어요</h1>
+    	<h1 style="text-align: center;font-size: 50px;color: #EB5757;"><i class="bi bi-cart-x"></i>장바구니가 비었어요</h1>
     </c:if>
     <c:if test="${list[0].sname ne null }">
         <div class="container">
@@ -132,8 +130,7 @@
     <script src="/js/form-validator.min.js"></script>
     <script src="/js/contact-form-script.js"></script>
     <script src="/js/custom.js"></script>
-    <script
-		src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script src="/js/sweetalert.min.js"></script>
     
     <script type="text/javascript">
     

@@ -16,11 +16,9 @@
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/custom.css">
 <!-- sweetalert -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<link rel="stylesheet" href="/css/sweetalert.min.css" />
 <!-- 아이콘 -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="/css/bootstrap-icons.css">
 </head>
 <body>
 	<div class="title">
@@ -95,9 +93,9 @@
 	<script src="/js/jquery-3.2.1.min.js"></script>
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<script src="/js/sweetalert.min.js"></script>
 		<!-- 도로명 주소 -->
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="/js/postcode.v2.js"></script>
 
 	<script type="text/javascript">
 	
@@ -348,7 +346,7 @@
 			if (!strToInt(phone)) {
 				return;
 			}
-			swal("", "인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주세요.", "success");
+			swal("", "인증번호 발송이 완료되었습니다.휴대폰에서 인증번호 확인을 해주세요.", "success");
 			$.ajax({
 				type : "post",
 				url : "./phoneCheck",

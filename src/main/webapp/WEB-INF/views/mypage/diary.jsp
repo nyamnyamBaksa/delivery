@@ -16,11 +16,9 @@
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/custom.css">
 <!-- sweetalert -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-<!-- 아이콘 -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="/css/sweetalert.min.css" />
+	<!-- 아이콘 -->
+	<link rel="stylesheet" href="/css/bootstrap-icons.css">
 </head>
 <body>
 	<div class="title">
@@ -109,10 +107,9 @@
 	<!-- ALL JS FILES -->
 	<script src="/js/jquery-3.2.1.min.js"></script>
 	<script src="/js/popper.min.js"></script>
+	<script src="/js/sweetalert.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-
+	
 	<script type="text/javascript">
 		$(document).on("click", ".dwrite", function() {
 			location.href = "/mypage/dwrite";
@@ -346,5 +343,6 @@
 			$("#exampleModal").modal("show");
 		}
 	</script>
+	
 </body>
 </html>

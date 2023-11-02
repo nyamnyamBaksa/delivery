@@ -1,4 +1,8 @@
 @charset "UTF-8";
+@import url('https://webfontworld.github.io/NanumSquareNeo/NanumSquareNeo.css');
+body{
+	font-family: 'NanumSquareNeo';
+}
 /* profile */
 .profile{
 	position: absolute;
@@ -24,7 +28,6 @@
 	top: 9.38%;
 	bottom: 82.91%;
 	
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 18px;
@@ -110,7 +113,6 @@
 }
 
 .review p{
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 18px;
@@ -135,7 +137,6 @@
 }
 
 .coupon p{
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 18px;
@@ -161,7 +162,6 @@
 }
 
 .pay p{
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 18px;
@@ -180,7 +180,6 @@
 	
 	background: #EB5757;
 	border-radius: 50px;
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 20px;
@@ -200,7 +199,6 @@
 	height: 33px;
 	background: #EB5757;
 	border-radius: 50px;
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 20px;
@@ -223,7 +221,6 @@
 	top: 10.55%;
 	bottom: 84.77%;
 	
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 18px;
@@ -246,7 +243,6 @@
 	top: 70%;
 	bottom: 35.64%;
 	
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 18px;
@@ -277,7 +273,6 @@
 /* 메가커피 강남점 */
 .favoriteStoreComponentFont{
 	
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 18px;
@@ -300,7 +295,6 @@
 	top: 16%;
 	bottom: 18%;
 	
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 18px;
@@ -337,7 +331,6 @@
 	top: 70%;
 	bottom: 36.33%;
 	
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 18px;
@@ -388,7 +381,6 @@
 	left: 2px;
 	top: 5px;
 	
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 32px;

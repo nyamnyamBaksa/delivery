@@ -1,5 +1,7 @@
 @charset "UTF-8";
-
+body{
+	font-family: 'NanumSquareNeo';
+}
 /* div.title-left */
 .title{
 	box-sizing: border-box;
