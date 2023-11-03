@@ -7,8 +7,9 @@
 	</select>
 	
 	<select id="tradegroup" resultType="MAP">
-		SELECT tgroup, tdate, mnname, tamount, sname, total, SUM(total) OVER (PARTITION BY tgroup) AS realtotal
-		FROM tradeview WHERE MID = #{id}
+		SELECT tgroup, tamount, mnname, sname, sname, total, tdate, SUM(total) OVER (PARTITION BY tgroup) AS realtotal
+		FROM tradeview 
+		WHERE mid=#{id}
 	</select>
 	
 	<select id="tradedetail" resultType="Map" parameterType="String">
@@ -16,4 +17,15 @@
 		FROM tradeview 
 		WHERE tgroup=#{tgroup}
 	</select>
+	
+	<select id="reviewgroup" resultType="Map" parameterType="Integer">
+		SELECT *
+		FROM tradeview
+		WHERE sno=#{sno}
+	</select>
+	
+	<insert id="saveReview" parameterType="MAP">
+		INSERT INTO review (sno, rcomment, mno, tno, rscore)
+		VALUES (#{sno}, #{review}, #{mno}, #{tno}, #{rscore})
+	</insert>
 </mapper>

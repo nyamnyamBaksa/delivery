@@ -15,10 +15,10 @@
 	<c:forEach items="${tradedetail}" var="row" varStatus="loop">
 		<c:if test="${loop.first || row.tgroup ne tradedetail[loop.index - 1].tgroup}">
 			<div class="tradedetailBox">
-				<span style="color: #EB5757;">배달이 완료되었어요</span><br>
+				<span style="color: #EB5757;" >배달이 완료되었어요</span><br>
 				<span style="font-weight: bold;">${row.mnname }</span><br>
 		        <button>가게보기</button>
-		        <button>2000원 할인 받음</button>
+		        <div class="coupon">2000원 할인 받음</div>
 				<div class="tradedetailDate">
 					주문일시 : ${row.tdate } <br>
 					주문번호 : ${row.tgroup }
@@ -26,7 +26,7 @@
 			</div>
 		</c:if>
 			<div class="tradeMnname">
-			${row.mnname}<br>
+			${row.mnname} ${row.tamount}개 <br>
 			${row.total}
 			</div>
 		</c:forEach>	

@@ -15,6 +15,13 @@ public interface TradeDAO {
 	List<Map<String, Object>> tradedetail(String tgroup);
 
 
+	List<Map<String, Object>> reviewgroup(int sno);
+
+	
+
+	int saveReview(Map<String, Object> map);
+
+
 
 
 

@@ -10,43 +10,78 @@
 	bottom: 83.69%;
 	
 	background: #EB5757;
-	border: 1px solid #E8E8E8;
+	border: none;
 	border-radius: 50px;
 }
 .serch::placeholder {
 	font-weight: 700;
 	font-size: 25px;
-	line-height: 1px;
+	
 	/* or 68% */
-	display: flex;
 	align-items: center;
 	vertical-align: middle;
 	color: #FFFFFF;
-}
-/* 
-Vector
-
-position: absolute;
-left: 0.81%;
-right: 97.25%;
-top: 16.67%;
-bottom: 18.75%;
-
-background: #FFFFFF; */
-
-/* 
-주문했던 메뉴와 가게를 검색해 보세요
-
-position: absolute;
-left: 3.72%;
-right: 41.38%;
-top: -8.33%;
-bottom: 0%;
-
-font-family: 'Dosis';
-font-style: normal;
-font-weight: 700;
-font-size: 32px;
-line-height: 22px;
- */
 	
+}
+.serchBtn{
+	position: absolute;
+	border: none;
+	background: #EB5757;
+	right: 7.38%;
+	top: 11.99%;
+}
+.tradeBox{
+	position: relative;
+	top: 100px;;
+	background-color:#ffffff;
+	height:222px;
+	border:3px solid #eb5757;
+	margin: 50px;
+}
+.tradedate{
+	color:#000000;
+	text-align:left;
+	vertical-align:text-middle;
+	font-size:20px;
+	font-family:Dosis;
+	line-height:21.600000381469727px;
+	border-style:hidden;
+	outline:none;
+	width:276px;
+	left:50px;
+}
+.sampleimg{
+	height:104px;
+	width:96px;
+	left:50px;
+	top:80px;
+	position:absolute;
+}
+.Sname{
+	color:#000000;
+	text-align:left;
+	font-size:25px;
+	font-family:Dosis;
+	line-height:21.600000381469727px;
+	border-style:hidden;
+	outline:none;
+	top:100px;
+	left:160px;
+	position:absolute;
+	font-weight: bold;
+}
+
+.tradeMnname{
+color:#000000;
+text-align:left;
+vertical-align:text-middle;
+font-size:20px;
+font-family:Dosis;
+line-height:21.600000381469727px;
+border-style:hidden;
+outline:none;
+top:150px;
+left:160px;
+position:absolute;
+width:236px;
+}

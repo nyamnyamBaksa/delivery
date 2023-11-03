@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -34,10 +35,38 @@ public class TradeController {
 
 	@GetMapping("/tradedetail")
 	public String tradedetail(@RequestParam(value="tgroup", required = false) String tgroup, Model model) {
-		
+	  
 		List<Map<String, Object>> tradedetail = tradeSerivce.tradedetail(tgroup);
-		model.addAttribute("tradedetail",tradedetail);
-		
-		return "tradedetail";
+	    model.addAttribute("tradedetail", tradedetail);
+	   
+	    return "tradedetail";
 	}
+
+	@GetMapping("/review")
+	public String review(@RequestParam(value = "sno", required = false) int sno, Model model) {
+
+		List<Map<String, Object>> reviewgroup = tradeSerivce.reviewgroup(sno);
+	    model.addAttribute("reviewgroup", reviewgroup);
+	    
+	    return "review";
+	}
+	
+
+    @PostMapping("/review")
+    public String saveReview(@RequestParam Map<String, Object> map, HttpSession session) {
+    	
+    	map.put("mno", (Integer) session.getAttribute("mno"));
+    	
+    	 int rating = Integer.parseInt((String) map.get("rating"));
+    	
+    	 map.put("rscore",rating);
+    	 
+    	int result = tradeSerivce.saveReview(map);
+    	
+    	if(result == 1) {
+    		return "redirect:/food/review?sno="+ map.get("sno");
+    	} 
+    	return "login";
+    }
+
 }

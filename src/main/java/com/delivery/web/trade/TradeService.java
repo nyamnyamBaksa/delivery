@@ -24,6 +24,16 @@ public class TradeService {
 		return tradeDAO.tradedetail(tgroup);
 	}
 
+	public List<Map<String, Object>> reviewgroup(int sno) {
+		return tradeDAO.reviewgroup(sno);
+	}
+
+
+	public int saveReview(Map<String, Object> map) {
+		return tradeDAO.saveReview(map);
+		
+	}
+
 
 
 
