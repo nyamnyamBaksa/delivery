@@ -1,0 +1,32 @@
+@charset "UTF-8";
+.hr{
+	border-top: 3px solid black;
+}
+
+.rate{
+	display: flex;
+  flex-direction: row-reverse;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  justify-content: space-around;
+  padding: 0 0.2em;
+  text-align: center;
+  width: 5em;
+  border: none;
+}
+.rate input {
+  display: none;
+}
+.rate label{
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 2.3px;
+  -webkit-text-stroke-color: #2b2a29;
+  cursor: pointer;
+}
+.rate :checked ~ label {
+  -webkit-text-fill-color: gold;
+}
+.rate label:hover,
+.rate label:hover ~ label {
+  -webkit-text-fill-color: #fff58c;
+} 
