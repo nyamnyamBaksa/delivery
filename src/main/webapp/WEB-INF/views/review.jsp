@@ -9,6 +9,7 @@
 <link href="css/review.css" rel="stylesheet">
 </head>
 <body>
+	<a href="/trade"><-뒤로가기</a>
 	<h1>리뷰쓰기</h1>
 	<hr class="hr">
 	<c:choose>
@@ -28,16 +29,18 @@
 		                        <input type="radio" id="rating2" name="rating" value="2"><label for="rating2" title="2점">★</label>
 		                        <input type="radio" id="rating1" name="rating" value="1"><label for="rating1" title="1점">★</label>
 		                  </fieldset>
-					  <textarea name="review" placeholder="음식에 대한 솔직한 리뷰를 남겨주세요."></textarea>
+					  <textarea class="reviewtextarea" name="review" placeholder="음식에 대한 솔직한 리뷰를 남겨주세요."></textarea>
 					  <input type="hidden" value="${row.sno }" name="sno">
 					  <input type="hidden" value="${row.tno }" name="tno">
-					  <button type="submit" class="review">완료</button>
+					  <button type="submit" class="reviewBtn">
+					  	<span class="reviewBtntext">완료</span>
+					  </button>
 					</form>
-					  <img alt="이미지첨부" src="img/camera.png">
+					  <img alt="이미지첨부" src="img/camera.png" class="cemeraimg">
 					  <hr>
-					  <div class="text">추천하고 싶은 메뉴가 있나요?</div>
+					  <div class="menutitle">추천하고 싶은 메뉴가 있나요?</div>
 				</c:if>
-					<div class="mnname">${row.mnname }<br></div>
+					<div class="mnname">${row.mnname }<img alt="추천엄지" src="/img/thumbs.png"><br></div>
 			</c:forEach>
 
 		

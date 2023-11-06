@@ -4,29 +4,116 @@
 }
 
 .rate{
-	display: flex;
-  flex-direction: row-reverse;
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-  justify-content: space-around;
-  padding: 0 0.2em;
-  text-align: center;
-  width: 5em;
-  border: none;
+	position: relative;
+ 	display: flex;
+  	flex-direction: row-reverse;
+  	font-size: 2.25rem;
+  	line-height: 2.5rem;
+  	justify-content: space-around;
+  	padding: 0 0.2em;
+  	text-align: center;
+  	width: 20em;
+  	border: none;
+  	left: 10%;
+  	top: -42px;
 }
 .rate input {
-  display: none;
+  	display: none;
 }
 .rate label{
-  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
-  -webkit-text-stroke-width: 2.3px;
-  -webkit-text-stroke-color: #2b2a29;
-  cursor: pointer;
+  	-webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  	-webkit-text-stroke-width: 2.3px;
+  	-webkit-text-stroke-color: #2b2a29;
+  	cursor: pointer;
 }
 .rate :checked ~ label {
-  -webkit-text-fill-color: gold;
+  	-webkit-text-fill-color: gold;
 }
 .rate label:hover,
 .rate label:hover ~ label {
-  -webkit-text-fill-color: #fff58c;
+  	-webkit-text-fill-color: #fff58c;
 } 
+.reviewBox{
+	margin: 50px;
+}
+.sname{
+	color:#000000;
+	text-align:left;
+	vertical-align:text-middle;
+	font-size:20px;
+	font-family:Dosis;
+	line-height:27px;
+	border-style:hidden;
+	outline:none;
+	width:306px;
+	font-weight: bold;
+}
+.reviewtextarea{
+	width: 1000px;
+    height: 500px;
+    border:2px solid #000000;
+    resize: none;
+}
+.reviewtextarea::placeholder{
+	color:#6C757D;
+	font-weight: bold;
+	font-size:25px;
+	font-family:Dosis;
+	
+}
+.cemeraimg{
+	border:2px solid #000000;
+	width: 80px;
+    height: 80px;
+}
+.reviewBtn{
+	background-color:#eb5757;
+	height:51px;
+	width:118.58000183105469px;
+	border-radius:50px;
+	left:50px;
+	top:-40x;
+	position:relative;
+	border: none;
+}
+.reviewBtntext{
+	color:#ffffff;
+	text-align:center;
+	vertical-align:text-middle;
+	font-size:20px;
+	font-family:Dosis;
+	line-height:27px;
+	border-style:hidden;
+	outline:none;
+	top:10px;
+	left:18px;
+	position:absolute;
+	width:78.90121459960938px;
+	font-weight: bold;
+}
+.menutitle{
+	color:#000000;
+	text-align:center;
+	vertical-align:text-middle;
+	font-size:18px;
+	font-family:Dosis;
+	line-height:27px;
+	border-style:hidden;
+	outline:none;
+}
+.mnname{
+	color:#000000;
+	text-align:center;
+	vertical-align:text-middle;
+	font-size:18px;
+	font-family:Dosis;
+	line-height:27px;
+	border-style:hidden;
+	outline:none;
+	width:230px;
+	margin: 20px;
+}
+hr {
+    border: 1px solid #000; /* 실선 스타일로 변경, 원하는 선 스타일로 수정 가능 */
+    font-weight: bold; /* 볼드(Bold) 텍스트 스타일 적용 */
+  }

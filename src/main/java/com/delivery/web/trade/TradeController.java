@@ -38,6 +38,9 @@ public class TradeController {
 	  
 		List<Map<String, Object>> tradedetail = tradeSerivce.tradedetail(tgroup);
 	    model.addAttribute("tradedetail", tradedetail);
+	    
+	    Map<String, Object> tradecp = tradeSerivce.tradecp(tgroup);
+	    model.addAttribute("tradecp", tradecp);
 	   
 	    return "tradedetail";
 	}
