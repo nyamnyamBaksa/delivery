@@ -46,6 +46,7 @@ public class TradeController {
 	public String review(@RequestParam(value = "sno", required = false) int sno, Model model) {
 
 		List<Map<String, Object>> reviewgroup = tradeSerivce.reviewgroup(sno);
+		
 	    model.addAttribute("reviewgroup", reviewgroup);
 	    
 	    return "review";
@@ -57,9 +58,9 @@ public class TradeController {
     	
     	map.put("mno", (Integer) session.getAttribute("mno"));
     	
-    	 int rating = Integer.parseInt((String) map.get("rating"));
+    	int rating = Integer.parseInt((String) map.get("rating"));
     	
-    	 map.put("rscore",rating);
+    	map.put("rscore",rating);
     	 
     	int result = tradeSerivce.saveReview(map);
     	

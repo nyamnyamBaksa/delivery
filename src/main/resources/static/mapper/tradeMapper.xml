@@ -7,7 +7,7 @@
 	</select>
 	
 	<select id="tradegroup" resultType="MAP">
-		SELECT tgroup, tamount, mnname, sname, sname, total, tdate, SUM(total) OVER (PARTITION BY tgroup) AS realtotal
+		SELECT tgroup, tamount, mnname, sname, sname, total, sno, tdate, SUM(total) OVER (PARTITION BY tgroup) AS realtotal
 		FROM tradeview 
 		WHERE mid=#{id}
 	</select>

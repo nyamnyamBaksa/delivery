@@ -13,6 +13,7 @@
 	<hr class="hr">
 	<c:choose>
 	<c:when test="${sessionScope.mname ne null }">
+	
 	<div class="reviewBox">
 		<div>
 			<c:forEach items="${reviewgroup}" var="row" varStatus="loop">
@@ -21,7 +22,7 @@
 					<form action="/review" method="post">
 						 <fieldset class="rate">
 						   <span style="width: 50%"></span>
-		                   		<input type="radio" id="rating5" name="rating" value="5"><label for="rating5" title="5점">★</label>
+		                   		<input type="radio" id="rating5" name="rating" value="5" checked><label for="rating5" title="5점">★</label>
 		                        <input type="radio" id="rating4" name="rating" value="4"><label for="rating4" title="4점">★</label>
 		                        <input type="radio" id="rating3" name="rating" value="3"><label for="rating3" title="3점">★</label>
 		                        <input type="radio" id="rating2" name="rating" value="2"><label for="rating2" title="2점">★</label>

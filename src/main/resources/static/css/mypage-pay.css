@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.charge, .delbtn {
+.charge, .delbtn, .editbtn, .editModalbtn, .againpurchase {
 	background: #EB5757;
 	border-radius: 50px;
 	font-family: 'Dosis';
@@ -8,6 +8,7 @@
 	font-weight: 700;
 	font-size: 20px;
 	line-height: 27px;
+	cursor: pointer;
 	/* or 135% */
 	display: flex;
 	align-items: center;

@@ -10,9 +10,10 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<!-- sweetalert -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+	<link rel="stylesheet" href="/css/sweetalert.min.css" />
 	<!-- 아이콘 -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="/css/bootstrap-icons.css">
+	
 </head>
 <body>
     <c:if test="${sessionScope.mid ne null}">
@@ -26,7 +27,7 @@
         <div class="profile"><!-- onclick="popup('${sessionScope.mid}')" 작은 따옴표로 감싸기 -->
             <img class="profile-image" src="/img/profileImg/${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
         </div>
-        <div class="nickname">${result.mname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><img src="/img/profileImg/arrow_right.png" onclick=""></c:if></div>
+        <div class="nickname">${result.mname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><img src="/img/profileImg/arrow_right.png"></a></c:if></div>
         <c:if test="${sessionScope.mid ne id }">
 	        <c:choose>
 	        	<c:when test="${babfriend eq 0 }">
@@ -43,20 +44,44 @@
 	        	</c:when>
 	        </c:choose>
         </c:if>
-        <div class="HowManyfollow">밥 친구&nbsp;${follow.friend } &nbsp;<c:if test="${id eq null || sessionScope.mid eq id }">|&nbsp; <span style="cursor: pointer;" class="followAsk">친구 요청&nbsp;${follow.friendreq }</span></c:if></div>
+        
+        <div class="HowManyfollow">밥 친구&nbsp;${follow.friend }&nbsp;
+        	<c:if test="${id eq null || sessionScope.mid eq id }">|&nbsp; <span style="cursor: pointer;" class="followAsk">친구 요청&nbsp;${follow.friendreq }</span></c:if>
+        </div>
         <c:if test="${id eq null || sessionScope.mid eq id }">
         	<div class="diary"><a href="/mypage/diary"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
+        	<div class="zzim"><a href="/wishlist"><img src="/img/profileImg/heart.png"></a><p>나의 찜</p></div>
+        	<div class="review"><a href="/mypage/review"><img src="/img/profileImg/review.png"></a><p>리뷰관리</p></div>
+        	<div class="coupon"><a href="/mypage/coupon"><img src="/img/profileImg/coupon.png"></a><p>쿠폰함</p></div>
+	        <div class="pay"><a href="/mypage/pay"><img src="/img/profileImg/credit_card.png"></a><p>냠냠페이</p></div>
         </c:if>
         <c:if test="${sessionScope.mid ne id }">
         	<div class="diary"><a href="/mypage/diary/${id }"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
+        	<div class="zzim"><a href="/wishlist/${id }"><img src="/img/profileImg/heart.png"></a><p>나의 찜</p></div>
+        	<div class="review"><a href="/mypage/review/${id }"><img src="/img/profileImg/review.png"></a><p>리뷰관리</p></div>
         </c:if>
-        <div class="zzim"><img src="/img/profileImg/heart.png" onclick=""><p>나의 찜</p></div>
-        <div class="review"><a href="/mypage/review"><img src="/img/profileImg/review.png" onclick=""></a><p>리뷰관리</p></div>
-        <c:if test="${id eq null || sessionScope.mid eq id }">
-	        <div class="coupon"><a href="/mypage/coupon"><img src="/img/profileImg/coupon.png"></a><p>쿠폰함</p></div>
-	        <div class="pay"><a href="/mypage/pay"><img src="/img/profileImg/credit_card.png" onclick=""></a><p>냠냠페이</p></div>
-        </c:if>
+        
         <div class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
+        <c:forEach items="${toplist }" var="row" varStatus="loopStatus">
+	        <div class="favoriteStoreComponent">
+	        	&nbsp;<i class="bi bi-trophy-fill" style="color:
+		            <c:choose>
+		                <c:when test="${loopStatus.index % 3 == 0}"> gold </c:when>
+		                <c:when test="${loopStatus.index % 3 == 1}"> silver </c:when>
+		                <c:when test="${loopStatus.index % 3 == 2}"> #cd7f32 </c:when>
+		            </c:choose>
+		        "></i>&nbsp;
+	        	<span style="font-size:large;font-weight:bold;">${row.sname }</span>
+	        	<span style="float:right;font-size:large;font-weight:bold;">${row.count }회 주문</span>
+	        </div>
+	    </c:forEach>
+	    
+	    <div class="favoriteCate">
+	    	'${result.mname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
+	    </div>
+	    <div class="favoriteCateGoogleChart" style="width: 700px; height: 300px;">
+        <canvas id="donutChart"></canvas>
+    </div>    
     </c:if>
     <!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -82,20 +107,26 @@
 	</div>
 	<!-- ALL JS FILES -->
 	<script src="/js/jquery-3.2.1.min.js"></script>
+	<script src="/js/mcore.extends.js"></script>
+	<script src="/js/mcore.min.js"></script>
+	<script src="/js/wnInterface.js"></script>
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<script src="/js/sweetalert.min.js"></script>
+	<!-- 차트 라이브러리 로드 -->
+	<script src="/js/chart.js"></script>
 	
 	<script type="text/javascript">
+	
 	$(document).on("click", ".profile", function() {
 		var myid = $(".myid").text();
 		var id = $(".id").text();
 		if(myid == id || id == ''){
-			$("#exampleModal").modal("show");
+			confirm('', '프로필 사진을 바꾸시겠습니까?', 'question');
 		}
 		
 		// 파일 선택(input)의 변경 이벤트 리스너
-	    $('#profileImageInput').on('change', function () {
+	    /*$('#profileImageInput').on('change', function () {
 	        let selectedFile = this.files[0];
 
 	        if (!selectedFile) {
@@ -119,15 +150,10 @@
 	                $("#userProfileImage").attr('src', newImageSrc);
 	            },
 	            error: function () {
-	                alert('서버와 통신 중 오류 발생');
+	            	swal('', '서버와 통신 중 오류 발생', "error");
 	            }
-	        });
+	        });*/
 		
-		});
-		
-	    $('.notok').on('click', function() {
-            $('#exampleModal').modal('hide');
-        });
 	});
 	
 	var confirm = function(msg, title, bno) {
@@ -141,6 +167,37 @@
 			cancelButtonText : "아니오",
 			closeOnConfirm : false,
 			closeOnCancel : true
+		},
+		function(isConfirm) {
+			if (isConfirm) {
+				
+				M.media.picker({
+				    mode: "SINGLE",
+				    media: "PHOTO",
+				    path: "/media",
+				    column: 3,
+				    callback: function( status, result ) {
+				        console( status + ", " + JSON.stringify(result) );
+				        $.ajax({
+				            url: '/mypage/updateProfileImg',
+				            type: 'POST',
+				            data: result,
+				            contentType: 'json',
+				            dataType:'json',
+				            processData: false,
+				            success: function (data) {
+				            	$("#exampleModal").modal("hide");
+				            	// 이미지를 업데이트
+				                var newImageSrc = '/img/profileImg/' + data.profileImg;
+				                $("#userProfileImage").attr('src', newImageSrc);
+				            },
+				            error: function () {
+				            	swal('', '서버와 통신 중 오류 발생', "error");
+				            }
+				        });
+				    }
+				});
+			}
 		});
 	}
 	
@@ -226,6 +283,9 @@
 	        data: { myid: myid },
 	        dataType: 'json',
 	        success: function (data) {
+	        	if(data.list.length == 0){
+	        		return;
+	        	}
 	            var modalContent = $(".modal-content");
 	            modalContent.empty();
 
@@ -246,7 +306,33 @@
 	    });
 	});
 	
+		// 데이터
+	    var data = {
+	        labels: [],
+	        datasets: [{
+	            data: [],
+	            backgroundColor: ['#FF7518', '#FFA36D', '#ED9121', '#FFD073']
+	        }]
+	    };
 	
-	</script>
+	    // 데이터 추가
+	    <c:forEach items="${favoritecate}" var="item">
+	        data.labels.push('${item.mncatename}');
+	        data.datasets[0].data.push(${item.count});
+	    </c:forEach>
+	
+	    // 차트 생성
+	    var ctx = document.getElementById('donutChart').getContext('2d');
+	    var myChart = new Chart(ctx, {
+	        type: 'doughnut',
+	        data: data,
+	        options: {
+	            cutoutPercentage: 50, // 도넛 차트로 만들기 위해 구멍 크기를 조절합니다.
+	            title: {
+	                display: false, // 제목 숨김
+	            },
+	        }
+	    });
+    </script>
 </body>
 </html>
