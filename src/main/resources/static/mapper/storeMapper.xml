@@ -7,10 +7,26 @@
 		SELECT DISTINCT s.*
 		FROM storeview s
 		JOIN menu m ON s.sno = m.sno
-		WHERE m.mncate = #{mncate};
+		<where>
+			<if test="mncate != null">
+				AND m.mncate = #{mncate}
+			</if>
+			<choose>
+				<when test="orderBy.equals('평점높은순')">
+					ORDER BY s.average_rating DESC
+				</when>
+				<when test="orderBy.equals('리뷰많은순')">
+					ORDER BY s.review_count DESC
+				</when>
+				<otherwise>
+					ORDER BY s.sno
+				</otherwise>
+			</choose>
+		</where>
 	</select>
 
-	<select id="detail" parameterType="Integer" resultType="com.delivery.web.store.StoreDTO">
+	<select id="detail" parameterType="Integer"
+		resultType="com.delivery.web.store.StoreDTO">
 		SELECT sno, store_name, store_image, average_rating,
 		review_count
 		FROM storeview
@@ -19,10 +35,9 @@
 
 	<select id="getMenuList" parameterType="Integer"
 		resultType="com.delivery.web.store.MenuDTO">
-		SELECT mnno, mnname, mnprice, mnimg
+		SELECT mnno, mnname, mnprice, mnimg, mnside
 		FROM menu
-		WHERE sno =
-		#{sno}
+		WHERE sno =#{sno}
 	</select>
 
 	<select id="storeinfo"
@@ -30,14 +45,15 @@
 		SELECT * FROM store
 		WHERE sno = #{sno}
 	</select>
-	
-	
-	<select id="menudetail" parameterType="Integer" resultType="com.delivery.web.store.MenuDTO">
-	SELECT mnname, mnprice, mnimg, mndesc
+
+
+	<select id="menudetail" parameterType="Integer"
+		resultType="com.delivery.web.store.MenuDTO">
+		SELECT mnname, mnprice, mnimg, mndesc, mnside
 		FROM menu
-		WHERE mnno = #{mnno}
+		WHERE mnno =#{mnno}
 	</select>
-	
+
 
 
 
