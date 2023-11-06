@@ -1,10 +1,14 @@
 package com.delivery.web.login;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
+import java.util.Map;
 
-@Repository
+import org.apache.ibatis.annotations.Mapper;
+
 @Mapper
-public class LoginDAO {
+public interface LoginDAO {
+
+	public Map<String, Object> login(Map<String, Object> map);
+
+	public int autologinCheckbox(Map<String, Object> result);
 
 }

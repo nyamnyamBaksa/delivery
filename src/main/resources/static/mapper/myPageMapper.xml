@@ -2,6 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.delivery.web.mypage.MyPageDAO">
 	
+	<select id="findById" parameterType="String" resultType="Integer">
+		select count(*)
+		from member
+		where mid = #{id} and mgrade = 1
+	</select>
+	
+	<select id="toplist" parameterType="String" resultType="Map">
+		SELECT sname, COUNT(*) AS count
+		from tradeview
+		where MID = #{id}
+		group by sname
+		ORDER BY COUNT desc
+		LIMIT 3
+	</select>
+	
+	<select id="favoritecate" parameterType="String" resultType="Map">
+	    SELECT
+	        (CASE
+	            WHEN mncate = '1' THEN '한식'
+	            WHEN mncate = '2' THEN '일식'
+	            WHEN mncate = '3' THEN '중식'
+	            WHEN mncate = '4' THEN '양식'
+	            WHEN mncate = '5' THEN '분식'
+	            WHEN mncate = '6' THEN '아시안'
+	            WHEN mncate = '7' THEN '패스트푸드'
+	            ELSE '카페/디저트'
+	        END) AS mncatename,
+	        COUNT(*) AS count
+	    FROM tradeview t, menu m
+	    WHERE t.mnno = m.mnno AND mid = #{id}
+	    GROUP BY mncate
+	    ORDER BY count DESC
+	    limit 3;
+	    
+	    SELECT 
+		    '그 외' AS mncatename,
+		    SUM(count) AS count
+		FROM (
+		    SELECT 
+		        (CASE
+		            WHEN mncate = '1' THEN '한식'
+		            WHEN mncate = '2' THEN '일식'
+		            WHEN mncate = '3' THEN '중식'
+		            WHEN mncate = '4' THEN '양식'
+		            WHEN mncate = '5' THEN '분식'
+		            WHEN mncate = '6' THEN '아시안'
+		            WHEN mncate = '7' THEN '패스트푸드'
+		            ELSE '카페/디저트'
+		        END) AS mncatename,
+		        mncate,
+		        COUNT(*) AS count
+		    FROM tradeview t
+		    JOIN menu m ON t.mnno = m.mnno
+		    WHERE t.MID = 'aaaa'
+		    GROUP BY mncate
+		    ORDER BY count DESC
+		    LIMIT 3
+		) AS subquery;
+	</select>
+	
 	<select id="profile" parameterType="String" resultType="Map">
 		select mname, mprofile
 		FROM member
@@ -13,6 +73,10 @@
 		where mid = #{mid}
 	</update>
 	
+	<select id="profileImg" parameterType="Map" resultType="String">
+		select mprofile from member where mid = #{mid}
+	</select>
+	
 	<select id="follow" parameterType="String" resultType="Map">
 		select (select count(*) from follow where fdel = 1 AND (follower = (select mno from member where mid = #{id}) or
 			 followee = (select mno from member where mid = #{id})))
@@ -20,10 +84,33 @@
 		,(select count(*) from follow where followee = (select mno from member where mid = #{id}) and fdel = 0) as friendreq
 	</select>
 	
-	<select id="boardlist" parameterType="String" resultType="Map">
+	<select id="babfriend"  parameterType="Map" resultType="Integer">
+		SELECT
+		    CASE
+		        WHEN NOT EXISTS (SELECT 1 FROM follow)
+		        THEN 0
+		        WHEN (
+		            EXISTS (SELECT 1 FROM follow WHERE (follower = (SELECT mno FROM member WHERE MID = #{myid}) AND followee = (SELECT mno FROM member WHERE MID = #{id}) AND fdel = 0))
+		        )
+		        THEN 1
+		        WHEN (
+		            EXISTS (SELECT 1 FROM follow WHERE (follower = (SELECT mno FROM member WHERE MID = #{id}) AND followee = (SELECT mno FROM member WHERE MID = #{myid}) AND fdel = 0))
+		        )
+		        THEN 2
+		        WHEN (
+		            EXISTS (SELECT 1 FROM follow WHERE (follower = (SELECT mno FROM member WHERE MID = #{myid}) AND followee = (SELECT mno FROM member WHERE MID = #{id}) AND fdel = 1))
+		            OR
+		            EXISTS (SELECT 1 FROM follow WHERE (follower = (SELECT mno FROM member WHERE MID = #{id}) AND followee = (SELECT mno FROM member WHERE MID = #{myid}) AND fdel = 1))
+		        )
+		        THEN 3
+		        ELSE 0
+		    END AS friend
+	</select>
+	
+	<select id="boardlist" parameterType="Map" resultType="Map">
 		SELECT b.bno, b.bcontent, COALESCE(COUNT(l.lno), 0) AS mylike, b.bdate, b.commentcount, b.blike
 		FROM boardview b LEFT JOIN bblike l
-			ON b.bno = l.bno AND b.mno = l.mno
+			ON b.bno = l.bno AND l.mno = (SELECT mno FROM member WHERE MID = #{mid})
 		WHERE b.mid = #{id}
 		GROUP BY b.bno, b.bcontent, b.bdate, b.commentcount, b.blike
 	</select>
@@ -50,9 +137,213 @@
 	</select>
 	
 	<select id="comment" parameterType="Integer" resultType="Map">
-		select c.cmno, c.cmcontent, c.cmdate, m.mid, m.mname
-		FROM comment c join member m on c.mno = m.mno
-		where c.bno = #{bno} and c.cmdel = 1
+		select cmno, cmcontent, mid, mname, cmdate
+		FROM commentview
+		where bno = #{bno}
 	</select>
+	
+	<select id="iIs3" parameterType="Map" resultType="Integer">
+	    select 
+	        CASE
+	            WHEN (
+	                NOT EXISTS (
+	                    SELECT 1 FROM follow
+	                    WHERE (follower = (SELECT mno FROM member WHERE mid = #{myid})
+	                        AND followee = (SELECT mno FROM member WHERE mid = #{id}) and fdel = 1)
+	                ) and EXISTS (
+	                    SELECT 1 FROM follow
+	                    WHERE (follower = (SELECT mno FROM member WHERE mid = #{id})
+	                        AND followee = (SELECT mno FROM member WHERE mid = #{myid}) and fdel = 1)
+	                )
+	            ) THEN 1
+	            WHEN (
+	                EXISTS (
+	                    SELECT 1 FROM follow
+	                    WHERE (follower = (SELECT mno FROM member WHERE mid = #{myid})
+	                        AND followee = (SELECT mno FROM member WHERE mid = #{id}) and fdel = 1)
+	              ) and NOT EXISTS (
+	                    SELECT 1 FROM follow
+	                    WHERE (follower = (SELECT mno FROM member WHERE mid = #{id})
+	                        AND followee = (SELECT mno FROM member WHERE mid = #{myid}) and fdel = 1)
+	                )
+	            ) THEN 2
+	            WHEN (
+	            	EXISTS (
+	                    SELECT 1 FROM follow
+	                    WHERE (follower = (SELECT mno FROM member WHERE mid = #{myid})
+	                        AND followee = (SELECT mno FROM member WHERE mid = #{id}) and fdel = 1)
+	                ) and EXISTS (
+	                    SELECT 1 FROM follow
+	                    WHERE (follower = (SELECT mno FROM member WHERE mid = #{id})
+	                        AND followee = (SELECT mno FROM member WHERE mid = #{myid}) and fdel = 1)
+	                )
+	            ) THEN 3
+	            ELSE 0
+	        END AS iIs3
+	</select>
+	
+	<update id="updateFollow" parameterType="Map">
+		<choose>
+	        <when test="i == 0">
+	            insert into follow(follower, followee)
+				values ((select mno from member where mid = #{myid}), (select mno from member where mid = #{id}))
+	        </when>
+	        <when test="i == 1">
+	            delete from follow
+	            where follower = (select mno from member where mid = #{myid})
+	            and followee = (select mno from member where mid = #{id})
+	        </when>
+	        <when test="i == 3">
+	            <if test="iIs3 == 1">
+		        	update follow set fdel = 0
+		            where follower = (select mno from member where mid = #{id})
+		            	and followee = (select mno from member where mid = #{myid});
+			    </if>
+	            <if test="iIs3 == 2">
+		        	delete from follow
+		        	where follower = (select mno from member where mid = #{myid})
+		            and followee = (select mno from member where mid = #{id});
+			    </if>
+	            <if test="iIs3 == 3">
+	            	update follow set fdel = 0
+		            where follower = (select mno from member where mid = #{id})
+		            	and followee = (select mno from member where mid = #{myid});
+		            	
+		        	delete from follow
+		        	where follower = (select mno from member where mid = #{myid})
+		            and followee = (select mno from member where mid = #{id});
+			    </if>
+	        </when>
+	        <otherwise>
+	            update follow set fdel = 1
+	            where (follower = (select mno from member where mid = #{id})
+	            	and followee = (select mno from member where mid = #{myid}))
+	            or (follower = (select mno from member where mid = #{myid})
+	            	and followee = (select mno from member where mid = #{id}))
+	        </otherwise>
+	    </choose>
+	</update>
+	
+	<select id="followAsk" parameterType="Map" resultType="Map">
+		SELECT m1.mno as mno, m1.mid as mid, m1.mname as mname, m1.mprofile as mprofile
+	    FROM follow f
+		    JOIN member m1 ON f.follower = m1.mno
+		    JOIN member m2 ON f.followee = m2.mno
+	    WHERE m2.mno = (SELECT mno FROM member WHERE MID = #{myid}) AND f.fdel = 0;
+	</select>
+	
+	<select id="coupon" parameterType="String" resultType="Map">
+		select cpno, cpid, cpname, date_format(cpedate, '%Y-%m-%d') as cpedate, cpprice,
+			(select count(*) from coupon where mno = (select mno from member where mid = #{mid}) and cpdel = 0) as count
+		from coupon
+		where mno = (select mno from member where mid = #{mid}) and cpdel = 0
+			and DATE_FORMAT(cpedate, '%y-%m-%d') >= DATE_FORMAT(NOW(), '%y-%m-%d')
+	</select>
+	
+	<select id="pay" parameterType="String" resultType="Map">
+	    select pno, pcharge, pbalance, puse, tgroup,
+	    	(SELECT sname FROM tradeview WHERE tgroup = point.tgroup LIMIT 1) AS sname,
+	    date_format(pcdate, '%Y-%m-%d') as pcdate
+	    from point
+	    WHERE mno = (SELECT mno FROM member where MID = #{mid})
+	    <choose>
+		    <when test="cate == 1">
+		        AND DATE_FORMAT(pcdate, '%y-%m-%d') BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 MONTH), '%y-%m-%d') AND DATE_FORMAT(NOW(), '%y-%m-%d')
+		    </when>
+		    <when test="cate == 3">
+		        AND DATE_FORMAT(pcdate, '%y-%m-%d') BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 3 MONTH), '%y-%m-%d') AND DATE_FORMAT(NOW(), '%y-%m-%d')
+		    </when>
+		    <when test="cate == 6">
+		        AND DATE_FORMAT(pcdate, '%y-%m-%d') BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 6 MONTH), '%y-%m-%d') AND DATE_FORMAT(NOW(), '%y-%m-%d')
+		    </when>
+		</choose>
+	    ORDER BY pno desc;
+	</select>
+	
+	<insert id="charge" parameterType="Map">
+		insert into point (pcharge, pbalance, mno)
+		values (#{pcharge}, #{pbalance}, (select mno from member where mid = #{mid}))
+	</insert>
+	
+	<select id="reviewlist" parameterType="String" resultType="Map">
+		SELECT rno, rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, mnname,
+			(select count(*) from review where mno = (SELECT mno FROM member WHERE MID = #{id}) AND rdel = 1) as count
+		FROM review r, tradeview t
+		WHERE r.tno = t.tno AND r.mno = (SELECT mno FROM member WHERE MID = #{id})
+			AND rdel = 1
+		order by rno desc
+	</select>
+	
+	<update id="rdelete" parameterType="Map">
+		update review set rdel = 0
+		where rno = #{del} 
+	</update>
+	
+	<insert id="dwrite" parameterType="Map">
+		insert into board (bcontent, mno)
+		values (#{content}, (select mno from member where mid = #{id}))
+	</insert>
+	
+	<select id="diaryDetail" parameterType="Integer" resultType="Map">
+		select bcontent from board where bno = #{bno}
+	</select>
+	
+	<update id="dupdate" parameterType="Map">
+		update board set bcontent = #{content}
+		where bno = #{bno}
+	</update>
+	
+	<insert id="cwrite" parameterType="Map">
+		insert into comment (cmcontent, mno, bno)
+		values (#{cwrite}, (select mno from member where mid = #{id}), #{bno})
+	</insert>
+	
+	<update id="updateReview" parameterType="Map">
+		update review set rcomment = #{redit}, rscore = #{starRating}
+		where rno = #{rno}
+	</update>
+	
+	<select id="findReviewByRno" parameterType="Map" resultType="Map">
+		SELECT rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, mnname
+		FROM review r, tradeview t
+		WHERE r.tno = t.tno AND rno = #{rno}
+	</select>
+	
+	<select id="info" parameterType="String" resultType="Map">
+		select mid, mname, mnickname, maddr, mphone
+		from member
+		where mid = #{mid}
+	</select>
+	
+	<update id="out" parameterType="String">
+		update member set mgrade = 0
+		where mid = #{mid}
+	</update>
+	
+	<select id="idchk" parameterType="Map" resultType="Integer">
+		select count(*)
+		from member
+		where mid = #{id} and mgrade = 1
+	</select>
+	
+	<update id="idUpdate" parameterType="Map">
+		update member set mid = #{id}
+		where mno = #{mno}
+	</update>
+	
+	<update id="pwUpdate" parameterType="Map">
+		update member set mpw = #{pw}
+		where mno = #{mno}
+	</update>
+	
+	<update id="addrUpdate" parameterType="Map">
+		update member set maddr = #{addr}
+		where mno = #{mno}
+	</update>
+	
+	<update id="phoneUpdate" parameterType="Map">
+		update member set mphone = #{phone}
+		where mno = #{mno}
+	</update>
 	
 </mapper>
