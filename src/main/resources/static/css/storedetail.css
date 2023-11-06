@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+
+#storename {
+	font-weight:bold;
+	font-size: 30px;
+}
+
+#storestar, #menumix {
+	font-weight:bold;
+	font-size: 20px;
+}
+#menubest {
+	font-weight:normal;
+	font-size: 15px;
+}
+
+#storeinfo {
+	float:right;
+	width: 130px;
+	height: 40px;
+	border-radius: 20px;
+	border:none;
+	font-weight:bold;
+	font-size:15px;
+	color: #ffffff;
+	background-color: #EB5757;
+	
+}
+
+#menulist > div {
+	    display:flex;
+	    align-items:center;
+        margin-bottom: 10px;
+        background-color: #EB5757;
+    }
+
+#menuname, #menuprice {
+        flex: 1; /* 남은 공간을 균등하게 분배하여 배치 */
+    }
+
+ #menuimg {
+       float: right;
+    }
+ 
+    
