@@ -4,13 +4,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class LoginController {
@@ -36,6 +34,7 @@ public class LoginController {
 			session.setAttribute("mname", result.get("mname"));
 			session.setAttribute("mgrade", result.get("mgrade"));
 			session.setAttribute("mno", result.get("mno"));
+			session.setAttribute("maddr", result.get("maddr"));
 			return "redirect:/";
 		}
 		return "redirect:/login";
@@ -50,19 +49,6 @@ public class LoginController {
 		return "redirect:/login";
 	}
 
-	/*
-	 * @ResponseBody
-	 * 
-	 * @PostMapping("/autologinCheckbox") public String
-	 * autologinCheckbox(@RequestParam Map<String, Object> map, HttpSession session)
-	 * {
-	 * 
-	 * JSONObject json = new JSONObject();
-	 * 
-	 * Map<String , Object> result = loginService.login(map);
-	 * 
-	 * int auto = loginService.autologinCheckbox(result);
-	 * 
-	 * json.put("auto", auto); return json.toString(); }
-	 */
+			
+	
 }
