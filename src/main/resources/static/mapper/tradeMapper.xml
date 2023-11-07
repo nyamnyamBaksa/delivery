@@ -7,15 +7,23 @@
 	</select>
 	
 	<select id="tradegroup" resultType="MAP">
-		SELECT tgroup, tamount, mnname, sname, sname, total, tdate, SUM(total) OVER (PARTITION BY tgroup) AS realtotal
+		SELECT tgroup, tamount, mnname, sname, sname, total, sno, tdate, SUM(total) OVER (PARTITION BY tgroup) AS realtotal
+		,SUM(tamount) OVER (PARTITION BY tgroup) AS totaltamount, cpno
 		FROM tradeview 
 		WHERE mid=#{id}
 	</select>
 	
 	<select id="tradedetail" resultType="Map" parameterType="String">
-		SELECT tgroup, tamount, mnname, sname, sname, total, tdate, SUM(total) OVER (PARTITION BY tgroup) AS realtotal
-		FROM tradeview 
+		SELECT tgroup, tamount, mnname, sname, sname, total, tdate, cpno, total, ttotal
+		FROM tradeview
 		WHERE tgroup=#{tgroup}
+	</select>
+	
+	<select id="tradecp" resultType="Map" parameterType="String">
+		SELECT puse, pbalance, c.cpname, c.cpprice
+		FROM point p
+		LEFT JOIN coupon c ON p.cpno = c.cpno
+		WHERE tgroup=#{tgroup} AND p.cpno = 1
 	</select>
 	
 	<select id="reviewgroup" resultType="Map" parameterType="Integer">

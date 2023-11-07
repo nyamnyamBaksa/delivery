@@ -107,10 +107,11 @@
 						                <c:if test="${id eq null || sessionScope.mid eq id}">
 						                    <input class="rowCheck wno" name="rowCheck" type="checkbox" value="${row.wno}">
 						                </c:if>
-						                &nbsp;${row.simg}
+						                &nbsp;<a href="/food/storedetail?sno=${row.sno }">
+						                <img src="${row.simg }"/></a>
 						            </td>
 						            <td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;">
-						                ${row.sname}
+						                <a href="/food/storedetail?sno=${row.sno }">${row.sname}</a>
 						            </td>
 						            <td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px;">
 										<c:set var="i" value="0" />
@@ -337,6 +338,7 @@
 			        var sname = row.sname;
 			        if (!groupedData[sname]) {
 			            groupedData[sname] = {
+			            	sno: row.sno,
 			            	wno: row.wno,
 			                count: row.count,
 			                sname: sname,
@@ -355,10 +357,10 @@
 			        newTableHTML += '<tr style="border-top: 1px solid black">';
 			        newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;">';
 			        newTableHTML += '<input class="rowCheck wno" name="rowCheck" type="checkbox" value="' + group.wno + '">';
-			        newTableHTML += '&nbsp;' + group.simg;
+			        newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><img src="' + group.simg + '" /></a>';
 			        newTableHTML += '</td>';
 			        newTableHTML += '<td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;">';
-			        newTableHTML += group.sname;
+			        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '">' + group.sname + '</a>';
 			        newTableHTML += '</td>';
 			        newTableHTML += '<td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px">';
 			        newTableHTML += group.mnnameList.join(', ');

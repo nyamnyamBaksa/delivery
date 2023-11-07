@@ -169,16 +169,27 @@ public class PayController {
 	}
 	
 	@GetMapping("/search")
-	public String search(@RequestParam Map<String, Object> map, Model model, HttpSession session) {
+	public String search(Model model, HttpSession session) {
 		if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
 			String id = (String) session.getAttribute("mid");
 			List<Map<String, Object>> list = payService.recommend(id);
 			List<Map<String, Object>> rlist = payService.recommend2();
-			List<Map<String, Object>> search = payService.search(map);
 			model.addAttribute("list", list);
 			model.addAttribute("rlist", rlist);
-			model.addAttribute("search", search);
 			return "/search";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/search")
+	public String search(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			List<Map<String, Object>> search = payService.search(map);
+			JSONObject json = new JSONObject();
+			json.put("search", search);
+			return json.toString();
 		} else {
 			return "redirect:/login";
 		}

@@ -102,7 +102,7 @@
 									<c:if test="${id eq null || sessionScope.mid eq id }">
 										<input class="rowCheck rno" name="rowCheck" type="checkbox" value="${row.rno }">
 									</c:if>
-									&nbsp;${row.sname }
+									<a href="/food/storedetail?sno=${row.sno }">&nbsp;${row.sname }</a>
 									<span class="star-ratings rdate">&nbsp;${row.rdate}</span>
 									<c:if test="${id eq null || sessionScope.mid eq id }">
 										<button class="editbtn" style="width: 70px;height: 40px;float:right;margin-left:10px;margin-right:10px;">수정</button>

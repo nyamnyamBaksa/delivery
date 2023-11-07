@@ -266,7 +266,7 @@
 	</insert>
 	
 	<select id="reviewlist" parameterType="String" resultType="Map">
-		SELECT rno, rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, mnname,
+		SELECT rno, rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, mnname, r.sno,
 			(select count(*) from review where mno = (SELECT mno FROM member WHERE MID = #{id}) AND rdel = 1) as count
 		FROM review r, tradeview t
 		WHERE r.tno = t.tno AND r.mno = (SELECT mno FROM member WHERE MID = #{id})

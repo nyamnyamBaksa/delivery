@@ -62,35 +62,3 @@
 .hr{
 	border-top: 3px solid black;
 }
-/*  Link
-
-position: absolute;
-left: 60.69%;
-right: 33.68%;
-top: 27.83%;
-bottom: 67.48%;
-
-background: #EB5757;
-border-radius: 50px;
-
-
-중복확인
-
-position: absolute;
-width: 78.9px;
-height: 22px;
-left: calc(50% - 78.9px/2 + 0.95px);
-top: calc(50% - 22px/2 - 1px);
-
-font-family: 'Dosis';
-font-style: normal;
-font-weight: 700;
-font-size: 18px;
-line-height: 27px;
-or 150%
-display: flex;
-align-items: center;
-text-align: center;
-
-color: #FFFFFF; */
-

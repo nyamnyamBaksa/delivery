@@ -91,8 +91,8 @@
 
 .search {
 	position: absolute;
-	left: 20%;
-	right: 25%;
+	left: 21%;
+	right: 21%;
 	top: 9.77%;
 	bottom: 85.55%;
 	background: #EB5757;
@@ -105,7 +105,7 @@
 }
 
 .search::placeholder {
-	padding-left: 10px;
+	padding-left: 5px;
 	color: white;
 	font-size: larger;
 	font-weight: bolder;
@@ -113,31 +113,28 @@
 
 .fa-search{
 	position: absolute;
-	left: 73%;
+	left: 77%;
 	right: 20%;
 	top: 11%;
 	bottom: 85.55%;
 	cursor: pointer;
+	color: white;
 }
 </style>
 </head>
 <body>
-	<div style="margin-top: 50px;"></div>
 	<div class="cart-box-main">
 		<div class="container">
-			<form action="/search" method="get" class="row">
-				<input type="text" class="search" name="search" required="required"
-					placeholder="검색어를 입력해주세요.">
-				<button class="search-btn" type="submit">
-					<i class="fa fa-search"></i>
-				</button>
-			</form>
+			<input type="text" class="search" required="required" placeholder="검색어를 입력해주세요.">
+			<i style="font-size: larger;" class="fa fa-search"></i>
+			<div style="margin-top: 100px;"></div>
 			<div class="col-lg-12">
 				<table class="table">
 				</table>
 			</div>
+			<div class="recommend">
 			<c:if test="${sessionScope.mid ne null}">
-				'${sessionScope.mname }'님이 최근에 드신 메뉴 별 추천 맛집
+				<span style="font-size: larger;font-weight: bolder;">'${sessionScope.mname }'님이 최근에 드신 메뉴 별 추천 맛집</span>
 					<div class="instagram-box">
 					<div class="main-instagram owl-carousel owl-theme">
 						<c:forEach items="${list}" var="row">
@@ -147,7 +144,7 @@
 										onerror="this.src='/img/profileImg/20231026101912스크린샷%202023-10-18%20171343.png'"
 										alt="" />
 									<div class="hov-in">
-										<a class="hover" href="#">${row.sname }</a>
+										<a class="hover" href="/food/storedetail?sno=${row.sno }">${row.sname }</a>
 									</div>
 								</div>
 							</div>
@@ -156,7 +153,7 @@
 				</div>
 			</c:if>
 			<c:if test="${sessionScope.mid eq null}">
-				주문량 많은 추천 맛집
+				<span style="font-size: larger;font-weight: bolder;">주문량 많은 추천 맛집</span>
 					<div class="instagram-box">
 					<div class="main-instagram owl-carousel owl-theme">
 						<c:forEach items="${rlist}" var="row">
@@ -166,7 +163,7 @@
 										onerror="this.src='/img/profileImg/20231026101912스크린샷%202023-10-18%20171343.png'"
 										alt="" />
 									<div class="hov-in">
-										<a class="hover" href="#">${row.sname }</a>
+										<a class="hover" href="/food/storedetail?sno=${row.sno }">${row.sname }</a>
 									</div>
 								</div>
 							</div>
@@ -174,6 +171,7 @@
 					</div>
 				</div>
 			</c:if>
+			</div>
 		</div>
 	</div>
 	<!-- ALL JS FILES -->
@@ -195,17 +193,6 @@
 	<script src="/js/sweetalert.min.js"></script>
 
 	<script type="text/javascript">
-		$('.rscore').each(function() {
-			var scoreElement = $(this);
-			var score = parseFloat(scoreElement.text());
-			score = score * 20;
-
-			var starRatings = scoreElement.closest('.star-ratings');
-
-			starRatings.find('.rscore').text(score);
-			var starRatingsFill = starRatings.find('.star-ratings-fill');
-			starRatingsFill.css('width', score + '%');
-		});
 
 		var confirm = function(msg, title, valueArr) {
 			swal({
@@ -219,25 +206,128 @@
 				closeOnConfirm : false,
 				closeOnCancel : true
 			}, function(isConfirm) {
-				if (isConfirm) {
-					$.ajax({
-						url : '/wdelete',
-						type : 'post',
-						traditional : true,// valueArr=[1, 2, 3] -> valueArr=1&valueArr=2&valueArr=3
-						data : {
-							valueArr : valueArr
-						},
-						dataType : 'json',
-						success : function(data) {
-							swal("", "찜을 삭제했습니다.", "success");
-							updateTable(data);
-						},
-						error : function(error) {
-							swal("실패", "작업수행에 실패하였습니다.", "error");
-						}
-					});
+			});
+		}
+		
+		$(document).on('click', '.fa-search', function(){
+			var search = $('.search').val().trim();
+			
+			if(search == '') return;
+			
+			$.ajax({
+				url: '/search',
+				type: 'post',
+				data: {search:search},
+				dataType:'json',
+				success:function(data){
+					if(data.search == ''){
+						swal("", "검색 결과가 없습니다.", "warning");
+					} else {
+						
+						var placeholder = search + '  ' + data.search[0].count + '개';
+						$('.search').val('');
+						$('.search').attr('placeholder', placeholder);
+						updateTable(data);
+						$('.recommend').empty();
+						
+						// mnname과 sname 텍스트를 노란색으로 변경
+					      $('.mnname').each(function() {
+						    if ($(this).text().includes(search)) {
+						        var text = $(this).text();
+						        var modifiedText = '';
+						        for (let i = 0; i < text.length; i++) {
+						            if (text.substring(i, i + search.length) === search) {
+						                modifiedText += '<span style="color: #FF9C41;">' + search + '</span>';
+						                i += search.length - 1;
+						            } else {
+						                modifiedText += text[i];
+						            }
+						        }
+						        $(this).html(modifiedText);
+						    }
+						});
+	
+						  
+					      $('.sname').each(function() {
+					    	  if ($(this).text().includes(search)) {
+							        var text = $(this).text();
+							        var modifiedText = '';
+							        for (let i = 0; i < text.length; i++) {
+							            if (text.substring(i, i + search.length) === search) {
+							                modifiedText += '<span style="color: #FF9C41;">' + search + '</span>';
+							                i += search.length - 1;
+							            } else {
+							                modifiedText += text[i];
+							            }
+							        }
+							        $(this).html(modifiedText);
+							    }
+					      });
+					}
+				},
+				error:function(error){
+					swal("실패", "작업수행에 실패하였습니다.", "error");
 				}
 			});
+		});
+		
+		function strToColor(str, search) {
+			
+		}
+		
+		function updateTable(data) {
+		    var newTableHTML = '<table class="table">';
+		    
+		    // 중복된 sno 값을 가진 데이터를 그룹화하기 위한 객체 생성
+		    var groupedData = {};
+
+		    // 데이터 그룹화
+		    $.each(data.search, function(index, row) {
+		        var sname = row.sname;
+		        if (!groupedData[sname]) {
+		            groupedData[sname] = {
+		            	sno: row.sno,
+		                count: row.count,
+		                sname: sname,
+		                mnnameList: [],
+		                average_rating: row.average_rating
+		            };
+		        }
+		        groupedData[sname].mnnameList.push(row.mnname);
+		    });
+
+		    // 그룹화된 데이터로 테이블 생성
+		    $.each(groupedData, function(sno, group) {
+		        newTableHTML += '<tr style="border-top: 1px solid black">';
+		        newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;">';
+		        newTableHTML += '<input class="sno" type="hidden" value="' + group.sno + '">';
+		        newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><img src="' + group.simg + '" /></a>';
+		        newTableHTML += '</td>';
+		        newTableHTML += '<td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;">';
+		        newTableHTML += group.sname;
+		        newTableHTML += '</td>';
+		        newTableHTML += '<td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px">';
+		        newTableHTML += group.mnnameList.join(', ');
+		        newTableHTML += '</td>';
+		        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
+		        newTableHTML += '<div class="star-ratings">';
+		        newTableHTML += '<div class="rscore" style="display: none;">' + group.average_rating + '</div>';
+		        newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.average_rating * 20) + '%;">';
+		        newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+		        newTableHTML += '</div>';
+		        newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
+		        newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+		        newTableHTML += '</div>';
+		        newTableHTML += '</div>&nbsp;(' + group.average_rating + ')';
+		        newTableHTML += '</td>';
+		        newTableHTML += '</tr>';
+		    });
+
+		    newTableHTML += '</table>';
+		    
+		    // 테이블 업데이트
+		    $('.table').html(newTableHTML);
+
 		}
 	</script>
 </body>

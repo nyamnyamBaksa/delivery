@@ -75,7 +75,7 @@
 	</select>
 	
 	<select id="wishlist" parameterType="String" resultType="Map">
-		select wno, sname, simg, average_rating, review_count, mnname,
+		select wno, sname, simg, average_rating, review_count, mnname, w.sno,
 			(SELECT COUNT(*) FROM wishlist WHERE mno = (SELECT mno FROM member WHERE MID = #{id})) AS count
 		from wishlistview w, storeview s
 		where w.sno = s.sno AND w.mno = (SELECT mno FROM member WHERE MID = #{id})
@@ -96,7 +96,7 @@
 	</delete>
 	
 	<select id="recommend" parameterType="String" resultType="Map">
-		select sname, simg
+		select sname, simg, s.sno
 		FROM store s, menu m
 		WHERE  s.sno = m.sno
 			and mncate IN (SELECT mncate FROM menu m, tradeview t WHERE t.mid=#{id} AND m.mnno = t.mnno)
@@ -104,9 +104,9 @@
 	</select>
 	
 	<select id="recommend2" resultType="Map">
-		SELECT simg, sname, SUM(count) AS totalcount
+		SELECT sno, simg, sname, SUM(count) AS totalcount
 		FROM (
-		  SELECT simg, sname, COUNT(*) AS count
+		  SELECT simg, sname, sno, COUNT(*) AS count
 		  FROM tradeview
 		  GROUP BY tgroup, sno
 		) AS subquery
@@ -115,14 +115,20 @@
 	</select>
 	
 	<select id="search" parameterType="Map" resultType="Map">
-		select
-		from store s, menu m
-		<where>
-			s.sno = m.sno
-			<choose>
-			    <when test="search != null">and s.sname like concat('%', #{search},'%')</when>
-			</choose>
-		</where>
+		SELECT s.sno, store_name AS sname, mnname, store_image AS simg, average_rating,
+		       (SELECT COUNT(*)
+				FROM (
+				  SELECT s1.sno
+				  FROM store s1
+				  WHERE s1.sname LIKE CONCAT('%', #{search},'%')
+				  UNION all
+				  SELECT m1.mnno
+				  FROM menu m1
+				  WHERE m1.mnname LIKE CONCAT('%', #{search},'%')
+				) AS combined_sno) AS count
+		FROM storeview s, menu m
+		WHERE s.sno = m.sno
+		  AND (store_name LIKE CONCAT('%', #{search},'%') OR mnname LIKE CONCAT('%', #{search},'%'));
 	</select>
 	
 </mapper>

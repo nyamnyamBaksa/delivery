@@ -34,6 +34,10 @@ public class TradeService {
 		
 	}
 
+	public Map<String, Object> tradecp(String tgroup) {
+		return tradeDAO.tradecp(tgroup);
+	}
+
 
 
 
