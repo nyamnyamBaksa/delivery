@@ -1,4 +1,4 @@
-package com.delivery.web.dao;
+package com.delivery.web.home;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface HomeDAO {
 
-	List<String> storelist(String category);
+	List<HomeDTO> list(Integer sno);
     
 	
 }

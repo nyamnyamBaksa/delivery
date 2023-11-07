@@ -23,7 +23,13 @@ public interface StoreDAO {
 	List<Map<String, Object>> foodlist();
 
 	List<MenuDTO> menudetail(int mnno);
-	
 
+	boolean wishlist(Integer mno);
+
+	boolean wishlist(String mid, int sno);
+
+	boolean wishremove(Integer mno);
+
+	
 
 }

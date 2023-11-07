@@ -1,18 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
-<body>
 
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
 <meta charset="UTF-8">
 <title>상세카테고리</title>
 <link rel="stylesheet" href="/css/storelist.css">
@@ -21,14 +15,12 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <link
 	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
 	rel="stylesheet">
 </head>
-
 
 <body>
 	<h1 style="text-align: center;">냠냠박사</h1>
@@ -143,8 +135,6 @@
 </script>
 	
 	
-
-
 	<!-- Swiper JS -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
