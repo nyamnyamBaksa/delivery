@@ -1,0 +1,84 @@
+@charset "UTF-8";
+.hr{
+	border-top: 3px solid black;
+}
+.tradedetailBox{
+	position: relative;
+	left: 35%;
+	top: 30px;
+}
+.title{
+	color: #EB5757;
+	font-weight: bold;
+	font-size:31px;
+	font-family:Dosis;
+	margin: 10px;
+}
+.storedetailBtn{
+	background-color: #EB5757;
+	height:51px;
+	width:192px;
+	border-radius:50px;
+	padding:0px;
+	border: none;
+	position:relative;
+	margin: 10px;
+}
+.storedetail{
+	color:#ffffff;
+	text-align:center;
+	vertical-align:text-middle;
+	font-size:20px;
+	font-family:Dosis;
+	line-height:27px;
+	border-style:hidden;
+	outline:none;
+	top:12px;
+	left:-4px;
+	position:absolute;
+	width:196px;
+	font-weight: bold;
+}
+.tradedetailDate{
+	position:relative;
+	color:#6C757D;
+	font-family:SemiBold;
+	font-size:25px;
+	left:10px;
+}
+.tradeMnname{
+	font-family:SemiBold;
+	font-size:25px;
+	font-weight: bold;
+	margin: 10px;
+}
+.text{
+	font-family:SemiBold;
+	font-size:25px;
+	font-weight: bold;
+	margin: 10px;
+}
+.cpno{
+	position:relative;
+	background-color:#ff9b40;
+	height:51px;
+	width:192px;
+	border-radius:50px;
+	top:-61px;
+	left: 280px;
+}
+.cpnotext{
+	color:#ffffff;
+	text-align:center;
+	vertical-align:text-middle;
+	font-size:20px;
+	font-family:Dosis;
+	line-height:27px;
+	border-style:hidden;
+	outline:none;
+	top:10px;
+	left:-4px;
+	position:absolute;
+	width:196px;
+	font-weight: bold;
+}

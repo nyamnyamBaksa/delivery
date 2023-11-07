@@ -12,9 +12,12 @@
 	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link
 	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
 	rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>	
 </head>
 
 <body>
@@ -54,11 +57,41 @@
     </c:forEach>
 </div>
 		<br><br>
-		<button type="button" onclick="location.href='./cart?cno='${cno}">담기</button>
-
+		<form name="cartbutton" method="post">
+		<button type="button" onclick="cart(${mf.mnno})">담기</button>
+        </form>
 
 
 <script type="text/javascript">
+
+function cart(mnno) {
+	
+	$.ajax({
+		type : POST,
+		url : "/cart",
+		data : {mnno : mnno},
+		success : function(response) {
+			Swal.fire("장바구니에 추가되었습니다.");
+		},
+		error : function() {
+			Swal.fire("문제가 발생했습니다");
+		}
+	
+	});
+	
+	
+	
+	
+	
+	
+}
+
+
+
+
+
+
+
 /*
 window.onload = function() {
     var sideMenuList = ${sideMenuList}; 

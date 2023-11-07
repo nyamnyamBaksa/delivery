@@ -51,12 +51,19 @@ public class StoreController {
 				sideMenuList.add(menu);
 			}
 		}
-
-		MenuDTO randomMain = RandomMenu(mainMenuList);
-		MenuDTO randomSide = RandomMenu(sideMenuList);
-
-		String bestmenu = randomMain.getMnname() + " + " + randomSide.getMnname();
-
+		
+		String bestmenu = "";
+		
+		if (!sideMenuList.isEmpty()) {
+			MenuDTO randomMain = RandomMenu(mainMenuList);
+			MenuDTO randomSide = RandomMenu(sideMenuList);
+		
+		    bestmenu = randomMain.getMnname() + " + " + randomSide.getMnname();
+		
+		} else {
+			MenuDTO randomMain = RandomMenu(mainMenuList);
+			bestmenu = randomMain.getMnname();
+		}
 		model.addAttribute("detail", detail);
 		model.addAttribute("menulist", menulist);
 		model.addAttribute("bestmenu", bestmenu);
@@ -166,5 +173,18 @@ public class StoreController {
 		    return "menudetail";
 
 	}
+	
+	@PostMapping("/cart")
+	@ResponseBody
+	public String cart (@RequestParam("mnno") int mnno, HttpSession session) {
+		
+		
+	
+		return "success";
+	}
+	
+	
+	
+
 
 }

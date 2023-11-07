@@ -1,0 +1,152 @@
+@charset "UTF-8";
+.hr{
+	border-top: 3px solid black;
+}
+.serch{
+	position: relative;
+	left: 70px;
+	top: 60px;
+	bottom: 83.69%;
+	width: 1700px;
+	height: 48px;
+	
+	background: #EB5757;
+	border: none;
+	border-radius: 50px;
+}
+.serch::placeholder {
+	position: relative;
+	font-weight: bold;
+	font-size: 25px;
+	top : 5px;
+	left:15px;
+	vertical-align: middle;
+	color: #FFFFFF;
+	
+}
+.serchBtn{
+	position: relative;
+	border: none;
+	background: #EB5757;
+	right: 50px;
+	top: 68px;
+}
+.tradeBox{
+	position: relative;
+	top: 100px;;
+	background-color:#ffffff;
+	height:222px;
+	border:3px solid #eb5757;
+	margin: 50px;
+}
+.tradedate{
+	position: relative;
+	color:#000000;
+	vertical-align:text-middle;
+	font-size:20px;
+	font-family:Dosis;
+	line-height:21.600000381469727px;
+	border-style:hidden;
+	outline:none;
+	width:276px;
+	left:50px;
+	top: 20px;
+	font-weight: bold;
+}
+.sampleimg{
+	height:104px;
+	width:96px;
+	left:50px;
+	top:80px;
+	position:absolute;
+}
+.Sname{
+	color:#000000;
+	text-align:left;
+	font-size:25px;
+	font-family:Dosis;
+	line-height:21.600000381469727px;
+	border-style:hidden;
+	outline:none;
+	top:100px;
+	left:160px;
+	position:absolute;
+	font-weight: bold;
+}
+
+.tradeMnname{
+	color:#000000;
+	text-align:left;
+	vertical-align:text-middle;
+	font-size:20px;
+	font-family:Dosis;
+	line-height:21.600000381469727px;
+	border-style:hidden;
+	outline:none;
+	top:150px;
+	left:160px;
+	position:absolute;
+	width:236px;
+	font-weight: bold;
+}
+.tradeDetailBtn{
+	background-color:#ff9b40;
+	height:50px;
+	width:167px;
+	border-radius:50px;
+	border-style:hidden;
+	padding:0px;
+	top:28px;
+	right: -1200px;
+	position:relative;
+}
+.tradeDetailText, .reviewText{
+	color:#ffffff;
+	text-align:center;
+	vertical-align:text-middle;
+	font-size:20px;
+	font-family:Dosis;
+	line-height:25px;
+	border-style:hidden;
+	outline:none;
+	top:13px;
+	left:-16px;
+	position:absolute;
+	width:196px;
+	font-weight: bold;
+}
+.reviewBtn{
+	background-color:#eb5757;
+	height:50px;
+	width:167px;
+	border-radius:50px;
+	border-style:hidden;
+	padding:0px;
+	top:125px;
+	right: -1028px;
+	position:relative;
+}
+.cpno{
+	position:relative;
+	background-color:#ff9b40;
+	height:50px;
+	width:192px;
+	border-radius:50px;
+	top:75px;
+	right: -1300px;
+}
+.cpnotext{
+	color:#ffffff;
+	text-align:center;
+	vertical-align:text-middle;
+	font-size:20px;
+	font-family:Dosis;
+	line-height:27px;
+	border-style:hidden;
+	outline:none;
+	top:10px;
+	left:-4px;
+	position:absolute;
+	width:196px;
+	font-weight: bold;
+}

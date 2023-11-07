@@ -1,0 +1,64 @@
+@charset "UTF-8";
+.joinBox{
+	box-sizing : border-box;
+	margin: 60px auto;
+	padding: 100px;
+	background-color:#FFFFFF;
+	width: 800px;
+}
+.input{
+   
+    border: 4px solid #EB5757;
+    border-radius: 10px;
+    height: 48px;
+    width: 370px;
+ 	margin: 10px;
+  
+}
+.Jbutton{
+	position: absolute;
+	width: 380px;
+	height: 58px;
+	margin: 5px;
+
+	background: #EB5757;
+	border-radius: 10px;
+
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 600;
+	font-size: 35px;
+	line-height: 27px;
+
+	align-items: center;
+	text-align: center;
+	
+	color: #FFFFFF;
+	border:#EB5757;
+	cursor: pointer;
+}
+
+.idCheck, .idbutton {
+	background: #EB5757;
+	border-radius: 50px;
+	border: #EB5757;
+	height: 48px;
+    width: 90px;
+	
+	color: white;
+	font-family: 'Dosis';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 27px;
+	cursor: pointer;
+}
+.resultMSG, .pwresultMSG{
+	font-size: 15px;
+	color : #EB5757;
+	margin-left: 15px;
+	margin-top: 0;
+}
+.hr{
+	border-top: 3px solid black;
+}

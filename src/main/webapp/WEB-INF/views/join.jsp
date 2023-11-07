@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="css/join.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 $(function() {
@@ -27,10 +28,10 @@ $(function() {
                    dataType : "json",
                    success : function(data) {
                       if (data == 1) {
-                         $("#resultMSG").css("color", "red").text("이미 등록된 아이디입니다.");
+                         $("#resultMSG").text("이미 등록된 아이디입니다.");
                          isIdChecked = false;
                       } else {
-                         $("#resultMSG").css("color", "greed").text("가입할 수 있습니다.");
+                         $("#resultMSG").text("가입할 수 있습니다.");
                          isIdChecked = true;
                       }
                    },
@@ -47,10 +48,10 @@ $(function() {
         let pw2 = $(this).val();
 
         if (pw1 == pw2) {
-           $("#pwresultMSG").css("color","green").text("비밀번호가 일치합니다.");
+           $("#pwresultMSG").text("비밀번호가 일치합니다.");
            return;
         } else {
-           $("#pwresultMSG").css("color","red").text("비밀번호가 일치하지 않습니다.");
+           $("#pwresultMSG").text("비밀번호가 일치하지 않습니다.");
         }
      });
     
@@ -95,23 +96,39 @@ $(function() {
 
 });
 </script>
+</script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+	window.onload = function(){
+	    document.getElementById("maddr").addEventListener("click", function(){ //주소입력칸을 클릭하면
+	        //카카오 지도 발생
+	        new daum.Postcode({
+	            oncomplete: function(data) { //선택시 입력값 세팅
+	                document.getElementById("maddr").value = data.address; // 주소 넣기
+	              /*   document.querySelector("maddr1").focus(); //상세입력 포커싱 */
+	            }
+	        }).open();
+	    });
+	}
+	</script>
 </head>
 <body>
+
 	<h1>회원가입</h1>
-	
-	<div>
+	<hr class="hr">
+	<div class=joinBox>
 	<form action="./join" method="post">
 		<div class="idBox">
 			<input class="input" type="text" name="mid" id="mid" placeholder="아이디">
-			<button id="idCheck" type="button" class="idCheck">중복검사</button>
-			<br><span id="resultMSG"></span>
+			<button id="idCheck" type="button" class="idCheck">중복확인</button>
+			<br><span class="resultMSG" id="resultMSG"></span>
 		</div>
 		<div class="pwBox1">
         	<input class="input" type="password" name="mpw1" id="pw1" placeholder="비밀번호">
         </div>
         <div class="poBox2">
          	<input class="input" type="password" name="mpw" id="pw2" placeholder="비밀번호 확인">
-            <br><span id="pwresultMSG"></span>
+            <br><span class="pwresultMSG" id="pwresultMSG"></span>
         </div>  
         <div class="nameBox">
         	<input class="input" type="text" name="mname" id="mname" placeholder="이름">
@@ -121,7 +138,6 @@ $(function() {
         </div>
         <div class="addrBox">
            <input class="input" type="text" name="maddr" id="maddr" placeholder="주소">
-           <br><button id="btnTest">현재 위치로 설정</button>
         </div>
         <div class="phoneBox">
           	<input class="input" type="text" name="mphone" id="mphone" placeholder="전화번호">
@@ -129,7 +145,6 @@ $(function() {
         </div>
         <div>
         <br>
-	    	<button class="Jbutton" type="reset">취소</button>
 	        <button class="Jbutton" type="submit" id="joinjoin">회원가입</button>
         </div>
 	</form>

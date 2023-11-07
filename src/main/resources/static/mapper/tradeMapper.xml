@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.delivery.web.trade.TradeDAO">
+
+	<select id="trade" resultType="java.util.Map">
+		select  * FROM tradeview where mid=#{id}
+	</select>
+	
+	<select id="tradegroup" resultType="MAP">
+		SELECT tgroup, tamount, mnname, sname, sname, total, sno, tdate, SUM(total) OVER (PARTITION BY tgroup) AS realtotal
+		,SUM(tamount) OVER (PARTITION BY tgroup) AS totaltamount, cpno
+		FROM tradeview 
+		WHERE mid=#{id}
+	</select>
+	
+	<select id="tradedetail" resultType="Map" parameterType="String">
+		SELECT tgroup, tamount, mnname, sname, sname, total, tdate, cpno, total, ttotal
+		FROM tradeview
+		WHERE tgroup=#{tgroup}
+	</select>
+	
+	<select id="tradecp" resultType="Map" parameterType="String">
+		SELECT puse, pbalance, c.cpname, c.cpprice
+		FROM point p
+		LEFT JOIN coupon c ON p.cpno = c.cpno
+		WHERE tgroup=#{tgroup} AND p.cpno = 1
+	</select>
+	
+	<select id="reviewgroup" resultType="Map" parameterType="Integer">
+		SELECT *
+		FROM tradeview
+		WHERE sno=#{sno}
+	</select>
+	
+	<insert id="saveReview" parameterType="MAP">
+		INSERT INTO review (sno, rcomment, mno, tno, rscore)
+		VALUES (#{sno}, #{review}, #{mno}, #{tno}, #{rscore})
+	</insert>
+</mapper>
