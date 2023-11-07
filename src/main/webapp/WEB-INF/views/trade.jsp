@@ -15,12 +15,16 @@
 	
 	<c:choose>
 		<c:when test="${sessionScope.mname ne null }">
-			<form action="./post" method="get" >
-			  <div class="serch-container">
-				<input class="serch" type="text" name="serchM" required="required" placeholder="주문했던 메뉴와 가게를 검색해 보세요">
-				<%-- <input type="hidden" name="cate" value="${param.cate }"> --%>
-				<button type="submit" class="serchBtn">
-					<img src="img/serchBtn.png" alt="검색">
+		<c:if test="${tradegroup ne null }">
+			<form action="./trade" method="get" >
+			  <div class="search-container">
+			  	<select name="searchN" class="serchN">
+			  		<option value="sname">가게명</option>
+			  		<option value="mnname">메뉴명</option>
+			  	</select>
+				<input name="search" class="search" type="text" placeholder="주문했던 메뉴와 가게를 검색해 보세요">
+				<button type="submit" class="searchBtn">
+					<img src="img/searchBtn.png" alt="검색">
 				</button>
 				</div>
 			</form>
@@ -33,7 +37,7 @@
 		                <a href="tradedetail?tgroup=${row.tgroup }"><div class="Sname">${row.sname } ></div></a> 
 		              	<a href="tradedetail?tgroup=${row.tgroup }"><button class="tradeDetailBtn">
 		              		<span class="tradeDetailText">주문상세</span></button></a>
-		              	<a href="review?sno=${row.sno}"><button class="reviewBtn">
+		              	<a href="reviewwrite?sno=${row.sno}"><button class="reviewBtn">
 		              		<span class="reviewText">리뷰쓰기</span></button></a>
 		            	<div class="tradeMnname">${row.mnname}
 			            	<c:if test="${row.totaltamount != 1}">
@@ -48,7 +52,10 @@
 		            </div>
 				</c:if>
              </c:forEach>
-		 
+        </c:if>
+        <c:if test="${tradegroup eq null }" >
+        	<span class="tradenull"> 주문내역이 없습니다.</span>
+        </c:if>	
 		</c:when>
 		
 		<c:otherwise>

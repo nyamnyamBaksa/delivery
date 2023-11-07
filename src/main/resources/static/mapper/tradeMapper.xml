@@ -6,11 +6,16 @@
 		select  * FROM tradeview where mid=#{id}
 	</select>
 	
-	<select id="tradegroup" resultType="MAP">
+	<select id="tradegroup" resultType="MAP" parameterType="map">
 		SELECT tgroup, tamount, mnname, sname, sname, total, sno, tdate, SUM(total) OVER (PARTITION BY tgroup) AS realtotal
 		,SUM(tamount) OVER (PARTITION BY tgroup) AS totaltamount, cpno
 		FROM tradeview 
-		WHERE mid=#{id}
+		<where>mid=#{id}
+			<choose>
+				<when test="serchN == 'sname'">AND sname LIKE CONCAT('%', #{serch}, '%')</when>
+				<when test="serchN == 'mnname'">AND mnname LIKE CONCAT('%', #{serch}, '%')</when>
+			</choose>
+		</where>
 	</select>
 	
 	<select id="tradedetail" resultType="Map" parameterType="String">
@@ -36,4 +41,5 @@
 		INSERT INTO review (sno, rcomment, mno, tno, rscore)
 		VALUES (#{sno}, #{review}, #{mno}, #{tno}, #{rscore})
 	</insert>
+	
 </mapper>

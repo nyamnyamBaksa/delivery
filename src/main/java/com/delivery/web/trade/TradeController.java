@@ -19,15 +19,16 @@ public class TradeController {
 	private TradeService tradeSerivce;
 	
 	@GetMapping("/trade")
-	public String trade(Model model, HttpSession session, Map<String, Object> map) {
-		
+	public String trade(
+			Model model, HttpSession session,@RequestParam Map<String, Object> map) {
+		System.out.println(map);
 		map.put("id", (String) session.getAttribute("mid"));
 		
 		List<Map<String, Object>> trade = tradeSerivce.trade(map);
 		model.addAttribute("trade", trade);
-		
+
 		List<Map<String, Object>> tradegroup = tradeSerivce.tradegroup(map);
-		//System.out.println(tradegroup);
+		System.out.println(tradegroup);
 		model.addAttribute("tradegroup", tradegroup);
 	        return "trade";
 	    
@@ -45,32 +46,5 @@ public class TradeController {
 	    return "tradedetail";
 	}
 
-	@GetMapping("/review")
-	public String review(@RequestParam(value = "sno", required = false) int sno, Model model) {
-
-		List<Map<String, Object>> reviewgroup = tradeSerivce.reviewgroup(sno);
-		
-	    model.addAttribute("reviewgroup", reviewgroup);
-	    
-	    return "review";
-	}
-	
-
-    @PostMapping("/review")
-    public String saveReview(@RequestParam Map<String, Object> map, HttpSession session) {
-    	
-    	map.put("mno", (Integer) session.getAttribute("mno"));
-    	
-    	int rating = Integer.parseInt((String) map.get("rating"));
-    	
-    	map.put("rscore",rating);
-    	 
-    	int result = tradeSerivce.saveReview(map);
-    	
-    	if(result == 1) {
-    		return "redirect:/food/review?sno="+ map.get("sno");
-    	} 
-    	return "login";
-    }
 
 }
