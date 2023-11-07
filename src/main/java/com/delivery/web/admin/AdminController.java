@@ -42,11 +42,19 @@ public class AdminController {
 	
 
 	// member
-	@RequestMapping(value = "/member", method = RequestMethod.GET)
+	@RequestMapping(value = "/list-member", method = RequestMethod.GET)
 	public ModelAndView member() {
-		ModelAndView mv = new ModelAndView("admin/member");
+		ModelAndView mv = new ModelAndView("admin/list-member");
 		mv.addObject("memberList", adminService.memberList());
-		return mv;
+		return mv;  
+	}
+	
+	// owner
+	@RequestMapping(value = "/list-owner", method = RequestMethod.GET)
+	public ModelAndView owner() {
+		ModelAndView mv = new ModelAndView("admin/list-owner");
+		mv.addObject("memberList", adminService.memberList());
+		return mv;  
 	}
 
 	// gradeChange
