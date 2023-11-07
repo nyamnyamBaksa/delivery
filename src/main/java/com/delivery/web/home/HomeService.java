@@ -1,11 +1,9 @@
-package com.delivery.web.service;
+package com.delivery.web.home;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.delivery.web.dao.HomeDAO;
 
 @Service
 public class HomeService {
@@ -13,9 +11,10 @@ public class HomeService {
 	@Autowired
 	private HomeDAO homeDAO;
 
-	public List<String> storelist(String category) {
-		
-		return homeDAO.storelist(category);
+
+	public List<HomeDTO> list(Integer sno) {
+		// TODO Auto-generated method stub
+		return homeDAO.list(sno);
 	}
 
 	

@@ -32,6 +32,17 @@
 		FROM storeview
 		WHERE sno = #{sno}
 	</select>
+	
+	<!-- 찜버튼 누르기 -->
+	<insert id="wishlist">
+	INSERT INTO wishlist (mno, sno)
+	VALUES (#{mno}, #{sno}) 
+	</insert>
+	
+	<!-- 찜버튼 취소하기 -->
+	<delete id="wishremove">
+    DELETE FROM wishlist WHERE sno = #{sno}
+    </delete>
 
 	<select id="getMenuList" parameterType="Integer"
 		resultType="com.delivery.web.store.MenuDTO">

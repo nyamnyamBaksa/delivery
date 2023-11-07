@@ -6,175 +6,95 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="./css/menu.css">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+<link rel="stylesheet" href="/css/menu.css">
 <link rel="stylesheet" href="/css/home.css">
+<link
+	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+<script
+	src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
 
 </head>
 <body>
-
-	<h1>냠냠박사</h1>
-	
-	<div id="menu-list"></div>
-
-	<script src="config.js"></script>
-	<script src="utils/index.js"></script>
-	<script src="components/MenuItem.js"></script>
-	<script src="App.js"></script>
-	<script type="text/javascript">
-		// config.js에서 메뉴 데이터 가져오기
-		const menus = defaultMenus; // config.js에 있는 배열명을 가져와서 사용
-
-		// utils/index.js에서 정의한 함수를 사용하여 메뉴 데이터를 생성
-		const menuData = createMenuData(menus);
-
-		// 메뉴 데이터를 동적으로 HTML에 추가
-		const menuListDiv = document.getElementById('menu-list');
-		menuData.forEach(menu => {
-			const menuDiv = document.createElement('div');
-			menuDiv.innerHTML = `<input type="checkbox" id="menu-${menu.id}" ${menu.checked ? 'checked' : ''}>
-				<label for="menu-${menu.id}">${menu.name}</label>`;
-			menuListDiv.appendChild(menuDiv);
-		});
-	</script>
-
-	 <div class="wrap">
-        <main>
-            <section class="address_search">
-                 <div id="search_box">
-                     <div>
-                         <input type="hidden" id="deliveryAddress1" placeholder="우편번호" value="" name="address1" readonly>
-                         <input type="text" value= "" onclick="execution_daum_address()"
-                             id="deliveryAddress2" readonly placeholder="주소를 입력해 주세요" name="address2"><br>
-                     </div>
- 
-                     <div class="search_btn">
-                         <label for="search_btn">
-                             <i class="fas fa-search"></i>
-                         </label>
- 
-                         <input type="button" name="search" id="search_btn">
- 
-                     </div>
- 
-                 </div>
-            </section>
-            <section class="category_box">
-                <div class="box">
-                    <ul class="category">
-                    
-                    			<li data-category ='1' onclick="location.href=''">
-									<div>
-										<div class="img_box">
-                                           <img src="/img/bibimbap.jpg" alt="이미지">
-										</div>
-                                    </div>
-                                    <div class="name">한식</div> 
-                                </li> 
-                                
-                                <li data-category ='2' onclick="location.href=''">
-									<div>
-										<div class="img_box">
-                                           <img src="/img/cutlet1.png" alt="이미지">
-										</div>
-                                    </div>
-                                    <div class="name">일식</div>
-                                </li>
-                                
-                                <li data-category ='3' onclick="location.href=''">
-									<div>
-										<div class="img_box">
-                                           <img src="/img/chinese1.png" alt="이미지">
-										</div>
-                                    </div>
-                                    <div class="name">중식</div>
-                                </li>
-                    
-                                <li data-category ='4' onclick="location.href=''">
-									<div>
-										<div class="img_box">
-                                           <img src="/img/pizza2.png" alt="이미지">
-										</div>
-                                    </div>
-                                    <div class="name">양식</div>
-                                </li>
-                                
-                                <li data-category ='5' onclick="location.href=''">
-									<div>
-										<div class="img_box">
-                                           <img src="/img/bunsik1.png" alt="이미지">
-										</div>
-                                    </div>
-                                    <div class="name">분식</div>
-                                </li>
-                    
-                                <li data-category ='6' onclick="location.href=''">
-									<div>
-										<div class="img_box">
-                                           <img src="/img/chicken1.png" alt="이미지">
-										</div>
-                                    </div>
-                                    <div class="name">아시안</div>
-                                </li>
-                    
-                                <li data-category ='7' onclick="location.href=''">
-									<div>
-										<div class="img_box">
-                                           <img src="/img/hamburger4.png" alt="이미지">
-										</div>
-                                    </div>
-                                    <div class="name">패스트푸드</div>
-                                </li>
-                    
-                                <li data-category ='8' onclick="location.href=''">
-									<div>
-										<div class="img_box">
-                                           <img src="/img/dessert2.png" alt="이미지">
-										</div>
-                                    </div>
-                                    <div class="name">카페/디저트</div>
-                                </li>
-                         
-                            </ul>
-                	</div>
-            </section>
-        </main>
-    </div>
-    <!-- 콘텐츠 -->
-
-
 	<%@ include file="menu.jsp"%>
+	<h1 style="text-align: center;">냠냠박사</h1>
+
+	<div id="location">
+		<div>
+			<i class="fa-solid fa-location-dot fa-xl" style="color: #ffffff;"></i>
+			대표 주소를 설정해주세요.
+		</div>
+	</div>
+	<br>
+	<div id="randomfood" style="float: right;">
+		<h1 style="display: inline;">오늘 뭐먹지?</h1>
+		<button type="button" style="display: inline;">선택</button>
+	</div>
+	<br>
+	<div id="foodcategory">
+		<div>
+			<a href="food/1?category=한식">한식</a>
+		</div>
+		<div>
+			<a href="food/2?category=중식">중식</a>
+		</div>
+		<div>
+			<a href="food/3?category=일식">일식</a>
+		</div>
+		<div>
+			<a href="food/4?category=양식">양식</a>
+		</div>
+		<div>
+			<a href="food/5?category=분식">분식</a>
+		</div>
+		<div>
+			<a href="food/6?category=아시안">아시안</a>
+		</div>
+		<div>
+			<a href="food/7?category=패스트푸드">패스트푸드</a>
+		</div>
+		<div>
+			<a href="food/8?category=카페/디저트">카페/디저트</a>
+		</div>
+	</div>
+
+
+	<swiper-container class="mySwiper" scrollbar-hide="true">
+	<swiper-wrapper> <c:forEach items="${list}" var="l"
+		varStatus="status">
+		<swiper-slide>
+		<div class="restraunt-list"
+			style="display: flex; align-items: center;">
+			<table width="50%" style="text-align: left; margin-right: 10px;">
+				<tr>
+					<td rowspan="3" style="width: 200px; text-align: center;"><c:if
+							test="${l.store_image == null}">
+							<i class="fa-solid fa-hammer fa-rotate-270 fa-lg"
+								style="color: #eb5757;"></i>이미지 준비중
+                                    <i class="fa-solid fa-wrench fa-lg"
+								style="color: #eb5757;"></i>
+						</c:if> <c:if test="${l.store_image != null}">${l.store_image}</c:if></td>
+					<td style="font-size: large;">${l.store_name}</td>
+				</tr>
+				<tr>
+					<td><i class="xi-star xi-x" style="color: #ffe11c;"></i><span
+						class="rating">${l.average_rating}</span><span class="review">(${l.review_count})</span></td>
+				</tr>
+				<tr>
+					<td>최소주문 9,000원</td>
+				</tr>
+			</table>
+		</div>
+		</swiper-slide>
+	</c:forEach> </swiper-wrapper> </swiper-container>
+
+
+
+
 </body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="/js/home.js"></script>
 
-<script type="text/javascript">
-//음식 카테고리를 클릭했을 때
-$('.category li').click(function() {
-    var selectedCategory = $(this).find('.name').text(); // 선택한 카테고리 텍스트 가져오기
-
-    // 서버에 AJAX 요청을 보냅니다.
-    $.ajax({
-        url: './getStoreList', // 서버의 API 엔드포인트 주소
-        method: 'GET',
-        data: {
-            mncatename: selectedCategory // 선택한 카테고리를 서버에 전달 
-        },
-        dataType: 'json',
-        success: function(data) {
-            var restaurantList = data.storelist; // 서버에서 받은 JSON 데이터의 키 이름을 확인하여 수정할 수 있습니다.
-            var restaurantListElement = $('.restaurant-list');
-            restaurantListElement.empty(); // 기존 목록을 비웁니다.
-
-            // 받아온 데이터를 리스트에 추가합니다.
-            restaurantList.forEach(function(restaurant) {
-                var listItem = $('<div class="restaurant"></div>').text(restaurant);
-                restaurantListElement.append(listItem);
-            });
-        },
-        error: function(error) {
-            console.error('Error:', error);
-        }
-    });
-});
-</script>
-</html> 
+</html>

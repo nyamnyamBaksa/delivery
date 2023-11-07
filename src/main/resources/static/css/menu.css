@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 body{
+	font-family: 'NanumSquareNeo';
 	margin: 0;
 	padding: 0;
 }
@@ -8,9 +9,23 @@ nav{
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	height: 50px;
+	height: 60px;
 	background-color: white;
 }
+
+ nav ul li {
+         display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+    }
+    
+nav ul li i {
+        display: block; 
+        margin-bottom: 5px; 
+    }
+
 nav ul{
 	margin: 0;
 	padding: 0;
@@ -18,11 +33,8 @@ nav ul{
 nav li{
 	list-style: none;
 	float: left;
-	width: 100px;
+	width: 20%;
 	line-height: 50px;
+	font-weight:bold;
 	text-align: center;
-}
-nav li:hover {
-	color: white;
-	font-weight: bold;
 }
