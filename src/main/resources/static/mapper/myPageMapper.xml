@@ -84,6 +84,26 @@
 		,(select count(*) from follow where followee = (select mno from member where mid = #{id}) and fdel = 0) as friendreq
 	</select>
 	
+	<select id="friendcount" parameterType="Map" resultType="Map">
+		SELECT
+		    CASE
+		        WHEN f.followee IN (SELECT mno FROM member WHERE MID = #{id})
+		            THEN m1.mid
+		        ELSE m2.mid
+		    END AS mid,
+		    CASE
+		        WHEN f.followee IN (SELECT mno FROM member WHERE MID = #{id})
+		            THEN m1.mprofile
+		        ELSE m2.mprofile
+		    END AS mprofile
+		FROM follow f
+		JOIN member m1 ON f.follower = m1.mno
+		JOIN member m2 ON f.followee = m2.mno
+		WHERE f.fdel = 1
+		  AND (f.followee IN (SELECT mno FROM member WHERE MID = #{id})
+		  OR f.follower IN (SELECT mno FROM member WHERE MID = #{id}));
+	</select>
+	
 	<select id="babfriend"  parameterType="Map" resultType="Integer">
 		SELECT
 		    CASE

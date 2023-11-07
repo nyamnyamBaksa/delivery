@@ -152,5 +152,9 @@ public class MyPageService {
 		myPageDAO.dupdate(map);
 	}
 
+	public List<Map<String, Object>> friendcount(Map<String, Object> map) {
+		return myPageDAO.friendcount(map);
+	}
+
 
 }

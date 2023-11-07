@@ -237,6 +237,19 @@ public class MyPageController {
 		}
 	}
 	
+	@ResponseBody
+	@PostMapping("/friendcount")
+	public String friendcount(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			List<Map<String, Object>> list = myPageService.friendcount(map);
+			JSONObject json = new JSONObject();
+			json.put("list", list);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
 	@GetMapping("/coupon")
 	public String coupon(Model model, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {

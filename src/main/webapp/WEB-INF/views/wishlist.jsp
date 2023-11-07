@@ -87,7 +87,7 @@
 	<div style="margin-top: 100px;"></div>
 		<div class="cart-box-main">
 		<c:if test="${list[0].count eq null}">
-			<div class="container">찜한 가게가 없습니다.</div>
+			<div class="container"><h1 style="text-align: center;">찜한 가게가 없습니다.</h1></div>
 		</c:if>
 		<c:if test="${list[0].count ne null}">
 			<div class="container">

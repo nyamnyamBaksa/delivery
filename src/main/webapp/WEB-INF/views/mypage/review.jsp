@@ -86,6 +86,12 @@
 	</div>
 	<div style="margin-top: 100px;"></div>
 		<div class="cart-box-main">
+		<c:if test="${list[0].count eq null}">
+			<div class="container">
+				<h1 style="text-align: center;">리뷰가 없습니다.</h1>
+			</div>
+		</c:if>
+		<c:if test="${list[0].count ne null}">
 			<div class="container">
 				<div class="col-lg-12"><h2>총 리뷰 개수 : <span class="reviewcount">${list[0].count }</span></h2>
 					<c:if test="${id eq null || sessionScope.mid eq id }">
@@ -133,6 +139,7 @@
 					</table>
 				</div>
 			</div>
+			</c:if>
 		</div>
 	</c:if>
 	<!-- Modal -->
