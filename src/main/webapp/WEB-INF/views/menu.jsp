@@ -31,12 +31,18 @@
 			<i class="fa-solid fa-clipboard-list fa-2xl" style="color: #eb5757;"></i>
 			주문내역
 			</li>
-			<li onclick="link('mypage')">
+			<li onclick="link('mypage/main')">
 			<i class="fa-regular fa-face-smile-wink fa-2xl" style="color: #eb5757;"></i>
 			마이페이지
 			</li>
 		</ul>
 	</nav>
+	
+<Script>	
+function link(url) {
+		location.href = "./" + url;
+	}	
+</Script>	
 	
 </body>
 </html>

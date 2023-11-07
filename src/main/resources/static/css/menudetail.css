@@ -45,10 +45,40 @@ button {
 	width: 130px;
 	height: 40px;
 	border-radius: 20px;
+	margin-top: 60px;
 	border: none;
 	font-weight: bold;
 	font-size: 15px;
 	color: #ffffff;
 	background-color: #EB5757;
 	
+}
+
+.menuimg {
+margin-top: -60px;
+z-index: -1;
+background-repeat: no-repeat;
+background-size: cover;
+}
+
+.mcount {
+	margin-right: 40px;
+	 width: 100px;
+	 height: 20px;
+	 border-radius:20px;
+	 text-align:center;
+	 border: solid #777777 1px;
+	 font-size: 17px;
+	 font-weight: bold;
+	 background-color: white;
+}
+
+#result {
+	font-size: 15px;
+}
+
+a {
+	text-decoration: none;
+	font-size: 17px;
+	color: black;
 }

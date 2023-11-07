@@ -23,36 +23,34 @@
 <body>
 
 	<div>
-		<a href="javascript:history.back()"> <i
-			class="fa-solid fa-arrow-left fa-xl" " style="color: black;"></i>
-		</a><i class="xi-cart-o xi-2x" style="color: #fffff; float: right;"></i>
-		
-	</div>
-	<br>
-	<br>
-	<div id="storedetail">
-		<div id="storeimg" style="text-align: center;">${detail.store_image}
-			<c:if test="${detail.store_image == null}">
-				<i class="fa-solid fa-hammer fa-rotate-270 fa-lg"
-					style="color: #eb5757;"></i>이미지 준비중<i
-					class="fa-solid fa-wrench fa-lg" style="color: #eb5757;"></i>
-			</c:if>
-			<c:if test="${detail.store_image != null}">${detail.store_image}</c:if>
-		</div>
-		<div id="wishlist" style="float: right;">
-			<button type="button" id="likebutton" data-sno="${detail.sno}">
-				<i class="fa-regular fa-heart fa-2xl" style="color: #eb5757;"></i>
-				
-			</button>
-		</div>
+		<a href="javascript:history.back()" style="position: relative; z-index: 1;">
+    <i class="fa-solid fa-arrow-left fa-xl" style="color: white;"></i>
+</a>
+<i class="xi-cart-o xi-2x" style="color: white; float: right; z-index: 1;"></i>
+
+<div id="storedetail">
+    <div id="storeimg" style="text-align: center;">
+        <c:if test="${detail.store_image == null}">
+            <i class="fa-solid fa-hammer fa-rotate-270 fa-lg" style="color: #eb5757;"></i>이미지 준비중
+            <i class="fa-solid fa-wrench fa-lg" style="color: #eb5757; position: relative; z-index: -1;"></i>
+        </c:if>
+        <c:if test="${detail.store_image != null}">
+            <img style="width: 100%; height: 250px; position: relative; z-index: -1;" class="foodimg" src="/img/food/${detail.store_image} ">
+        </c:if>
+    </div>
+    <div id="wishlist" style="float: right;">
+        <button type="button" id="likebutton" data-sno="${detail.sno}">
+            <i class="fa-regular fa-heart fa-2xl" style="color: #EB5757; font-size: 3rem; position: relative; z-index: 1;"></i>
+        </button>
+    </div>
+</div>
 
 		<br>
 		<div id="storename">${detail.store_name}</div>
 		<br>
 		<div id="storestar">
 			<i class="xi-star xi-x" style="color: #FFC633;"></i>${detail.average_rating}&nbsp;&nbsp;리뷰${detail.review_count}개
-			<a href="./review?sno=${detail.sno}"><i class="fa-solid fa-chevron-right fa-2xs"
-				style="color: #000000;"></i></a>
+			<a href="./review?sno=${detail.sno}"><i class="fa-solid fa-chevron-right fa-2xs" style="color: #000000;"></i></a>
 		</div>
 		<button id="storeinfo"
 			onclick="location.href='./storeinfo?sno=${detail.sno}'">가게정보</button>
@@ -68,7 +66,7 @@
 			</c:forEach>
 		</div>
 
-
+        <br>
 		<h3 style="margin-left: 25px;">
 			<i class="fa-solid fa-utensils fa-lg" style="color: #eb5757;"></i>&nbsp;&nbsp;메뉴
 		</h3>
@@ -82,8 +80,7 @@
 								<i class="fa-solid fa-hammer fa-rotate-270 fa-lg"
 									style="color: #eb5757;"></i>이미지 준비중 <i
 									class="fa-solid fa-wrench fa-lg" style="color: #eb5757;"></i>
-							</c:if> <c:if test="${menu.mnimg != null}">${l.store_image}</c:if></td>
-
+							</c:if> <c:if test="${menu.mnimg != null}"><img style="width: 160px; height: 120px;" class="menuimg" src="/img/food/${menu.mnimg}"></c:if></td>
 					</tr>
 					<tr>
 						<td>${menu.mnprice}</td>
