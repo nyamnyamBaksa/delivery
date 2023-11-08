@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.delivery.web.home.HomeDAO">
+
+
+	<select id="list" parameterType="Integer" resultType="com.delivery.web.home.HomeDTO">
+		SELECT DISTINCT s.*
+		FROM storeview s
+		JOIN menu m ON s.sno = m.sno
+		WHERE m.mncate = #{mncate};
+	</select>
+
+
+
+
+</mapper>

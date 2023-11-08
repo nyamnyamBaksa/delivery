@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.delivery.web.pay.PayDAO">
+	
+	<select id="cartlist" parameterType="String" resultType="Map">
+		select cno, mnname, camount, ctotal, mndesc, sname, mnimg, mnprice,
+			SUM(ctotal) OVER (PARTITION BY mno) AS total
+		from cartview
+		where mno = (select mno from member where mid = #{mid})
+	</select>
+	
+	<update id="updateQty" parameterType="Map">
+		update cart set camount = #{qty}, ctotal = #{ctotal}
+		where cno = #{cno}
+	</update>
+	
+	<delete id="cartdel" parameterType="Integer">
+		delete from cart
+		where cno = #{cno}
+	</delete>
+	
+	<select id="coupon" parameterType="String" resultType="Map">
+		select cpno, cpid, cpname, cpprice
+		from coupon
+		where mno = (select mno from member where mid = #{mid}) and cpdel = 0
+			and DATE_FORMAT(cpedate, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d')
+	</select>
+	
+	<select id="findByCpno" parameterType="Integer" resultType="Integer">
+		select cpprice
+		from coupon
+		where cpno = #{cpno}
+	</select>
+	
+	<select id="point" parameterType="String" resultType="Integer">
+		select COALESCE(pbalance, 0)
+		from point
+		where mno = (select mno from member where MID = #{mid})
+		order by pno desc
+		limit 1
+	</select>
+	
+	<insert id="purchase" parameterType="Map">
+		<choose>
+			<when test="cpno == 0">
+				INSERT INTO trade (mnno, tamount, ttotal, mno, toowner, torider)
+					SELECT mnno, camount, ctotal, mno, #{toowner}, #{riderAsk}
+					FROM cart	
+					WHERE mno = (SELECT mno FROM member WHERE MID = #{mid});
+			</when>
+			<otherwise>
+				INSERT INTO trade (mnno, tamount, ttotal, mno, toowner, torider, cpno)
+					SELECT mnno, camount, ctotal, mno, #{toowner}, #{riderAsk}, #{cpno}
+					FROM cart	
+					WHERE mno = (SELECT mno FROM member WHERE MID = #{mid});
+			</otherwise>
+		</choose>
+		
+		delete from cart
+		where mno = (SELECT mno FROM member WHERE MID = #{mid});
+		
+		insert into point (mno, puse, tgroup, cpno, pbalance)
+			SELECT mno, #{realtotal}, tgroup, cpno, #{pbalance}
+			FROM trade	
+			WHERE mno = (SELECT mno FROM member WHERE MID = #{mid}) AND tno = (SELECT MAX(tno) FROM trade);
+		
+		update coupon set cpdel = 1
+		where cpno = #{cpno}
+	</insert>
+	
+	<select id="tgroup" parameterType="Map" resultType="String">
+		select tgroup
+		from trade
+		where mno = (SELECT mno FROM member WHERE MID = #{mid}) and tno = (SELECT MAX(tno) FROM trade)
+	</select>
+	
+	<select id="wishlist" parameterType="String" resultType="Map">
+		select wno, sname, simg, average_rating, review_count, mnname, w.sno,
+			(SELECT COUNT(*) FROM wishlist WHERE mno = (SELECT mno FROM member WHERE MID = #{id})) AS count
+		from wishlistview w, storeview s
+		where w.sno = s.sno AND w.mno = (SELECT mno FROM member WHERE MID = #{id})
+	</select>
+	
+	<select id="mnname" parameterType="String" resultType="Map">
+		SELECT mnname, COUNT(*) AS COUNT, sname
+		FROM trade t, menu m, store s
+		WHERE t.mnno = m.mnno and m.sno = s.sno AND s.sname = #{sname}
+		GROUP BY t.mnno
+		ORDER BY COUNT DESC
+		LIMIT 2
+	</select>
+	
+	<delete id="wdelete" parameterType="Map">
+		delete from wishlist
+		where wno = #{del}
+	</delete>
+	
+	<select id="recommend" parameterType="String" resultType="Map">
+		select sname, simg, s.sno
+		FROM store s, menu m
+		WHERE  s.sno = m.sno
+			and mncate IN (SELECT mncate FROM menu m, tradeview t WHERE t.mid=#{id} AND m.mnno = t.mnno)
+		GROUP BY s.sno
+	</select>
+	
+	<select id="recommend2" resultType="Map">
+		SELECT sno, simg, sname, SUM(count) AS totalcount
+		FROM (
+		  SELECT simg, sname, sno, COUNT(*) AS count
+		  FROM tradeview
+		  GROUP BY tgroup, sno
+		) AS subquery
+		GROUP BY sname
+		ORDER BY totalcount DESC;
+	</select>
+	
+	<select id="search" parameterType="Map" resultType="Map">
+		SELECT s.sno, store_name AS sname, mnname, store_image AS simg, average_rating,
+		       (SELECT COUNT(*)
+				FROM (
+				  SELECT s1.sno
+				  FROM store s1
+				  WHERE s1.sname LIKE CONCAT('%', #{search},'%')
+				  UNION all
+				  SELECT m1.mnno
+				  FROM menu m1
+				  WHERE m1.mnname LIKE CONCAT('%', #{search},'%')
+				) AS combined_sno) AS count
+		FROM storeview s, menu m
+		WHERE s.sno = m.sno
+		  AND (store_name LIKE CONCAT('%', #{search},'%') OR mnname LIKE CONCAT('%', #{search},'%'));
+	</select>
+	
+</mapper>

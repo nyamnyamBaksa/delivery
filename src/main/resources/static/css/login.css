@@ -71,21 +71,7 @@
 	border:#EB5757;
 	cursor: pointer;
 }
-/* .autologin{
-	position: fixed;
-	left: 42.86%;
-	bottom: 50.8%;
-	
-	font-family: 'Dosis';
-	font-style: normal;
-	font-weight: bold;
-	font-size: 15px;
-	line-height: 22px;
-	
-	background: #FFFFFF;
-	border :#FFFFFF;
-	cursor: pointer;
-} */
+
 .autologin{
 	position: absolute;
 	left: 40.86%;
@@ -97,4 +83,10 @@
 }
 #autologinCheckbox + label {
     font-weight: bold;
+}
+.hr{
+	border-top: 3px solid black;
+}
+#kakao, #naver{
+	cursor: pointer;
 }

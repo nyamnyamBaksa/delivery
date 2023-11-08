@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+
+body {
+font-family: 'NanumSquareNeo';
+
+}
+
+ .foodimg {
+margin-top: -60px;
+z-index: -1;
+background-repeat: no-repeat;
+background-size: cover;
+        
+    }
+
+table {
+margin-left: 25px;
+border-spacing: 10px;
+}
+
+th {
+font-size: large;
+}
+
+a {
+  text-decoration: none;
+  color:black;
+}
+
+#storename {
+	margin-left: 25px;
+	font-weight:bold;
+	font-size: 30px;
+}
+
+#storestar, #menumix {
+	margin-left: 25px;
+	font-weight:bold;
+	font-size: 20px;
+}
+#menubest {
+	margin-left: 20px;
+	font-weight:normal;
+	font-size: 17px;
+}
+
+#storeinfo {
+	float:right;
+	width: 130px;
+	height: 40px;
+	position: relative;
+	margin-right:25px;
+    top: -40px;
+	border-radius: 20px;
+	border:none;
+	font-weight:bold;
+	font-size:15px;
+	color: #ffffff;
+	background-color: #EB5757;
+	
+}
+
+#menulist > div {
+	    display:flex;
+	    align-items:center;
+        margin-bottom: 10px;
+        background-color: #EB5757;
+    }
+
+#menuname, #menuprice {
+        flex: 1;
+    }
+
+#menuimg {
+       float: right;
+    }           
+
+button {
+	border:none;
+	background: none;
+	
+}    
+
+#wishlist {
+    margin-top: -40px;
+}
+
+.menuimg {
+border-radius: 10px;	
+}

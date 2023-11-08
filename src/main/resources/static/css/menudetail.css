@@ -1,0 +1,84 @@
+@charset "UTF-8";
+
+
+body {
+font-family: 'NanumSquareNeo';
+
+}
+    
+#menuname {
+	font-weight:bold;
+	font-size: 30px;
+}
+
+#menuname, #menudesc, #menuprice, #sidecheck, #sidecheckbox {
+	margin-left: 30px;
+}
+
+#sidecheck {
+	font-weight:bold;
+	font-size: 17px;
+}
+
+#sidemenu {
+	font-size: 17px;
+}
+
+#menuprice {
+	font-weight:bold;
+	font-size: 30px;
+	margin-right: 50px;
+	display: flex; 
+	justify-content: space-between; 
+	align-items: center;
+}
+
+.price{
+	margin-right: 60px;
+	float: right;
+}
+
+button {
+	display: block; 
+    margin: 0 auto; 
+    text-align: center;
+	width: 130px;
+	height: 40px;
+	border-radius: 20px;
+	margin-top: 60px;
+	border: none;
+	font-weight: bold;
+	font-size: 15px;
+	color: #ffffff;
+	background-color: #EB5757;
+	
+}
+
+.menuimg {
+margin-top: -60px;
+z-index: -1;
+background-repeat: no-repeat;
+background-size: cover;
+}
+
+.mcount {
+	margin-right: 40px;
+	 width: 100px;
+	 height: 20px;
+	 border-radius:20px;
+	 text-align:center;
+	 border: solid #777777 1px;
+	 font-size: 17px;
+	 font-weight: bold;
+	 background-color: white;
+}
+
+#result {
+	font-size: 15px;
+}
+
+a {
+	text-decoration: none;
+	font-size: 17px;
+	color: black;
+}

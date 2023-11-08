@@ -5,18 +5,80 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class StoreService {
 	
 	@Autowired
-	private StoreDAO categorylistDAO;
+	private StoreDAO storeDAO;
+	
 
-	public List<StoreDTO> list() {
-		
-		return categorylistDAO.list();
+	public List<StoreDTO> list(int mncate) {
+		return storeDAO.list(mncate);
 	}
 
+
+	public StoreDTO detail(int sno) {
+		
+		StoreDTO storeDTO = storeDAO.detail(sno);
+		List<MenuDTO> menulist = storeDAO.getMenuList(sno);
+		
+		storeDTO.setMenuList(menulist);
+		
+		return storeDTO;
+	}
+
+
+	public List<MenuDTO> getmenulist(int sno) {
+		
+		return storeDAO.getMenuList(sno);
+	}
+
+
+	public List<StoreDTO> storeinfo(int sno) {
+		
+		return storeDAO.storeinfo(sno);
+	}
+
+
+	public List<MenuDTO> menudetail(int mnno) {
+		
+		return storeDAO.menudetail(mnno);
+	}
 	
+	
+
+	@Transactional
+	public boolean wishlist(String mid, Integer mno) {
+		
+		boolean addwishlist = storeDAO.wishlist(mno);
+		
+		return addwishlist;
+	
+	}
+
+
+	@Transactional
+	public boolean wishremove(String mid, Integer mno) {
+		
+		boolean removed = storeDAO.wishremove(mno);
+		
+		return removed;
+	
+	}
+
+
+	public List<MenuDTO> cartlist(Map<String, Object> map) {
+		
+		return storeDAO.cartlist(map);
+	}
+
+
+
+
+
+	
+
 
 }

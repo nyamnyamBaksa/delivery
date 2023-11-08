@@ -38,27 +38,27 @@ public class MyPageController {
 	@Autowired
 	private Util util;
 	
+	@Autowired
+	private SmsUtil smsUtil;
+	
 	// 나중에 수정
 	@GetMapping("/sample")
 	public String sample(HttpSession session){
-		session.setAttribute("mid", "bbbb");// 나중에 수정
-		session.setAttribute("mgrade", 1);// 나중에 수정
 		return "/mypage/sample";
 	}
 	
 	@GetMapping({"/main","/main/{id}"})
 	public String main(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
-		session.setAttribute("mid", "aaaa");// 나중에 수정
-		session.setAttribute("mgrade", 1);// 나중에 수정
-		
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			if(id == null) {// 본인 계정
 				id = (String) session.getAttribute("mid");
 			} else {// 다른 사람 계정 or 본인 계정
 				String myid = (String) session.getAttribute("mid");
 				model.addAttribute("id", id);
-				int babfriend = myPageService.babfriend(myid, id);
-				model.addAttribute("babfriend", babfriend);
+				if(myid != id) {
+					int babfriend = myPageService.babfriend(myid, id);
+					model.addAttribute("babfriend", babfriend);
+				}
 			}
 			int findById = myPageService.findById(id);
 			if(findById == 0) {
@@ -66,8 +66,12 @@ public class MyPageController {
 			}
 			Map<String, Object> result = myPageService.profile(id);
             Map<String, Object> follow = myPageService.follow(id);
+            List<Map<String, Object>> toplist = myPageService.toplist(id);
+            List<Map<String, Object>> favoritecate = myPageService.favoritecate(id);
             model.addAttribute("result", result);
             model.addAttribute("follow", follow);
+            model.addAttribute("toplist", toplist);
+            model.addAttribute("favoritecate", favoritecate);
             return "/mypage/main";
 		} else {
 			return "redirect:/login";
@@ -116,20 +120,26 @@ public class MyPageController {
 	
 	@GetMapping({"/diary", "/diary/{id}"})
 	public String diary(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
-		session.setAttribute("mid", "aaaa");// 나중에 수정
-		session.setAttribute("mgrade", 1);// 나중에 수정
-		
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String mid = (String) session.getAttribute("mid");
 			if(id == null) {// 본인 계정
 				id = (String) session.getAttribute("mid");
 			} else {// 다른 사람 계정 or 본인 계정
+				String myid = (String) session.getAttribute("mid");
 				model.addAttribute("id", id);
+				if(myid != id) {
+					int babfriend = myPageService.babfriend(myid, id);
+					model.addAttribute("babfriend", babfriend);
+					if(babfriend != 3) {
+						return "redirect:/mypage/main/{id}";
+					}
+				}
 			}
 			int findById = myPageService.findById(id);
 			if(findById == 0) {
 				return "redirect:/";
 			}
-			List<Map<String, Object>> list = myPageService.boardlist(id);
+			List<Map<String, Object>> list = myPageService.boardlist(mid, id);
 			model.addAttribute("list", list);
 			return "/mypage/diary";
 		} else {
@@ -143,8 +153,9 @@ public class MyPageController {
 			@RequestParam(value = "bno", required = true, defaultValue = "0") int bno) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			myPageService.bdelete(bno);
+			String mid = (String) session.getAttribute("mid");
 			String id = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = myPageService.boardlist(id);
+			List<Map<String, Object>> list = myPageService.boardlist(mid, id);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
 			return json.toString();
@@ -158,6 +169,7 @@ public class MyPageController {
 	public String updateLike(Model model, HttpSession session, @RequestParam Map<String, Object> map) {
 		// System.out.println(map);// {bno=2, i=0, id=aaaa}
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("id", (String)session.getAttribute("mid"));
 			myPageService.updateLike(map);
 			int blike = myPageService.mylike(map);
 			JSONObject json = new JSONObject();
@@ -170,7 +182,7 @@ public class MyPageController {
 	
 	@ResponseBody
 	@PostMapping("/comment")
-	public String detail(@RequestParam(value = "bno", required = true, defaultValue = "0") int bno, HttpSession session) 
+	public String comment(@RequestParam(value = "bno", required = true, defaultValue = "0") int bno, HttpSession session) 
 			throws JsonProcessingException {
 		// System.out.println(bno);
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
@@ -225,6 +237,19 @@ public class MyPageController {
 		}
 	}
 	
+	@ResponseBody
+	@PostMapping("/friendcount")
+	public String friendcount(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			List<Map<String, Object>> list = myPageService.friendcount(map);
+			JSONObject json = new JSONObject();
+			json.put("list", list);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
 	@GetMapping("/coupon")
 	public String coupon(Model model, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
@@ -238,10 +263,11 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/pay")
-	public String pay(Model model, HttpSession session) {
+	public String pay(Model model, HttpSession session,
+			@RequestParam(name="cate", required = false, defaultValue = "0") int cate) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			String mid = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = myPageService.pay(mid);
+			List<Map<String, Object>> list = myPageService.pay(mid, cate);
 			model.addAttribute("list", list);
 			return "/mypage/pay";
 		} else {
@@ -250,15 +276,34 @@ public class MyPageController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/cateChange")
+	public String cateChange( HttpSession session, @RequestParam(name="cate", required = false, defaultValue = "0") int cate) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String mid = (String) session.getAttribute("mid");
+			List<Map<String, Object>> list = myPageService.pay(mid, cate);
+			JSONObject json = new JSONObject();
+			json.put("list", list);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
 	@PostMapping("/charge")
-	public String charge(@RequestParam Map<String, Object> map, HttpSession session) {
+	public String charge(@RequestParam Map<String, Object> map, HttpSession session,
+			@RequestParam(name="cate", required = false, defaultValue = "0") int cate) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			// System.out.println(map);// {pcharge=10000, pbalance=14500}
-			map.put("pbalance", util.strToInt((String)map.get("pbalance"))  + util.strToInt((String)map.get("pcharge")));
+			if(map.get("pbalance") == null || map.get("pbalance").equals("")) {
+				map.put("pbalance", util.strToInt((String)map.get("pcharge")));
+			} else {
+				map.put("pbalance", util.strToInt((String)map.get("pbalance"))  + util.strToInt((String)map.get("pcharge")));
+			}
 			String mid = (String) session.getAttribute("mid");
 			map.put("mid", mid);
 			myPageService.charge(map);
-			List<Map<String, Object>> list = myPageService.pay(mid);
+			List<Map<String, Object>> list = myPageService.pay(mid, cate);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
 			return json.toString();
@@ -269,9 +314,6 @@ public class MyPageController {
 	
 	@GetMapping({"/review", "/review/{id}"})
 	public String review(@PathVariable(name = "id", required = false) String id,Model model, HttpSession session) {
-		session.setAttribute("mid", "aaaa");// 나중에 수정
-		session.setAttribute("mgrade", 1);// 나중에 수정
-		
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			if(id == null) {// 본인 계정
 				id = (String) session.getAttribute("mid");
@@ -290,6 +332,21 @@ public class MyPageController {
 		}
 	}
 	
+	/*@ResponseBody
+	@PostMapping("/reviewStar")
+	public String reviewStar(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String id = (String) map.get("id");
+			List<Map<String, Object>> list = myPageService.reviewlist(id);
+			JSONObject json = new JSONObject();
+			json.put("score", util.strToInt((String) map.get("score")));
+			json.put("list", list);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}*/
+	
 	@ResponseBody
 	@PostMapping("/rdelete")
 	public String rdelete(@RequestParam(value="valueArr") String[] del, HttpSession session) {
@@ -300,17 +357,218 @@ public class MyPageController {
 				map.put("del", del[i]);
 				map.put("mid", session.getAttribute("mid"));
 				int result = myPageService.rdelete(map);
-				json.put("result", result);
 			}
+			String id = (String) session.getAttribute("mid");
+			List<Map<String, Object>> list = myPageService.reviewlist(id);
+			json.put("list", list);
 			return json.toString();
 		} else {
 			return "redirect:/login";
 		}
 	}
 	
-	
-	@GetMapping({"/cart"})
-	public String cart() {
-		return "/mypage/cart";
+	@ResponseBody
+	@PostMapping("/updateReview")
+	public String updateReview(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			JSONObject json = new JSONObject();
+			Map<String, Object> review = myPageService.findReviewByRno(map);
+			json.put("review", review);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
 	}
+	
+	@ResponseBody
+	@PostMapping("/editReview")
+	public String editReview(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			JSONObject json = new JSONObject();
+			myPageService.updateReview(map);
+			String id = (String) session.getAttribute("mid");
+			List<Map<String, Object>> list = myPageService.reviewlist(id);
+			json.put("list", list);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@GetMapping("/dwrite")
+	public String dwrite(HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			return "/mypage/dwrite";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@PostMapping("/dwrite")
+	public String dwrite(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("id", (String)session.getAttribute("mid"));
+			myPageService.dwrite(map);
+			return "redirect:/mypage/diary";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@GetMapping({"/dedit/{bno}", "/dedit"})
+	public String dedit(@PathVariable(value = "bno", required = false) Integer bno, Model model, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			if(bno == null) {
+				return "redirect:/";
+			}
+			Map<String, Object> result = myPageService.diaryDetail(bno);
+			model.addAttribute("result", result);
+			model.addAttribute("bno", bno);
+			return "/mypage/dedit";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@PostMapping("/dedit")
+	public String dedit(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("id", (String)session.getAttribute("mid"));
+			myPageService.dupdate(map);
+			return "redirect:/mypage/diary";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/cwrite")
+	public String cwrite(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("id", (String)session.getAttribute("mid"));
+			myPageService.cwrite(map);
+			int bno = util.strToInt((String)map.get("bno"));
+			List<Map<String, Object>> comment = myPageService.comment(bno);
+			JSONObject json = new JSONObject();
+			json.put("comment", comment);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@GetMapping("/info")
+	public String info(Model model, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String mid = (String) session.getAttribute("mid");
+			Map<String, Object> info = myPageService.info(mid);
+			model.addAttribute("info", info);
+			return "/mypage/info";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@GetMapping("/out")
+	public String out(HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			String mid = (String) session.getAttribute("mid");
+			myPageService.out(mid);
+			session.invalidate();
+			return "redirect:/";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			session.invalidate();
+			return "redirect:/";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/idchk")
+	public String idchk(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			int idchk = myPageService.idchk(map);
+			JSONObject json = new JSONObject();
+			json.put("idchk", idchk);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/idUpdate")
+	public String idUpdate(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("mno", session.getAttribute("mno"));
+			myPageService.idUpdate(map);
+			session.setAttribute("mid", map.get("id"));
+			JSONObject json = new JSONObject();
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/pwUpdate")
+	public String pwUpdate(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("mno", session.getAttribute("mno"));
+			myPageService.pwUpdate(map);
+			JSONObject json = new JSONObject();
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/addrUpdate")
+	public String addrUpdate(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("mno", session.getAttribute("mno"));
+			myPageService.addrUpdate(map);
+			JSONObject json = new JSONObject();
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/phoneCheck")// 휴대폰 문자보내기
+	public String sendSMS(@RequestParam(name="phone", required = false) String phone, HttpSession session) {
+		if(session.getAttribute("mid") != null) {
+			System.out.println(phone);
+			int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
+	
+			smsUtil.sendOne(phone, randomNumber);
+			return String.valueOf(randomNumber);
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/phoneUpdate")
+	public String phoneUpdate(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			map.put("mno", session.getAttribute("mno"));
+			myPageService.phoneUpdate(map);
+			JSONObject json = new JSONObject();
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
 }

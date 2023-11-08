@@ -8,6 +8,60 @@
 		where mid = #{id} and mgrade = 1
 	</select>
 	
+	<select id="toplist" parameterType="String" resultType="Map">
+		SELECT sname, COUNT(*) AS count
+		from tradeview
+		where MID = #{id}
+		group by sname
+		ORDER BY COUNT desc
+		LIMIT 3
+	</select>
+	
+	<select id="favoritecate" parameterType="String" resultType="Map">
+	    SELECT
+	        (CASE
+	            WHEN mncate = '1' THEN '한식'
+	            WHEN mncate = '2' THEN '일식'
+	            WHEN mncate = '3' THEN '중식'
+	            WHEN mncate = '4' THEN '양식'
+	            WHEN mncate = '5' THEN '분식'
+	            WHEN mncate = '6' THEN '아시안'
+	            WHEN mncate = '7' THEN '패스트푸드'
+	            ELSE '카페/디저트'
+	        END) AS mncatename,
+	        COUNT(*) AS count
+	    FROM tradeview t, menu m
+	    WHERE t.mnno = m.mnno AND mid = #{id}
+	    GROUP BY mncate
+	    ORDER BY count DESC
+	    limit 3;
+	    
+	    SELECT 
+		    '그 외' AS mncatename,
+		    SUM(count) AS count
+		FROM (
+		    SELECT 
+		        (CASE
+		            WHEN mncate = '1' THEN '한식'
+		            WHEN mncate = '2' THEN '일식'
+		            WHEN mncate = '3' THEN '중식'
+		            WHEN mncate = '4' THEN '양식'
+		            WHEN mncate = '5' THEN '분식'
+		            WHEN mncate = '6' THEN '아시안'
+		            WHEN mncate = '7' THEN '패스트푸드'
+		            ELSE '카페/디저트'
+		        END) AS mncatename,
+		        mncate,
+		        COUNT(*) AS count
+		    FROM tradeview t
+		    JOIN menu m ON t.mnno = m.mnno
+		    WHERE t.MID = 'aaaa'
+		    GROUP BY mncate
+		    ORDER BY count DESC
+		    LIMIT 3
+		) AS subquery;
+	</select>
+	
 	<select id="profile" parameterType="String" resultType="Map">
 		select mname, mprofile
 		FROM member
@@ -28,6 +82,26 @@
 			 followee = (select mno from member where mid = #{id})))
 			as friend
 		,(select count(*) from follow where followee = (select mno from member where mid = #{id}) and fdel = 0) as friendreq
+	</select>
+	
+	<select id="friendcount" parameterType="Map" resultType="Map">
+		SELECT
+		    CASE
+		        WHEN f.followee IN (SELECT mno FROM member WHERE MID = #{id})
+		            THEN m1.mid
+		        ELSE m2.mid
+		    END AS mid,
+		    CASE
+		        WHEN f.followee IN (SELECT mno FROM member WHERE MID = #{id})
+		            THEN m1.mprofile
+		        ELSE m2.mprofile
+		    END AS mprofile
+		FROM follow f
+		JOIN member m1 ON f.follower = m1.mno
+		JOIN member m2 ON f.followee = m2.mno
+		WHERE f.fdel = 1
+		  AND (f.followee IN (SELECT mno FROM member WHERE MID = #{id})
+		  OR f.follower IN (SELECT mno FROM member WHERE MID = #{id}));
 	</select>
 	
 	<select id="babfriend"  parameterType="Map" resultType="Integer">
@@ -53,10 +127,10 @@
 		    END AS friend
 	</select>
 	
-	<select id="boardlist" parameterType="String" resultType="Map">
+	<select id="boardlist" parameterType="Map" resultType="Map">
 		SELECT b.bno, b.bcontent, COALESCE(COUNT(l.lno), 0) AS mylike, b.bdate, b.commentcount, b.blike
 		FROM boardview b LEFT JOIN bblike l
-			ON b.bno = l.bno AND b.mno = l.mno
+			ON b.bno = l.bno AND l.mno = (SELECT mno FROM member WHERE MID = #{mid})
 		WHERE b.mid = #{id}
 		GROUP BY b.bno, b.bcontent, b.bdate, b.commentcount, b.blike
 	</select>
@@ -183,16 +257,27 @@
 			(select count(*) from coupon where mno = (select mno from member where mid = #{mid}) and cpdel = 0) as count
 		from coupon
 		where mno = (select mno from member where mid = #{mid}) and cpdel = 0
+			and DATE_FORMAT(cpedate, '%y-%m-%d') >= DATE_FORMAT(NOW(), '%y-%m-%d')
 	</select>
 	
 	<select id="pay" parameterType="String" resultType="Map">
-	    select p.pno, p.pcharge, p.pbalance, p.puse, t.tgroup, t.sname, t.tdate, 
-	    SUM(p.puse) OVER (PARTITION BY t.tgroup) AS total,
-	    date_format(p.pcdate, '%Y-%m-%d') as pcdate
-	    from point p LEFT join tradeview t
-	    ON p.tno = t.tno
-	    WHERE p.mno = (SELECT mno FROM member where mid = #{mid})
-	    ORDER BY p.pno desc;
+	    select pno, pcharge, pbalance, puse, tgroup,
+	    	(SELECT sname FROM tradeview WHERE tgroup = point.tgroup LIMIT 1) AS sname,
+	    date_format(pcdate, '%Y-%m-%d') as pcdate
+	    from point
+	    WHERE mno = (SELECT mno FROM member where MID = #{mid})
+	    <choose>
+		    <when test="cate == 1">
+		        AND DATE_FORMAT(pcdate, '%y-%m-%d') BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 MONTH), '%y-%m-%d') AND DATE_FORMAT(NOW(), '%y-%m-%d')
+		    </when>
+		    <when test="cate == 3">
+		        AND DATE_FORMAT(pcdate, '%y-%m-%d') BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 3 MONTH), '%y-%m-%d') AND DATE_FORMAT(NOW(), '%y-%m-%d')
+		    </when>
+		    <when test="cate == 6">
+		        AND DATE_FORMAT(pcdate, '%y-%m-%d') BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 6 MONTH), '%y-%m-%d') AND DATE_FORMAT(NOW(), '%y-%m-%d')
+		    </when>
+		</choose>
+	    ORDER BY pno desc;
 	</select>
 	
 	<insert id="charge" parameterType="Map">
@@ -201,16 +286,84 @@
 	</insert>
 	
 	<select id="reviewlist" parameterType="String" resultType="Map">
-		SELECT rno, rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, mnname,
+		SELECT rno, rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, mnname, r.sno,
 			(select count(*) from review where mno = (SELECT mno FROM member WHERE MID = #{id}) AND rdel = 1) as count
 		FROM review r, tradeview t
 		WHERE r.tno = t.tno AND r.mno = (SELECT mno FROM member WHERE MID = #{id})
 			AND rdel = 1
+		order by rno desc
 	</select>
 	
-	<delete id="rdelete" parameterType="Map">
-		delete from review
-		where rno = #{del} and mid= #{mid}
-	</delete>
+	<update id="rdelete" parameterType="Map">
+		update review set rdel = 0
+		where rno = #{del} 
+	</update>
+	
+	<insert id="dwrite" parameterType="Map">
+		insert into board (bcontent, mno)
+		values (#{content}, (select mno from member where mid = #{id}))
+	</insert>
+	
+	<select id="diaryDetail" parameterType="Integer" resultType="Map">
+		select bcontent from board where bno = #{bno}
+	</select>
+	
+	<update id="dupdate" parameterType="Map">
+		update board set bcontent = #{content}
+		where bno = #{bno}
+	</update>
+	
+	<insert id="cwrite" parameterType="Map">
+		insert into comment (cmcontent, mno, bno)
+		values (#{cwrite}, (select mno from member where mid = #{id}), #{bno})
+	</insert>
+	
+	<update id="updateReview" parameterType="Map">
+		update review set rcomment = #{redit}, rscore = #{starRating}
+		where rno = #{rno}
+	</update>
+	
+	<select id="findReviewByRno" parameterType="Map" resultType="Map">
+		SELECT rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, mnname
+		FROM review r, tradeview t
+		WHERE r.tno = t.tno AND rno = #{rno}
+	</select>
+	
+	<select id="info" parameterType="String" resultType="Map">
+		select mid, mname, mnickname, maddr, mphone
+		from member
+		where mid = #{mid}
+	</select>
+	
+	<update id="out" parameterType="String">
+		update member set mgrade = 0
+		where mid = #{mid}
+	</update>
+	
+	<select id="idchk" parameterType="Map" resultType="Integer">
+		select count(*)
+		from member
+		where mid = #{id} and mgrade = 1
+	</select>
+	
+	<update id="idUpdate" parameterType="Map">
+		update member set mid = #{id}
+		where mno = #{mno}
+	</update>
+	
+	<update id="pwUpdate" parameterType="Map">
+		update member set mpw = #{pw}
+		where mno = #{mno}
+	</update>
+	
+	<update id="addrUpdate" parameterType="Map">
+		update member set maddr = #{addr}
+		where mno = #{mno}
+	</update>
+	
+	<update id="phoneUpdate" parameterType="Map">
+		update member set mphone = #{phone}
+		where mno = #{mno}
+	</update>
 	
 </mapper>

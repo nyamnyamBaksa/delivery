@@ -2,8 +2,75 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.delivery.web.store.StoreDAO">
 
-	<select id="list" parameterType="String" resultType="com.delivery.web.store.StoreDTO">
-		SELECT * FROM storeview
+	<select id="list" parameterType="Integer"
+		resultType="com.delivery.web.store.StoreDTO">
+		SELECT DISTINCT s.*
+		FROM storeview s
+		JOIN menu m ON s.sno = m.sno
+		<where>
+			<if test="mncate != null">
+				AND m.mncate = #{mncate}
+			</if>
+			<choose>
+				<when test="orderBy.equals('평점높은순')">
+					ORDER BY s.average_rating DESC
+				</when>
+				<when test="orderBy.equals('리뷰많은순')">
+					ORDER BY s.review_count DESC
+				</when>
+				<otherwise>
+					ORDER BY s.sno
+				</otherwise>
+			</choose>
+		</where>
 	</select>
+
+	<select id="detail" parameterType="Integer"
+		resultType="com.delivery.web.store.StoreDTO">
+		SELECT sno, store_name, store_image, average_rating,
+		review_count
+		FROM storeview
+		WHERE sno = #{sno}
+	</select>
+
+	<!-- 찜버튼 누르기 -->
+	<insert id="wishlist">
+		INSERT INTO wishlist (mno, sno)
+		VALUES (#{mno}, #{sno})
+	</insert>
+
+	<!-- 찜버튼 취소하기 -->
+	<delete id="wishremove">
+		DELETE FROM wishlist WHERE sno = #{sno}
+	</delete>
+
+	<select id="getMenuList" parameterType="Integer"
+		resultType="com.delivery.web.store.MenuDTO">
+		SELECT mnno, mnname, mnprice, mnimg, mnside
+		FROM menu
+		WHERE
+		sno =#{sno}
+	</select>
+
+	<select id="storeinfo"
+		resultType="com.delivery.web.store.StoreDTO">
+		SELECT * FROM store
+		WHERE sno = #{sno}
+	</select>
+
+
+	<select id="menudetail" parameterType="Integer"
+		resultType="com.delivery.web.store.MenuDTO">
+		SELECT mnname, mnprice, mnimg, mndesc, mnside
+		FROM menu
+		WHERE mnno =#{mnno}
+	</select>
+
+	<insert id="cartlist">
+		INSERT INTO cart (mno, mnno, camount, mnprice, ctotal, camount)
+		VALUES(#{mno}, #{mnno}, #{camount}, #{price}, #{ctotal}, #{camount})
+	</insert>
+
+
 
 </mapper>

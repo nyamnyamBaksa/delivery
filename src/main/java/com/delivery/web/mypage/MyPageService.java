@@ -28,8 +28,8 @@ public class MyPageService {
 		return myPageDAO.follow(id);
 	}
 
-	public List<Map<String, Object>> boardlist(String id) {
-		return myPageDAO.boardlist(id);
+	public List<Map<String, Object>> boardlist(String mid, String id) {
+		return myPageDAO.boardlist(mid, id);
 	}
 
 	public void bdelete(int bno) {
@@ -72,8 +72,8 @@ public class MyPageService {
 		return myPageDAO.coupon(mid);
 	}
 
-	public List<Map<String, Object>> pay(String mid) {
-		return myPageDAO.pay(mid);
+	public List<Map<String, Object>> pay(String mid, int cate) {
+		return myPageDAO.pay(mid, cate);
 	}
 
 	public int findById(String id) {
@@ -90,6 +90,70 @@ public class MyPageService {
 
 	public int rdelete(Map<String, Object> map) {
 		return myPageDAO.rdelete(map);
+	}
+
+	public void dwrite(Map<String, Object> map) {
+		myPageDAO.dwrite(map);
+	}
+
+	public void cwrite(Map<String, Object> map) {
+		myPageDAO.cwrite(map);
+	}
+
+	public void updateReview(Map<String, Object> map) {
+		myPageDAO.updateReview(map);
+	}
+
+	public Map<String, Object> findReviewByRno(Map<String, Object> map) {
+		return myPageDAO.findReviewByRno(map);
+	}
+
+	public Map<String, Object> info(String mid) {
+		return myPageDAO.info(mid);
+	}
+
+	public void out(String mid) {
+		myPageDAO.out(mid);
+	}
+
+	public int idchk(Map<String, Object> map) {
+		return myPageDAO.idchk(map);
+	}
+
+	public void idUpdate(Map<String, Object> map) {
+		myPageDAO.idUpdate(map);
+	}
+
+	public void pwUpdate(Map<String, Object> map) {
+		myPageDAO.pwUpdate(map);
+	}
+
+	public void addrUpdate(Map<String, Object> map) {
+		myPageDAO.addrUpdate(map);
+	}
+
+	public void phoneUpdate(Map<String, Object> map) {
+		myPageDAO.phoneUpdate(map);
+	}
+
+	public List<Map<String, Object>> toplist(String id) {
+		return myPageDAO.toplist(id);
+	}
+
+	public List<Map<String, Object>> favoritecate(String id) {
+		return myPageDAO.favoritecate(id);
+	}
+
+	public Map<String, Object> diaryDetail(int bno) {
+		return myPageDAO.diaryDetail(bno);
+	}
+
+	public void dupdate(Map<String, Object> map) {
+		myPageDAO.dupdate(map);
+	}
+
+	public List<Map<String, Object>> friendcount(Map<String, Object> map) {
+		return myPageDAO.friendcount(map);
 	}
 
 
