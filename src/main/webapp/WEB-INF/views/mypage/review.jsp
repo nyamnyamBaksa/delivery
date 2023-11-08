@@ -86,11 +86,17 @@
 	</div>
 	<div style="margin-top: 100px;"></div>
 		<div class="cart-box-main">
+		<c:if test="${list[0].count eq null}">
 			<div class="container">
-				<div class="col-lg-12"><h2>총 리뷰 개수 : ${list[0].count }</h2>
+				<h1 style="text-align: center;">리뷰가 없습니다.</h1>
+			</div>
+		</c:if>
+		<c:if test="${list[0].count ne null}">
+			<div class="container">
+				<div class="col-lg-12"><h2>총 리뷰 개수 : <span class="reviewcount">${list[0].count }</span></h2>
 					<c:if test="${id eq null || sessionScope.mid eq id }">
 						<input style="float: left;margin-top: 15px; margin-right: 15px;" class="allCheck" name="allCheck" type="checkbox">
-						<span style="float: left; font-size: larger; font-weight: bolder; margin-top: 5px;margin-right: 5px;"><span class="review"></span> / ${list[0].count }</span>
+						<span style="float: left; font-size: larger; font-weight: bolder; margin-top: 5px;margin-right: 5px;"><span class="review"></span> / <span class="reviewcount">${list[0].count }</span></span>
 						&nbsp;<button class="delbtn" style="width: 70px;height: 40px;float:left;">삭제</button>
 					</c:if>
 				</div>
@@ -102,7 +108,7 @@
 									<c:if test="${id eq null || sessionScope.mid eq id }">
 										<input class="rowCheck rno" name="rowCheck" type="checkbox" value="${row.rno }">
 									</c:if>
-									&nbsp;${row.sname }
+									<a href="/food/storedetail?sno=${row.sno }">&nbsp;${row.sname }</a>
 									<span class="star-ratings rdate">&nbsp;${row.rdate}</span>
 									<c:if test="${id eq null || sessionScope.mid eq id }">
 										<button class="editbtn" style="width: 70px;height: 40px;float:right;margin-left:10px;margin-right:10px;">수정</button>
@@ -133,6 +139,7 @@
 					</table>
 				</div>
 			</div>
+			</c:if>
 		</div>
 	</c:if>
 	<!-- Modal -->
@@ -162,8 +169,6 @@
     
     <script type="text/javascript">
     
-	    var id = $('.id').text();
-	
 	    $('.rscore').each(function() {
 	        var scoreElement = $(this);
 	        var score = parseFloat(scoreElement.text());
@@ -171,21 +176,9 @@
 	        
 	        var starRatings = scoreElement.closest('.star-ratings');
 	
-	        $.ajax({
-	            url: '/mypage/reviewStar',
-	            type: 'post',
-	            data: { score: score, id: id },
-	            dataType: 'json',
-	            success: function(data) {
-	                starRatings.find('.id').text(id);
-	                starRatings.find('.rscore').text(score);
-	                var starRatingsFill = starRatings.find('.star-ratings-fill');
-	                starRatingsFill.css('width', score + '%');
-	            },
-	            error: function(error) {
-	                swal("실패", "작업수행에 실패하였습니다.", "error");
-	            }
-	        });
+            starRatings.find('.rscore').text(score);
+            var starRatingsFill = starRatings.find('.star-ratings-fill');
+            starRatingsFill.css('width', score + '%');
 	    });
 
     
@@ -211,8 +204,10 @@
 						data : {
 							valueArr : valueArr
 						},
+						dataType: 'json',
 						success : function(data) {
 							swal("", "리뷰를 삭제했습니다.", "success");
+							updateTable(data.list);
 						},
 						error : function(error) {
 							swal("실패", "작업수행에 실패하였습니다.", "error");
@@ -367,6 +362,7 @@
 				dataType : 'json',
 				success : function(data) {
 					swal("", "리뷰를 수정했습니다.", "success");
+					updateTable(data.list);
 				},
 				error : function(error) {
 					swal("실패", "작업수행에 실패하였습니다.", "error");
@@ -384,7 +380,6 @@
 			}
 			
 			if (valueArr.length == 0) {
-				// swal("", "선택한 리뷰가 없습니다.", "error");
 				return false;
 			} else {
 				var chk = confirm('', '정말 삭제하시겠습니까?', valueArr);
@@ -395,6 +390,50 @@
 			이 경우 jQuery는 배열 데이터를 전송할 때, 배열 이름에 대괄호([])를 추가하여 데이터를 직렬화한다.
 		2. traditional 속성을 true로 설정하면 jQuery는 배열 데이터를 직렬화할 때 대괄호([])를 사용하지 않으며, 배열 요소를 반복적으로 전송
 			ex)valueArr=1&valueArr=2&valueArr=3 */
+			
+		function updateTable(data){
+				var newTableHTML = '<table class="table">';
+			    
+			    for (var i = 0; i < data.length; i++) {
+			        var row = data[i];
+			        newTableHTML += '<tr>';
+			        newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;">';
+			        newTableHTML += '<input class="rowCheck rno" name="rowCheck" type="checkbox" value="' + row.rno + '">';
+			        newTableHTML += '&nbsp;' + row.sname;
+			        newTableHTML += '<span class="star-ratings rdate">&nbsp;' + row.rdate + '</span>';
+			        newTableHTML += '<button class="editbtn" style="width: 70px; height: 40px; float:right; margin-left:10px; margin-right:10px;">수정</button>';
+			        newTableHTML += '</td>';
+			        newTableHTML += '</tr>';
+			        newTableHTML += '<tr>';
+			        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
+			        newTableHTML += '<div class="star-ratings">';
+			        newTableHTML += '<div class="id" style="display: none;">' + row.id + '</div>';
+			        newTableHTML += '<div class="rscore" style="display: none;">' + row.rscore + '</div>';
+			        newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (row.rscore * 20) + '%;">';
+			        newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+			        newTableHTML += '</div>';
+			        newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
+			        newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+			        newTableHTML += '</div>';
+			        newTableHTML += '</div>';
+			        newTableHTML += '</td>';
+			        newTableHTML += '</tr>';
+			        newTableHTML += '<tr>';
+			        newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed;">' + row.rcomment + '</td>';
+			        newTableHTML += '</tr>';
+			        newTableHTML += '<tr style="border-bottom: 1px solid black;">';
+			        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed;">' + row.mnname + '</td>';
+			        newTableHTML += '</tr>';
+			    }
+
+			    newTableHTML += '</table>';
+			 	// 테이블 업데이트
+			    $('.table').html(newTableHTML);
+			 	
+			 	// 리뷰 개수 업데이트
+			    $('.reviewcount').text(data[0].count);
+			    $('.review').text('0');
+		}
 	</script>
 </body>
 </html>

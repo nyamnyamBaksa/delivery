@@ -79,4 +79,6 @@ public interface MyPageDAO {
 
 	void dupdate(Map<String, Object> map);
 
+	List<Map<String, Object>> friendcount(Map<String, Object> map);
+
 }

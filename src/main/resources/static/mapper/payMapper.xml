@@ -74,4 +74,61 @@
 		where mno = (SELECT mno FROM member WHERE MID = #{mid}) and tno = (SELECT MAX(tno) FROM trade)
 	</select>
 	
+	<select id="wishlist" parameterType="String" resultType="Map">
+		select wno, sname, simg, average_rating, review_count, mnname, w.sno,
+			(SELECT COUNT(*) FROM wishlist WHERE mno = (SELECT mno FROM member WHERE MID = #{id})) AS count
+		from wishlistview w, storeview s
+		where w.sno = s.sno AND w.mno = (SELECT mno FROM member WHERE MID = #{id})
+	</select>
+	
+	<select id="mnname" parameterType="String" resultType="Map">
+		SELECT mnname, COUNT(*) AS COUNT, sname
+		FROM trade t, menu m, store s
+		WHERE t.mnno = m.mnno and m.sno = s.sno AND s.sname = #{sname}
+		GROUP BY t.mnno
+		ORDER BY COUNT DESC
+		LIMIT 2
+	</select>
+	
+	<delete id="wdelete" parameterType="Map">
+		delete from wishlist
+		where wno = #{del}
+	</delete>
+	
+	<select id="recommend" parameterType="String" resultType="Map">
+		select sname, simg, s.sno
+		FROM store s, menu m
+		WHERE  s.sno = m.sno
+			and mncate IN (SELECT mncate FROM menu m, tradeview t WHERE t.mid=#{id} AND m.mnno = t.mnno)
+		GROUP BY s.sno
+	</select>
+	
+	<select id="recommend2" resultType="Map">
+		SELECT sno, simg, sname, SUM(count) AS totalcount
+		FROM (
+		  SELECT simg, sname, sno, COUNT(*) AS count
+		  FROM tradeview
+		  GROUP BY tgroup, sno
+		) AS subquery
+		GROUP BY sname
+		ORDER BY totalcount DESC;
+	</select>
+	
+	<select id="search" parameterType="Map" resultType="Map">
+		SELECT s.sno, store_name AS sname, mnname, store_image AS simg, average_rating,
+		       (SELECT COUNT(*)
+				FROM (
+				  SELECT s1.sno
+				  FROM store s1
+				  WHERE s1.sname LIKE CONCAT('%', #{search},'%')
+				  UNION all
+				  SELECT m1.mnno
+				  FROM menu m1
+				  WHERE m1.mnname LIKE CONCAT('%', #{search},'%')
+				) AS combined_sno) AS count
+		FROM storeview s, menu m
+		WHERE s.sno = m.sno
+		  AND (store_name LIKE CONCAT('%', #{search},'%') OR mnname LIKE CONCAT('%', #{search},'%'));
+	</select>
+	
 </mapper>
