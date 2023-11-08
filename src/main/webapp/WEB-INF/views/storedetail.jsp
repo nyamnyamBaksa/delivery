@@ -26,8 +26,8 @@
 		<a href="javascript:history.back()" style="position: relative; z-index: 1;">
     <i class="fa-solid fa-arrow-left fa-xl" style="color: white;"></i>
 </a>
-<i class="xi-cart-o xi-2x" style="color: white; float: right; z-index: 1;"></i>
-
+<a id="cart" href="/cart"><i class="fa-solid fa-cart-shopping fa-2xl"
+		style="color: white; margin-left: 95%;"></i></a>
 <div id="storedetail">
     <div id="storeimg" style="text-align: center;">
         <c:if test="${detail.store_image == null}">

@@ -74,16 +74,16 @@
 					<span class="price"> + ${sm.mnprice}원</span>
 				</c:forEach>
 				<br><br><br>
-				<span>
+			</c:if>
+			<span>
 				  <span class="cacount" style="font-weight:bold; margin-left: 30px; font-size: 17px;">수량</span>
 				  <span class="mcount" style="float: right;"> 
 				<a href="#" class="minus">-</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='result'>1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="plus">+</a></span>
 			    </span>
-			<br>
-			<form name="cartbutton" method="post" onclick="/cart">
+			
+				<form name="cartbutton" method="post" onclick="/cart">
 			<button type="submit">담기</button>
 			</form>
-			</c:if>
 		</c:forEach>
 	</div>
 	<br>

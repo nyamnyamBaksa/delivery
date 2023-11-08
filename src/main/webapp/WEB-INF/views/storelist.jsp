@@ -24,7 +24,7 @@
 
 <body>
 	<h1 style="text-align: center;">냠냠박사</h1>
-	<a id="cart" href="./cart"><i class="fa-solid fa-cart-shopping fa-2xl"
+	<a id="cart" href="/cart"><i class="fa-solid fa-cart-shopping fa-2xl"
 		style="color: #000000; margin-left: 95%;"></i></a>
 	<!-- <i class="xi-cart-o xi-2x" style="float: right;"></i> -->
 	<br>
