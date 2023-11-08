@@ -108,9 +108,9 @@
 						                    <input class="rowCheck wno" name="rowCheck" type="checkbox" value="${row.wno}">
 						                </c:if>
 						                &nbsp;<a href="/food/storedetail?sno=${row.sno }">
-						                <img src="${row.simg }"/></a>
+						                <img style="width: 150px;height: 130px;" src="/img/food/${row.simg }"/></a>
 						            </td>
-						            <td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;">
+						            <td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 150px;">
 						                <a href="/food/storedetail?sno=${row.sno }">${row.sname}</a>
 						            </td>
 						            <td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px;">
@@ -339,6 +339,7 @@
 			        if (!groupedData[sname]) {
 			            groupedData[sname] = {
 			            	sno: row.sno,
+			            	simg: row.simg,
 			            	wno: row.wno,
 			                count: row.count,
 			                sname: sname,
@@ -357,9 +358,9 @@
 			        newTableHTML += '<tr style="border-top: 1px solid black">';
 			        newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;">';
 			        newTableHTML += '<input class="rowCheck wno" name="rowCheck" type="checkbox" value="' + group.wno + '">';
-			        newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><img src="' + group.simg + '" /></a>';
+			        newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 150px;height: 130px;" src="/img/food/' + group.simg + '" /></a>';
 			        newTableHTML += '</td>';
-			        newTableHTML += '<td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;">';
+			        newTableHTML += '<td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 150px;">';
 			        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '">' + group.sname + '</a>';
 			        newTableHTML += '</td>';
 			        newTableHTML += '<td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px">';

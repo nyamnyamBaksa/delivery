@@ -17,6 +17,9 @@
 </head>
 <body>
     <c:if test="${sessionScope.mid ne null}">
+	    <a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+	    	<i class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
+		</a>
 		<div class="mypage">
 			<div class="mypageFont">마이페이지</div>
 		</div>
@@ -73,7 +76,7 @@
 			            </c:choose>
 			        "></i>&nbsp;
 		        	<span style="font-size:large;font-weight:bold;">${row.sname }</span>
-		        	<span style="float:right;font-size:large;font-weight:bold;">${row.count }회 주문</span>
+		        	<span style="float:right;font-size:large;font-weight:bold;padding-right: 5px;">${row.count }회 주문</span>
 		        </div>
 		    </c:forEach>
 		    <div class="favoriteCate">

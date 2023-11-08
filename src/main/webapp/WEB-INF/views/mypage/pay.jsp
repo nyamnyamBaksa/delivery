@@ -70,6 +70,7 @@
 						<div class="pbalance" style="display: none;">${list[0].pbalance }</div>
 					</div>
 					<br>
+					<div style="display: none;" class="paycount">${paycount }</div>
 					<table class="table">
 						<c:forEach items="${list }" var="row">
 							<tr style="border-bottom: 1px solid #EB5757;">
@@ -89,6 +90,7 @@
 							</tr>
 						</c:forEach>
 					</table>
+					<button style="margin: 0 auto;" class="morebtn">+ 더보기</button>
 				</div>
 			</div>
 		</div>
@@ -99,6 +101,64 @@
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/sweetalert.min.js"></script>
 	<script type="text/javascript">
+	
+		// 총 개수
+		var paycount = $('.paycount').text();
+		// 조회 인덱스
+		var offset = 0;	// 인덱스 초기값
+		var count = 10;	// 10개씩 로딩
+		
+		// 더보기 버튼 삭제
+		if(offset + count >= paycount){
+			$('.morebtn').remove();
+		}
+	
+			// 더보기 클릭시
+		$(document).on("click", ".morebtn", function(){
+			offset += count;
+			readOldNotify(offset);
+		});
+				
+		// 더보기 실행함수
+		function readOldNotify(offset){
+			let endIndex = offset+count-1;	// endIndex설정
+			$.ajax({
+				url: "/mypage/morePay",
+				type: "post",
+				async: "true",
+				dataType: "json",
+				data: {
+					offset: offset,
+					endIndex: endIndex
+				},
+				success: function (data) {
+					var tableHtml = '';
+				    $.each(data.list, function (index, row) {
+				        tableHtml += '<tr style="border-bottom: 1px solid #EB5757;">';
+				        tableHtml += '<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">' + row.pcdate + '</td>';
+				        if (row.pcharge != null) {
+				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;"></td>';
+				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder; color: #EB5757;">' + row.pcharge + '원 충전</td>';
+				        }
+				        if (row.tgroup != null) {
+				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;">' + row.sname + '</td>';
+				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;">' + row.puse + '원 차감</td>';
+				        }
+				        tableHtml += '</tr>';
+				    });
+				    tableHtml += '';
+
+				 	// 테이블 업데이트
+					$(tableHtml).appendTo($(".table")).slideDown();
+				 	
+					// 더보기 버튼 삭제
+					if(offset + count >= paycount){
+						$('.morebtn').remove();
+					}
+				 	
+				}
+			});
+		}
 	
 		$(document).on("click",".againpurchase", function(){
 			location.href="/purchase";

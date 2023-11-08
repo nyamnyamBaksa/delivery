@@ -140,7 +140,7 @@
 						<c:forEach items="${list}" var="row">
 							<div class="item">
 								<div class="ins-inner-box">
-									<img src="${row.simg }"
+									<img style="width: 215px;height: 180px;" src="/img/food/${row.simg }"
 										onerror="this.src='/img/profileImg/20231026101912스크린샷%202023-10-18%20171343.png'"
 										alt="" />
 									<div class="hov-in">
@@ -287,6 +287,7 @@
 		        if (!groupedData[sname]) {
 		            groupedData[sname] = {
 		            	sno: row.sno,
+		            	simg: row.simg,
 		                count: row.count,
 		                sname: sname,
 		                mnnameList: [],
@@ -301,10 +302,10 @@
 		        newTableHTML += '<tr style="border-top: 1px solid black">';
 		        newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;">';
 		        newTableHTML += '<input class="sno" type="hidden" value="' + group.sno + '">';
-		        newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><img src="' + group.simg + '" /></a>';
+		        newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 150px;height: 130px;" src="/img/food/' + group.simg + '" /></a>';
 		        newTableHTML += '</td>';
-		        newTableHTML += '<td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;">';
-		        newTableHTML += group.sname;
+		        newTableHTML += '<td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 150px;">';
+		        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '">' + group.sname + '</a>';
 		        newTableHTML += '</td>';
 		        newTableHTML += '<td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px">';
 		        newTableHTML += group.mnnameList.join(', ');

@@ -34,6 +34,7 @@
 	<!-- Start Cart  -->
 	<div class="cart-box-main">
 		<div class="container">
+			<div style="margin: 20px;"></div>
 			<div class="row">
 				<div class="col-sm-6 col-lg-6 mb-3">
 					<div class="col-md-12 col-lg-12">

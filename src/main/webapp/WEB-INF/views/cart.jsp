@@ -36,6 +36,7 @@
     <c:if test="${list[0].sname ne null }">
         <div class="container">
             <div class="row">
+            <div style="margin: 10px;"></div>
             	<div class="col-lg-12"><h1>${list[0].sname }</h1></div>
                 <div class="col-lg-12">
                     <div class="table-main table-responsive">
@@ -54,17 +55,17 @@
                             	<c:forEach items="${list }" var="row">
 	                                <tr>
 	                                    <td class="thumbnail-img">
-	                                        <a href="/storelist/${row.sname }">
-												<img class="img-fluid" src="/img/menuImg/${row.mnimg}" alt="" />
+	                                        <a href="food/storedetail?sno=${list[0].sno}">
+												<img class="img-fluid" src="/img/food/${row.mnimg}" alt="" />
 											</a>
 	                                    </td>
 	                                    <td class="name-pr">${row.mnname }</td>
 	                                    <td class="price-pr">
 	                                        <span class="mnprice">${row.mnprice }</span>원
 	                                    </td>
-	                                    <td class="quantity-box" style="margin-bottom: 5px;">
+	                                    <td class="quantity-box">
 											<div class="cno" style="display: none;">${row.cno }</div>
-	                                    	<input style="width: 50px;" type="number" value="${row.camount }" min="1" step="1" class="c-input-text qty text">
+	                                    	<input style="width: 50px;margin-bottom: 15px;" type="number" value="${row.camount }" min="1" step="1" class="c-input-text qty text">
 						                    &nbsp;<button class="qtyChange" style="background-color: black;">수량변경</button>
 	                                    </td>
 	                                    <td class="price-pr">
@@ -79,7 +80,7 @@
                         </table>
                         <hr style="border: 1px solid black;">
                         <div>
-                        	<h2 onclick="location.href='/storelist/${list[0].sname}'" style="font-weight:bold;text-align: center;cursor: pointer;">+ 더 담으러 가기</h2>
+                        	<h2 onclick="location.href='/food/storedetail?sno=${list[0].sno}'" style="font-weight:bold;text-align: center;cursor: pointer;">+ 더 담으러 가기</h2>
                         </div>
                     </div>
                 </div>

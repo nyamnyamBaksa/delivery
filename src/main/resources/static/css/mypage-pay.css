@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.charge, .delbtn, .editbtn, .editModalbtn, .againpurchase {
+.charge, .delbtn, .editbtn, .editModalbtn, .againpurchase, .morebtn {
 	background: #EB5757;
 	border-radius: 50px;
 	font-family: 'Dosis';

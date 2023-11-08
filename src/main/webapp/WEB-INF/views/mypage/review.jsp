@@ -81,6 +81,9 @@
 </head>
 <body>
 	<c:if test="${sessionScope.mid ne null}">
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+    	<i class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
+	</a>
 	<div class="title">
 		<div class="titleFont">리뷰관리</div>
 	</div>
@@ -92,8 +95,10 @@
 			</div>
 		</c:if>
 		<c:if test="${list[0].count ne null}">
+			<div class="mid" style="display: none;">${sessionScope.mid }</div>
+			<div id="id" style="display: none;">${id }</div>
 			<div class="container">
-				<div class="col-lg-12"><h2>총 리뷰 개수 : <span class="reviewcount">${list[0].count }</span></h2>
+				<div class="col-lg-12"><h2>총 리뷰 개수 : <span class="reviewcount" id="reviewcount">${list[0].count }</span></h2>
 					<c:if test="${id eq null || sessionScope.mid eq id }">
 						<input style="float: left;margin-top: 15px; margin-right: 15px;" class="allCheck" name="allCheck" type="checkbox">
 						<span style="float: left; font-size: larger; font-weight: bolder; margin-top: 5px;margin-right: 5px;"><span class="review"></span> / <span class="reviewcount">${list[0].count }</span></span>
@@ -102,7 +107,8 @@
 				</div>
 				<div class="col-lg-12">
 					<table class="table">
-						<c:forEach items="${list }" var="row">
+						<c:forEach items="${list }" var="row" varStatus="loop">
+						    <c:if test="${loop.index == 0 || !row.tgroup.equals(list[loop.index - 1].tgroup)}">
 							<tr>
 								<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;">
 									<c:if test="${id eq null || sessionScope.mid eq id }">
@@ -133,10 +139,28 @@
 								<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed;">${row.rcomment}</td>
 							</tr>
 							<tr style="border-bottom: 1px solid black;">
-								<td class="name-pr" style="border: 0; border-style: dashed;">${row.mnname}</td>
+								 <td class="name-pr" style="border: 0; border-style: dashed;">
+				                <c:set var="menuNames" value="" />
+				                <c:forEach items="${list}" var="innerRow">
+				                    <c:if test="${innerRow.tgroup.equals(row.tgroup)}">
+				                        <c:choose>
+				                            <c:when test="${not empty menuNames}">
+				                                <c:set var="menuNames" value="${menuNames}, " />
+				                            </c:when>
+				                            <c:otherwise>
+				                                <c:set var="menuNames" value="${menuNames}" />
+				                            </c:otherwise>
+				                        </c:choose>
+				                        <c:set var="menuNames" value="${menuNames}${innerRow.mnname}" />
+				                    </c:if>
+				                </c:forEach>
+				                ${menuNames}
+				            </td>
 							</tr>
+							</c:if>
 						</c:forEach>
 					</table>
+					<button style="margin: 0 auto;" class="morebtn">+ 더보기</button>
 				</div>
 			</div>
 			</c:if>
@@ -168,6 +192,108 @@
 	<script src="/js/sweetalert.min.js"></script>
     
     <script type="text/javascript">
+    
+   		// 총 개수
+   		var reviewcount = $('#reviewcount').text();
+   		// 조회 인덱스
+   		var offset = 0;	// 인덱스 초기값
+   		var count = 7;	// 7개씩 로딩
+   		
+  		// 더보기 버튼 삭제
+		if(offset + count >= reviewcount){
+			$('.morebtn').remove();
+		}
+    
+   		// 더보기 클릭시
+    	$(document).on("click", ".morebtn", function(){
+    		offset += count;
+   			readOldNotify(offset);
+    	});
+    			
+   		// 더보기 실행함수
+   		function readOldNotify(offset){
+   			var id = $(".id").text();
+   			if(id == ''){
+   				id = $('.mid').text();
+   			}
+   			let endIndex = offset+count-1;	// endIndex설정
+   			$.ajax({
+   				url: "/mypage/moreReview",
+   				type: "post",
+   				async: "true",
+   				dataType: "json",
+   				data: {
+   					id: id,
+   					offset: offset,
+   					endIndex: endIndex
+   				},
+   				success: function (data) {
+   					var newTableHTML = '';
+	   			    var menuNames = '';
+	   			    var prevTGroup = '';
+	
+	   			    for (var i = 0; i < data.length; i++) {
+	   			        var row = data[i];
+	
+	   			        if (i === 0 || row.tgroup !== data[i - 1].tgroup) {
+	   			            newTableHTML += '<tr>';
+	   			            newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 800px;">';
+	
+	   		                newTableHTML += '<input class="rowCheck rno" name="rowCheck" type="checkbox" value="' + row.rno + '">';
+	   		                newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + row.sno + '">' + row.sname + '</a>';
+	   		                newTableHTML += '<span class="star-ratings rdate">&nbsp;' + row.rdate + '</span>';
+	   		                newTableHTML += '<button class="editbtn" style="width: 70px; height: 40px; float:right; margin-left:10px; margin-right:10px;">수정</button>';
+	   			            newTableHTML += '</td>';
+	   			            newTableHTML += '</tr>';
+	
+	   			            newTableHTML += '<tr>';
+	   			            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
+	   			            newTableHTML += '<div class="star-ratings">';
+	   			            newTableHTML += '<div class="id" style="display: none;">' + id + '</div>';
+	   			            newTableHTML += '<div class="rscore" style="display: none;">' + row.rscore + '</div>';
+	   			            newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (row.rscore * 20) + '%;">';
+	   			            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+	   			            newTableHTML += '</div>';
+	   			            newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
+	   			            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+	   			            newTableHTML += '</div>';
+	   			            newTableHTML += '</div>';
+	   			            newTableHTML += '</td>';
+	   			            newTableHTML += '</tr>';
+	   			            newTableHTML += '<tr>';
+	   			            newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed;">' + row.rcomment + '</td>';
+	   			            newTableHTML += '</tr>';
+	   			        }
+	
+	   			        if (row.mnname) {
+	   			            menuNames += menuNames ? ', ' + row.mnname : row.mnname;
+	   			        }
+	
+	   			        if (i === data.length - 1 || row.tgroup !== data[i + 1].tgroup) {
+	   			            newTableHTML += '<tr style="border-bottom: 1px solid black;">';
+	   			            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed;">' + menuNames + '</td>';
+	   			            newTableHTML += '</tr>';
+	   			            menuNames = '';
+	   			        }
+	
+	   			        prevTGroup = row.tgroup;
+	   			    }
+	
+	   			    newTableHTML += '';
+   				 	// 테이블 업데이트
+   					$(newTableHTML).appendTo($(".table")).slideDown();
+   				 	
+   				 	editok();
+   				 	
+   					// 더보기 버튼 삭제
+   					if(offset + count >= reviewcount){
+   						$('.morebtn').remove();
+   					}
+   				 	
+   				}
+   			});
+   		}
+    	
     
 	    $('.rscore').each(function() {
 	        var scoreElement = $(this);
@@ -202,7 +328,7 @@
 						type : 'post',
 						traditional : true,// valueArr=[1, 2, 3] -> valueArr=1&valueArr=2&valueArr=3
 						data : {
-							valueArr : valueArr
+							valueArr : valueArr,offset: offset
 						},
 						dataType: 'json',
 						success : function(data) {
@@ -283,7 +409,7 @@
 		}
 
 		$(document).on("click", ".editbtn, .delbtn", function(){
-			var rno = $('.rno').val();
+			var rno = $(this).closest('tr').find('.rno').val();
 			let $icon = $(this);
 			if ($icon.hasClass('editbtn')) {
 				updateReview(rno);
@@ -292,16 +418,21 @@
 			}
 		});
 		
-		var rdate = $('.rdate').text();
+		// 3일 지난 리뷰
 		var today = new Date();
-		var rdateDate = new Date(rdate);
-		
 		var threeDaysAgo = new Date();
-	    threeDaysAgo.setDate(today.getDate() - 3);
-	    
-	    if (rdateDate > threeDaysAgo) {
-	    	$('.editbtn').attr("disabled",true);
-	    }
+		threeDaysAgo.setDate(today.getDate() - 3);
+		editok();
+		function editok(){
+			$('.rdate').each(function() {
+			    var rdate = $(this).text();
+			    var rdateDate = new Date(rdate);
+			    if (rdateDate < threeDaysAgo) {
+			        $(this).closest('tr').find('.editbtn').remove();
+			    }
+			});
+		}
+
 		
 		function updateReview(rno){
 		   
@@ -355,14 +486,18 @@
 			var rno = $('.rnoModal').text();
 			var redit = $('.redit').val();
 			var starRating = $('input[name="rating"]:checked').val();
+			if(starRating == null){
+				starRating = 0;
+			}
 			$.ajax({
 				url : '/mypage/editReview',
 				type : 'post',
-				data : {rno : rno, redit:redit, starRating:starRating},
+				data : {rno : rno, redit:redit, starRating:starRating,offset: offset},
 				dataType : 'json',
 				success : function(data) {
 					swal("", "리뷰를 수정했습니다.", "success");
 					updateTable(data.list);
+					$("#exampleModal").modal("hide");
 				},
 				error : function(error) {
 					swal("실패", "작업수행에 실패하였습니다.", "error");
@@ -390,50 +525,67 @@
 			이 경우 jQuery는 배열 데이터를 전송할 때, 배열 이름에 대괄호([])를 추가하여 데이터를 직렬화한다.
 		2. traditional 속성을 true로 설정하면 jQuery는 배열 데이터를 직렬화할 때 대괄호([])를 사용하지 않으며, 배열 요소를 반복적으로 전송
 			ex)valueArr=1&valueArr=2&valueArr=3 */
-			
-		function updateTable(data){
-				var newTableHTML = '<table class="table">';
-			    
-			    for (var i = 0; i < data.length; i++) {
-			        var row = data[i];
-			        newTableHTML += '<tr>';
-			        newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;">';
-			        newTableHTML += '<input class="rowCheck rno" name="rowCheck" type="checkbox" value="' + row.rno + '">';
-			        newTableHTML += '&nbsp;' + row.sname;
-			        newTableHTML += '<span class="star-ratings rdate">&nbsp;' + row.rdate + '</span>';
-			        newTableHTML += '<button class="editbtn" style="width: 70px; height: 40px; float:right; margin-left:10px; margin-right:10px;">수정</button>';
-			        newTableHTML += '</td>';
-			        newTableHTML += '</tr>';
-			        newTableHTML += '<tr>';
-			        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
-			        newTableHTML += '<div class="star-ratings">';
-			        newTableHTML += '<div class="id" style="display: none;">' + row.id + '</div>';
-			        newTableHTML += '<div class="rscore" style="display: none;">' + row.rscore + '</div>';
-			        newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (row.rscore * 20) + '%;">';
-			        newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
-			        newTableHTML += '</div>';
-			        newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
-			        newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
-			        newTableHTML += '</div>';
-			        newTableHTML += '</div>';
-			        newTableHTML += '</td>';
-			        newTableHTML += '</tr>';
-			        newTableHTML += '<tr>';
-			        newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed;">' + row.rcomment + '</td>';
-			        newTableHTML += '</tr>';
-			        newTableHTML += '<tr style="border-bottom: 1px solid black;">';
-			        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed;">' + row.mnname + '</td>';
-			        newTableHTML += '</tr>';
-			    }
+		
+		function updateTable(data) {
+		    var newTableHTML = '<table class="table">';
+		    var menuNames = '';
+		    var prevTGroup = '';
 
-			    newTableHTML += '</table>';
-			 	// 테이블 업데이트
-			    $('.table').html(newTableHTML);
-			 	
-			 	// 리뷰 개수 업데이트
-			    $('.reviewcount').text(data[0].count);
-			    $('.review').text('0');
+		    for (var i = 0; i < data.length; i++) {
+		        var row = data[i];
+
+		        if (i === 0 || row.tgroup !== data[i - 1].tgroup) {
+		            newTableHTML += '<tr>';
+		            newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 800px;">';
+
+	                newTableHTML += '<input class="rowCheck rno" name="rowCheck" type="checkbox" value="' + row.rno + '">';
+	                newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + row.sno + '">' + row.sname + '</a>';
+	                newTableHTML += '<span class="star-ratings rdate">&nbsp;' + row.rdate + '</span>';
+	                newTableHTML += '<button class="editbtn" style="width: 70px; height: 40px; float:right; margin-left:10px; margin-right:10px;">수정</button>';
+		            newTableHTML += '</td>';
+		            newTableHTML += '</tr>';
+
+		            newTableHTML += '<tr>';
+		            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
+		            newTableHTML += '<div class="star-ratings">';
+		            newTableHTML += '<div class="id" style="display: none;">' + id + '</div>';
+		            newTableHTML += '<div class="rscore" style="display: none;">' + row.rscore + '</div>';
+		            newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (row.rscore * 20) + '%;">';
+		            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+		            newTableHTML += '</div>';
+		            newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
+		            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+		            newTableHTML += '</div>';
+		            newTableHTML += '</div>';
+		            newTableHTML += '</td>';
+		            newTableHTML += '</tr>';
+		            newTableHTML += '<tr>';
+		            newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed;">' + row.rcomment + '</td>';
+		            newTableHTML += '</tr>';
+		        }
+
+		        if (row.mnname) {
+		            menuNames += menuNames ? ', ' + row.mnname : row.mnname;
+		        }
+
+		        if (i === data.length - 1 || row.tgroup !== data[i + 1].tgroup) {
+		            newTableHTML += '<tr style="border-bottom: 1px solid black;">';
+		            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed;">' + menuNames + '</td>';
+		            newTableHTML += '</tr>';
+		            menuNames = '';
+		        }
+
+		        prevTGroup = row.tgroup;
+		    }
+
+		    newTableHTML += '</table>';
+
+		    // 테이블 업데이트
+		    $('.table').html(newTableHTML);
+
+		    editok();
 		}
+
 	</script>
 </body>
 </html>

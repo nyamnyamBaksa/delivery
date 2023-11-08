@@ -72,8 +72,8 @@ public class MyPageService {
 		return myPageDAO.coupon(mid);
 	}
 
-	public List<Map<String, Object>> pay(String mid, int cate) {
-		return myPageDAO.pay(mid, cate);
+	public List<Map<String, Object>> pay(Map<String, Object> map) {
+		return myPageDAO.pay(map);
 	}
 
 	public int findById(String id) {
@@ -84,8 +84,8 @@ public class MyPageService {
 		myPageDAO.charge(map);
 	}
 
-	public List<Map<String, Object>> reviewlist(String id) {
-		return myPageDAO.reviewlist(id);
+	public List<Map<String, Object>> reviewlist(Map<String, Object> map) {
+		return myPageDAO.reviewlist(map);
 	}
 
 	public int rdelete(Map<String, Object> map) {
@@ -154,6 +154,14 @@ public class MyPageService {
 
 	public List<Map<String, Object>> friendcount(Map<String, Object> map) {
 		return myPageDAO.friendcount(map);
+	}
+
+	public int oldListCnt(Map<String, Object> map) {
+		return myPageDAO.oldListCnt(map);
+	}
+
+	public int paycount(Map<String, Object> map) {
+		return myPageDAO.paycount(map);
 	}
 
 

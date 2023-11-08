@@ -462,13 +462,11 @@
 					
 					var detailElement = '<div class="detail">' +
 				    '<input class="input" type="tel" id="phone" name="phone" placeholder="전화번호를 입력하세요.">' +
-				    '<input class="infobtn" type="button" id="phoneChk" style="float: right; background: #FF9C41;" value="인증번호 받기"><br><br>' +
-				    '<input class="input" id="phone2" type="text" disabled required />' +
-				    '<input class="infobtn" type="button" id="phoneChk2" style="float: right; background: #FF9C41;" value="본인인증" disabled="disabled">' +
-				    '<br><button class="phonechbtn infobtn" style="float: right;">전화번호 변경</button>' +
-				    '<div>' +
+				    '<button class="phonechbtn infobtn" style="float: right;">전화번호 변경</button><br>' +
+				    '<input class="infobtn" type="button" id="phoneChk" style="background: #FF9C41;" value="인증번호 받기">' +
+				    '<input style="margin-top: 5px;" class="input" id="phone2" type="text" disabled required /><br>' +
+				    '<input class="infobtn" type="button" id="phoneChk2" style="background: #FF9C41;display: inline-block;" value="본인인증" disabled="disabled">' +
 				    '<span style="color: red;" class="point successPhoneChk">휴대폰 번호 입력후 인증번호 보내기를 해주십시오.</span>' +
-				    '</div>' +
 				    '<input type="hidden" id="phoneDoubleChk" />' +
 				    '</div>';
 				    

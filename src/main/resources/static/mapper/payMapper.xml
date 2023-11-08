@@ -3,7 +3,7 @@
 <mapper namespace="com.delivery.web.pay.PayDAO">
 	
 	<select id="cartlist" parameterType="String" resultType="Map">
-		select cno, mnname, camount, ctotal, mndesc, sname, mnimg, mnprice,
+		select cno, mnname, camount, ctotal, mndesc, sname, mnimg, mnprice, sno,
 			SUM(ctotal) OVER (PARTITION BY mno) AS total
 		from cartview
 		where mno = (select mno from member where mid = #{mid})

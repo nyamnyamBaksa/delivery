@@ -263,12 +263,15 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/pay")
-	public String pay(Model model, HttpSession session,
+	public String pay(Model model, HttpSession session,@RequestParam Map<String, Object> map,
 			@RequestParam(name="cate", required = false, defaultValue = "0") int cate) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
-			String mid = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = myPageService.pay(mid, cate);
+			map.put("mid", (String) session.getAttribute("mid"));
+			map.put("offset", 0);
+			List<Map<String, Object>> list = myPageService.pay(map);
+			int paycount = myPageService.paycount(map);
 			model.addAttribute("list", list);
+			model.addAttribute("paycount", paycount);
 			return "/mypage/pay";
 		} else {
 			return "redirect:/login";
@@ -276,11 +279,30 @@ public class MyPageController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/cateChange")
-	public String cateChange( HttpSession session, @RequestParam(name="cate", required = false, defaultValue = "0") int cate) {
+	@PostMapping("/morePay")
+	public String morePay(@RequestParam Map<String, Object> map, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
-			String mid = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = myPageService.pay(mid, cate);
+			map.put("mid", (String) session.getAttribute("mid"));
+			map.put("offset", util.strToInt((String)map.get("offset")));
+			List<Map<String, Object>> list = myPageService.pay(map);
+			JSONObject json = new JSONObject();
+			json.put("list", list);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/cateChange")
+	public String cateChange(HttpSession session, @RequestParam(name="cate", required = false, defaultValue = "0") int cate,
+			@RequestParam Map<String, Object> map) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			if(map.get("offset") == null) {
+				map.put("offset", 0);
+			}
+			map.put("mid", (String) session.getAttribute("mid"));
+			List<Map<String, Object>> list = myPageService.pay(map);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
 			return json.toString();
@@ -295,6 +317,9 @@ public class MyPageController {
 			@RequestParam(name="cate", required = false, defaultValue = "0") int cate) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			// System.out.println(map);// {pcharge=10000, pbalance=14500}
+			if(map.get("offset") == null) {
+				map.put("offset", 0);
+			}
 			if(map.get("pbalance") == null || map.get("pbalance").equals("")) {
 				map.put("pbalance", util.strToInt((String)map.get("pcharge")));
 			} else {
@@ -303,7 +328,7 @@ public class MyPageController {
 			String mid = (String) session.getAttribute("mid");
 			map.put("mid", mid);
 			myPageService.charge(map);
-			List<Map<String, Object>> list = myPageService.pay(mid, cate);
+			List<Map<String, Object>> list = myPageService.pay(map);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
 			return json.toString();
@@ -313,7 +338,7 @@ public class MyPageController {
 	}
 	
 	@GetMapping({"/review", "/review/{id}"})
-	public String review(@PathVariable(name = "id", required = false) String id,Model model, HttpSession session) {
+	public String review(@RequestParam Map<String, Object> map, @PathVariable(name = "id", required = false) String id,Model model, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			if(id == null) {// 본인 계정
 				id = (String) session.getAttribute("mid");
@@ -324,9 +349,26 @@ public class MyPageController {
 			if(findById == 0) {
 				return "redirect:/";
 			}
-			List<Map<String, Object>> list = myPageService.reviewlist(id);
+			map.put("id", id);
+			map.put("offset", 0);
+			List<Map<String, Object>> list = myPageService.reviewlist(map);
 			model.addAttribute("list", list);
 			return "/mypage/review";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/moreReview")
+	public String moreReview(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			System.out.println(map);// {id=aaaa, offset=7, endIndex=13}
+			map.put("offset", util.strToInt((String)map.get("offset")));
+			List<Map<String, Object>> list = myPageService.reviewlist(map);
+			JSONObject json = new JSONObject();
+			json.put("list", list);
+			return json.toString();
 		} else {
 			return "redirect:/login";
 		}
@@ -349,7 +391,8 @@ public class MyPageController {
 	
 	@ResponseBody
 	@PostMapping("/rdelete")
-	public String rdelete(@RequestParam(value="valueArr") String[] del, HttpSession session) {
+	public String rdelete(@RequestParam(value="valueArr") String[] del, HttpSession session,
+			@RequestParam(name="offset", required = false) int offset) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			JSONObject json = new JSONObject();
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -359,7 +402,9 @@ public class MyPageController {
 				int result = myPageService.rdelete(map);
 			}
 			String id = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = myPageService.reviewlist(id);
+			map.put("id", id);
+			map.put("offset", offset);
+			List<Map<String, Object>> list = myPageService.reviewlist(map);
 			json.put("list", list);
 			return json.toString();
 		} else {
@@ -387,7 +432,9 @@ public class MyPageController {
 			JSONObject json = new JSONObject();
 			myPageService.updateReview(map);
 			String id = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = myPageService.reviewlist(id);
+			map.put("id", id);
+			map.put("offset", util.strToInt((String)map.get("offset")));
+			List<Map<String, Object>> list = myPageService.reviewlist(map);
 			json.put("list", list);
 			return json.toString();
 		} else {
