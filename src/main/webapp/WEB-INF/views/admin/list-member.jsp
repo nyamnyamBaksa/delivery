@@ -49,7 +49,7 @@
 </style>
 <script type="text/javascript">
 function gradeCh(mno, name, value){
-  if(confirm(name + "님의 등급을 변경하시겠습니까?")){
+  if(confirm(name + "님의 등급을 변경합니다.")){
     location.href="./gradeChange?mno="+mno+"&grade="+value;
   }
 }
@@ -57,7 +57,7 @@ function gradeCh(mno, name, value){
 </head>
 <body>
 	<div class="container">
-		<%--@ include file="menubar.jsp"--%>
+		<%@ include file="menubar.jsp"%>
 		<div class="main">
 			<div class="article">
 				<h1>회원관리</h1>
@@ -94,11 +94,27 @@ function gradeCh(mno, name, value){
 									</optgroup>
 								</select>
 							</div>
+							
+							<!-- button class="btn btn-primary xi-view-list" onclick="location.href='./multiboard?board=${param.board}'">멀티보드로</button -->
+							
+
+
 						</div>
 					</c:forEach>
+							 <button type="button" class="btn btn-lg text-white float-end" style="background-color: #EB5757;">회원삭제</button>
+							 <!-- button type="button" class="btn text-white" style="background-color: #EB5757;">회원삭제</button -->
+							 
+							 
+							
+							 
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
 </body>
 </html>

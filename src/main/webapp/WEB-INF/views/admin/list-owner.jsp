@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="../css/admin.css">
 <link rel="stylesheet" href="../css/member.css">
 <style type="text/css">
-/* 스타일 내용은 그대로 유지 */
+
 .div-table {
 	margin: 0 auto;
 	display: table;
@@ -32,9 +32,11 @@
 }
 
 .table-head {
-	background-color: gray;
+	background-color: #EB5757;
+	height: 40px;
 	font-weight: bold;
 	text-align: center;
+	
 }
 
 .gray {
@@ -55,7 +57,7 @@ function gradeCh(mno, name, value){
 </head>
 <body>
 	<div class="container">
-		<%--@ include file="menubar.jsp"--%>
+		<%@ include file="menubar.jsp"%>
 		<div class="main">
 			<div class="article">
 				<h1>사장님관리</h1>
