@@ -20,6 +20,11 @@ a {
 	color: black;
 }
 
+.foodimg {
+border-radius: 10px;	
+}
+
+
 table {
 	margin-left: 30px;
 	font-size: 15px;

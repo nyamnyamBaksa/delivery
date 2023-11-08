@@ -32,23 +32,24 @@
 		FROM storeview
 		WHERE sno = #{sno}
 	</select>
-	
+
 	<!-- 찜버튼 누르기 -->
 	<insert id="wishlist">
-	INSERT INTO wishlist (mno, sno)
-	VALUES (#{mno}, #{sno}) 
+		INSERT INTO wishlist (mno, sno)
+		VALUES (#{mno}, #{sno})
 	</insert>
-	
+
 	<!-- 찜버튼 취소하기 -->
 	<delete id="wishremove">
-    DELETE FROM wishlist WHERE sno = #{sno}
-    </delete>
+		DELETE FROM wishlist WHERE sno = #{sno}
+	</delete>
 
 	<select id="getMenuList" parameterType="Integer"
 		resultType="com.delivery.web.store.MenuDTO">
 		SELECT mnno, mnname, mnprice, mnimg, mnside
 		FROM menu
-		WHERE sno =#{sno}
+		WHERE
+		sno =#{sno}
 	</select>
 
 	<select id="storeinfo"
@@ -65,7 +66,10 @@
 		WHERE mnno =#{mnno}
 	</select>
 
-
+	<insert id="cartlist">
+		INSERT INTO cart (mno, mnno, camount, mnprice, ctotal, camount)
+		VALUES(#{mno}, #{mnno}, #{camount}, #{price}, #{ctotal}, #{camount})
+	</insert>
 
 
 

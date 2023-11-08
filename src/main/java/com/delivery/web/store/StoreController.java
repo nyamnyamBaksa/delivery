@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -54,12 +53,13 @@ public class StoreController {
 		
 		String bestmenu = "";
 		
+		//사이드 메뉴 있을 때
 		if (!sideMenuList.isEmpty()) {
 			MenuDTO randomMain = RandomMenu(mainMenuList);
 			MenuDTO randomSide = RandomMenu(sideMenuList);
 		
 		    bestmenu = randomMain.getMnname() + " + " + randomSide.getMnname();
-		
+		//사이드 메뉴 없을 때
 		} else {
 			MenuDTO randomMain = RandomMenu(mainMenuList);
 			bestmenu = randomMain.getMnname();
@@ -139,8 +139,6 @@ public class StoreController {
 		return response;
 	}
 	
-
-
 	@GetMapping("/food/storeinfo")
 	public String storeinfo(@RequestParam(value = "sno", required = false) int sno, Model model) {
 
@@ -174,13 +172,19 @@ public class StoreController {
 
 	}
 	
-	@PostMapping("/cart")
-	@ResponseBody
-	public String cart (@RequestParam("mnno") int mnno, HttpSession session) {
+	@PostMapping("/food/menudetail")
+	public String cart (@RequestParam Map<String, Object> map, Model model, HttpSession session) {
 		
+		if (session.getAttribute("mid") != null) {
+			
+			List<MenuDTO> cartlist = storeService.cartlist(map);			
+			
+			return "redirect:/cart";
+			
+		}else {
+			return "redirect:/login";
+		}
 		
-	
-		return "success";
 	}
 	
 	

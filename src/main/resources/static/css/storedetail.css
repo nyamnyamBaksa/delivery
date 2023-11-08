@@ -6,6 +6,14 @@ font-family: 'NanumSquareNeo';
 
 }
 
+ .foodimg {
+margin-top: -60px;
+z-index: -1;
+background-repeat: no-repeat;
+background-size: cover;
+        
+    }
+
 table {
 margin-left: 25px;
 border-spacing: 10px;
@@ -73,3 +81,11 @@ button {
 	background: none;
 	
 }    
+
+#wishlist {
+    margin-top: -40px;
+}
+
+.menuimg {
+border-radius: 10px;	
+}
