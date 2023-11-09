@@ -131,7 +131,8 @@
 	</select>
 	
 	<select id="boardlist" parameterType="Map" resultType="Map">
-		SELECT b.bno, b.bcontent, COALESCE(COUNT(l.lno), 0) AS mylike, b.bdate, b.commentcount, b.blike
+		SELECT b.bno, b.bcontent, COALESCE(COUNT(l.lno), 0) AS mylike, b.bdate, b.commentcount, b.blike,
+			(select count(*) from boardview where WHERE mid = #{id}) as count
 		FROM boardview b LEFT JOIN bblike l
 			ON b.bno = l.bno AND l.mno = (SELECT mno FROM member WHERE MID = #{mid})
 		WHERE b.mid = #{id}

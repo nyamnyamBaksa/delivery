@@ -24,7 +24,7 @@ public interface PayDAO {
 
 	String tgroup(Map<String, Object> map);
 
-	List<Map<String, Object>> wishlist(String id);
+	List<Map<String, Object>> wishlist(Map<String, Object> map);
 
 	List<Map<String, Object>> mnname(String sname);
 
@@ -35,5 +35,11 @@ public interface PayDAO {
 	List<Map<String, Object>> recommend2();
 
 	List<Map<String, Object>> search(Map<String, Object> map);
+
+	List<Map<String, Object>> mnwishlist(Map<String, Object> map);
+
+	List<Map<String, Object>> mnsearch(Map<String, Object> map);
+
+	int searchcount(Map<String, Object> map);
 
 }

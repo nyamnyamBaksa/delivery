@@ -95,7 +95,7 @@
 			</div>
 		</c:if>
 		<c:if test="${list[0].count ne null}">
-			<div class="mid" style="display: none;">${sessionScope.mid }</div>
+			<div id="mid" style="display: none;">${sessionScope.mid }</div>
 			<div id="id" style="display: none;">${id }</div>
 			<div class="container">
 				<div class="col-lg-12"><h2>총 리뷰 개수 : <span class="reviewcount" id="reviewcount">${list[0].count }</span></h2>
@@ -124,7 +124,6 @@
 							<tr>
 							    <td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">
 							        <div class="star-ratings">
-							        	<div class="id" style="display: none;">${id }</div>
 							        	<div class="rscore" style="display: none;">${row.rscore }</div>
 										<div class="star-ratings-fill space-x-2 text-lg" style="width: ${score}%;">
 										    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
@@ -212,9 +211,9 @@
     			
    		// 더보기 실행함수
    		function readOldNotify(offset){
-   			var id = $(".id").text();
+   			var id = $("#id").text();
    			if(id == ''){
-   				id = $('.mid').text();
+   				id = $('#mid').text();
    			}
    			let endIndex = offset+count-1;	// endIndex설정
    			$.ajax({
@@ -249,7 +248,6 @@
 	   			            newTableHTML += '<tr>';
 	   			            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
 	   			            newTableHTML += '<div class="star-ratings">';
-	   			            newTableHTML += '<div class="id" style="display: none;">' + id + '</div>';
 	   			            newTableHTML += '<div class="rscore" style="display: none;">' + row.rscore + '</div>';
 	   			            newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (row.rscore * 20) + '%;">';
 	   			            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
@@ -334,6 +332,10 @@
 						success : function(data) {
 							swal("", "리뷰를 삭제했습니다.", "success");
 							updateTable(data.list);
+							// 더보기 버튼 삭제
+		   					if(offset + count >= reviewcount){
+		   						$('.morebtn').remove();
+		   					}
 						},
 						error : function(error) {
 							swal("실패", "작업수행에 실패하였습니다.", "error");
@@ -548,7 +550,6 @@
 		            newTableHTML += '<tr>';
 		            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
 		            newTableHTML += '<div class="star-ratings">';
-		            newTableHTML += '<div class="id" style="display: none;">' + id + '</div>';
 		            newTableHTML += '<div class="rscore" style="display: none;">' + row.rscore + '</div>';
 		            newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (row.rscore * 20) + '%;">';
 		            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';

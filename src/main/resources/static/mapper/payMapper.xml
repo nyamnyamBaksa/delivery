@@ -74,11 +74,19 @@
 		where mno = (SELECT mno FROM member WHERE MID = #{mid}) and tno = (SELECT MAX(tno) FROM trade)
 	</select>
 	
-	<select id="wishlist" parameterType="String" resultType="Map">
-		select wno, sname, simg, average_rating, review_count, mnname, w.sno,
+	<select id="wishlist" parameterType="Map" resultType="Map">
+		select wno, sname, simg, average_rating, review_count, w.sno,
 			(SELECT COUNT(*) FROM wishlist WHERE mno = (SELECT mno FROM member WHERE MID = #{id})) AS count
 		from wishlistview w, storeview s
 		where w.sno = s.sno AND w.mno = (SELECT mno FROM member WHERE MID = #{id})
+		GROUP BY sno
+		LIMIT #{offset}, 7;
+	</select>
+	
+	<select id="mnwishlist" parameterType="Map" resultType="Map">
+		select mnname, w.sno, sname
+		from wishlistview w, storeview s
+		where w.sno = s.sno AND w.mno = (SELECT mno FROM member WHERE MID = #{id});
 	</select>
 	
 	<select id="mnname" parameterType="String" resultType="Map">
@@ -99,7 +107,7 @@
 		select sname, simg, s.sno
 		FROM store s, menu m
 		WHERE  s.sno = m.sno
-			and mncate IN (SELECT mncate FROM menu m, tradeview t WHERE t.mid=#{id} AND m.mnno = t.mnno)
+			and m.mncate IN (SELECT m.mncate FROM menu m, tradeview t WHERE t.mid=#{id} AND m.mnno = t.mnno)
 		GROUP BY s.sno
 	</select>
 	
@@ -114,21 +122,112 @@
 		ORDER BY totalcount DESC;
 	</select>
 	
+	<select id="searchcount" parameterType="Map" resultType="Integer">
+		SELECT count(subcount) AS count
+		FROM(	
+			SELECT COUNT(*) AS subcount		      
+			FROM storeview s, menu m
+			WHERE s.sno = m.sno
+				AND (store_name LIKE CONCAT('%', #{search},'%') OR mnname LIKE CONCAT('%', #{search},'%'))
+			group by s.sno) AS sub
+	</select>
+	
 	<select id="search" parameterType="Map" resultType="Map">
-		SELECT s.sno, store_name AS sname, mnname, store_image AS simg, average_rating,
-		       (SELECT COUNT(*)
-				FROM (
-				  SELECT s1.sno
-				  FROM store s1
-				  WHERE s1.sname LIKE CONCAT('%', #{search},'%')
-				  UNION all
-				  SELECT m1.mnno
-				  FROM menu m1
-				  WHERE m1.mnname LIKE CONCAT('%', #{search},'%')
-				) AS combined_sno) AS count
-		FROM storeview s, menu m
-		WHERE s.sno = m.sno
-		  AND (store_name LIKE CONCAT('%', #{search},'%') OR mnname LIKE CONCAT('%', #{search},'%'));
+		<choose>
+			<when test="cate == 0">
+				SELECT s.sno, store_name AS sname, store_image AS simg, average_rating,
+				       (SELECT COUNT(*)
+						FROM (
+						  SELECT s1.sno
+						  FROM store s1
+						  WHERE s1.sname LIKE CONCAT('%', #{search},'%')
+						  UNION all
+						  SELECT m1.mnno
+						  FROM menu m1
+						  WHERE m1.mnname LIKE CONCAT('%', #{search},'%')
+						) AS combined_sno) AS count
+				FROM storeview s, menu m
+				WHERE s.sno = m.sno
+				  AND (store_name LIKE CONCAT('%', #{search},'%') OR mnname LIKE CONCAT('%', #{search},'%'))
+				group by s.sno
+				limit #{offset}, 7
+			</when>
+		  
+		    <when test="cate == 1">
+		        SELECT
+				  subquery.sno, subquery.sname, subquery.simg, subquery.average_rating, COUNT(*) AS totalcount,
+				     	(SELECT COUNT(*)
+							FROM (
+							  SELECT s1.sno
+							  FROM store s1
+							  WHERE s1.sname LIKE CONCAT('%', #{search},'%')
+							  UNION all
+							  SELECT m1.mnno
+							  FROM menu m1
+							  WHERE m1.mnname LIKE CONCAT('%', #{search},'%')
+							) AS combined_sno) AS count
+				     FROM (
+						  SELECT s.sno, store_name AS sname, store_image AS simg, average_rating
+						  FROM (storeview s join menu m ON s.sno = m.sno)
+							WHERE (store_name LIKE CONCAT('%', #{search},'%') OR m.mnname LIKE CONCAT('%', #{search},'%'))
+						  GROUP BY s.sno
+						) AS subquery LEFT JOIN tradeview t ON subquery.sno = t.sno
+					GROUP BY subquery.sno
+					ORDER BY totalcount DESC
+					limit #{offset}, 7
+		    </when>
+		    
+		    <when test="cate == 2">
+			  SELECT s.sno, store_name AS sname, store_image AS simg, average_rating,
+					       (SELECT COUNT(*)
+							FROM (
+							  SELECT s1.sno
+							  FROM store s1
+							  WHERE s1.sname LIKE CONCAT('%', #{search},'%')
+							  UNION all
+							  SELECT m1.mnno
+							  FROM menu m1
+							  WHERE m1.mnname LIKE CONCAT('%', #{search},'%')
+							) AS combined_sno) AS count
+					FROM storeview s, menu m
+					WHERE s.sno = m.sno
+					  AND (store_name LIKE CONCAT('%', #{search},'%') OR mnname LIKE CONCAT('%', #{search},'%'))
+					group by s.sno
+			    	order by average_rating desc
+			    	limit #{offset}, 7
+			</when>
+		    
+		    <when test="cate == 3">
+		    	SELECT
+				  subquery.sno, subquery.sname, subquery.simg, subquery.average_rating, COUNT(*) AS totalcount,
+				  		(SELECT COUNT(*)
+						FROM (
+						  SELECT s1.sno
+						  FROM store s1
+						  WHERE s1.sname LIKE CONCAT('%', #{search},'%')
+						  UNION all
+						  SELECT m1.mnno
+						  FROM menu m1
+						  WHERE m1.mnname LIKE CONCAT('%', #{search},'%')
+						) AS combined_sno) AS count
+				     FROM (
+						  SELECT s.sno, store_name AS sname, store_image AS simg, average_rating
+						  FROM (storeview s join menu m ON s.sno = m.sno)
+							WHERE (store_name LIKE CONCAT('%', #{search},'%') OR m.mnname LIKE CONCAT('%', #{search},'%'))
+						  GROUP BY s.sno
+						) AS subquery LEFT JOIN wishlist w ON subquery.sno = w.sno
+					GROUP BY subquery.sno
+					ORDER BY totalcount DESC
+					limit #{offset}, 7
+		    </when>
+		</choose>
+	</select>
+	
+	<select id="mnsearch" parameterType="Map" resultType="Map">
+		select mnname, sname
+		from store s, menu m
+		where s.sno = m.sno
+		  AND (sname LIKE CONCAT('%', #{search},'%') OR mnname LIKE CONCAT('%', #{search},'%'))
 	</select>
 	
 </mapper>

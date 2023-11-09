@@ -91,8 +91,8 @@
 
 .search {
 	position: absolute;
-	left: 21%;
-	right: 21%;
+	left: 15%;
+	right: 15%;
 	top: 9.77%;
 	bottom: 85.55%;
 	background: #EB5757;
@@ -113,12 +113,13 @@
 
 .fa-search{
 	position: absolute;
-	left: 77%;
-	right: 20%;
+	left: 78%;
+	right: 17%;
 	top: 11%;
-	bottom: 85.55%;
+	bottom: 85%;
 	cursor: pointer;
 	color: white;
+	font-size: larger;
 }
 </style>
 </head>
@@ -126,15 +127,27 @@
 	<div class="cart-box-main">
 		<div class="container">
 			<input type="text" class="search" required="required" placeholder="검색어를 입력해주세요.">
-			<i style="font-size: larger;" class="fa fa-search"></i>
+			<i class="fa fa-search"></i>
 			<div style="margin-top: 100px;"></div>
+			<div class="col-lg-12">
+				<div class="searchcate toolbar-sorter-right">
+		       		<select class="cate selectpicker show-tick form-control" id="cate">
+						<option selected="selected" value="0"> 기본순 ▼</option>
+						<option value="1">주문 많은 순 ▼</option>
+						<option value="2">별점 높은 순 ▼</option>
+						<option value="3">찜 많은 순 ▼</option>
+					</select>
+		       	</div>
+		    </div>
+		    <div id="searchcount" style="display: none;">${searchcount }</div>
 			<div class="col-lg-12">
 				<table class="table">
 				</table>
+				<button style="margin: 0 auto;" class="morebtn">+ 더보기</button>
 			</div>
 			<div class="recommend">
 			<c:if test="${sessionScope.mid ne null}">
-				<span style="font-size: larger;font-weight: bolder;">'${sessionScope.mname }'님이 최근에 드신 메뉴 별 추천 맛집</span>
+				<h2 style="font-weight: bolder;text-align: center;">'${sessionScope.mname }'님이 최근에 드신 메뉴 별 추천 맛집</h2>
 					<div class="instagram-box">
 					<div class="main-instagram owl-carousel owl-theme">
 						<c:forEach items="${list}" var="row">
@@ -153,7 +166,7 @@
 				</div>
 			</c:if>
 			<c:if test="${sessionScope.mid eq null}">
-				<span style="font-size: larger;font-weight: bolder;">주문량 많은 추천 맛집</span>
+				<h2 style="font-weight: bolder;text-align: center;">주문량 많은 추천 맛집</h2>
 					<div class="instagram-box">
 					<div class="main-instagram owl-carousel owl-theme">
 						<c:forEach items="${rlist}" var="row">
@@ -193,37 +206,41 @@
 	<script src="/js/sweetalert.min.js"></script>
 
 	<script type="text/javascript">
-
-		var confirm = function(msg, title, valueArr) {
-			swal({
-				title : title,
-				text : msg,
-				type : "warning",
-				showCancelButton : true,
-				confirmButtonClass : "btn-danger",
-				confirmButtonText : "예",
-				cancelButtonText : "아니오",
-				closeOnConfirm : false,
-				closeOnCancel : true
-			}, function(isConfirm) {
-			});
-		}
 		
-		$(document).on('click', '.fa-search', function(){
-			var search = $('.search').val().trim();
+		// 총 개수
+		var searchcount = $('#searchcount').text();
+		// 조회 인덱스
+		var offset = 0;	// 인덱스 초기값
+		var count = 7;	// 7개씩 로딩
+		$('.searchcate').hide();
+		$('.morebtn').hide();
+		if(offset + count >= searchcount){
+			$('.morebtn').remove();
+		}
+	
+		// 더보기 클릭시
+		$(document).on("click", ".morebtn", function(){
+			$('.searchcate').show();
+			offset += count;
+			readOldNotify(offset);
+		});
 			
-			if(search == '') return;
-			
+		// 더보기 실행함수
+		function readOldNotify(offset){
+			let endIndex = offset+count-1;	// endIndex설정
 			$.ajax({
-				url: '/search',
-				type: 'post',
-				data: {search:search},
-				dataType:'json',
-				success:function(data){
+				url: "/search",
+				type: "post",
+				async: "true",
+				dataType: "json",
+				data: {
+					offset: offset,
+					endIndex: endIndex
+				},
+				success: function (data) {
 					if(data.search == ''){
 						swal("", "검색 결과가 없습니다.", "warning");
 					} else {
-						
 						var placeholder = search + '  ' + data.search[0].count + '개';
 						$('.search').val('');
 						$('.search').attr('placeholder', placeholder);
@@ -248,7 +265,151 @@
 						});
 	
 						  
-					      $('.sname').each(function() {
+					      $('.ssname').each(function() {
+					    	  if ($(this).text().includes(search)) {
+							        var text = $(this).text();
+							        var modifiedText = '';
+							        for (let i = 0; i < text.length; i++) {
+							            if (text.substring(i, i + search.length) === search) {
+							                modifiedText += '<span style="color: #FF9C41;">' + search + '</span>';
+							                i += search.length - 1;
+							            } else {
+							                modifiedText += text[i];
+							            }
+							        }
+							        $(this).html(modifiedText);
+							    }
+					      });
+					}
+				}
+			});
+		}
+		
+		function getParameterByName(name, url) {
+	    	const urlParams = new URL(location.href).searchParams;
+	    	return urlParams.get(name);
+	    }
+	
+		// URL에서 cate 매개변수를 가져와서 기본값으로 설정
+	    var defaultCate = getParameterByName('cate');
+	    $('#cate').val(defaultCate);
+		
+	    var search = '';
+	    
+	    $('#cate').on('change', function(){
+	    	$('.searchcate').show();
+			var cate = $('#cate').val();
+			$.ajax({
+				url:'/cateChange',
+				type:'post',
+				data:{cate:cate, search:search,offset: offset},
+				dataType:'json',
+				success:function(data){
+					if(data.search == ''){
+						swal("", "검색 결과가 없습니다.", "warning");
+					} else {
+						var placeholder = search + '  ' + data.search[0].count + '개';
+						$('.search').val('');
+						$('.search').attr('placeholder', placeholder);
+						updateTable(data);
+						$('.recommend').empty();
+						
+						// mnname과 sname 텍스트를 노란색으로 변경
+					      $('.mnname').each(function() {
+						    if ($(this).text().includes(search)) {
+						        var text = $(this).text();
+						        var modifiedText = '';
+						        for (let i = 0; i < text.length; i++) {
+						            if (text.substring(i, i + search.length) === search) {
+						                modifiedText += '<span style="color: #FF9C41;">' + search + '</span>';
+						                i += search.length - 1;
+						            } else {
+						                modifiedText += text[i];
+						            }
+						        }
+						        $(this).html(modifiedText);
+						    }
+						});
+	
+						  
+					      $('.ssname').each(function() {
+					    	  if ($(this).text().includes(search)) {
+							        var text = $(this).text();
+							        var modifiedText = '';
+							        for (let i = 0; i < text.length; i++) {
+							            if (text.substring(i, i + search.length) === search) {
+							                modifiedText += '<span style="color: #FF9C41;">' + search + '</span>';
+							                i += search.length - 1;
+							            } else {
+							                modifiedText += text[i];
+							            }
+							        }
+							        $(this).html(modifiedText);
+							    }
+					      });
+					}
+				},
+				error:function(error){
+					swal("실패", "작업수행에 실패하였습니다.", "error");
+				}
+			});
+		});
+		
+		var confirm = function(msg, title, valueArr) {
+			swal({
+				title : title,
+				text : msg,
+				type : "warning",
+				showCancelButton : true,
+				confirmButtonClass : "btn-danger",
+				confirmButtonText : "예",
+				cancelButtonText : "아니오",
+				closeOnConfirm : false,
+				closeOnCancel : true
+			}, function(isConfirm) {
+			});
+		}
+		
+		$(document).on('click', '.fa-search', function(){
+			$('.searchcate').show();
+			search = $('.search').val().trim();
+			
+			if(search == '') return;
+			
+			$.ajax({
+				url: '/search',
+				type: 'post',
+				data: {search:search},
+				dataType:'json',
+				success:function(data){
+					if(data.search == ''){
+						swal("", "검색 결과가 없습니다.", "warning");
+					} else {
+						var placeholder = search + '  ' + data.search[0].count + '개';
+						$('.search').val('');
+						$('.search').attr('placeholder', placeholder);
+						updateTable(data);
+						$('.recommend').empty();
+						
+						// mnname과 sname 텍스트를 노란색으로 변경
+					      $('.mnname').each(function() {
+						    if ($(this).text().includes(search)) {
+						        var text = $(this).text();
+						        var modifiedText = '';
+						        for (let i = 0; i < text.length; i++) {
+						            if (text.substring(i, i + search.length) === search) {
+						                modifiedText += '<span style="color: #FF9C41;">' + search + '</span>';
+						                i += search.length - 1;
+						            } else {
+						                modifiedText += text[i];
+						            }
+						        }
+						        $(this).html(modifiedText);
+						    }
+						});
+	
+						  
+					      $('.ssname').each(function() {
 					    	  if ($(this).text().includes(search)) {
 							        var text = $(this).text();
 							        var modifiedText = '';
@@ -294,23 +455,28 @@
 		                average_rating: row.average_rating
 		            };
 		        }
-		        groupedData[sname].mnnameList.push(row.mnname);
+		        $.each(data.mnsearch, function(index2, row2) {
+			     	// 최대 두 개의 mnname만 추가
+			        if (groupedData[sname].sname == row2.sname) {
+			            groupedData[sname].mnnameList.push(row2.mnname);
+			        }
+		        });
 		    });
 
 		    // 그룹화된 데이터로 테이블 생성
 		    $.each(groupedData, function(sno, group) {
-		        newTableHTML += '<tr style="border-top: 1px solid black">';
+		        newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;border-bottom: 1px solid #c0c0c0;">';
 		        newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;">';
 		        newTableHTML += '<input class="sno" type="hidden" value="' + group.sno + '">';
-		        newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 150px;height: 130px;" src="/img/food/' + group.simg + '" /></a>';
+		        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 150px;height: 130px;" src="/img/food/' + group.simg + '" /></a>';
 		        newTableHTML += '</td>';
-		        newTableHTML += '<td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 150px;">';
-		        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '">' + group.sname + '</a>';
+		        newTableHTML += '<td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
+		        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><span class="ssname">' + group.sname + '</span></a>';
 		        newTableHTML += '</td>';
-		        newTableHTML += '<td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px">';
+		        newTableHTML += '<td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
 		        newTableHTML += group.mnnameList.join(', ');
 		        newTableHTML += '</td>';
-		        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
+		        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;vertical-align: middle;">';
 		        newTableHTML += '<div class="star-ratings">';
 		        newTableHTML += '<div class="rscore" style="display: none;">' + group.average_rating + '</div>';
 		        newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.average_rating * 20) + '%;">';
@@ -328,7 +494,11 @@
 		    
 		    // 테이블 업데이트
 		    $('.table').html(newTableHTML);
-
+		    $('#searchcount').text(data.searchcount);
+		    
+		    if(offset + count >= searchcount){
+				$('.morebtn').remove();
+			}
 		}
 	</script>
 </body>

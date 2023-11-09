@@ -34,6 +34,7 @@
 			</div>
 			<div class="container">
 				<div class="col-lg-12">
+					<div id="count" style="display: none;">${list[0].count }</div>
 					<table class="table">
 						<c:forEach items="${list }" var="row">
 							<tr style="height: 200px;">
