@@ -24,4 +24,16 @@ public interface PayDAO {
 
 	String tgroup(Map<String, Object> map);
 
+	List<Map<String, Object>> wishlist(String id);
+
+	List<Map<String, Object>> mnname(String sname);
+
+	int wdelete(Map<String, Object> map);
+
+	List<Map<String, Object>> recommend(String id);
+
+	List<Map<String, Object>> recommend2();
+
+	List<Map<String, Object>> search(Map<String, Object> map);
+
 }

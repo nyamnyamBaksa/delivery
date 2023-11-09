@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class StoreService {
@@ -45,6 +46,36 @@ public class StoreService {
 		
 		return storeDAO.menudetail(mnno);
 	}
+	
+	
+
+	@Transactional
+	public boolean wishlist(String mid, Integer mno) {
+		
+		boolean addwishlist = storeDAO.wishlist(mno);
+		
+		return addwishlist;
+	
+	}
+
+
+	@Transactional
+	public boolean wishremove(String mid, Integer mno) {
+		
+		boolean removed = storeDAO.wishremove(mno);
+		
+		return removed;
+	
+	}
+
+
+	public List<MenuDTO> cartlist(Map<String, Object> map) {
+		
+		return storeDAO.cartlist(map);
+	}
+
+
+
 
 
 	

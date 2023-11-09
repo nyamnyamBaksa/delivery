@@ -237,6 +237,19 @@ public class MyPageController {
 		}
 	}
 	
+	@ResponseBody
+	@PostMapping("/friendcount")
+	public String friendcount(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			List<Map<String, Object>> list = myPageService.friendcount(map);
+			JSONObject json = new JSONObject();
+			json.put("list", list);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
 	@GetMapping("/coupon")
 	public String coupon(Model model, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
@@ -319,7 +332,7 @@ public class MyPageController {
 		}
 	}
 	
-	@ResponseBody
+	/*@ResponseBody
 	@PostMapping("/reviewStar")
 	public String reviewStar(@RequestParam Map<String, Object> map, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
@@ -332,7 +345,7 @@ public class MyPageController {
 		} else {
 			return "redirect:/login";
 		}
-	}
+	}*/
 	
 	@ResponseBody
 	@PostMapping("/rdelete")
@@ -344,8 +357,10 @@ public class MyPageController {
 				map.put("del", del[i]);
 				map.put("mid", session.getAttribute("mid"));
 				int result = myPageService.rdelete(map);
-				json.put("result", result);
 			}
+			String id = (String) session.getAttribute("mid");
+			List<Map<String, Object>> list = myPageService.reviewlist(id);
+			json.put("list", list);
 			return json.toString();
 		} else {
 			return "redirect:/login";
@@ -371,6 +386,9 @@ public class MyPageController {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			JSONObject json = new JSONObject();
 			myPageService.updateReview(map);
+			String id = (String) session.getAttribute("mid");
+			List<Map<String, Object>> list = myPageService.reviewlist(id);
+			json.put("list", list);
 			return json.toString();
 		} else {
 			return "redirect:/login";

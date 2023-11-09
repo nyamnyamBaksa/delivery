@@ -19,6 +19,41 @@
 <link rel="stylesheet" href="/css/sweetalert.min.css" />
 <!-- 아이콘 -->
 <link rel="stylesheet" href="/css/bootstrap-icons.css">
+
+<style type="text/css">
+.form-group{
+	position: relative;
+}
+.input{
+	width: 350px;
+	height: 50px;
+	
+	background: #FFFFFF;
+	border: 4px solid #EB5757;
+	border-radius: 10px;
+	font-size: larger;
+	font-weight: bolder;
+	
+}
+
+.infobtn{
+	margin-top:5px;
+	top: 27.83%;
+	bottom: 67.48%;
+	height: 40px;
+	background: #EB5757;
+	border-radius: 50px;
+	border: none;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	color: #FFFFFF;
+}
+</style>
 </head>
 <body>
 	<div class="title">
@@ -26,64 +61,48 @@
 	</div>
 	<div style="margin-top: 120px;"></div>
 	<c:if test="${sessionScope.mid ne null}">
-		<div class="container" style="margin: 0 auto; border: 3px solid #EB5757;width: 500px;">
-			<div class="col-lg-12">
+		<div class="container" style="margin: 0 auto;width: 520px;">
+			<div class="col-lg-15">
 				<div class="form-group">
-					아이디 :
-					<p style="display: inline" id="id">${info.mid}</p>
 					<div>
-						<input class="id" type="text" placeholder="아이디" />
-						<input class="idchk" type=button value="아이디 중복 확인" />
-						<button class="idchbtn" style="float: right;">아이디 변경</button><br>
+						<input class="id input" type="text" placeholder="아이디를 입력하세요." />
+						<button class="idchbtn infobtn" style="float: right;">아이디 변경</button><br>
+						<input style="display: inline-block;margin-top: 5px;background: #FF9C41;" class="idchk infobtn" type=button value="아이디 중복 확인" />
 						<span style="color: red;" id="idchkMsg"></span>
 					</div>
 				</div>
 				<div class="form-group">
-					새 비밀번호
 					<div>
-						<input style="width: 300px;" class="pw" type="password" placeholder="새 비밀번호를 입력해주세요." />
+						<input class="pw input" type="password" placeholder="새 비밀번호를 입력하세요." />
+						<button class="pwchbtn infobtn" style="float: right;">비밀번호 변경</button>
+					</div>
+					<div style="margin-top: 5px;">
+						<input class="input-sm pwchk input"  type="password" placeholder="새 비밀번호를 한 번 더 입력하세요." />
+						<br><span style="color: red;" id="pwchkMsg">비밀번호와 일치하지 않습니다.</span>
 					</div>
 				</div>
 				<div class="form-group">
-					비밀번호 확인
 					<div>
-						<input style="width: 300px;" class="input-sm pwchk"  type="password" placeholder="새 비밀번호를 한 번 더 입력해주세요." />
-						<button class="pwchbtn" style="float: right;">비밀번호 변경</button>
-					&nbsp;<span style="color: red;" id="pwchkMsg">비밀번호와 일치하지 않습니다.</span>
-					</div>
-				</div>
-				<div class="form-group">
-					이름 :
-					<p style="display: inline;" id="name">${info.mname}</p>
-				</div>
-				<div class="form-group">
-					주소 :
-					<p id="addr" style="display: inline" class="menu-title">${info.maddr}</p>
-					<div>
-						<input name="postcode" type="text" id="postcode" placeholder="우편번호">
-						<input type="button" onclick="addrChange()" value="우편번호 찾기"><br>
-						<input name="address" type="text" id="address" placeholder="주소"><br>
-						<input name="detailAddress" type="text" id="detailAddress" placeholder="상세주소">
-						<input name="extraAddress" type="text" id="extraAddress" placeholder="참고항목">
-						<button class="addrchbtn" style="float: right;">주소 변경</button>
+						<input class="input" name="postcode" type="text" id="postcode" placeholder="우편번호">
+						<button class="addrchbtn infobtn" style="float: right;">주소 변경</button><br>
+						<input class="infobtn" type="button" onclick="addrChange()" value="우편번호 찾기" style="background: #FF9C41;">
+						<input style="margin-top: 5px;" class="input" name="address" type="text" id="address" placeholder="주소">
+						<input style="margin-top: 5px;" class="input" name="detailAddress" type="text" id="detailAddress" placeholder="상세주소">
+						<input style="margin-top: 5px;" class="input" name="extraAddress" type="text" id="extraAddress" placeholder="참고항목">
 					</div>
 				</div>
 				<div class="form-group phone-form">
-					전화번호 (숫자만 입력하세요.)
 					<div class="detail">
-						<input type="tel" id="phone" name="phone" placeholder="${info.mphone }">
-						<input type="button" id="phoneChk" value="인증번호 받기"><br><br>
-						<input id="phone2" type="text" disabled required />
-						<input type="button" id="phoneChk2" value="본인인증" disabled="disabled">
-						<button class="phonechbtn" style="float: right;">전화번호 변경</button>
-						<div>
-							<span style="color: red;" class="point successPhoneChk">
-							휴대폰 번호 입력후 인증번호 보내기를 해주십시오.</span>
-						</div>
+						<input class="input" type="tel" id="phone" name="phone" placeholder="전화번호를 입력하세요.">
+						<button class="phonechbtn infobtn" style="float: right;">전화번호 변경</button><br>
+						<input class="infobtn" type="button" id="phoneChk" style="background: #FF9C41;" value="인증번호 받기">
+						<input style="margin-top: 5px;" class="input" id="phone2" type="text" disabled required /><br>
+						<input class="infobtn" type="button" id="phoneChk2" style="background: #FF9C41;display: inline-block;" value="본인인증" disabled="disabled">
+						<span style="color: red;" class="point successPhoneChk">휴대폰 번호 입력후 인증번호 보내기를 해주십시오.</span>
 						<input type="hidden" id="phoneDoubleChk" />
 					</div>
 				</div>
-				<div style="text-align: center;">
+				<div style="text-align: center;margin-top: 50px;">
 					<span class="logout" style="cursor: pointer;">로그아웃</span> || <span class="out" style="cursor: pointer;">탈퇴하기</span>
 				</div>
 			</div>
@@ -441,18 +460,18 @@
 				success : function(data) {
 					$(".phone-form").empty();
 					
-					var detailElement = '전화번호 (숫자만 입력하세요.)<div class="detail">' +
-		            '<input type="tel" id="phone" name="phone" placeholder="' + phone + '">' +
-		            '<input type="button" id="phoneChk" value="인증번호 받기"><br><br>' +
-		            '<input id="phone2" type="text" disabled required />' +
-		            '<input type="button" id="phoneChk2" value="본인인증" disabled="disabled">' +
-		            '<button class="phonechbtn" style="float: right;">전화번호 변경</button>' +
-		            '<div>' +
-		            '<span style="color: red;" class="point successPhoneChk">휴대폰 번호 입력후 인증번호 보내기를 해주십시오.</span>' +
-		            '</div>' +
-		            '<input type="hidden" id="phoneDoubleChk" />' +
-		            '</div>';
-		        
+					var detailElement = '<div class="detail">' +
+				    '<input class="input" type="tel" id="phone" name="phone" placeholder="전화번호를 입력하세요.">' +
+				    '<input class="infobtn" type="button" id="phoneChk" style="float: right; background: #FF9C41;" value="인증번호 받기"><br><br>' +
+				    '<input class="input" id="phone2" type="text" disabled required />' +
+				    '<input class="infobtn" type="button" id="phoneChk2" style="float: right; background: #FF9C41;" value="본인인증" disabled="disabled">' +
+				    '<br><button class="phonechbtn infobtn" style="float: right;">전화번호 변경</button>' +
+				    '<div>' +
+				    '<span style="color: red;" class="point successPhoneChk">휴대폰 번호 입력후 인증번호 보내기를 해주십시오.</span>' +
+				    '</div>' +
+				    '<input type="hidden" id="phoneDoubleChk" />' +
+				    '</div>';
+				    
 			        // HTML 엘리먼트를 삽입하거나 교체
 			        $(".phone-form").html(detailElement);
 					swal("", "전화번호가 변경되었습니다.", "success");

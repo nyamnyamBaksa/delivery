@@ -31,7 +31,7 @@
 		                  </fieldset>
 					  <textarea class="reviewtextarea" name="review" placeholder="음식에 대한 솔직한 리뷰를 남겨주세요."></textarea>
 					  <input type="hidden" value="${row.sno }" name="sno">
-					  <input type="hidden" value="${row.tno }" name="tno">
+					  <input type="hidden" value="${row.tgroup}" name="tgroup">
 					  <button type="submit" class="reviewBtn">
 					  	<span class="reviewBtntext">완료</span>
 					  </button>

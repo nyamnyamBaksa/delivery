@@ -51,7 +51,7 @@ public class ReviewController {
     	
     	List<Map<String, Object>> review = reviewService.review(sno);
     	System.out.println(review);
-    	model.addAttribute("review", review);
+    	model.addAttribute("reviewview", review);
     	return "review";
     }
 }

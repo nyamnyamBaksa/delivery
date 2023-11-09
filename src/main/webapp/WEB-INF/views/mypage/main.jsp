@@ -45,7 +45,7 @@
 	        </c:choose>
         </c:if>
         
-        <div class="HowManyfollow">밥 친구&nbsp;${follow.friend }&nbsp;
+        <div class="HowManyfollow"><span style="cursor: pointer;" class="friendcount">밥 친구&nbsp;${follow.friend }</span>&nbsp;
         	<c:if test="${id eq null || sessionScope.mid eq id }">|&nbsp; <span style="cursor: pointer;" class="followAsk">친구 요청&nbsp;${follow.friendreq }</span></c:if>
         </div>
         <c:if test="${id eq null || sessionScope.mid eq id }">
@@ -61,27 +61,28 @@
         	<div class="review"><a href="/mypage/review/${id }"><img src="/img/profileImg/review.png"></a><p>리뷰관리</p></div>
         </c:if>
         
-        <div class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
-        <c:forEach items="${toplist }" var="row" varStatus="loopStatus">
-	        <div class="favoriteStoreComponent">
-	        	&nbsp;<i class="bi bi-trophy-fill" style="color:
-		            <c:choose>
-		                <c:when test="${loopStatus.index % 3 == 0}"> gold </c:when>
-		                <c:when test="${loopStatus.index % 3 == 1}"> silver </c:when>
-		                <c:when test="${loopStatus.index % 3 == 2}"> #cd7f32 </c:when>
-		            </c:choose>
-		        "></i>&nbsp;
-	        	<span style="font-size:large;font-weight:bold;">${row.sname }</span>
-	        	<span style="float:right;font-size:large;font-weight:bold;">${row.count }회 주문</span>
-	        </div>
-	    </c:forEach>
-	    
-	    <div class="favoriteCate">
-	    	'${result.mname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
-	    </div>
-	    <div class="favoriteCateGoogleChart" style="width: 700px; height: 300px;">
-        <canvas id="donutChart"></canvas>
-    </div>    
+        <c:if test="${toplist[0].sname ne null }">
+	        <div class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
+	        <c:forEach items="${toplist }" var="row" varStatus="loopStatus">
+		        <div class="favoriteStoreComponent">
+		        	&nbsp;<i class="bi bi-trophy-fill" style="color:
+			            <c:choose>
+			                <c:when test="${loopStatus.index % 3 == 0}"> gold </c:when>
+			                <c:when test="${loopStatus.index % 3 == 1}"> silver </c:when>
+			                <c:when test="${loopStatus.index % 3 == 2}"> #cd7f32 </c:when>
+			            </c:choose>
+			        "></i>&nbsp;
+		        	<span style="font-size:large;font-weight:bold;">${row.sname }</span>
+		        	<span style="float:right;font-size:large;font-weight:bold;">${row.count }회 주문</span>
+		        </div>
+		    </c:forEach>
+		    <div class="favoriteCate">
+		    	'${result.mname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
+		    </div>
+		    <div class="favoriteCateGoogleChart" style="width: 700px; height: 300px;">
+	        	<canvas id="donutChart"></canvas>
+		    </div>    
+	    </c:if>
     </c:if>
     <!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -291,11 +292,43 @@
 
 	            $.each(data.list, function (index, row) {
 	                var newContent = '<div class="modal-header">' +
-	                    '<h5 class="modal-title" id="exampleModalLabel"><img class="profile-image-follow" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" />' + row.mname + '</h5>' +
+	                    '<h5 class="modal-title" id="exampleModalLabel"><a href="/mypage/main/' + row.mid + '"><img class="profile-image-follow" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
 	                    '<div class="modal-body"><div class="detail">' +
 	                    '<div class="detail-date-read"><div class="detail"><button class="followAcceptModal">+ 밥 친구 신청 수락</button><div>' +
 	                    '</div></div></div>' +
 	                    '<div class="followerMid" style="display: none;">' + row.mid + '</div>';
+	                modalContent.append(newContent);
+	            });
+	            $("#exampleModal").modal("show");
+	        },
+	        error: function () {
+	        	swal('', '서버와 통신 중 오류 발생', "error");
+	        }
+	    });
+	});
+	
+	$(document).on("click", ".friendcount", function() {
+		var id = $(".id").text();
+		if(id == ''){
+			id = $('.myid').text();
+		}
+	    $.ajax({
+	        url: '/mypage/friendcount',
+	        type: 'POST',
+	        data: { id: id },
+	        dataType: 'json',
+	        success: function (data) {
+	        	if(data.list.length == 0){
+	        		return;
+	        	}
+	            var modalContent = $(".modal-content");
+	            modalContent.empty();
+
+	            $.each(data.list, function (index, row) {
+	                var newContent = '<div class="modal-header">' +
+	                    '<h5 class="modal-title" id="exampleModalLabel"><a href="/mypage/main/' + row.mid + '"><img class="profile-image-follow" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
+	                    '<div class="modal-body"><div class="detail">' +
+	                    '</div></div></div>';
 	                modalContent.append(newContent);
 	            });
 	            $("#exampleModal").modal("show");

@@ -1,5 +1,6 @@
 package com.delivery.web.pay;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -111,6 +113,82 @@ public class PayController {
 			String tgroup = payService.tgroup(map);
 			JSONObject json = new JSONObject();
 			json.put("tgroup", tgroup);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@GetMapping({"/wishlist","/wishlist/{id}"})
+	public String wishlist(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
+		if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
+			if(id == null) {// 본인 계정
+				id = (String) session.getAttribute("mid");
+			} else {// 다른 사람 계정 or 본인 계정
+				model.addAttribute("id", id);
+			}
+			List<Map<String, Object>> list = payService.wishlist(id);
+			model.addAttribute("list", list);
+			return "/wishlist";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/mnname")
+	public String mnname(@RequestParam(name = "sname", required = false) String sname, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			List<Map<String, Object>> mlist = payService.mnname(sname);
+			JSONObject json = new JSONObject();
+			json.put("mlist", mlist);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/wdelete")
+	public String wdelete(@RequestParam(value="valueArr") String[] del, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			JSONObject json = new JSONObject();
+			Map<String, Object> map = new HashMap<String, Object>();
+			for (int i = 0; i < del.length; i++) {
+				map.put("del", del[i]);
+				map.put("mid", session.getAttribute("mid"));
+				int result = payService.wdelete(map);
+			}
+			String id = (String) session.getAttribute("mid");
+			List<Map<String, Object>> list = payService.wishlist(id);
+			json.put("wlist", list);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@GetMapping("/search")
+	public String search(Model model, HttpSession session) {
+		if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
+			String id = (String) session.getAttribute("mid");
+			List<Map<String, Object>> list = payService.recommend(id);
+			List<Map<String, Object>> rlist = payService.recommend2();
+			model.addAttribute("list", list);
+			model.addAttribute("rlist", rlist);
+			return "/search";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/search")
+	public String search(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			List<Map<String, Object>> search = payService.search(map);
+			JSONObject json = new JSONObject();
+			json.put("search", search);
 			return json.toString();
 		} else {
 			return "redirect:/login";
