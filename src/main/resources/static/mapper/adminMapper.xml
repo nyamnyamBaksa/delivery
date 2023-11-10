@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.delivery.web.admin.AdminDAO">
+
+
+	<select id="memberList" resultType="Map">
+		SELECT mno, mid, mname,
+		mnickname, mjoindate, mgrade, maddr, mphone, mprofile
+		FROM member
+	</select>
+	
+	<select id="ownerList" resultType="Map">
+		SELECT ono, oid, oname,
+		ojoindate, ograde, ophone, obiz, ocertificate, obank
+		FROM owner
+	</select>
+
+	<update id="gradeChange" parameterType="Map">
+		UPDATE member SET
+		mgrade=#{grade} WHERE mno=#{mno}
+	</update>
+	
+	<update id="gradeOwner" parameterType="Map">
+		UPDATE owner SET
+		ograde=#{grade} WHERE ono=#{ono}
+	</update>
+
+
+	<delete id="deleteMembers" parameterType="java.util.List">
+		DELETE FROM member
+		WHERE mno IN
+
+
+
+		<foreach collection="list" item="mno" open="(" separator=","
+			close=")">
+			#{mno}
+
+		</foreach>
+
+
+	</delete>
+	
+	<delete id="deleteOwners" parameterType="java.util.List">
+		DELETE FROM owner
+		WHERE ono IN
+
+
+
+		<foreach collection="list" item="ono" open="(" separator=","
+			close=")">
+			#{ono}
+
+		</foreach>
+
+
+	</delete>
+	
+</mapper>
