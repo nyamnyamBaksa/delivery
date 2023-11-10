@@ -63,7 +63,7 @@
 		resultType="com.delivery.web.store.MenuDTO">
 		SELECT mnname, mnprice, mnimg, mndesc, mnside
 		FROM menu
-		WHERE mnno =#{mnno}
+		WHERE mnno =#{mnno} AND mnside = #{mnside}
 	</select>
 
 	<insert id="cartlist" parameterType="java.util.Map">

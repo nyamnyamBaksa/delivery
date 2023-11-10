@@ -69,7 +69,7 @@ font-size: 20px;
         <td>${s.saddr}</td>
       </tr>
     </table>
-	<div id="map" style="margin-left: 200px; width:40%;height:250px;"></div>
+	<div id="map" style="margin-left: 150px; width:40%;height:250px;"></div>
 </c:forEach>
 
 <script>

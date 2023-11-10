@@ -79,15 +79,17 @@
     </c:forEach>
 				<br><br><br>
 			</c:if>
-				  <span class="cacount" style="font-weight:bold; margin-left: 30px; font-size: 17px;">수량</span>
+				  <span class="camount" style="font-weight:bold; margin-left: 30px; font-size: 17px;">수량</span>
 				  <span class="minus">-</span> 
-				  <input type="text" class="camount" value="1">
+				  <input type="text" class="camount" name="camount" value="1">
 				   <span class="plus">+</span>
+				  <input type="hidden" name="ctotal" value="${mf.mnprice}">
 				  <!--  <span name="camount"  class="mcount" style="float: right;"> 
 				<a href="#" class="minus">-</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='result'>1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="plus">+</a></span>
 			    </span>-->
-			<button class="cart_btn" data-mnno="${sm.mnno}" data-mnprice="${sm.mnprice}">담기</button>
-			
+			   
+			<button class="cart_btn" data-mnno="${mf.mnno}" data-mnprice="${mf.mnprice}">담기</button>
+
 		</c:forEach>
 	</div>
 	</form>
@@ -115,9 +117,8 @@ $(document).ready(function() {
 	   
 	   const mnno = $(this).data("mnno");
        const mnprice = $(this).data("mnprice");
-       const camount = $(this).siblings("input[name='camount']").val();
-       const ctotal = $(this).siblings("input[name='ctotal']").val();
-       
+       const camount = $(this).siblings(".camount").val();
+       const ctotal = mnprice * camount;
         $.ajax({
             url: '/food/menudetail',
             type: 'POST',
@@ -129,7 +130,7 @@ $(document).ready(function() {
        
     });
 
-    function cartAlert(result) {
+  function cartAlert(result) {
         if (result === '0') {
             Swal.fire("Error", "장바구니에 추가하지 못했습니다.", "error");
         } else if (result === '1') {

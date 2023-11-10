@@ -22,8 +22,8 @@
 
 	<div id="location">
 		<div>
-			<i class="fa-solid fa-location-dot fa-xl" style="color: #ffffff;"></i>
-			대표 주소를 설정해주세요.
+			<a href="/location"><i class="fa-solid fa-location-dot fa-xl" style="color: #ffffff;"></i>
+			대표 주소를 설정해주세요.</a>
 		</div>
 	</div>
 	<br>
@@ -62,7 +62,7 @@
 <div class="restraunt-list" style="display: flex; flex-wrap: wrap; justify-content: space-between; ">
 		<c:forEach items="${list}" var="l">
 			<div style="display: flex; align-items: center;">
-				<table border="1" width="100%" style="text-align: left; margin-right: 10px;">
+				<table width="100%" style="text-align: left; margin-right: 10px;">
 
 					<tr>
 						<td rowspan="3" style="width: 200px; text-align: center;">

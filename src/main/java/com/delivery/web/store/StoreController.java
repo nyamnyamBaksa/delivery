@@ -189,7 +189,6 @@ public class StoreController {
 	public String cart (@RequestParam Map<String, Object> map, Model model, HttpSession session) {
 		
 		if (session.getAttribute("mid") != null) {
-			
 			map.put("mid", (String)(session.getAttribute("mid") ));
 			
 			System.out.println(map);
