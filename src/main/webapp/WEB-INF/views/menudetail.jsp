@@ -13,6 +13,8 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link
 	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
 	rel="stylesheet">
@@ -30,7 +32,7 @@
 			style="color: white; z-index: 1;"></i>
 		</a>
 	</div>
-
+<form name="cartbutton" method="post">
 	<div id="storedetail">
 		<c:forEach items="${menudetail}" var="mf">
 			<div id="menuimg" style="text-align: center;">
@@ -60,106 +62,85 @@
 			<br>
 			<br>
 			<!-- 메인 메뉴인 경우에만 사이드 추가 선택 표시 -->
-			<c:if test="${mf.mnside == 0}">
+			<c:if test="${isMain == true}">
 				<div id="sidecheck">
-					<i class="fa-solid fa-plus fa-xl" style="color: #eb5757;"></i> 사이드
-					추가 선택
+					<i class="fa-solid fa-plus fa-xl" style="color: #eb5757;"></i> 사이드 추가 선택
 				</div>
 				<br>
 
 				<c:forEach items="${menudetail}" var="sm">
-					<input id="sidecheckbox" type="checkbox" name="sidemenu"
-						value="${sm.mnno}">
-					<span id="sidemenu">${sm.mnname}</span>
-					<span class="price"> + ${sm.mnprice}원</span>
-				</c:forEach>
+        <!-- 메인 메뉴에 해당하는 경우만 출력 -->
+        <c:if test="${sm.mnside == 1}">
+            <input id="sidecheckbox" type="checkbox" name="sidemenu"
+                value="${sm.mnno}">
+            <span id="sidemenu">${sm.mnname}</span>
+            <span class="price"> + ${sm.mnprice}원</span>
+        </c:if>
+    </c:forEach>
 				<br><br><br>
 			</c:if>
-			<span>
 				  <span class="cacount" style="font-weight:bold; margin-left: 30px; font-size: 17px;">수량</span>
-				  <span class="mcount" style="float: right;"> 
+				  <span class="minus">-</span> 
+				  <input type="text" class="camount" value="1">
+				   <span class="plus">+</span>
+				  <!--  <span name="camount"  class="mcount" style="float: right;"> 
 				<a href="#" class="minus">-</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='result'>1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="plus">+</a></span>
-			    </span>
+			    </span>-->
+			<button class="cart_btn" data-mnno="${sm.mnno}" data-mnprice="${sm.mnprice}">담기</button>
 			
-				<form name="cartbutton" method="post" onclick="/cart">
-			<button type="submit">담기</button>
-			</form>
 		</c:forEach>
 	</div>
+	</form>
 	<br>
 	<br>
 
+<script type="text/javascript">
+$(document).ready(function() {
+    let cacount = 1; // 기본 수량 1로 설정
 
+    $(".plus").on("click", function(){
+        cacount++;
+        $(".camount").val(cacount);
+    });
 
+    $(".minus").on("click", function(){
+        if (cacount > 1) {
+            cacount--;
+            $(".camount").val(cacount);
+        }
+    });
 
-	<script type="text/javascript">
-	
-	let plus = document.querySelector(".plus");
-	let minus = document.querySelector(".minus");
-	let result = document.querySelector("#result");
-	let totalmount = document.querySelector('.totalmount');
-	let i = 1;
-	
-	plus.addEventListener("click", () => {
-		
-		i++
-		result.textContent = i;
-		let totalcostNum = i*45000;
-		totalmount.textContent = "|" + totalcostNum.toLocaleString();
-		
-	})
-minus.addEventListener("click", () => {
-	if(i > 0) {
-		i--
-		result.textContent = i;
-		let totalcostNum = i*45000;
-		totalmount.textContent = "|" + totalcostNum.toLocaleString();
-	}else {
-		totalmount.textContent = "|" + 0
-	}	
-})
+    // 장바구니 담기
+   $(".cart_btn").on("click", function() {
+	   
+	   const mnno = $(this).data("mnno");
+       const mnprice = $(this).data("mnprice");
+       const camount = $(this).siblings("input[name='camount']").val();
+       const ctotal = $(this).siblings("input[name='ctotal']").val();
+       
+        $.ajax({
+            url: '/food/menudetail',
+            type: 'POST',
+            data: { mnno: mnno, mnprice: mnprice, camount: camount, ctotal: ctotal},
+            success: function(result) {
+                cartAlert(result);
+            }
+        });
+       
+    });
 
-</script>
-
-<script>
-/*function cart(mnno) {
-	
-	$.ajax({
-		type : POST,
-		url : "/cart",
-		data : {mnno : mnno},
-		success : function(response) {
-			Swal.fire("장바구니에 추가되었습니다.");
-		},
-		error : function() {
-			Swal.fire("문제가 발생했습니다");
-		}
-	
-	});
-	*/
-	
-
-
-
-
-
-
-
-
-/*
-window.onload = function() {
-    var sideMenuList = ${sideMenuList}; 
-
-    if (sideMenuList.length > 0) {
-        // 사이드 메뉴가 존재하는 경우
-        document.getElementById('sideMenuAdditions').style.display = 'block'; // 사이드 메뉴 추가 선택 리스트 표시
-    } else {
-        // 사이드 메뉴가 존재하지 않는 경우
-        document.getElementById('sideMenuAdditions').style.display = 'none'; // 사이드 메뉴 추가 선택 리스트 숨김
+    function cartAlert(result) {
+        if (result === '0') {
+            Swal.fire("Error", "장바구니에 추가하지 못했습니다.", "error");
+        } else if (result === '1') {
+            Swal.fire("Success", "장바구니에 추가되었습니다.", "success");
+        } else if (result === '2') {
+            Swal.fire("Info", "장바구니에 이미 추가되었습니다.", "info");
+        } else if (result === '5') {
+            Swal.fire("Info", "로그인이 필요합니다.", "info");
+        }
     }
-};
-*/
-
+});
 </script>
 
 

@@ -18,6 +18,8 @@ public class StoreService {
 		return storeDAO.list(mncate);
 	}
 
+	
+	
 
 	public StoreDTO detail(int sno) {
 		
@@ -69,16 +71,34 @@ public class StoreService {
 	}
 
 
-	public List<MenuDTO> cartlist(Map<String, Object> map) {
+
+	public MenuDTO menuinfo(int mnno) {
 		
-		return storeDAO.cartlist(map);
+		return storeDAO.menuinfo(mnno);
 	}
 
 
 
 
 
-	
+	public List<MenuDTO> getMainMenu() {
+		
+		return storeDAO.getMainMenu();
+	}
+
+
+	public List<MenuDTO> getSideMenu() {
+		
+		return storeDAO.getSideMenu();
+	}
+
+
+	public void cartlist(Map<String, Object> map) {
+		
+		storeDAO.cartlist(map);
+	}
+
+
 
 
 }

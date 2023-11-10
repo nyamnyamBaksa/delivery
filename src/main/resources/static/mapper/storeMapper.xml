@@ -66,9 +66,9 @@
 		WHERE mnno =#{mnno}
 	</select>
 
-	<insert id="cartlist">
-		INSERT INTO cart (mno, mnno, camount, mnprice, ctotal, camount)
-		VALUES(#{mno}, #{mnno}, #{camount}, #{price}, #{ctotal}, #{camount})
+	<insert id="cartlist" parameterType="java.util.Map">
+		INSERT INTO cart (mno, mnno, camount, ctotal)
+		VALUES((select mno from member where mid = #{mid}), #{mnno}, #{camount}, #{ctotal})
 	</insert>
 
 
