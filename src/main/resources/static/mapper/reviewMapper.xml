@@ -18,4 +18,19 @@
 		FROM reviewview
 		WHERE sno = #{sno}
 	</select>
+	
+	<select id="countrscore" resultType="Map">
+		SELECT
+		    SUM(rscore = 5) AS countrscore5,
+		    SUM(rscore = 4) AS countrscore4,
+		    SUM(rscore = 3) AS countrscore3,
+		    SUM(rscore = 2) AS countrscore2,
+		    SUM(rscore = 1) AS countrscore1
+		FROM
+		    reviewview
+		WHERE
+		    sno = #{sno}
+		GROUP BY
+		    sno;
+	</select>
 </mapper>

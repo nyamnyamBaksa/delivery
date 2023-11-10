@@ -9,7 +9,7 @@
 <link href="css/reviewwrite.css" rel="stylesheet">
 </head>
 <body>
-	<a href="/trade"><-뒤로가기</a>
+	<a href="/trade">뒤로가기</a>
 	<h1>리뷰쓰기</h1>
 	<hr class="hr">
 	<c:choose>
@@ -40,7 +40,7 @@
 					  <hr>
 					  <div class="menutitle">추천하고 싶은 메뉴가 있나요?</div>
 				</c:if>
-					<div class="mnname">${row.mnname }<img alt="추천엄지" src="/img/thumbs.png"><br></div>
+					<div class="mnname">${row.mnname }<img alt="추천엄지" src="/img/thumbs.png" style="height:15px; width:15px;"></div>
 			</c:forEach>
 
 		

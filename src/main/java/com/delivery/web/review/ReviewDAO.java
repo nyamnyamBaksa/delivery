@@ -13,4 +13,6 @@ public interface ReviewDAO {
 	int saveReview(Map<String, Object> map);
 
 	List<Map<String, Object>> revivew(int sno);
+
+	Map<String, Object> countrscore(int sno);
 }

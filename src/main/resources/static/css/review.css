@@ -6,7 +6,7 @@
 	color:#1f1f1f;
 	text-align:left;
 	vertical-align:text-middle;
-	font-size:32px;
+	font-size:28px;
 	font-family:Dosis;
 	line-height:21.600000381469727px;
 	border-style:hidden;
@@ -14,11 +14,13 @@
 	width:237px;
 	font-weight: bold;
 	margin:10px;
+	position:relative;
+	top: 200px;
 }
 .profile{
 	width:76px;
 	height:78px;
-	top:250px;;
+	top:640px;;
 	position:absolute;
 	margin: 10px;
 }
@@ -26,30 +28,24 @@
 	color:rgba(31, 31, 31, 0.5899999737739563);
 	text-align:left;
 	vertical-align:text-middle;
-	font-size:32px;
+	font-size:22px;
 	font-family:Dosis;
 	line-height:21.600000381469727px;
 	border-style:hidden;
 	outline:none;
 	width:420px;
-	left:35%;
+	left:25%;
 	position:relative;
-	margin:10px;
+	top: -150px;
 }
 .mnickname{
-	color:#000000;
 	text-align:left;
-	vertical-align:text-middle;
-	font-size:32px;
+	font-size:28px;
 	font-family:Dosis;
-	line-height:21.600000381469727px;
-	border-style:hidden;
-	outline:none;
-	width:255px;
-	margin:10px;
 	position:absolute;
 	font-weight: bold;
-	left:155px;
+	left:100px;
+	margin:10px;
 }
 .mnickname a {
   text-decoration: none; /* 밑줄 제거 */
@@ -66,7 +62,7 @@
   	width: 20em;
   	border: none;
   	left: -400px;
-  	top: 45px;
+  	top: 60px;
   	justify-content: flex-start;
 }
 .rate input {
@@ -82,7 +78,9 @@
 }
 .rate :checked ~ label {
   	-webkit-text-fill-color: gold;
+  	
 }
+
 .rddate{
 	color:#000000;
 	text-align:left;
@@ -107,11 +105,8 @@
 	outline:none;
 	margin:50px;
 	position:relative;
-	left :50px;
-	top: 20px;
-}
-.reviewview{
-	margin:50px;
+	left :60px;
+	top: 40px;
 }
 .rphoto{
 	height:211px;
@@ -135,5 +130,11 @@
 	font-weight: bold;
 }
 .stroeAvg{
-	margin:100px;
+	margin:5px;
+	position:relative;
+	top : -240px;
+}
+.chart{
+	position:relative;
+	left :300px;
 }
