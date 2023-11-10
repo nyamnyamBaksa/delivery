@@ -85,4 +85,6 @@ public interface MyPageDAO {
 
 	int paycount(Map<String, Object> map);
 
+	List<Map<String, Object>> mnreviewlist(Map<String, Object> map);
+
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -120,60 +121,56 @@
 				</div>
 				<div class="col-lg-12">
 					<table class="table">
-						<c:forEach items="${list }" var="row" varStatus="loop">
-						    <c:if test="${loop.index == 0 || !row.tgroup.equals(list[loop.index - 1].tgroup)}">
-							<tr style="border-top: 1px solid #c0c0c0;">
-								<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;">
-									<c:if test="${id eq null || sessionScope.mid eq id }">
-										<div class="custom-control custom-checkbox" style="display: inline-block;">
-						                    <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="${loop.index }" value="${row.rno}">
-						                    <label class="custom-control-label" for="${loop.index }"></label>
+						 <c:forEach var="row" items="${list}" varStatus="loop">
+					        <tr style="border-top: 1px solid #c0c0c0;">
+					            <td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 800px;">
+					
+					                <div class="custom-control custom-checkbox" style="display: inline-block;">
+					                    <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="${loop.index}" value="${row.rno}">
+					                    <label class="custom-control-label" for="${loop.index}"></label>
+					                </div>
+					
+					                &nbsp;<a href="/food/storedetail?sno=${row.sno}">${row.sname}</a>
+					                <span class="star-ratings rdate">&nbsp;${row.rdate}</span>
+					                <button class="editbtn" style="width: 70px; height: 40px; float:right; margin-left:10px; margin-right:10px;">수정</button>
+					            </td>
+					        </tr>
+					        <tr>
+					            <td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">
+					                <div class="star-ratings">
+					                    <div class="rscore" style="display: none;">${row.rscore}</div>
+					                    <div class="star-ratings-fill space-x-2 text-lg" style="width: ${(row.rscore * 20)}%;">
+					                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
 					                    </div>
-									</c:if>
-									<a href="/food/storedetail?sno=${row.sno }">&nbsp;${row.sname }</a>
-									<span class="star-ratings rdate">&nbsp;${row.rdate}</span>
-									<c:if test="${id eq null || sessionScope.mid eq id }">
-										<button class="editbtn" style="width: 70px;height: 40px;float:right;margin-left:10px;margin-right:10px;">수정</button>
-									</c:if>
-								</td>
-							</tr>
-							<tr>
-							    <td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">
-							        <div class="star-ratings">
-							        	<div class="rscore" style="display: none;">${row.rscore }</div>
-										<div class="star-ratings-fill space-x-2 text-lg" style="width: ${score}%;">
-										    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-										</div>
-										<div class="star-ratings-base space-x-2 text-lg">
-											<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-										</div>
-									</div>
-							    </td>
-							</tr>
-							<tr>
-								<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed;">${row.rcomment}</td>
-							</tr>
-							<tr style="border-bottom: 1px solid #c0c0c0;">
-								 <td class="name-pr" style="border: 0; border-style: dashed;">
-				                <c:set var="menuNames" value="" />
-				                <c:forEach items="${list}" var="innerRow">
-				                    <c:if test="${innerRow.tgroup.equals(row.tgroup)}">
-				                        <c:choose>
-				                            <c:when test="${not empty menuNames}">
-				                                <c:set var="menuNames" value="${menuNames}, " />
-				                            </c:when>
-				                            <c:otherwise>
-				                                <c:set var="menuNames" value="${menuNames}" />
-				                            </c:otherwise>
-				                        </c:choose>
-				                        <c:set var="menuNames" value="${menuNames}${innerRow.mnname}" />
-				                    </c:if>
-				                </c:forEach>
-				                ${menuNames}
-				            </td>
-							</tr>
-							</c:if>
-						</c:forEach>
+					                    <div class="star-ratings-base space-x-2 text-lg">
+					                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+					                    </div>
+					                </div>
+					            </td>
+					        </tr>
+					        <tr>
+					            <td class="name-pr" style="border: 0; border-style: dashed; font-size: larger; font-weight: bolder;">${row.rcomment}</td>
+					        </tr>
+					        <tr style="border-bottom: 1px solid #c0c0c0;">
+					            <td class="name-pr mnname" style="border: 0; border-style: dashed; width: 200px;vertical-align: middle;">
+					                <c:set var="menuNames" value="" />
+					                <c:forEach var="mn" items="${mnlist}" varStatus="loop">
+					                    <c:if test="${mn.rno eq row.rno}">
+						                    <c:choose>
+					                            <c:when test="${not empty menuNames}">
+					                                <c:set var="menuNames" value="${menuNames}, " />
+					                            </c:when>
+					                            <c:otherwise>
+					                                <c:set var="menuNames" value="${menuNames}" />
+					                            </c:otherwise>
+					                        </c:choose>
+				                        <c:set var="menuNames" value="${menuNames}${mn.mnname}" />
+				                        </c:if>
+					                </c:forEach>
+					                ${menuNames}
+					            </td>
+					        </tr>
+					    </c:forEach>
 					</table>
 					<button style="margin: 0 auto;" class="morebtn">+ 더보기</button>
 				</div>
@@ -207,6 +204,8 @@
 	<script src="/js/sweetalert.min.js"></script>
     
     <script type="text/javascript">
+		
+    	
     
    		// 총 개수
    		var reviewcount = $('#reviewcount').text();
@@ -244,57 +243,64 @@
    				},
    				success: function (data) {
    					var newTableHTML = '';
-	   			    var menuNames = '';
-	   			    var prevTGroup = '';
-					
-	   			    var i = 0;
-	   			    i += count;
-	   			    for (i; i < data.length; i++) {
-	   			        var row = data[i];
-	
-	   			        if (i === 0 || row.tgroup !== data[i - 1].tgroup) {
-	   			            newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
-	   			            newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 800px;">';
-	
-	   		                newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + i + '" value="' + group.rno + '"><label class="custom-control-label" for="' + i + '"></label></div>';
-	   		                newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + row.sno + '">' + row.sname + '</a>';
-	   		                newTableHTML += '<span class="star-ratings rdate">&nbsp;' + row.rdate + '</span>';
-	   		                newTableHTML += '<button class="editbtn" style="width: 70px; height: 40px; float:right; margin-left:10px; margin-right:10px;">수정</button>';
-	   			            newTableHTML += '</td>';
-	   			            newTableHTML += '</tr>';
-	
-	   			            newTableHTML += '<tr>';
-	   			            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
-	   			            newTableHTML += '<div class="star-ratings">';
-	   			            newTableHTML += '<div class="rscore" style="display: none;">' + row.rscore + '</div>';
-	   			            newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (row.rscore * 20) + '%;">';
-	   			            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
-	   			            newTableHTML += '</div>';
-	   			            newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
-	   			            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
-	   			            newTableHTML += '</div>';
-	   			            newTableHTML += '</div>';
-	   			            newTableHTML += '</td>';
-	   			            newTableHTML += '</tr>';
-	   			            newTableHTML += '<tr>';
-	   			            newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed;">' + row.rcomment + '</td>';
-	   			            newTableHTML += '</tr>';
-	   			        }
-	
-	   			        if (row.mnname) {
-	   			            menuNames += menuNames ? ', ' + row.mnname : row.mnname;
-	   			        }
-	
-	   			        if (i === data.length - 1 || row.tgroup !== data[i + 1].tgroup) {
-	   			            newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;">';
-	   			            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed;">' + menuNames + '</td>';
-	   			            newTableHTML += '</tr>';
-	   			            menuNames = '';
-	   			        }
-	
-	   			        prevTGroup = row.tgroup;
-	   			    }
-	
+   					// 중복된 rno 값을 가진 데이터를 그룹화하기 위한 객체 생성
+   				    var groupedData = {};
+
+   				    // 데이터 그룹화
+   				    $.each(data.list, function(index, row) {
+   				        var rno = row.rno;
+   				        if (!groupedData[rno]) {
+   				            groupedData[rno] = {
+   				            	sno: row.sno,
+   				            	sname: row.sname,
+   				                rdate: row.rdate,
+   				                rcomment: row.rcomment,
+   				                rno: rno,
+   				                mnnameList: [],
+   				                rsocre: row.rsocre,
+   				                index:index
+   				            };
+   				        }
+   				        $.each(data.mnlist, function(index2, row2) {
+   					        if (groupedData[rno].rno == row2.rno) {
+   					            groupedData[rno].mnnameList.push(row2.mnname);
+   					        }
+   				        });
+   				    });
+
+   				 	// 그룹화된 데이터로 테이블 생성
+   				    $.each(groupedData, function(rno, group) {
+   				            newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
+   				            newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 800px;">';
+
+   			                newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + group.index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + group.index + '"></label></div>';
+   			                newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '">' + group.sname + '</a>';
+   			                newTableHTML += '<span class="star-ratings rdate">&nbsp;' + group.rdate + '</span>';
+   			                newTableHTML += '<button class="editbtn" style="width: 70px; height: 40px; float:right; margin-left:10px; margin-right:10px;">수정</button>';
+   				            newTableHTML += '</td>';
+   				            newTableHTML += '</tr>';
+
+   				            newTableHTML += '<tr>';
+   				            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
+   				            newTableHTML += '<div class="star-ratings">';
+   				            newTableHTML += '<div class="rscore" style="display: none;">' + group.rscore + '</div>';
+   				            newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.rscore * 20) + '%;">';
+   				            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+   				            newTableHTML += '</div>';
+   				            newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
+   				            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+   				            newTableHTML += '</div>';
+   				            newTableHTML += '</div>';
+   				            newTableHTML += '</td>';
+   				            newTableHTML += '</tr>';
+   				            newTableHTML += '<tr>';
+   				            newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed;">' + group.rcomment + '</td>';
+   				            newTableHTML += '</tr>';
+   				            newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"><td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
+   					        newTableHTML += group.mnnameList.join(', ');
+   					        newTableHTML += '</td></tr>';
+   					    });
+
 	   			    newTableHTML += '';
    				 	// 테이블 업데이트
    					$(newTableHTML).appendTo($(".table")).slideDown();
@@ -356,8 +362,74 @@
 						dataType: 'json',
 						success : function(data) {
 							swal("", "리뷰를 삭제했습니다.", "success");
-							updateTable(data.list);
-							reviewcount = $('#reviewcount').text(data.list[0].count);
+							updateTable(data);
+							var count = data.list[0].count;
+							$('.reviewcount').text(count);
+							$('.review').text('0');
+							
+							var check = document.getElementsByName("rowCheck");// var check = $(".rowCheck");
+							var checkCnt = check.length;
+
+							$('input[name="allCheck"]').click(function() {
+								var checkList = $('input[name="rowCheck"]');
+								for (var i = 0; i < checkList.length; i++) {
+									checkList[i].checked = this.checked;
+								}
+							});
+
+							$('input[name="rowCheck"]').click(function() {
+								if ($('input[name="rowCheck"]:checked').length == checkCnt) {// $('.rowCheck:checked').length
+									$('input[name="allCheck"]')[0].checked = true;
+								} else {
+									$('input[name="allCheck"]')[0].checked = false;
+								}
+							});
+						    
+						 	// 모든 체크박스 요소를 가져오기
+							var allCheckCb = document.querySelector('input[name="allCheck"]');// var allCheckCb = $('input[name="allCheck"]');
+							var rowCheckCb = document
+									.querySelectorAll('input[name="rowCheck"]');// var rowCheckCb = $('input[name="rowCheck"]');
+
+							// allCheck 체크박스의 변경 이벤트 처리
+							allCheckCb.addEventListener('change', function() {
+								var checkedCount = 0;
+								if (allCheckCb.checked) {
+									// 맨 위의 체크박스가 체크되면 모든 상품 체크박스도 체크
+									rowCheckCb.forEach(function(checkbox) {
+										checkbox.checked = true;
+										checkedCount++;
+									});
+								} else {
+									// 맨 위의 체크박스가 해제되면 모든 상품 체크박스도 해제
+									rowCheckCb.forEach(function(checkbox) {
+										checkbox.checked = false;
+									});
+								}
+
+								// 총 선택된 상품 개수를 업데이트
+								updateTotalCount(checkedCount);
+							});
+
+							// rowCheck 체크박스의 변경 이벤트 처리
+							rowCheckCb.forEach(function(checkbox) {
+								checkbox.addEventListener('change', function() {
+									var checkedCount = 0;
+									rowCheckCb.forEach(function(checkbox) {
+										if (checkbox.checked) {
+											checkedCount++;
+										}
+									});
+
+									// 총 선택된 상품 개수를 업데이트
+									updateTotalCount(checkedCount);
+								});
+							});
+
+							// 총 선택된 상품 개수를 업데이트하는 함수
+							function updateTotalCount(count) {
+								var zzimTotalElement = document.querySelector('.review');
+								zzimTotalElement.textContent = count;
+							}
 							// 더보기 버튼 삭제
 		   					if(offset + count >= reviewcount){
 		   						$('.morebtn').remove();
@@ -524,7 +596,7 @@
 				dataType : 'json',
 				success : function(data) {
 					swal("", "리뷰를 수정했습니다.", "success");
-					updateTable(data.list);
+					updateTable(data);
 					$("#exampleModal").modal("hide");
 				},
 				error : function(error) {
@@ -556,56 +628,63 @@
 		
 		function updateTable(data) {
 		    var newTableHTML = '<table class="table">';
-		    var menuNames = '';
-		    var prevTGroup = '';
+		 	// 중복된 rno 값을 가진 데이터를 그룹화하기 위한 객체 생성
+		    var groupedData = {};
 
-		    var i = 0;
-		    i += count;
-			    for (i; i < data.length; i++) {
-			        var row = data[i];
-
-			        if (i === 0 || row.tgroup !== data[i - 1].tgroup) {
-			            newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
-			            newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 800px;">';
-
-		                newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + i + '" value="' + group.rno + '"><label class="custom-control-label" for="' + i + '"></label></div>';
-		                newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + row.sno + '">' + row.sname + '</a>';
-		                newTableHTML += '<span class="star-ratings rdate">&nbsp;' + row.rdate + '</span>';
-		                newTableHTML += '<button class="editbtn" style="width: 70px; height: 40px; float:right; margin-left:10px; margin-right:10px;">수정</button>';
-			            newTableHTML += '</td>';
-			            newTableHTML += '</tr>';
-
-			            newTableHTML += '<tr>';
-			            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
-			            newTableHTML += '<div class="star-ratings">';
-			            newTableHTML += '<div class="rscore" style="display: none;">' + row.rscore + '</div>';
-			            newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (row.rscore * 20) + '%;">';
-			            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
-			            newTableHTML += '</div>';
-			            newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
-			            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
-			            newTableHTML += '</div>';
-			            newTableHTML += '</div>';
-			            newTableHTML += '</td>';
-			            newTableHTML += '</tr>';
-			            newTableHTML += '<tr>';
-			            newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed;">' + row.rcomment + '</td>';
-			            newTableHTML += '</tr>';
+		    // 데이터 그룹화
+		    $.each(data.list, function(index, row) {
+		        var rno = row.rno;
+		        if (!groupedData[rno]) {
+		            groupedData[rno] = {
+		            	sno: row.sno,
+		            	sname: row.sname,
+		                rdate: row.rdate,
+		                rcomment: row.rcomment,
+		                rno: rno,
+		                mnnameList: [],
+		                rsocre: row.rsocre,
+		                index:index
+		            };
+		        }
+		        $.each(data.mnlist, function(index2, row2) {
+			        if (groupedData[rno].rno == row2.rno) {
+			            groupedData[rno].mnnameList.push(row2.mnname);
 			        }
+		        });
+		    });
 
-			        if (row.mnname) {
-			            menuNames += menuNames ? ', ' + row.mnname : row.mnname;
-			        }
+		 	// 그룹화된 데이터로 테이블 생성
+		    $.each(groupedData, function(rno, group) {
+		            newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
+		            newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 800px;">';
 
-			        if (i === data.length - 1 || row.tgroup !== data[i + 1].tgroup) {
-			            newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;">';
-			            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed;">' + menuNames + '</td>';
-			            newTableHTML += '</tr>';
-			            menuNames = '';
-			        }
+	                newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + group.index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + group.index + '"></label></div>';
+	                newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '">' + group.sname + '</a>';
+	                newTableHTML += '<span class="star-ratings rdate">&nbsp;' + group.rdate + '</span>';
+	                newTableHTML += '<button class="editbtn" style="width: 70px; height: 40px; float:right; margin-left:10px; margin-right:10px;">수정</button>';
+		            newTableHTML += '</td>';
+		            newTableHTML += '</tr>';
 
-			        prevTGroup = row.tgroup;
-			    }
+		            newTableHTML += '<tr>';
+		            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
+		            newTableHTML += '<div class="star-ratings">';
+		            newTableHTML += '<div class="rscore" style="display: none;">' + group.rscore + '</div>';
+		            newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.rscore * 20) + '%;">';
+		            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+		            newTableHTML += '</div>';
+		            newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
+		            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+		            newTableHTML += '</div>';
+		            newTableHTML += '</div>';
+		            newTableHTML += '</td>';
+		            newTableHTML += '</tr>';
+		            newTableHTML += '<tr>';
+		            newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed;">' + group.rcomment + '</td>';
+		            newTableHTML += '</tr>';
+		            newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"><td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
+			        newTableHTML += group.mnnameList.join(', ');
+			        newTableHTML += '</td></tr>';
+			    });
 
 		    newTableHTML += '</table>';
 

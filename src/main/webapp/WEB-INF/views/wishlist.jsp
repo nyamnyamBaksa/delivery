@@ -274,7 +274,8 @@
 					$(newTableHTML).appendTo($(".table")).slideDown();
 
 				    // 찜 개수 업데이트
-				    $('.wishcount').text(data.wlist[0].count);
+				    var count = data.wlist[0].count;
+				    $('.wishcount').text(count);
 				    $('.wish').text('0');
 				    
 				    var check = document.getElementsByName("rowCheck");// var check = $(".rowCheck");

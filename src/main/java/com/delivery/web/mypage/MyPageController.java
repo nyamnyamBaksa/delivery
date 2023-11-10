@@ -381,7 +381,9 @@ public class MyPageController {
 			map.put("id", id);
 			map.put("offset", 0);
 			List<Map<String, Object>> list = myPageService.reviewlist(map);
+			List<Map<String, Object>> mnlist = myPageService.mnreviewlist(map);
 			model.addAttribute("list", list);
+			model.addAttribute("mnlist", mnlist);
 			return "/mypage/review";
 		} else {
 			return "redirect:/login";
@@ -395,8 +397,10 @@ public class MyPageController {
 			System.out.println(map);// {id=aaaa, offset=7, endIndex=13}
 			map.put("offset", util.strToInt((String)map.get("offset")));
 			List<Map<String, Object>> list = myPageService.reviewlist(map);
+			List<Map<String, Object>> mnlist = myPageService.mnreviewlist(map);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
+			json.put("list", mnlist);
 			return json.toString();
 		} else {
 			return "redirect:/login";
@@ -434,7 +438,9 @@ public class MyPageController {
 			map.put("id", id);
 			map.put("offset", offset);
 			List<Map<String, Object>> list = myPageService.reviewlist(map);
+			List<Map<String, Object>> mnlist = myPageService.mnreviewlist(map);
 			json.put("list", list);
+			json.put("mnlist", mnlist);
 			return json.toString();
 		} else {
 			return "redirect:/login";

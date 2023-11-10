@@ -164,4 +164,8 @@ public class MyPageService {
 		return myPageDAO.paycount(map);
 	}
 
+	public List<Map<String, Object>> mnreviewlist(Map<String, Object> map) {
+		return myPageDAO.mnreviewlist(map);
+	}
+
 }

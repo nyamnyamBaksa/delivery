@@ -460,7 +460,6 @@
 		            };
 		        }
 		        $.each(data.mnsearch, function(index2, row2) {
-			     	// 최대 두 개의 mnname만 추가
 			        if (groupedData[sname].sname == row2.sname) {
 			            groupedData[sname].mnnameList.push(row2.mnname);
 			        }
