@@ -33,7 +33,7 @@
 	</select>
 	
 	<select id="point" parameterType="String" resultType="Integer">
-		select COALESCE(pbalance, 0)
+		select COALESCE(pbalance, COUNT(*)) AS pbalance
 		from point
 		where mno = (select mno from member where MID = #{mid})
 		order by pno desc

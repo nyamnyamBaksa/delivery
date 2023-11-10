@@ -124,11 +124,14 @@
 </style>
 </head>
 <body>
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	</a>
 	<div class="cart-box-main">
 		<div class="container">
 			<input type="text" class="search" required="required" placeholder="검색어를 입력해주세요.">
 			<i class="fa fa-search"></i>
-			<div style="margin-top: 100px;"></div>
+			<div style="margin-top: 50px;"></div>
 			<div class="col-lg-12">
 				<div class="searchcate toolbar-sorter-right">
 		       		<select class="cate selectpicker show-tick form-control" id="cate">
@@ -141,12 +144,13 @@
 		    </div>
 		    <div id="searchcount" style="display: none;">${searchcount }</div>
 			<div class="col-lg-12">
+				<div style="margin-bottom: 35px;"></div>
 				<table class="table">
 				</table>
 				<button style="margin: 0 auto;" class="morebtn">+ 더보기</button>
 			</div>
 			<div class="recommend">
-			<c:if test="${sessionScope.mid ne null}">
+			<c:if test="${sessionScope.mid ne null && list[0].sno ne null}">
 				<h2 style="font-weight: bolder;text-align: center;">'${sessionScope.mname }'님이 최근에 드신 메뉴 별 추천 맛집</h2>
 					<div class="instagram-box">
 					<div class="main-instagram owl-carousel owl-theme">
@@ -165,7 +169,7 @@
 					</div>
 				</div>
 			</c:if>
-			<c:if test="${sessionScope.mid eq null}">
+			<c:if test="${sessionScope.mid eq null || list[0].sno eq null}">
 				<h2 style="font-weight: bolder;text-align: center;">주문량 많은 추천 맛집</h2>
 					<div class="instagram-box">
 					<div class="main-instagram owl-carousel owl-theme">
@@ -192,17 +196,17 @@
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<!-- ALL PLUGINS -->
-	<script src="js/jquery.superslides.min.js"></script>
-	<script src="js/bootstrap-select.js"></script>
-	<script src="js/inewsticker.js"></script>
-	<script src="js/bootsnav.js."></script>
-	<script src="js/images-loded.min.js"></script>
-	<script src="js/isotope.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/baguetteBox.min.js"></script>
-	<script src="js/form-validator.min.js"></script>
-	<script src="js/contact-form-script.js"></script>
-	<script src="js/custom.js"></script>
+	<script src="/js/jquery.superslides.min.js"></script>
+	<script src="/js/bootstrap-select.js"></script>
+	<script src="/js/inewsticker.js"></script>
+	<script src="/js/bootsnav.js."></script>
+	<script src="/js/images-loded.min.js"></script>
+	<script src="/js/isotope.min.js"></script>
+	<script src="/js/owl.carousel.min.js"></script>
+	<script src="/js/baguetteBox.min.js"></script>
+	<script src="/js/form-validator.min.js"></script>
+	<script src="/js/contact-form-script.js"></script>
+	<script src="/js/custom.js"></script>
 	<script src="/js/sweetalert.min.js"></script>
 
 	<script type="text/javascript">

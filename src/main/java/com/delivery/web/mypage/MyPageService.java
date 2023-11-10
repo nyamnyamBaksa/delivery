@@ -28,8 +28,8 @@ public class MyPageService {
 		return myPageDAO.follow(id);
 	}
 
-	public List<Map<String, Object>> boardlist(String mid, String id) {
-		return myPageDAO.boardlist(mid, id);
+	public List<Map<String, Object>> boardlist(Map<String, Object> map) {
+		return myPageDAO.boardlist(map);
 	}
 
 	public void bdelete(int bno) {
@@ -163,6 +163,5 @@ public class MyPageService {
 	public int paycount(Map<String, Object> map) {
 		return myPageDAO.paycount(map);
 	}
-
 
 }

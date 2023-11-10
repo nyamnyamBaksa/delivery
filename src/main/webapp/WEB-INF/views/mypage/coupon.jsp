@@ -21,11 +21,14 @@
 	<link rel="stylesheet" href="/css/bootstrap-icons.css">
 </head>
 <body>
+	<c:if test="${sessionScope.mid ne null}">
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	</a>
 	<div class="title">
 		<div class="titleFont">쿠폰함</div>
 	</div>
 	<div style="margin-top: 100px;"></div>
-	<c:if test="${sessionScope.mid ne null}">
 		<div class="cart-box-main">
 			<div class="container">
 				<div class="col-lg-12">

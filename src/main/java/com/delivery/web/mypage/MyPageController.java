@@ -55,7 +55,7 @@ public class MyPageController {
 			} else {// 다른 사람 계정 or 본인 계정
 				String myid = (String) session.getAttribute("mid");
 				model.addAttribute("id", id);
-				if(myid != id) {
+				if(!myid.equals(id)) {
 					int babfriend = myPageService.babfriend(myid, id);
 					model.addAttribute("babfriend", babfriend);
 				}
@@ -119,15 +119,17 @@ public class MyPageController {
 	}
 	
 	@GetMapping({"/diary", "/diary/{id}"})
-	public String diary(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
+	public String diary(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session,
+			@RequestParam Map<String, Object> map) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			String mid = (String) session.getAttribute("mid");
+			map.put("mid", mid);
 			if(id == null) {// 본인 계정
 				id = (String) session.getAttribute("mid");
 			} else {// 다른 사람 계정 or 본인 계정
 				String myid = (String) session.getAttribute("mid");
 				model.addAttribute("id", id);
-				if(myid != id) {
+				if(!myid.equals(id)) {// 서로 친구 아니면 못 보게함
 					int babfriend = myPageService.babfriend(myid, id);
 					model.addAttribute("babfriend", babfriend);
 					if(babfriend != 3) {
@@ -135,11 +137,13 @@ public class MyPageController {
 					}
 				}
 			}
+			map.put("id", id);
+			map.put("offset", 0);
 			int findById = myPageService.findById(id);
 			if(findById == 0) {
 				return "redirect:/";
 			}
-			List<Map<String, Object>> list = myPageService.boardlist(mid, id);
+			List<Map<String, Object>> list = myPageService.boardlist(map);
 			model.addAttribute("list", list);
 			return "/mypage/diary";
 		} else {
@@ -148,14 +152,32 @@ public class MyPageController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/moreDiary")
+	public String moreDiary(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			System.out.println(map);
+			map.put("offset", util.strToInt((String)map.get("offset")));
+			List<Map<String, Object>> list = myPageService.boardlist(map);
+			JSONObject json = new JSONObject();
+			json.put("list", list);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
 	@PostMapping("/bdelete")
-	public String bdelete(Model model, HttpSession session,
+	public String bdelete(Model model, HttpSession session, @RequestParam Map<String, Object> map,
 			@RequestParam(value = "bno", required = true, defaultValue = "0") int bno) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			myPageService.bdelete(bno);
 			String mid = (String) session.getAttribute("mid");
 			String id = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = myPageService.boardlist(mid, id);
+			map.put("mid", mid);
+			map.put("id", id);
+			map.put("offset", util.strToInt((String)map.get("offset")));
+			List<Map<String, Object>> list = myPageService.boardlist(map);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
 			return json.toString();
@@ -211,7 +233,7 @@ public class MyPageController {
 			}
 			int result = myPageService.updateFollow(map);
 			int babfriend = myPageService.babfriend(myid, id);
-			Map<String, Object> follow = myPageService.follow(myid);
+			Map<String, Object> follow = myPageService.follow(id);
 			JSONObject json = new JSONObject();
 			json.put("result", result);
 			json.put("i", map.get("i"));
@@ -285,8 +307,10 @@ public class MyPageController {
 			map.put("mid", (String) session.getAttribute("mid"));
 			map.put("offset", util.strToInt((String)map.get("offset")));
 			List<Map<String, Object>> list = myPageService.pay(map);
+			int paycount = myPageService.paycount(map);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
+			json.put("paycount", paycount);
 			return json.toString();
 		} else {
 			return "redirect:/login";
@@ -319,7 +343,10 @@ public class MyPageController {
 			// System.out.println(map);// {pcharge=10000, pbalance=14500}
 			if(map.get("offset") == null) {
 				map.put("offset", 0);
+			} else {
+				map.put("offset", util.strToInt((String)map.get("offset")));
 			}
+			
 			if(map.get("pbalance") == null || map.get("pbalance").equals("")) {
 				map.put("pbalance", util.strToInt((String)map.get("pcharge")));
 			} else {
@@ -329,8 +356,10 @@ public class MyPageController {
 			map.put("mid", mid);
 			myPageService.charge(map);
 			List<Map<String, Object>> list = myPageService.pay(map);
+			int paycount = myPageService.paycount(map);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
+			json.put("paycount", paycount);
 			return json.toString();
 		} else {
 			return "redirect:/login";

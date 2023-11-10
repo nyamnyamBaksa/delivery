@@ -169,7 +169,7 @@ body{
 
 
 /* Link */
-.dwrite, .cbtn, .dedit{
+.dwrite, .cbtn, .dedit, .morebtn{
 	background: #EB5757;
 	border-radius: 50px;
 	border: none;
@@ -179,9 +179,11 @@ body{
 	font-size: 20px;
 	line-height: 27px;
 	/* or 135% */
+	display: flex;
 	align-items: center;
 	text-align: center;
-	
+	justify-content: center;
+	cursor: pointer;
 	color: #FFFFFF;
 	
 }

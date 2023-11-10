@@ -56,11 +56,14 @@
 </style>
 </head>
 <body>
+	<c:if test="${sessionScope.mid ne null}">
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	</a>
 	<div class="title">
 		<div class="titleFont">회원정보수정</div>
 	</div>
 	<div style="margin-top: 120px;"></div>
-	<c:if test="${sessionScope.mid ne null}">
 		<div class="container" style="margin: 0 auto;width: 520px;">
 			<div class="col-lg-15">
 				<div class="form-group">

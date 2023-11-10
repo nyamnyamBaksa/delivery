@@ -200,10 +200,10 @@ public class PayController {
 			String id = (String) session.getAttribute("mid");
 			List<Map<String, Object>> list = payService.recommend(id);
 			model.addAttribute("list", list);
-		} else {
-			List<Map<String, Object>> rlist = payService.recommend2();
-			model.addAttribute("rlist", rlist);
 		}
+		List<Map<String, Object>> rlist = payService.recommend2();
+		model.addAttribute("rlist", rlist);
+		
 		return "/search";
 	}
 	
@@ -215,6 +215,8 @@ public class PayController {
 		}
 		if(map.get("offset") == null) {
 			map.put("offset", 0);
+		} else {
+			map.put("offset", util.strToInt((String)map.get("offset")));
 		}
 		List<Map<String, Object>> search = payService.search(map);
 		List<Map<String, Object>> mnsearch = payService.mnsearch(map);
@@ -235,6 +237,8 @@ public class PayController {
 		}
 		if(map.get("offset") == null) {
 			map.put("offset", 0);
+		} else {
+			map.put("offset", util.strToInt((String)map.get("offset")));
 		}
 		List<Map<String, Object>> search = payService.search(map);
 		List<Map<String, Object>> mnsearch = payService.mnsearch(map);

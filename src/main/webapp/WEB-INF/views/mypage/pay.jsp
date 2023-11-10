@@ -18,58 +18,74 @@
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/custom.css">
 <!-- sweetalert -->
-	<link rel="stylesheet" href="/css/sweetalert.min.css" />
-	<!-- 아이콘 -->
-	<link rel="stylesheet" href="/css/bootstrap-icons.css">
+<link rel="stylesheet" href="/css/sweetalert.min.css" />
+<!-- 아이콘 -->
+<link rel="stylesheet" href="/css/bootstrap-icons.css">
+<style type="text/css">
+</style>
 </head>
 <body>
 	<c:if test="${sessionScope.mid ne null}">
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	</a>
 		<div class="title">
-			<div class="titleFont">냠냠페이</div>
+			<div style="display: inline-block;" class="titleFont">냠냠페이</div>
+			<c:if test="${param.pbalance eq 'charge' }">
+	       		<button class="againpurchase">결제페이지로</button>
+	       	</c:if>
 		</div>
-		<div style="margin-top: 50px;"></div>
+		<div style="margin-top: 20px;"></div>
 		<div class="cart-box-main">
 			<div class="container">
 				<div class="col-lg-12">
-					<c:if test="${param.pbalance eq 'charge' }">
-			       		<div class="col-sm-8 col-sm-offset-3">
-			       			<button class="againpurchase">결제페이지로</button>
-			       		</div>
-			       	</c:if>
-			       	<div class="count">
-			       		<select class="cate" id="cate">
-							<option selected="selected" value="0">전체 보기</option>
-							<option value="1">최근 1개월</option>
-							<option value="3">최근 3개월</option>
-							<option value="6">최근 6개월</option>
-						</select>
-			       	</div>
-					<div class="count">
-						<div class="h2">
-							<h2 style="font-weight: bolder;float: left;">
+				<table>
+					<tr>
+						<td>
+					       	<div class="count toolbar-sorter-right">
+					       		<select class="cate selectpicker show-tick form-control" id="cate">
+									<option selected="selected" value="0">전체 보기</option>
+									<option value="1">최근 1개월</option>
+									<option value="3">최근 3개월</option>
+									<option value="6">최근 6개월</option>
+								</select>
+					       	</div>
+						</td>
+						<td>
+							<span style="font-weight: bolder;font-size: larger;color: black;">
 								<c:if test="${list[0].pbalance eq null }">
-								보유금액&nbsp;:&nbsp;0원
+									보유금액&nbsp;:&nbsp;0원
 								</c:if>
 								<c:if test="${list[0].pbalance ne null }">
 									보유금액&nbsp;:&nbsp;${list[0].pbalance }원
 								</c:if>
-							</h2>
-						</div>&nbsp;
-							<select class="pcharge">
-								<option selected="selected" value="10000">10,000원</option>
-								<option value="30000">30,000원</option>
-								<option value="50000">50,000원</option>
-								<option value="100000">100,000원</option>
-								<option value="4">입력하세요.</option>
-							</select>
-							<div id="pchargeInput" style="display: none;">
-							    <input type="text" style="width: 300px;" class="pchargeInput" placeholder="10만원 이상의 금액을 숫자만 입력하세요.">
-							    <div class="pchargeAlert" style="display: none;"></div>
+							</span>
+						</td>
+						<td style="width: 670px;"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<div class="toolbar-sorter-right">
+								<select id="pcharge" class="selectpicker show-tick form-control">
+									<option selected="selected" value="10000">10,000원</option>
+									<option value="30000">30,000원</option>
+									<option value="50000">50,000원</option>
+									<option value="100000">100,000원</option>
+									<option value="4">입력하세요.</option>
+								</select>
 							</div>
-						<button class="charge" style="cursor:pointer;width: 100px;height: 50px;float: right; margin-bottom: 5px;">충전하기</button>
-						<div class="pbalance" style="display: none;">${list[0].pbalance }</div>
-					</div>
-					<br>
+						</td>
+						<td>
+							<input type="text" style="width: 280px;display: none;border: 2px solid #EB5757;border-radius: 50px;font-weight: bold;" id="pchargeInput" placeholder="10만원 이상의 금액을 숫자만 입력하세요.">
+						</td>
+						<td style="width: 670px;"></td>
+						<td>
+							<button class="charge" style="width: 100px;height: 50px;">충전하기</button>
+						</td>
+					</tr>
+				</table>
+					<div class="pbalance" style="display: none;">${list[0].pbalance }</div>
 					<div style="display: none;" class="paycount">${paycount }</div>
 					<table class="table">
 						<c:forEach items="${list }" var="row">
@@ -99,6 +115,18 @@
 	<script src="/js/jquery-3.2.1.min.js"></script>
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
+	<!-- ALL PLUGINS -->
+	<script src="/js/jquery.superslides.min.js"></script>
+	<script src="/js/bootstrap-select.js"></script>
+	<script src="/js/inewsticker.js"></script>
+	<script src="/js/bootsnav.js."></script>
+	<script src="/js/images-loded.min.js"></script>
+	<script src="/js/isotope.min.js"></script>
+	<script src="/js/owl.carousel.min.js"></script>
+	<script src="/js/baguetteBox.min.js"></script>
+	<script src="/js/form-validator.min.js"></script>
+	<script src="/js/contact-form-script.js"></script>
+	<script src="/js/custom.js"></script>
 	<script src="/js/sweetalert.min.js"></script>
 	<script type="text/javascript">
 	
@@ -113,7 +141,7 @@
 			$('.morebtn').remove();
 		}
 	
-			// 더보기 클릭시
+		// 더보기 클릭시
 		$(document).on("click", ".morebtn", function(){
 			offset += count;
 			readOldNotify(offset);
@@ -151,10 +179,10 @@
 				 	// 테이블 업데이트
 					$(tableHtml).appendTo($(".table")).slideDown();
 				 	
-					// 더보기 버튼 삭제
-					if(offset + count >= paycount){
-						$('.morebtn').remove();
-					}
+		         	// 더보기 버튼 삭제
+		    		if(offset + count >= paycount){
+		    			$('.morebtn').remove();
+		    		}
 				 	
 				}
 			});
@@ -206,12 +234,15 @@
 				}
 			});
 		});
-		
-		$(document).on('change', '.pcharge', function(){
+	    
+	    // 충전 사용자 지정
+		$(document).on('change', '#pcharge', function(){
 			var selectedValue = $(this).val();
 			if(selectedValue == '4'){
 				$('#pchargeInput').css('display', 'inline');
-				selectedValue = $('.pchargeInput').val();
+				selectedValue = $('#pchargeInput').val();
+			} else {
+				$('#pchargeInput').css('display', 'none');
 			}
 		});
 		
@@ -231,12 +262,12 @@
 		    // 숫자로만 이루어진 문자열을 정수로 변환하여 반환
 		    return parseInt(str);
 		}
-	
+		
 		$(document).on("click",".charge", function(){
-			var pcharge = $('.pcharge').val();
+			var pcharge = $('#pcharge').val();
 			var pbalance = $('.pbalance').text();
 			if(pcharge == 4){
-				pcharge = $('.pchargeInput').val().trim();
+				pcharge = $('#pchargeInput').val().trim();
 				if (!strToInt(pcharge)) {
 		            return; // 숫자로 변환되지 않으면 함수 종료
 		        }
@@ -259,6 +290,15 @@
 	 		        h2.empty();
 		            // 보유금액 업데이트
 		            updateBalance(data.list[0].pbalance);
+		            
+		            var count = data.paycount;
+		            paycount = $('.paycount').text(count);
+		            $('#pchargeInput').css('display', 'none');
+		            $('#pchargeInput').val('');
+		         	// 더보기 버튼 삭제
+		    		if(offset + count >= paycount){
+		    			$('.morebtn').remove();
+		    		}
 				},
 				error:function(error){
 					swal("실패", "작업수행에 실패하였습니다.", "error");

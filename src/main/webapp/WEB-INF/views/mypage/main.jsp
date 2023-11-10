@@ -18,7 +18,7 @@
 <body>
     <c:if test="${sessionScope.mid ne null}">
 	    <a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
-	    	<i class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
+	    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
 		</a>
 		<div class="mypage">
 			<div class="mypageFont">마이페이지</div>
@@ -67,17 +67,21 @@
         <c:if test="${toplist[0].sname ne null }">
 	        <div class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
 	        <c:forEach items="${toplist }" var="row" varStatus="loopStatus">
-		        <div class="favoriteStoreComponent">
-		        	&nbsp;<i class="bi bi-trophy-fill" style="color:
-			            <c:choose>
-			                <c:when test="${loopStatus.index % 3 == 0}"> gold </c:when>
-			                <c:when test="${loopStatus.index % 3 == 1}"> silver </c:when>
-			                <c:when test="${loopStatus.index % 3 == 2}"> #cd7f32 </c:when>
-			            </c:choose>
-			        "></i>&nbsp;
-		        	<span style="font-size:large;font-weight:bold;">${row.sname }</span>
-		        	<span style="float:right;font-size:large;font-weight:bold;padding-right: 5px;">${row.count }회 주문</span>
-		        </div>
+	        <table class="favoriteStoreComponent">
+	        	<tr>
+	        		<td style="width: 50px;">
+			        	<i class="bi bi-trophy-fill" style="color:
+				            <c:choose>
+				                <c:when test="${loopStatus.index % 3 == 0}"> gold </c:when>
+				                <c:when test="${loopStatus.index % 3 == 1}"> silver </c:when>
+				                <c:when test="${loopStatus.index % 3 == 2}"> #cd7f32 </c:when>
+				            </c:choose>
+				        "></i>
+			        </td>
+		        	<td style="width: 210px;">${row.sname }</td>
+		        	<td>${row.count }회 주문</td>
+		    	</tr>   
+		    </table>
 		    </c:forEach>
 		    <div class="favoriteCate">
 		    	'${result.mname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
@@ -208,6 +212,9 @@
 	$(document).on("click", ".follow, .unfollow1, .followAccept, .unfollow3 , .followAcceptModal", function() {
 		var myid = $(".myid").text();
 		var id = $('.id').text();
+	    if(id == ''){
+	    	id = $(".myid").text();
+	    }
 		var modal = $('.followerMid').text();
 		let i = 0;
 	    let $icon = $(this);
@@ -223,9 +230,6 @@
 	    	i = 3;
 	    }
 	    
-	    if(id == ''){
-	    	id = 'String';
-	    }
 	    
 		$.ajax({
             url: '/mypage/updateFollow',
@@ -233,6 +237,7 @@
             data: {myid:myid, id:id, i:i, modal:modal},
             dataType:'json',
             success: function (data) {
+                var $howManyFollow = $(".HowManyfollow");
             	if(data.result == 1){
             		if(data.i == 0){
 	            		swal('', '밥친구 신청을 완료했어요.', "success");
@@ -242,14 +247,16 @@
             			swal('', '밥친구가 되었어요.', "success");
             		} else if(data.i == 4){
             			swal('', '밥친구가 되었어요.', "success");
-                        $("#exampleModal").modal("hide");
-            			// HowManyfollow 업데이트
-                        var $howManyFollow = $(".HowManyfollow");
-                        $howManyFollow.html('밥 친구 ' + data.follow.friend + ' ');
-                        $howManyFollow.append('|&nbsp;<span class="followAsk">친구 요청 ' + data.follow.friendreq + '</span>');
+            			$("#exampleModal").modal("hide");
             		} else {
             			swal('', '밥친구를 취소했어요.', "success");
             		}
+            		
+           			// HowManyfollow 업데이트
+                    $howManyFollow.html('<span style="cursor: pointer;" class="friendcount">밥 친구 ' + data.follow.friend + '</span>&nbsp;');
+           			if(id == myid){
+                    	$howManyFollow.append('&nbsp;|&nbsp;<span class="followAsk">친구 요청 ' + data.follow.friendreq + '</span>');
+           			}
             		
             		$('.babfriend').text(data.babfriend);
             		var button = $('.babfriend-btn');
@@ -295,7 +302,7 @@
 
 	            $.each(data.list, function (index, row) {
 	                var newContent = '<div class="modal-header">' +
-	                    '<h5 class="modal-title" id="exampleModalLabel"><a href="/mypage/main/' + row.mid + '"><img class="profile-image-follow" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
+	                    '<h5 class="modal-title" id="exampleModalLabel"><a style="margin-right:20px;" href="/mypage/main/' + row.mid + '"><img class="profile-image-follow profile-image" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
 	                    '<div class="modal-body"><div class="detail">' +
 	                    '<div class="detail-date-read"><div class="detail"><button class="followAcceptModal">+ 밥 친구 신청 수락</button><div>' +
 	                    '</div></div></div>' +
@@ -329,7 +336,7 @@
 
 	            $.each(data.list, function (index, row) {
 	                var newContent = '<div class="modal-header">' +
-	                    '<h5 class="modal-title" id="exampleModalLabel"><a href="/mypage/main/' + row.mid + '"><img class="profile-image-follow" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
+	                    '<h5 class="modal-title" id="exampleModalLabel"><a href="/mypage/main/' + row.mid + '"><img style="margin-right:20px;" class="profile-image-follow profile-image" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
 	                    '<div class="modal-body"><div class="detail">' +
 	                    '</div></div></div>';
 	                modalContent.append(newContent);

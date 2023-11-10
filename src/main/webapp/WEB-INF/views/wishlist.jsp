@@ -82,10 +82,13 @@
 </head>
 <body>
 	<c:if test="${sessionScope.mid ne null}">
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	</a>
 	<div class="title">
 		<div class="titleFont">찜</div>
 	</div>
-	<div style="margin-top: 50px;"></div>
+	<div style="margin-top: 15px;"></div>
 		<div class="cart-box-main">
 		<c:if test="${list[0].count eq null}">
 			<div class="container"><h1 style="text-align: center;">찜한 가게가 없습니다.</h1></div>
@@ -406,9 +409,11 @@
 			function(isConfirm) {
 				if (isConfirm) {
 					var wish = $('.wish').text();
-					offset = offset - wish;
-					for(var i = 1; offset <= 7 * i && offset > 7 * (i - 1); i++){
-						offset = i - 1;
+					if(offset > 0){
+						offset = offset - wish;
+						for(var i = 1; offset <= 7 * i && offset > 7 * (i - 1); i++){
+							offset = i - 1;
+						}
 					}
 					$.ajax({
 						url : '/wdelete',

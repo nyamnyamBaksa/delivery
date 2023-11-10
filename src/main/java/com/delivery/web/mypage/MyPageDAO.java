@@ -15,7 +15,7 @@ public interface MyPageDAO {
 
 	Map<String, Object> follow(String id);
 
-	List<Map<String, Object>> boardlist(@Param("mid") String mid, @Param("id") String id);
+	List<Map<String, Object>> boardlist(Map<String, Object> map);
 
 	void bdelete(int bno);
 

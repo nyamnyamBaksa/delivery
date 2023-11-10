@@ -28,6 +28,10 @@
 </head>
 
 <body>
+	<c:if test="${sessionScope.mid ne null}">
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	</a>
 	<div class="mypage">
 		<div class="mypageFont">주문하기</div>
 	</div>
@@ -189,6 +193,7 @@
 
 		</div>
 	</div>
+	</c:if>
 	<!-- End Cart -->
 
 

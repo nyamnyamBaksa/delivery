@@ -25,12 +25,16 @@
 
 <body>
 <c:if test="${sessionScope.mid ne null}">
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	</a>
 	<div class="mypage">
 		<div class="mypageFont">장바구니</div>
 	</div>
     <!-- Start Cart  -->
     <div class="cart-box-main">
     <c:if test="${list[0].sname eq null }">
+    	<div style="margin-bottom: 100px;"></div>
     	<h1 style="text-align: center;font-size: 50px;color: #EB5757;"><i class="bi bi-cart-x"></i>장바구니가 비었어요</h1>
     </c:if>
     <c:if test="${list[0].sname ne null }">
