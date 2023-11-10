@@ -50,7 +50,12 @@
 		<br>
 		<div id="storestar">
 			<i class="xi-star xi-x" style="color: #FFC633;"></i>${detail.average_rating}&nbsp;&nbsp;리뷰${detail.review_count}개
+
+			<a href="./review?sno=${detail.sno }"><i class="fa-solid fa-chevron-right fa-2xs"
+				style="color: #000000;"></i></a>
+
 			<a href="./review?sno=${detail.sno}"><i class="fa-solid fa-chevron-right fa-2xs" style="color: #000000;"></i></a>
+
 		</div>
 		<button id="storeinfo"
 			onclick="location.href='./storeinfo?sno=${detail.sno}'">가게정보</button>
