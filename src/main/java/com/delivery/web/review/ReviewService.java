@@ -26,4 +26,9 @@ public class ReviewService {
 		return reviewDAO.revivew(sno);
 	}
 
+
+	public Map<String, Object> countrscore(int sno) {
+		return reviewDAO.countrscore(sno);
+	}
+
 }

@@ -50,8 +50,13 @@ public class ReviewController {
     public String review(@RequestParam(value="sno", required = false) int sno , Model model) {
     	
     	List<Map<String, Object>> review = reviewService.review(sno);
-    	System.out.println(review);
-    	model.addAttribute("review", review);
+    	model.addAttribute("reviewview", review);
+    	
+    	Map<String, Object> countrscore = reviewService.countrscore(sno);
+    	model.addAttribute("countrscore",countrscore);
+    	
     	return "review";
     }
+    
+  
 }

@@ -10,13 +10,10 @@
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 <link rel="stylesheet" href="/css/menu.css">
 <link rel="stylesheet" href="/css/home.css">
-<link
-	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-<script
-	src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 </head>
 <body>
@@ -25,8 +22,8 @@
 
 	<div id="location">
 		<div>
-			<i class="fa-solid fa-location-dot fa-xl" style="color: #ffffff;"></i>
-			대표 주소를 설정해주세요.
+			<a href="/location"><i class="fa-solid fa-location-dot fa-xl" style="color: #ffffff;"></i>
+			대표 주소를 설정해주세요.</a>
 		</div>
 	</div>
 	<br>
@@ -62,39 +59,46 @@
 		</div>
 	</div>
 
+<div class="restraunt-list" style="display: flex; flex-wrap: wrap; justify-content: space-between; ">
+		<c:forEach items="${list}" var="l">
+			<div style="display: flex; align-items: center;">
+				<table width="100%" style="text-align: left; margin-right: 10px;">
 
-	<swiper-container class="mySwiper" scrollbar-hide="true">
-	<swiper-wrapper> <c:forEach items="${list}" var="l"
-		varStatus="status">
-		<swiper-slide>
-		<div class="restraunt-list"
-			style="display: flex; align-items: center;">
-			<table width="50%" style="text-align: left; margin-right: 10px;">
-				<tr>
-					<td rowspan="3" style="width: 200px; text-align: center;"><c:if
-							test="${l.store_image == null}">
-							<i class="fa-solid fa-hammer fa-rotate-270 fa-lg"
-								style="color: #eb5757;"></i>이미지 준비중
-                                    <i class="fa-solid fa-wrench fa-lg"
-								style="color: #eb5757;"></i>
-						</c:if> <c:if test="${l.store_image != null}">${l.store_image}</c:if></td>
-					<td style="font-size: large;">${l.store_name}</td>
-				</tr>
-				<tr>
-					<td><i class="xi-star xi-x" style="color: #ffe11c;"></i><span
-						class="rating">${l.average_rating}</span><span class="review">(${l.review_count})</span></td>
-				</tr>
-				<tr>
-					<td>최소주문 9,000원</td>
-				</tr>
-			</table>
-		</div>
-		</swiper-slide>
-	</c:forEach> </swiper-wrapper> </swiper-container>
+					<tr>
+						<td rowspan="3" style="width: 200px; text-align: center;">
+						<c:if test="${l.store_image == null}">
+								<i class="fa-solid fa-hammer fa-rotate-270 fa-lg"
+									style="color: #eb5757;"></i>이미지 준비중<i class="fa-solid fa-wrench fa-lg" style="color: #eb5757;"></i>
+							</c:if>
+							<c:if test="${l.store_image != null}"><img style="width: 160px; height: 120px; " class="foodimg" src="/img/food/${l.store_image}"></c:if></td>
+	 					<td style="font-size: large;">${l.store_name}</td>
+					</tr>
+					<tr>
+						<td><i class="xi-star xi-x" style="color: #ffe11c;"></i><span class="rating">${l.average_rating }</span><span class="review">(${l.review_count})</span></td>
+					</tr>
+					<tr>
+						<td>최소주문 9,000원</td>
+					</tr>
 
-
-
-
+				</table>
+				<a href="food/storedetail?sno=${l.sno}"><button type="button" style="color: black; background-color: white;">주문하러가기</button></a>
+			</div>
+		</c:forEach>
+	</div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 </body>
 
 </html>

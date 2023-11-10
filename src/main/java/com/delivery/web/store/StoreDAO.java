@@ -30,7 +30,13 @@ public interface StoreDAO {
 
 	boolean wishremove(Integer mno);
 
-	List<MenuDTO> cartlist(Map<String, Object> map);
+	MenuDTO menuinfo(int mnno);
+
+	void cartlist(Map<String, Object> map);
+
+	List<MenuDTO> getMainMenu();
+
+	List<MenuDTO> getSideMenu();
 
 	
 

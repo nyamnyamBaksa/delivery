@@ -63,12 +63,12 @@
 		resultType="com.delivery.web.store.MenuDTO">
 		SELECT mnname, mnprice, mnimg, mndesc, mnside
 		FROM menu
-		WHERE mnno =#{mnno}
+		WHERE mnno =#{mnno} AND mnside = #{mnside}
 	</select>
 
-	<insert id="cartlist">
-		INSERT INTO cart (mno, mnno, camount, mnprice, ctotal, camount)
-		VALUES(#{mno}, #{mnno}, #{camount}, #{price}, #{ctotal}, #{camount})
+	<insert id="cartlist" parameterType="java.util.Map">
+		INSERT INTO cart (mno, mnno, camount, ctotal)
+		VALUES((select mno from member where mid = #{mid}), #{mnno}, #{camount}, #{ctotal})
 	</insert>
 
 

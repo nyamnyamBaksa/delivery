@@ -9,7 +9,7 @@
 <link href="css/reviewwrite.css" rel="stylesheet">
 </head>
 <body>
-	<a href="/trade"><-뒤로가기</a>
+	<a href="/trade">뒤로가기</a>
 	<h1>리뷰쓰기</h1>
 	<hr class="hr">
 	<c:choose>
@@ -31,7 +31,7 @@
 		                  </fieldset>
 					  <textarea class="reviewtextarea" name="review" placeholder="음식에 대한 솔직한 리뷰를 남겨주세요."></textarea>
 					  <input type="hidden" value="${row.sno }" name="sno">
-					  <input type="hidden" value="${row.tno }" name="tno">
+					  <input type="hidden" value="${row.tgroup}" name="tgroup">
 					  <button type="submit" class="reviewBtn">
 					  	<span class="reviewBtntext">완료</span>
 					  </button>
@@ -40,7 +40,7 @@
 					  <hr>
 					  <div class="menutitle">추천하고 싶은 메뉴가 있나요?</div>
 				</c:if>
-					<div class="mnname">${row.mnname }<img alt="추천엄지" src="/img/thumbs.png"><br></div>
+					<div class="mnname">${row.mnname }<img alt="추천엄지" src="/img/thumbs.png" style="height:15px; width:15px;"></div>
 			</c:forEach>
 
 		

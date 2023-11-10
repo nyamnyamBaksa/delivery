@@ -23,11 +23,11 @@
 <body>
 
 	<div>
-		<a href="javascript:history.back()" style="position: relative; z-index: 1;">
+		<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
     <i class="fa-solid fa-arrow-left fa-xl" style="color: white;"></i>
 </a>
 <a id="cart" href="/cart"><i class="fa-solid fa-cart-shopping fa-2xl"
-		style="color: white; margin-left: 95%;"></i></a>
+		style="color: white; margin-left: 95%; text-shadow: 2px 2px 2px gray;"></i></a>
 <div id="storedetail">
     <div id="storeimg" style="text-align: center;">
         <c:if test="${detail.store_image == null}">
@@ -51,6 +51,12 @@
 		<div id="storestar">
 			<i class="xi-star xi-x" style="color: #FFC633;"></i>${detail.average_rating}&nbsp;&nbsp;리뷰${detail.review_count}개
 			<a href="./review?sno=${detail.sno}"><i class="fa-solid fa-chevron-right fa-2xs" style="color: #000000;"></i></a>
+
+			<a href="./review?sno=${detail.sno }"><i class="fa-solid fa-chevron-right fa-2xs"
+				style="color: #000000;"></i></a>
+
+			<a href="./review?sno=${detail.sno}"><i class="fa-solid fa-chevron-right fa-2xs" style="color: #000000;"></i></a>
+
 		</div>
 		<button id="storeinfo"
 			onclick="location.href='./storeinfo?sno=${detail.sno}'">가게정보</button>
