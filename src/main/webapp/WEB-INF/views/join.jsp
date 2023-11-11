@@ -96,7 +96,6 @@ $(function() {
 
 });
 </script>
-</script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 	window.onload = function(){
@@ -141,7 +140,7 @@ $(function() {
         </div>
         <div class="phoneBox">
           	<input class="input" type="text" name="mphone" id="mphone" placeholder="전화번호">
-          	<button id="idCheck" type="button" class="idbutton">본인인증</button>
+
         </div>
         <div>
         <br>

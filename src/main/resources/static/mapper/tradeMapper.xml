@@ -42,4 +42,10 @@
 		VALUES (#{sno}, #{review}, #{mno}, #{tno}, #{rscore})
 	</insert>
 	
+	<select id="reviewWhether" resultType="MAP">
+		SELECT *
+		FROM review
+		WHERE mid=#{id}
+	</select>
+	
 </mapper>
