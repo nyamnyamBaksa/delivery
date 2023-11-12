@@ -28,7 +28,7 @@
 	<div class="title">
 		<div class="titleFont">냠냠 다이어리</div>
 	</div>
-	<div style="margin-top: 50px;"></div>
+	<div style="margin-top: 130px;"></div>
 		<div class="cart-box-main">
 			<c:if test="${list[0].count eq null}">
 			<div class="container">
@@ -52,16 +52,18 @@
 								<td class="name-pr"
 									style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 800px;">${row.bcontent }</td>
 								<td class="quantity-box"
-									style="border: 0; border-style: dashed; width: 100px;">${row.bdate }</td>
+									style="border: 0; border-style: dashed; width: 120px;">${row.bdate }</td>
 								<td class="bbno" style="display: none;">${row.bno }</td>
-								<c:if test="${id eq null || sessionScope.mid eq id }">
-									<td style="border: 0; border-style: dashed;">
+								<td style="border: 0; border-style: dashed;">
+									<c:if test="${id eq null || sessionScope.mid eq id }">
 										<a href="/mypage/dedit/${row.bno}"><button class="dedit" style="width:100px;height:35px;">수정</button></a>
-									</td>
-									<td class="remove-pr" style="border: 0; border-style: dashed;">
+									</c:if>
+								</td>
+								<td class="remove-pr" style="border: 0; border-style: dashed;">
+									<c:if test="${id eq null || sessionScope.mid eq id }">
 										<i style="cursor: pointer;align-items: center;" class="fas fa-times"></i>
-									</td>
-								</c:if>
+									</c:if>
+								</td>
 							</tr>
 							<tr style="border-bottom: 1px solid #c0c0c0;">
 								<td class="name-pr"
@@ -84,10 +86,10 @@
 										</c:otherwise>
 									</c:choose></td>
 								<td class="total-pr"
-									style="border: 0; border-style: dashed; width: 60px;">
+									style="border: 0; border-style: dashed; width: 70px;">
 									<p>
 										<i class="bi bi-chat-dots"
-											style="font-size: 32px; color: #EB5757; cursor: pointer;"></i>&nbsp;${row.commentcount }
+											style="font-size: 32px; color: #EB5757; cursor: pointer;"></i>&nbsp;<span class="commentcount" data-bno="${row.bno}">${row.commentcount }</span>
 									</p>
 								</td>
 							</tr>
@@ -169,14 +171,14 @@
 								+ '<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;">'
 								+ row.bcontent
 								+ '</td>'
-								+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 100px;">'
+								+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 120px;">'
 								+ row.bdate
 								+ '</td>'
 								+ '<td class="bbno" style="display: none;">'
 								+ row.bno
 								+ '</td>'
 
-						if ('${sessionScope.mid}' === '${id}') {
+						if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
 							newRow += '<td style="border: 0; border-style: dashed;"><a href="/mypage/dedit/${row.bno}"><button class="dedit" style="width:100px;height:35px;">수정</button></a></td>';
 							newRow += '<td class="remove-pr" style="border: 0; border-style: dashed;">';
 							newRow += '<i style="cursor: pointer;" class="fas fa-times"></i>';
@@ -211,10 +213,10 @@
 						}
 
 						newRow += '</td>'
-								+ '<td class="total-pr" style="border: 0; border-style: dashed; width: 60px;">'
-								+ '<p><i class="bi bi-chat-dots" style="font-size: 32px; color: #EB5757; cursor: pointer;"></i>&nbsp;'
+								+ '<td class="total-pr" style="border: 0; border-style: dashed; width: 70px;">'
+								+ '<p><i class="bi bi-chat-dots" style="font-size: 32px; color: #EB5757; cursor: pointer;"></i>&nbsp;<span class="commentcount" data-bno="${row.bno}">'
 								+ row.commentcount
-								+ '</p>'
+								+ '</span></p>'
 								+ '</td>'
 								+ '</tr>';
 					
@@ -271,14 +273,14 @@
 										+ '<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;">'
 										+ row.bcontent
 										+ '</td>'
-										+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 100px;">'
+										+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 120px;">'
 										+ row.bdate
 										+ '</td>'
 										+ '<td class="bbno" style="display: none;">'
 										+ row.bno
 										+ '</td>'
 
-								if ('${sessionScope.mid}' === '${id}') {
+								if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
 									newRow += '<td style="border: 0; border-style: dashed;"><a href="/mypage/dedit/${row.bno}"><button class="dedit" style="width:100px;height:35px;">수정</button></a></td>';
 									newRow += '<td class="remove-pr" style="border: 0; border-style: dashed;">';
 									newRow += '<i style="cursor: pointer;" class="fas fa-times"></i>';
@@ -313,10 +315,10 @@
 								}
 
 								newRow += '</td>'
-										+ '<td class="total-pr" style="border: 0; border-style: dashed; width: 60px;">'
-										+ '<p><i class="bi bi-chat-dots" style="font-size: 32px; color: #EB5757; cursor: pointer;"></i>&nbsp;'
+										+ '<td class="total-pr" style="border: 0; border-style: dashed; width: 70px;">'
+										+ '<p><i class="bi bi-chat-dots" style="font-size: 32px; color: #EB5757; cursor: pointer;"></i>&nbsp<span class="commentcount" data-bno="${row.bno}">'
 										+ row.commentcount
-										+ '</p>'
+										+ '</span></p>'
 										+ '</td>'
 										+ '</tr>';
 							
@@ -409,6 +411,9 @@
 				dataType : 'json',
 				success : function(data) {
 					updateComment(data, bno);
+					var count = data.comment[0].count;
+					var commentcount = $('.commentcount[data-bno="' + bno + '"]').text(count);
+					alert(count + '   '+commentcount);
 				},
 				error : function(err) {
 					swal("실패", "작업수행에 실패하였습니다.", "error");
@@ -437,41 +442,43 @@
 				+ '</div>';
 				
 				modalcontent.append(newContent);
+			} else {
+				$.each(data.comment, function(index, row) {
+					var newContent = '<div class="modal-body" style="display: flex; justify-content: space-between;background-color: #FF9C41;">'
+							+ '<div class="detail">'
+							+ '<div class="detail-date-read">'
+							+ '<a href="/mypage/main/' + row.mid + '"><div class="detail-read" style="fon-size:large;font-weight:bold;">'
+							+ row.mnickname
+							+ '</a>&nbsp;('
+							+ row.cmdate
+							+ ')</div>'
+							+ '</div>'
+							+ '</div>'
+							+ '</div>'
+							+ '<div class="modal-header">'
+							+ '<h5 class="modal-title" id="exampleModalLabel" style="font-weight: bolder;">'
+							+ row.cmcontent
+							+ '</h5>'
+							+ '</div>'
+					modalcontent.append(newContent);
+				});
+				 newContent = '<div class="modal-body" style="display: flex; justify-content: space-between;background-color: #FF9C41;">'
+							+ '<div class="detail">'
+							+ '<div class="detail-date-read">'
+							+ '<div class="detail-read" style="fon-size:large;font-weight:bold;"><i class="bi bi-pencil"></i>&nbsp;댓글쓰기</div>'
+							+ '</div>'
+							+ '</div>'
+							+ '</div>'
+							+ '<div class="modal-header">'
+							+ '<div class="bbbno" style="display:none;">' + bno + '</div>'
+							+ '<input class="modal-title cwrite" id="exampleModalLabel" style="width:800px;height:100px;font-weight: bolder;">'
+							+ '</div>'
+							+ '<div class="modal-header">'
+							+ '<button class="modal-title cbtn" style="width:100px;height:35px;cursor:pointer;">댓글쓰기</button>'
+							+ '</div>';
+				modalcontent.append(newContent);
 			}
 
-			$.each(data.comment, function(index, row) {
-				var newContent = '<div class="modal-body" style="display: flex; justify-content: space-between;background-color: #FF9C41;">'
-						+ '<div class="detail">'
-						+ '<div class="detail-date-read">'
-						+ '<a href="/mypage/main/' + row.mid + '"><div class="detail-read" style="fon-size:large;font-weight:bold;">'
-						+ row.mnickname
-						+ '</a>&nbsp;('
-						+ row.cmdate
-						+ ')</div>'
-						+ '</div>'
-						+ '</div>'
-						+ '</div>'
-						+ '<div class="modal-header">'
-						+ '<h5 class="modal-title" id="exampleModalLabel" style="font-weight: bolder;">'
-						+ row.cmcontent
-						+ '</h5>'
-						+ '</div>'
-						+ '<div class="modal-body" style="display: flex; justify-content: space-between;background-color: #FF9C41;">'
-						+ '<div class="detail">'
-						+ '<div class="detail-date-read">'
-						+ '<div class="detail-read" style="fon-size:large;font-weight:bold;"><i class="bi bi-pencil"></i>&nbsp;댓글쓰기</div>'
-						+ '</div>'
-						+ '</div>'
-						+ '</div>'
-						+ '<div class="modal-header">'
-						+ '<div class="bbbno" style="display:none;">' + bno + '</div>'
-						+ '<input class="modal-title cwrite" id="exampleModalLabel" style="width:800px;height:100px;font-weight: bolder;">'
-						+ '</div>'
-						+ '<div class="modal-header">'
-						+ '<button class="modal-title cbtn" style="width:100px;height:35px;cursor:pointer;">댓글쓰기</button>'
-						+ '</div>';
-				modalcontent.append(newContent);
-			});
 			$("#exampleModal").modal("show");
 		}
 	</script>

@@ -63,7 +63,7 @@
 	<div class="title">
 		<div class="titleFont">회원정보수정</div>
 	</div>
-	<div style="margin-top: 120px;"></div>
+	<div style="margin-top: 230px;"></div>
 		<div class="container" style="margin: 0 auto;width: 520px;">
 			<div class="col-lg-15">
 				<div class="form-group">

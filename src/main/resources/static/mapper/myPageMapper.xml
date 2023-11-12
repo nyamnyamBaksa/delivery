@@ -162,7 +162,8 @@
 	</select>
 	
 	<select id="comment" parameterType="Integer" resultType="Map">
-		select cmno, cmcontent, mid, mname, cmdate, mnickname
+		select cmno, cmcontent, mid, mname, cmdate, mnickname,
+			(select commentcount from boardview where bno = #{bno}) as count
 		FROM commentview
 		where bno = #{bno}
 	</select>

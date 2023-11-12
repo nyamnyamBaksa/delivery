@@ -42,7 +42,7 @@
 	<div class="title">
 		<div class="titleFont">냠냠 다이어리 수정</div>
 	</div>
-	<div style="margin-top: 50px;"></div>
+	<div style="margin-top: 170px;"></div>
 		<div class="cart-box-main">
 			<div class="container">
 				<div class="col-lg-12">

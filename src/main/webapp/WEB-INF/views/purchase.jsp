@@ -140,18 +140,19 @@
 								<div class="title-left">
 									<h3>주문금액</h3>
 								</div>
-								<div class="d-flex gr-total" onclick="location.href='/mypage/pay?pbalance=charge'" style="cursor: pointer;">
+								<a href="/mypage/pay?pbalance=charge"><div class="d-flex gr-total" style="cursor: pointer;">
 									<h5 style="color: #EB5757;display: none;" class="pointempty">
 										<i class="bi bi-credit-card"></i>
 										포인트가 부족합니다. 충전하시려면 클릭하세요.
 									</h5>
 								</div>
-								<div class="d-flex gr-total" onclick="location.href='/mypage/pay?pbalance=charge'" style="cursor: pointer;">
+								<div class="d-flex gr-total" style="cursor: pointer;">
 									<h5 style="color: #EB5757;">포인트</h5>
 									<div class="ml-auto h5">
 										<span class="point">${pbalance }</span>원
 									</div>
 								</div>
+								</a>
 								<hr>
 								<div class="d-flex">
 									<h4>주문금액</h4>

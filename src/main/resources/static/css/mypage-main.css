@@ -8,7 +8,7 @@ body{
 	position: absolute;
 	left: 8.61%;
 	right: 83.54%;
-	top: 7.91%;
+	top: 9%;
 	bottom: 81.45%;
 	
 }
@@ -23,9 +23,9 @@ body{
 /* 닉네임 */
 .nickname{
 	position: absolute;
-	left: 17.5%;
-	right: 75.42%;
-	top: 9.38%;
+	left: 25%;
+	right: 65%;
+	top: 7%;
 	bottom: 82.91%;
 	
 	font-style: normal;
@@ -45,9 +45,9 @@ body{
 /* 냠냠 다이어리 */
 .diary{
 	position: absolute;
-	left: 16.46%;
-	right: 76.04%;
-	top: 25%;
+	left: 15.46%;
+	right: 72%;
+	top: 20%;
 	bottom: 64.84%;
 	display: flex;
     flex-direction: column; /* 요소 내의 요소들을 수직으로 나열합니다. */
@@ -72,13 +72,13 @@ body{
 /* 나의 찜 */
 .zzim{
 	position: absolute;
-	left: 46.74%;
-	right: 47.99%;
-	top: 25%;
+	left: 46%;
+	right: 40%;
+	top: 20%;
 	bottom: 64.84%;
 	display: flex;
-    flex-direction: column; /* 요소 내의 요소들을 수직으로 나열합니다. */
-    align-items: center; /* 요소를 수직으로 중앙 정렬합니다. */
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 	
 }
@@ -89,7 +89,6 @@ body{
 	font-weight: 400;
 	font-size: 18px;
 	line-height: 27px;
-	/* identical to box height, or 150% */
 	
 	color: #000000;
 }
@@ -99,9 +98,9 @@ body{
 /* 리뷰관리 */
 .review{
 	position: absolute;
-	left: 75%;
-	right: 19.72%;
-	top: 25%;
+	left: 77%;
+	right: 15%;
+	top: 20%;
 	bottom: 64.26%;
 	
 	/* identical to box height, or 150% */
@@ -125,8 +124,8 @@ body{
 .coupon{
 	position: absolute;
 	left: 17.5%;
-	right: 77.22%;
-	top: 45%;
+	right: 75%;
+	top: 35%;
 	bottom: 45.7%;
 	
 	/* identical to box height, or 150% */
@@ -149,8 +148,8 @@ body{
 .pay{
 	position: absolute;
 	left: 46.46%;
-	right: 48.26%;
-	top: 45%;
+	right: 45%;
+	top: 35%;
 	bottom: 45.7%;
 	
 	
@@ -173,10 +172,10 @@ body{
 /* + 밥친구 추가 네모 */
 .follow, .unfollow1, .followAccept, .unfollow3 {
 	position: absolute;
-	left: 28.06%;
-	right: 58.26%;
-	top: 11.23%;
-	bottom: 84.77%;
+	left: 33%;
+	right: 45%;
+	top: 11%;
+	bottom: 87%;
 	
 	background: #EB5757;
 	border-radius: 50px;
@@ -216,9 +215,8 @@ body{
 /* 밥친구 6 | 친구 요청 10 */
 .HowManyfollow{
 	position: absolute;
-	left: 45.97%;
-	right: 32.08%;
-	top: 10.55%;
+	left: 60%;
+	top: 8%;
 	bottom: 84.77%;
 	
 	font-style: normal;
@@ -240,7 +238,7 @@ body{
 	position: absolute;
 	left: 14.44%;
 	right: 62.43%;
-	top: 70%;
+	top: 50%;
 	bottom: 35.64%;
 	
 	font-style: normal;
@@ -262,8 +260,8 @@ body{
 	position: relative;
 	width: 350px;
 	height: 50px;
-	left: 200px;
-	top: 700px;
+	left: 100px;
+	top: 1300px;
 	margin:1px;
 	background: #FF9C41;
 	border-radius: 10px;
@@ -334,7 +332,7 @@ body{
 	position: absolute;
 	left: 55.76%;
 	right: 21.11%;
-	top: 70%;
+	top: 50%;
 	bottom: 36.33%;
 	
 	font-style: normal;
@@ -358,7 +356,7 @@ body{
 	width: 296px;
 	height: 278px;
 	left: 53%;
-	top: 680px;
+	top: 60%;
 	
 }
 
@@ -369,11 +367,10 @@ body{
 	box-sizing: border-box;
 	
 	position: absolute;
-	left: 5.49%;
-	right: 12.71%;
+	left: 5%;
+	right: 3%;
 	top: 2.73%;
 	bottom: 92.68%;
-	
 	border-bottom: 3px solid #000000;
 	
 }

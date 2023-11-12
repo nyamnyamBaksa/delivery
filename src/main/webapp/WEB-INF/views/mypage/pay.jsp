@@ -35,7 +35,7 @@
 	       		<button class="againpurchase">결제페이지로</button>
 	       	</c:if>
 		</div>
-		<div style="margin-top: 20px;"></div>
+		<div style="margin-top: 150px;"></div>
 		<div class="cart-box-main">
 			<div class="container">
 				<div class="col-lg-12">
@@ -51,7 +51,7 @@
 								</select>
 					       	</div>
 						</td>
-						<td>
+						<td style="width: 280px;">
 							<span style="font-weight: bolder;font-size: larger;color: black;">
 								<c:if test="${list[0].pbalance eq null }">
 									보유금액&nbsp;:&nbsp;0원

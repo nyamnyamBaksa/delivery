@@ -28,7 +28,7 @@
 	<div class="title">
 		<div class="titleFont">쿠폰함</div>
 	</div>
-	<div style="margin-top: 100px;"></div>
+	<div style="margin-top: 150px;"></div>
 		<div class="cart-box-main">
 			<div class="container">
 				<div class="col-lg-12">

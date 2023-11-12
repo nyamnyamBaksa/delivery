@@ -95,6 +95,7 @@
 	right: 15%;
 	top: 9.77%;
 	bottom: 85.55%;
+	height: 50px;
 	background: #EB5757;
 	border: 1px solid #E8E8E8;
 	border-radius: 50px;
@@ -102,6 +103,28 @@
 	color: white;
 	font-size: larger;
 	font-weight: bolder;
+}
+
+h2{
+	position: absolute;
+	left: 20%;
+	right: 20%;
+	top: 17%;
+	bottom: 73%;
+}
+
+.instagram-box{
+	position: absolute;
+	left: 20%;
+	right: 20%;
+	top: 20%;
+	bottom: 70%;
+}
+
+.col-lg-12{
+	position: absolute;
+	top: 17%;
+	left: 5%;
 }
 
 .search::placeholder {
@@ -115,11 +138,12 @@
 	position: absolute;
 	left: 78%;
 	right: 17%;
-	top: 11%;
+	top: 10%;
 	bottom: 85%;
 	cursor: pointer;
 	color: white;
-	font-size: larger;
+	font-size: 25px;
+	margin-top: 8px;
 }
 </style>
 </head>
@@ -132,6 +156,7 @@
 			<input type="text" class="search" required="required" placeholder="검색어를 입력해주세요.">
 			<i class="fa fa-search"></i>
 			<div style="margin-top: 50px;"></div>
+		    <div id="searchcount" style="display: none;">${searchcount }</div>
 			<div class="col-lg-12">
 				<div class="searchcate toolbar-sorter-right">
 		       		<select class="cate selectpicker show-tick form-control" id="cate">
@@ -141,9 +166,6 @@
 						<option value="3">찜 많은 순 ▼</option>
 					</select>
 		       	</div>
-		    </div>
-		    <div id="searchcount" style="display: none;">${searchcount }</div>
-			<div class="col-lg-12">
 				<div style="margin-bottom: 35px;"></div>
 				<table class="table">
 				</table>
@@ -151,7 +173,7 @@
 			</div>
 			<div class="recommend">
 			<c:if test="${sessionScope.mid ne null && list[0].sno ne null}">
-				<h2 style="font-weight: bolder;text-align: center;">'${sessionScope.mname }'님이 최근에 드신 메뉴 별 추천 맛집</h2>
+				<h2 style="font-weight: bolder;text-align: center;">'${sessionScope.mname }'님을 위한 추천 맛집</h2>
 					<div class="instagram-box">
 					<div class="main-instagram owl-carousel owl-theme">
 						<c:forEach items="${list}" var="row">

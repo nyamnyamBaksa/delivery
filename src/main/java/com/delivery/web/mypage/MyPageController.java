@@ -41,12 +41,6 @@ public class MyPageController {
 	@Autowired
 	private SmsUtil smsUtil;
 	
-	// 나중에 수정
-	@GetMapping("/sample")
-	public String sample(HttpSession session){
-		return "/mypage/sample";
-	}
-	
 	@GetMapping({"/main","/main/{id}"})
 	public String main(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {

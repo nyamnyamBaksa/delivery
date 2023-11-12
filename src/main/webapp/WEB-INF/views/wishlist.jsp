@@ -88,7 +88,7 @@
 	<div class="title">
 		<div class="titleFont">찜</div>
 	</div>
-	<div style="margin-top: 15px;"></div>
+	<div style="margin-top: 110px;"></div>
 		<div class="cart-box-main">
 		<c:if test="${list[0].count eq null}">
 			<div class="container"><h1 style="text-align: center;">찜한 가게가 없습니다.</h1></div>
@@ -247,7 +247,9 @@
 				    $.each(groupedData, function(sno, group) {
 				        newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;border-bottom: 1px solid #c0c0c0;">';
 				        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 5px;vertical-align: middle;">';
+			        if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
 				        newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck wno" name="rowCheck" id="' + group.index + '" value="' + group.wno + '"><label class="custom-control-label" for="' + group.index + '"></label></div></td>';
+			        }
 				        newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;"><a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 150px;height: 130px;" src="/img/food/' + group.simg + '" /></a>';
 				        newTableHTML += '</td>';
 				        newTableHTML += '<td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
@@ -273,75 +275,72 @@
 				    // 테이블 업데이트
 					$(newTableHTML).appendTo($(".table")).slideDown();
 
-				    // 찜 개수 업데이트
-				    var count = data.wlist[0].count;
-				    $('.wishcount').text(count);
-				    $('.wish').text('0');
-				    
-				    var check = document.getElementsByName("rowCheck");// var check = $(".rowCheck");
-					var checkCnt = check.length;
-
-					$('input[name="allCheck"]').click(function() {
-						var checkList = $('input[name="rowCheck"]');
-						for (var i = 0; i < checkList.length; i++) {
-							checkList[i].checked = this.checked;
-						}
-					});
-
-					$('input[name="rowCheck"]').click(function() {
-						if ($('input[name="rowCheck"]:checked').length == checkCnt) {// $('.rowCheck:checked').length
-							$('input[name="allCheck"]')[0].checked = true;
-						} else {
-							$('input[name="allCheck"]')[0].checked = false;
-						}
-					});
-				    
-				 	// 모든 체크박스 요소를 가져오기
-					var allCheckCb = document.querySelector('input[name="allCheck"]');// var allCheckCb = $('input[name="allCheck"]');
-					var rowCheckCb = document
-							.querySelectorAll('input[name="rowCheck"]');// var rowCheckCb = $('input[name="rowCheck"]');
-
-					// allCheck 체크박스의 변경 이벤트 처리
-					allCheckCb.addEventListener('change', function() {
-						var checkedCount = 0;
-						if (allCheckCb.checked) {
-							// 맨 위의 체크박스가 체크되면 모든 상품 체크박스도 체크
-							rowCheckCb.forEach(function(checkbox) {
-								checkbox.checked = true;
-								checkedCount++;
-							});
-						} else {
-							// 맨 위의 체크박스가 해제되면 모든 상품 체크박스도 해제
-							rowCheckCb.forEach(function(checkbox) {
-								checkbox.checked = false;
-							});
-						}
-
-						// 총 선택된 상품 개수를 업데이트
-						updateTotalCount(checkedCount);
-					});
-
-					// rowCheck 체크박스의 변경 이벤트 처리
-					rowCheckCb.forEach(function(checkbox) {
-						checkbox.addEventListener('change', function() {
+				    if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
+					    $('.wish').text('0');
+					    var check = document.getElementsByName("rowCheck");// var check = $(".rowCheck");
+						var checkCnt = check.length;
+	
+						$('input[name="allCheck"]').click(function() {
+							var checkList = $('input[name="rowCheck"]');
+							for (var i = 0; i < checkList.length; i++) {
+								checkList[i].checked = this.checked;
+							}
+						});
+	
+						$('input[name="rowCheck"]').click(function() {
+							if ($('input[name="rowCheck"]:checked').length == checkCnt) {// $('.rowCheck:checked').length
+								$('input[name="allCheck"]')[0].checked = true;
+							} else {
+								$('input[name="allCheck"]')[0].checked = false;
+							}
+						});
+					    
+					 	// 모든 체크박스 요소를 가져오기
+						var allCheckCb = document.querySelector('input[name="allCheck"]');// var allCheckCb = $('input[name="allCheck"]');
+						var rowCheckCb = document
+								.querySelectorAll('input[name="rowCheck"]');// var rowCheckCb = $('input[name="rowCheck"]');
+	
+						// allCheck 체크박스의 변경 이벤트 처리
+						allCheckCb.addEventListener('change', function() {
 							var checkedCount = 0;
-							rowCheckCb.forEach(function(checkbox) {
-								if (checkbox.checked) {
+							if (allCheckCb.checked) {
+								// 맨 위의 체크박스가 체크되면 모든 상품 체크박스도 체크
+								rowCheckCb.forEach(function(checkbox) {
+									checkbox.checked = true;
 									checkedCount++;
-								}
-							});
-
+								});
+							} else {
+								// 맨 위의 체크박스가 해제되면 모든 상품 체크박스도 해제
+								rowCheckCb.forEach(function(checkbox) {
+									checkbox.checked = false;
+								});
+							}
+	
 							// 총 선택된 상품 개수를 업데이트
 							updateTotalCount(checkedCount);
 						});
-					});
-
-					// 총 선택된 상품 개수를 업데이트하는 함수
-					function updateTotalCount(count) {
-						var zzimTotalElement = document.querySelector('.wish');
-						zzimTotalElement.textContent = count;
-					}
-   			    	
+	
+						// rowCheck 체크박스의 변경 이벤트 처리
+						rowCheckCb.forEach(function(checkbox) {
+							checkbox.addEventListener('change', function() {
+								var checkedCount = 0;
+								rowCheckCb.forEach(function(checkbox) {
+									if (checkbox.checked) {
+										checkedCount++;
+									}
+								});
+	
+								// 총 선택된 상품 개수를 업데이트
+								updateTotalCount(checkedCount);
+							});
+						});
+	
+						// 총 선택된 상품 개수를 업데이트하는 함수
+						function updateTotalCount(count) {
+							var zzimTotalElement = document.querySelector('.wish');
+							zzimTotalElement.textContent = count;
+						}
+				    }
 					// 더보기 버튼 삭제
 					if(offset + count >= wishcount){
 						$('.morebtn').remove();
@@ -427,6 +426,11 @@
 						success: function(data) {
 						    swal("", "찜을 삭제했습니다.", "success");
 						    updateTable(data);
+						    
+						 	// 더보기 버튼 삭제
+							if(offset + count >= wishcount){
+								$('.morebtn').remove();
+							}
 						},
 						error: function(error) {
 							swal("실패", "작업수행에 실패하였습니다.", "error");
@@ -562,7 +566,9 @@
 			    $.each(groupedData, function(sno, group) {
 			        newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;border-bottom: 1px solid #c0c0c0;">';
 			        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 5px;vertical-align: middle;">';
+		        if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
 			        newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck wno" name="rowCheck" id="' + group.index + '" value="' + group.wno + '"><label class="custom-control-label" for="' + group.index + '"></label></div></td>';
+		        }
 			        newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;"><a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 150px;height: 130px;" src="/img/food/' + group.simg + '" /></a>';
 			        newTableHTML += '</td>';
 			        newTableHTML += '<td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
@@ -590,7 +596,8 @@
 			    $('.table').html(newTableHTML);
 
 			    // 찜 개수 업데이트
-			    $('.wishcount').text(data.wlist[0].count);
+			    var count = data.wlist[0].count;
+			    wishcount = $('.wishcount').text(count);
 			    $('.wish').text('0');
 			    
 			    var check = document.getElementsByName("rowCheck");// var check = $(".rowCheck");
