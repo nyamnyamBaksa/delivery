@@ -51,7 +51,7 @@ function naverLogin(){
 				<input type="text" class="id" id="id" name="id" placeholder="아이디">
 			</div>
 			<div>
-				<input type="text" class="pw" id="pw" name="pw" placeholder="비밀번호">
+				<input type="password" class="pw" id="pw" name="pw" placeholder="비밀번호">
 			</div>
 
 			<div>

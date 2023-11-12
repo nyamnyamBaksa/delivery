@@ -16,4 +16,6 @@ public interface TradeDAO {
 
 	Map<String, Object> tradecp(String tgroup);
 
+	List<Map<String, Object>> reviewWhether(Map<String, Object> map);
+
 }
