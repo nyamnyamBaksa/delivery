@@ -1,14 +1,11 @@
 package com.delivery.web.store;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.delivery.web.mypage.Util;
 
@@ -44,12 +39,16 @@ public class StoreController {
 	}
 
 	@GetMapping("/food/storedetail")
-	public String storedetail(@RequestParam(value = "sno", required = false) int sno, Model model) {
+	public String storedetail(@RequestParam(value = "sno", required = false) int sno, Model model,HttpSession session) {
 
 		// 메뉴리스트 불러오기
 		StoreDTO detail = storeService.detail(sno);
 		List<MenuDTO> menulist = storeService.getmenulist(sno);
 
+		if (session.getAttribute("sno") == null) {
+			session.setAttribute("sno", sno);
+		}
+		
 		// 메인+사이드 메뉴 랜덤 뽑기
 		List<MenuDTO> mainMenuList = new ArrayList<>();
 		List<MenuDTO> sideMenuList = new ArrayList<>();
@@ -97,21 +96,21 @@ public class StoreController {
 	// 찜 누르기
 	@PostMapping("/food/storedetail")
 	@ResponseBody
-	public Map<String, Object> wishlist(@RequestParam(value = "sno", required = false) int sno, HttpSession session) {
+	public Map<String, Object> wishlist(@RequestParam(value = "sno", required = false) int sno,HttpSession session) {
 
 		Map<String, Object> response = new HashMap<>();
-
 		Integer mno = (Integer) session.getAttribute("mno");
 		String mid = (String) session.getAttribute("mid");
 
 		if (mno == null || mid == null) {
+			
 			response.put("status", "error");
 			response.put("message", "로그인 이용 후 가능합니다.");
 
 		} else {
-			boolean success = storeService.wishlist(mid, sno);
+			boolean wishlistAdded = storeService.wishlist(mno, sno);
 
-			if (success) {
+			if (wishlistAdded) {
 				response.put("status", "success");
 				response.put("message", "찜목록에 추가되었습니다.");
 			} else {
@@ -132,14 +131,15 @@ public class StoreController {
 		Integer mno = (Integer) session.getAttribute("mno");
 		String mid = (String) session.getAttribute("mid");
 
-		if (mid == null || mid == null) {
+		if (mid == null) {
+			
 			response.put("status", "error");
 			response.put("message", "로그인 이용 후 가능합니다.");
 
 		} else {
-			boolean success = storeService.wishlist(mid, sno);
+			boolean wishlistRemoved = storeService.wishremove(mno, sno);
 
-			if (success) {
+			if (wishlistRemoved) {
 				response.put("status", "removed");
 				response.put("message", "찜목록에서 제거되었습니다.");
 			} else {
@@ -189,16 +189,17 @@ public class StoreController {
 	public String cart (@RequestParam Map<String, Object> map, Model model, HttpSession session) {
 		
 		if (session.getAttribute("mid") != null) {
-			map.put("mid", (String)(session.getAttribute("mid") ));
-			
-			System.out.println(map);
-			
-			storeService.cartlist(map);			
-			
-			return "redirect:/cart";
-			
-		}else {
-			return "redirect:/login";
-		}
-}
+	        
+			    map.put("sno", (String) session.getAttribute("sno"));
+		        map.put("mid", (String) session.getAttribute("mid"));
+
+		        System.out.println(map);
+
+		        storeService.cartlist(map);
+
+		        return "redirect:/cart";
+		    } else {
+		        return "redirect:/login";
+		    }
+	}
 }

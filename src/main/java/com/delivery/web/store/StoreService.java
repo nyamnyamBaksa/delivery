@@ -50,23 +50,23 @@ public class StoreService {
 	}
 	
 	
-
+	//찜버튼 누르기
 	@Transactional
-	public boolean wishlist(String mid, Integer mno) {
-		
-		boolean addwishlist = storeDAO.wishlist(mno);
-		
+	public boolean wishlist(Integer mno, int sno) {
+	    
+		boolean addwishlist = storeDAO.addwishlist(mno, sno);
+	    
 		return addwishlist;
 	
 	}
 
-
+	//찜버튼 취소하기
 	@Transactional
-	public boolean wishremove(String mid, Integer mno) {
+	public boolean wishremove(Integer mno, int sno) {
 		
-		boolean removed = storeDAO.wishremove(mno);
+		 boolean wishremoved = storeDAO.wishremoved(mno, sno);
 		
-		return removed;
+		return wishremoved;
 	
 	}
 
@@ -96,6 +96,14 @@ public class StoreService {
 	public void cartlist(Map<String, Object> map) {
 		
 		storeDAO.cartlist(map);
+	}
+
+
+
+
+	public boolean wishlist(String mid, int sno) {
+		
+		return false;
 	}
 
 
