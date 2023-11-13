@@ -29,13 +29,4 @@ public class TradeService {
 		return tradeDAO.tradecp(tgroup);
 	}
 
-	public List<Map<String, Object>> reviewWhether(Map<String, Object> map) {
-		return tradeDAO.reviewWhether(map);
-	}
-
-
-
-
-
-
 }

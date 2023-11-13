@@ -63,7 +63,7 @@ $(function () {
     $.uploadImageByPath = function (targetImgPath, progress) {
       return new Promise((resolve) => {
         const _options = {
-          url: `${location.origin}/file/upload`,
+          url: 'http://172.30.1.87:8080/fileUpload',
           header: {},
           params: {},
           body: [
@@ -90,6 +90,7 @@ $(function () {
 	<h1>리뷰쓰기</h1>
 	<hr class="hr">
 	<c:choose>
+	
 	<c:when test="${sessionScope.mname ne null }">
 	
 	<div class="reviewBox">
