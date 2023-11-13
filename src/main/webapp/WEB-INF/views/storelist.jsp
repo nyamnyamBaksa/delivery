@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title>상세카테고리</title>
 <link rel="stylesheet" href="/css/storelist.css">
+<link rel="stylesheet" href="/css/menu.css">
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
@@ -23,6 +24,8 @@
 </head>
 
 <body>
+<%@ include file="menu.jsp"%>
+
 	<h1 style="text-align: center;"><a id="" href="/">냠냠박사</a></h1>
 	<a id="cart" href="/cart"><i class="fa-solid fa-cart-shopping fa-2xl"
 		style="color: #000000; margin-left: 95%;"></i></a>

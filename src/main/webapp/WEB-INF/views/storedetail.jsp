@@ -8,6 +8,7 @@
 <title>가게상세페이지</title>
 <link rel="stylesheet" href="/css/storedetail.css">
 
+
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <link rel="stylesheet"
@@ -55,8 +56,6 @@
 			<a href="./review?sno=${detail.sno }"><i class="fa-solid fa-chevron-right fa-2xs"
 				style="color: #000000;"></i></a>
 
-			<a href="./review?sno=${detail.sno}"><i class="fa-solid fa-chevron-right fa-2xs" style="color: #000000;"></i></a>
-
 		</div>
 		<button id="storeinfo"
 			onclick="location.href='./storeinfo?sno=${detail.sno}'">가게정보</button>
@@ -98,41 +97,59 @@
 	</div>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
+	  $(document).ready(function() {
+	        let likeButton = $("#likebutton");
 
-			$('#likebutton').click(function() {
+	        likeButton.click(function() {
+	            let sno = likeButton.data("sno");
+	            let mno = likeButton.data("mno");
+	            let inWishlist = likeButton.data("wishlist");
 
-				let sno = $(this).data("sno");
+	            let url = "";
 
-				$.ajax({
-					type : "post",
-					url : "/food/storedetail?sno=" + sno,
-					data : {
-						sno : sno
-					},
-					contentType : "application/json",
-					success : function(response) {
-						
-							  let likeButton = $("#likebutton i");
-							  
-							  if (response.status === "success") {
-									if (likeButton.hasClass("fa-regular")) {
-										likeButton.removeClass("fa-regular").addClass("fa-solid");
-										Swal.fire(response.message);
-									} else if (likeButton.hasClass("fa-solid")) {
-										likeButton.removeClass("fa-solid").addClass("fa-regular");
-										Swal.fire("찜이 취소되었습니다.");
-									}
-								} else {
-									Swal.fire(response.message);
-								}
-							},
-							error: function() {
-								Swal.fire("문제가 발생했습니다");
-							}
-						});
-					});
-				});
+	            if (inWishlist) {
+	                url = "/food/storedetail/remove";  
+	            } else {
+	                url = "/food/storedetail"; 
+	            }
+
+	            $.ajax({
+	                type: "post",
+	                url: url,
+	                data: {sno: sno},
+	                success: function(response) {
+	                    if (response.status === "success") {
+	                        likeButton.data("wishlist", !inWishlist);  
+	                        Swal.fire({
+	                            icon: "success",
+	                            title: inWishlist ? "찜 취소" : "찜 추가",
+	                            text: inWishlist ? "찜이 취소되었습니다." : "찜목록에 추가되었습니다."
+	                        });
+	                    } else if (response.status === "removed") {
+	                        likeButton.data("wishlist", !inWishlist); 
+	                        Swal.fire({
+	                            icon: "success",
+	                            title: "찜 취소",
+	                            text: "찜이 취소되었습니다."
+	                        });
+	                    } else if (response.status === "error") {
+	                        Swal.fire({
+	                            icon: "error",
+	                            title: "에러",
+	                            text: response.message
+	                        });
+	                    }
+	                },
+	                error: function() {
+	                    Swal.fire({
+	                        icon: "error",
+	                        title: "에러",
+	                        text: "문제가 발생했습니다."
+	                    });
+	                }
+	            });
+	        });
+	    });
 	</script>
 
 </body>

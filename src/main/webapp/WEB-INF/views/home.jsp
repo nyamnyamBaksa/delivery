@@ -15,6 +15,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+
+
+
 </head>
 <body>
 	<%@ include file="menu.jsp"%>
@@ -27,10 +30,33 @@
 		</div>
 	</div>
 	<br>
-	<div id="randomfood" style="float: right;">
-		<h1 style="display: inline;">오늘 뭐먹지?</h1>
-		<button type="button" style="display: inline;">선택</button>
-	</div>
+<div id="randomfood" style="float: right;">
+    <h2 id="menutext" style="display: inline;">오늘 뭐먹지?</h2>
+    <button type="button" onclick="randommenu()" style="display: inline;">선택</button>
+</div>
+
+    <script type="text/javascript">
+    let menulist = ["칼국수", "감베리크레마", "교자만두", "시골야채된장비빔밥",
+        "목살김치된장", "햄버거", "새우샤오룽바오", "꿔바로우", "보슬키토",
+        "생돼지 김치찌개식 두루치기", "돼지갈비찜", "완당떡국", "스시"];
+
+    function randommenu() {
+        let randomindex = Math.floor(Math.random() * menulist.length);
+        let selectmenu = menulist[randomindex];
+        
+        let menu = document.getElementById("menutext");
+        menu.style.transition = "opacity 0.5s ease-in-out"; 
+        
+        setTimeout(() => {
+            menu.style.opacity = "0";
+            setTimeout(() => {
+                menu.textContent = selectmenu; 
+                menu.style.opacity = "1"; 
+            }, 500); 
+        }, 10); 
+    }
+</script>
+
 	<br>
 	<div id="foodcategory">
 		<div>
@@ -58,7 +84,7 @@
 			<a href="food/8?category=카페/디저트">카페/디저트</a>
 		</div>
 	</div>
-
+	<h2>Best 맛집</h2>
 <div class="restraunt-list" style="display: flex; flex-wrap: wrap; justify-content: space-between; ">
 		<c:forEach items="${list}" var="l">
 			<div style="display: flex; align-items: center;">

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface StoreDAO {
@@ -24,12 +25,6 @@ public interface StoreDAO {
 
 	List<MenuDTO> menudetail(int mnno);
 
-	boolean wishlist(Integer mno);
-
-	boolean wishlist(String mid, int sno);
-
-	boolean wishremove(Integer mno);
-
 	MenuDTO menuinfo(int mnno);
 
 	void cartlist(Map<String, Object> map);
@@ -37,6 +32,10 @@ public interface StoreDAO {
 	List<MenuDTO> getMainMenu();
 
 	List<MenuDTO> getSideMenu();
+
+	boolean addwishlist(@Param("mno") Integer mno, @Param("sno") int sno);
+
+	boolean wishremoved(@Param("mno")Integer mno,@Param("sno") int sno);
 
 	
 

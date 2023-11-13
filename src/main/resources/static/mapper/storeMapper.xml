@@ -34,13 +34,13 @@
 	</select>
 
 	<!-- 찜버튼 누르기 -->
-	<insert id="wishlist">
+	<insert id="addwishlist">
 		INSERT INTO wishlist (mno, sno)
 		VALUES (#{mno}, #{sno})
 	</insert>
 
 	<!-- 찜버튼 취소하기 -->
-	<delete id="wishremove">
+	<delete id="wishremoved">
 		DELETE FROM wishlist WHERE sno = #{sno}
 	</delete>
 
@@ -63,7 +63,7 @@
 		resultType="com.delivery.web.store.MenuDTO">
 		SELECT mnname, mnprice, mnimg, mndesc, mnside
 		FROM menu
-		WHERE mnno =#{mnno} AND mnside = #{mnside}
+		WHERE mnno =#{mnno}
 	</select>
 
 	<insert id="cartlist" parameterType="java.util.Map">
