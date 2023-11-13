@@ -97,6 +97,7 @@ td{
 }
 
 .custom-checkbox{
+	vertical-align: middle;
 	margin-top: 22px;
 }
 </style>
@@ -192,11 +193,17 @@ td{
 			</div>
 		</c:if>
 		</div>
+		<div class="mouse" style="text-align: center;">
+		<a href="#" class="mouse-icon">
+			<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
+		</a>
+	</div>
 	</c:if>
 	<!-- ALL JS FILES -->
 	<script src="/js/jquery-3.2.1.min.js"></script>
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
+	<script src="js/scrollax.min.js"></script>
 	<script src="/js/sweetalert.min.js"></script>
     
     <script type="text/javascript">

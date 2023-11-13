@@ -22,6 +22,27 @@
 <!-- 아이콘 -->
 <link rel="stylesheet" href="/css/bootstrap-icons.css">
 <style type="text/css">
+.col-lg-12{
+	position: absolute;
+	top: 11%;
+	left: 5%;
+	right: 5%;
+	bottom: 50%;
+}
+
+td{
+	font-size: 40px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.selectpicker, .show-tick , .form-control{
+	font-weight: 700;
+	font-size: 40px;
+	line-height: 27px;
+	width:200px;
+	height:70px;
+}
 </style>
 </head>
 <body>
@@ -35,7 +56,7 @@
 	       		<button class="againpurchase">결제페이지로</button>
 	       	</c:if>
 		</div>
-		<div style="margin-top: 150px;"></div>
+		<div style="margin-top: 100px;"></div>
 		<div class="cart-box-main">
 			<div class="container">
 				<div class="col-lg-12">
@@ -51,7 +72,7 @@
 								</select>
 					       	</div>
 						</td>
-						<td style="width: 280px;">
+						<td style="width: 550px;text-align: left;">
 							<span style="font-weight: bolder;font-size: larger;color: black;">
 								<c:if test="${list[0].pbalance eq null }">
 									보유금액&nbsp;:&nbsp;0원
@@ -61,7 +82,6 @@
 								</c:if>
 							</span>
 						</td>
-						<td style="width: 670px;"></td>
 						<td></td>
 					</tr>
 					<tr>
@@ -77,11 +97,10 @@
 							</div>
 						</td>
 						<td>
-							<input type="text" style="width: 280px;display: none;border: 2px solid #EB5757;border-radius: 50px;font-weight: bold;" id="pchargeInput" placeholder="10만원 이상의 금액을 숫자만 입력하세요.">
+							<input type="text" style="width: 550px;display: none;border: 2px solid #EB5757;border-radius: 50px;font-weight: bold;" id="pchargeInput" placeholder="10만원 이상의 금액을 숫자만 입력하세요.">
 						</td>
-						<td style="width: 670px;"></td>
 						<td>
-							<button class="charge" style="width: 100px;height: 50px;">충전하기</button>
+							<button class="charge">충전하기</button>
 						</td>
 					</tr>
 				</table>
@@ -93,15 +112,15 @@
 								<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">${row.pcdate }</td>
 								<c:if test="${row.pcharge ne null }">
 									<td class="name-pr"
-										style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;"></td>
+										style="border: 0; border-style: dashed; width: 500px;font-weight: bolder;"></td>
 									<td class="name-pr"
-										style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder; color: #EB5757;">${row.pcharge }원 충전</td>
+										style="border: 0; border-style: dashed; width: 300px;font-weight: bolder; color: #EB5757;">${row.pcharge }원 충전</td>
 								</c:if>
 								<c:if test="${row.tgroup ne null}">
 									<td class="name-pr"
-										style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;">${row.sname }</td>
+										style="border: 0; border-style: dashed; width: 500px;font-weight: bolder;">${row.sname }</td>
 									<td class="name-pr"
-										style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;">${row.puse }원 차감</td>
+										style="border: 0; border-style: dashed; width: 300px;font-weight: bolder;">${row.puse }원 차감</td>
 								</c:if>
 							</tr>
 						</c:forEach>
@@ -110,6 +129,11 @@
 				</div>
 			</div>
 		</div>
+		<div class="mouse" style="text-align: center;">
+		<a href="#" class="mouse-icon">
+			<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
+		</a>
+	</div>
 	</c:if>
 	<!-- ALL JS FILES -->
 	<script src="/js/jquery-3.2.1.min.js"></script>
@@ -117,6 +141,7 @@
 	<script src="/js/bootstrap.min.js"></script>
 	<!-- ALL PLUGINS -->
 	<script src="/js/jquery.superslides.min.js"></script>
+	<script src="js/scrollax.min.js"></script>
 	<script src="/js/bootstrap-select.js"></script>
 	<script src="/js/inewsticker.js"></script>
 	<script src="/js/bootsnav.js."></script>
@@ -165,12 +190,12 @@
 				        tableHtml += '<tr style="border-bottom: 1px solid #EB5757;">';
 				        tableHtml += '<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">' + row.pcdate + '</td>';
 				        if (row.pcharge != null) {
-				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;"></td>';
-				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder; color: #EB5757;">' + row.pcharge + '원 충전</td>';
+				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 500px;font-weight: bolder;"></td>';
+				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 300px;font-weight: bolder; color: #EB5757;">' + row.pcharge + '원 충전</td>';
 				        }
 				        if (row.tgroup != null) {
-				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;">' + row.sname + '</td>';
-				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;">' + row.puse + '원 차감</td>';
+				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 500px;font-weight: bolder;">' + row.sname + '</td>';
+				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 300px;font-weight: bolder;">' + row.puse + '원 차감</td>';
 				        }
 				        tableHtml += '</tr>';
 				    });
@@ -312,12 +337,12 @@
 		        tableHtml += '<tr style="border-bottom: 1px solid #EB5757;">';
 		        tableHtml += '<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">' + row.pcdate + '</td>';
 		        if (row.pcharge != null) {
-		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;"></td>';
-		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder; color: #EB5757;">' + row.pcharge + '원 충전</td>';
+		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 500px;font-weight: bolder;"></td>';
+		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 300px;font-weight: bolder; color: #EB5757;">' + row.pcharge + '원 충전</td>';
 		        }
 		        if (row.tgroup != null) {
-		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;">' + row.sname + '</td>';
-		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 600px;text-align:right;font-size: larger; font-weight: bolder;">' + row.puse + '원 차감</td>';
+		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 500px;font-weight: bolder;">' + row.sname + '</td>';
+		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 300px;font-weight: bolder;">' + row.puse + '원 차감</td>';
 		        }
 		        tableHtml += '</tr>';
 		    });
@@ -326,7 +351,7 @@
 		}
 
 		function updateBalance(pbalance) {
-		    var pbalanceHtml = '<h2 style="font-weight: bolder; float: left;">보유금액 : ' + pbalance + '원</h2>';
+		    var pbalanceHtml = '<span style="font-weight: bolder;font-size: larger;color: black;">보유금액 : ' + pbalance + '원</span>';
 		    $('.h2').html(pbalanceHtml);
 		}
 	</script>

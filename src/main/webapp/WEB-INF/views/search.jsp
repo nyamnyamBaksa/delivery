@@ -251,12 +251,18 @@ td{
 			</div>
 		</div>
 	</div>
+	<div class="mouse" style="text-align: center;">
+		<a href="#" class="mouse-icon">
+			<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
+		</a>
+	</div>
 	<!-- ALL JS FILES -->
 	<script src="/js/jquery-3.2.1.min.js"></script>
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<!-- ALL PLUGINS -->
 	<script src="/js/jquery.superslides.min.js"></script>
+	<script src="js/scrollax.min.js"></script>
 	<script src="/js/bootstrap-select.js"></script>
 	<script src="/js/inewsticker.js"></script>
 	<script src="/js/bootsnav.js."></script>

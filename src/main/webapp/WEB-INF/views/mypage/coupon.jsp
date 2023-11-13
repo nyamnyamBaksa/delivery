@@ -19,6 +19,26 @@
 	<link rel="stylesheet" href="/css/sweetalert.min.css" />
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="/css/bootstrap-icons.css">
+	<style type="text/css">
+		.col-lg-12{
+			position: absolute;
+			top: 15%;
+			left: 7%;
+			right: 7%;
+			bottom: 50%;
+		}
+		
+		h2, h1{
+			font-size: 40px;
+			font-weight: bolder;
+			color: black;
+		}
+		
+		td{
+			font-size: 30px;
+			vertical-align: middle;
+		}
+	</style>
 </head>
 <body>
 	<c:if test="${sessionScope.mid ne null}">
@@ -36,15 +56,15 @@
 					<h1 style="text-align: center;">보유쿠폰이 없습니다.</h1>
 				</c:if>
 				<c:if test="${list[0].count ne null }">
-					<div class="count"><h3>보유쿠폰 ${list[0].count }장</h3></div><br>
+					<div class="count"><h2>보유쿠폰 ${list[0].count }장</h2></div><br>
 					<table class="table" style="border-left: 3px solid #EB5757;border-right: 3px solid #EB5757;">
 						<c:forEach items="${list }" var="row">
-							<tr style="border-top: 3px solid #EB5757;">
-								<td class="name-pr" style="font-size: large; font-weight: bold;border: 0; border-style: dashed; width: 800px;">${row.cpid }</td>
+							<tr style="border-top: 3px solid #EB5757;height: 30px;">
+								<td class="name-pr" style="font-weight: bold;border: 0; border-style: dashed; width: 800px;">${row.cpid }</td>
 							</tr>
-							<tr style="margin-top:30px;height: 100px;border-bottom: 3px solid #EB5757;">
-								<td class="name-pr" style="border: 0; border-style: dashed; width: 800px;"><h1 style="font-size: larger; font-weight: bolder;">${row.cpname }&nbsp;${row.cpprice }원 할인 쿠폰</h1></td>
-								<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">사용기한 : ${row.cpedate }</td>
+							<tr style="height: 100px;border-bottom: 3px solid #EB5757;">
+								<td class="name-pr" style="border: 0; border-style: dashed; width: 700px;"><h1 style="font-weight: bolder;">${row.cpname }&nbsp;${row.cpprice }원 할인 쿠폰</h1></td>
+								<td class="quantity-box" style="border: 0; border-style: dashed; width: 500px;">사용기한 : ${row.cpedate }</td>
 								<td class="bbno" style="display: none;">${row.cpno }</td>
 							</tr>
 						</c:forEach>

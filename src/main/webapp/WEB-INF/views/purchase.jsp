@@ -33,12 +33,11 @@
     	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
 	</a>
 	<div class="mypage">
-		<div class="mypageFont">주문하기</div>
+		<div class="mypageFont" style="font-size: 23px;">주문하기</div>
 	</div>
 	<!-- Start Cart  -->
 	<div class="cart-box-main">
 		<div class="container">
-			<div style="margin: 20px;"></div>
 			<div class="row">
 				<div class="col-sm-6 col-lg-6 mb-3">
 					<div class="col-md-12 col-lg-12">
@@ -194,6 +193,11 @@
 
 		</div>
 	</div>
+	<div class="mouse" style="text-align: center;">
+		<a href="#" class="mouse-icon">
+			<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
+		</a>
+	</div>
 	</c:if>
 	<!-- End Cart -->
 
@@ -203,6 +207,8 @@
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<!-- ALL PLUGINS -->
+	<script src="js/jquery.min.js"></script>
+    <script src="js/scrollax.min.js"></script>
 	<script src="/js/jquery.superslides.min.js"></script>
 	<script src="/js/bootstrap-select.js"></script>
 	<script src="/js/inewsticker.js"></script>

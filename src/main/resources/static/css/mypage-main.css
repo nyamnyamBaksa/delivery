@@ -14,8 +14,8 @@ body{
 }
 
 .profile-image{
-	width: 200px;
-	height: 200px;
+	width: 210px;
+	height: 210px;
 	border-radius: 80px;
 }
 
@@ -25,7 +25,7 @@ body{
 	position: absolute;
 	left: 35%;
 	right: 40%;
-	top: 15%;
+	top: 13%;
 	bottom: 82.91%;
 	
 	font-style: normal;
@@ -191,7 +191,7 @@ img{
      border: none; /* border를 제거하기 위해 추가 */
 }
 
-.followAcceptModal, .cartbtn, .qtyChange, .cpbtn, .purchasebtn{
+.followAcceptModal, .cartbtn, .cpbtn, .purchasebtn{
 	margin-top: 30px;
 	height: 33px;
 	background: #EB5757;
@@ -214,7 +214,7 @@ img{
 .HowManyfollow{
 	position: absolute;
 	left: 35%;
-	top: 22%;
+	top: 20%;
 	bottom: 84.77%;
 	
 	font-style: normal;

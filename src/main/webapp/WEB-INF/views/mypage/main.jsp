@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>냠냠박사</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/css/mypage-main.css">
 	<link rel="stylesheet" href="/css/mypage-pay.css">
 	<!-- Bootstrap CSS -->
@@ -238,7 +239,7 @@
 				    callback: function( status, result ) {
 				        console( status + ", " + JSON.stringify(result) );
 				        $.ajax({
-				            url: '/mypage/updateProfileImg',
+				            url: '/mypage/updateProfileImg2',
 				            type: 'POST',
 				            data: result,
 				            contentType: 'json',
@@ -414,18 +415,21 @@
 	        data.labels.push('${item.mncatename}');
 	        data.datasets[0].data.push(${item.count});
 	    </c:forEach>
-	
 	    // 차트 생성
 	    var ctx = document.getElementById('donutChart').getContext('2d');
 	    var myChart = new Chart(ctx, {
 	        type: 'doughnut',
 	        data: data,
 	        options: {
-	            cutoutPercentage: 50, // 도넛 차트로 만들기 위해 구멍 크기를 조절합니다.
+	            cutoutPercentage: 50, // 도넛 차트로 만들기 위해 구멍 크기를 조절
 	            title: {
 	                display: false, // 제목 숨김
 	            },
-	        }
+	            labels: {
+                   fontSize: 100,
+                   fontStyle: 'bolder'
+                }
+           	}
 	    });
     </script>
 </body>

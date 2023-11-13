@@ -73,8 +73,48 @@ public class MyPageController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/updateProfileImg")// 본인만 프로필 사진 바꿀 수 있음
+	@PostMapping("/updateProfileImg")// 웹 전용
 	public String updateProfileImg(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> map, HttpSession session) {
+		if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
+	        if (file != null && !file.isEmpty()) {
+	        	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+						.getRequest();
+				String path = request.getServletContext().getRealPath("/img/profileImg");
+	
+				//이미지 저장 
+				//UUID uuid = UUID.randomUUID();
+				LocalDateTime ldt = LocalDateTime.now();
+				String format = ldt.format(DateTimeFormatter.ofPattern("YYYYMMddHHmmss"));
+				String realFileName = format + file.getOriginalFilename();
+	
+				File newFileName = new File(path, realFileName);
+				try {
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					FileCopyUtils.copy(file.getBytes(), newFileName);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				map.put("mid", session.getAttribute("mid"));
+				map.put("file", realFileName);
+				myPageService.updateProfileImg(map);
+				String profileImg = myPageService.profileImg(map);
+				JSONObject json = new JSONObject();
+				json.put("profileImg", profileImg);
+				return json.toString();
+	        } else {
+	        	return "redirect:/mypage/main";
+	        }
+	    } else {
+	        return "redirect:/login";
+	    }
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateProfileImg2")// 모바일 전용
+	public String updateProfileImg2(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> map, HttpSession session) {
 		if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
 	        if (file != null && !file.isEmpty()) {
 	        	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
