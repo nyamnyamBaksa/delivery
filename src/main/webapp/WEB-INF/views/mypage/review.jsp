@@ -78,6 +78,25 @@
 .star-rating label:hover ~ label {
   -webkit-text-fill-color: #fff58c;
 }
+
+.col-lg-12{
+	position: absolute;
+	top: 18%;
+	left: 3%;
+	right: 3%;
+	bottom: 35%;
+}
+
+h2, h1{
+	font-size: 40px;
+	font-weight: bolder;
+	color: black;
+}
+
+td, .rdate, .sname{
+	font-size: 30px;
+	vertical-align: middle;
+}
 </style>
 </head>
 <body>
@@ -88,7 +107,7 @@
 	<div class="title">
 		<div class="titleFont">리뷰관리</div>
 	</div>
-	<div style="margin-top: 150px;"></div>
+	<div style="margin-top: 120px;"></div>
 		<div class="cart-box-main">
 		<c:if test="${list[0].count eq null}">
 			<div class="container">
@@ -99,7 +118,7 @@
 			<div id="mid" style="display: none;">${sessionScope.mid }</div>
 			<div id="id" style="display: none;">${id }</div>
 			<div class="container">
-				<div class="col-lg-12"><h2>총 리뷰 개수 : <span class="reviewcount" id="reviewcount">${list[0].count }</span></h2>
+				<div class="col-lg-13"><h2>총 리뷰 개수 : <span class="reviewcount" id="reviewcount">${list[0].count }</span></h2>
 					<c:if test="${id eq null || sessionScope.mid eq id }">
 						<table style="margin-bottom: 10px;">
 							<tr>
@@ -113,7 +132,7 @@
 									<span style="font-size: larger; font-weight: bolder;margin-right: 5px;"><span class="review"></span> / <span class="reviewcount">${list[0].count }</span></span>
 								</td>
 								<td>
-									<button class="delbtn" style="width: 70px;height: 40px;">삭제</button>
+									<button class="delbtn">삭제</button>
 								</td>
 							</tr>
 						</table>
@@ -123,17 +142,17 @@
 					<table class="table">
 						 <c:forEach var="row" items="${list}" varStatus="loop">
 					        <tr style="border-top: 1px solid #c0c0c0;">
-					            <td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 800px;">
+					            <td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 800px;">
 									<c:if test="${id eq null || sessionScope.mid eq id}">
 					                <div class="custom-control custom-checkbox" style="display: inline-block;">
 					                    <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="${loop.index}" value="${row.rno}">
 					                    <label class="custom-control-label" for="${loop.index}"></label>
 					                </div>
 									</c:if>
-					                &nbsp;<a href="/food/storedetail?sno=${row.sno}">${row.sname}</a>
-					                <span class="star-ratings rdate">&nbsp;${row.rdate}</span>
+					                &nbsp;<a href="/food/storedetail?sno=${row.sno}"><span class="sname">${row.sname}</span></a>
+					                &nbsp;<span class="rdate">${row.rdate}</span>
 					                <c:if test="${id eq null || sessionScope.mid eq id }">
-					                	<button class="editbtn" style="width: 70px; height: 40px; float:right; margin-left:10px; margin-right:10px;">수정</button>
+					                	<button class="editbtn" style="float:right; margin-left:10px; margin-right:10px;">수정</button>
 					            	</c:if>
 					            </td>
 					        </tr>
@@ -151,10 +170,10 @@
 					            </td>
 					        </tr>
 					        <tr>
-					            <td class="name-pr" style="border: 0; border-style: dashed; font-size: larger; font-weight: bolder;">${row.rcomment}</td>
+					            <td class="name-pr" style="border: 0; border-style: dashed;font-weight: bolder;">${row.rcomment}</td>
 					        </tr>
 					        <tr style="border-bottom: 1px solid #c0c0c0;">
-					            <td class="name-pr mnname" style="border: 0; border-style: dashed; width: 200px;vertical-align: middle;">
+					            <td class="name-pr mnname" style="font-size:25px;border: 0; border-style: dashed; width: 200px;vertical-align: middle;">
 					                <c:set var="menuNames" value="" />
 					                <c:forEach var="mn" items="${mnlist}" varStatus="loop">
 					                    <c:if test="${mn.rno eq row.rno}">
@@ -169,7 +188,7 @@
 				                        <c:set var="menuNames" value="${menuNames}${mn.mnname}" />
 				                        </c:if>
 					                </c:forEach>
-					                ${menuNames}
+					                <span class="mnname">${menuNames}</span>
 					            </td>
 					        </tr>
 					    </c:forEach>

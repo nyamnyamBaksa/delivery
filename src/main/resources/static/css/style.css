@@ -1179,7 +1179,7 @@
 }
  .instagram-box::before{
      width: 100%;
-     height: 100%;
+     height: 200%;
      left: 0px;
      top: 0px;
      content: "" ;
@@ -1191,7 +1191,7 @@
      z-index: 1;
      display: block;
      height: 100%;
-     width: 50px;
+     width: 100px;
      line-height: 0px;
      font-size: 24px;
      cursor: pointer;
@@ -1210,7 +1210,7 @@
      z-index: 1;
      display: block;
      height: 100%;
-     width: 50px;
+     width: 100px;
      line-height: 0px;
      font-size: 24px;
      cursor: pointer;

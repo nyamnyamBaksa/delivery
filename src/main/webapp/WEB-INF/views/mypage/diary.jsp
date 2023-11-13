@@ -19,6 +19,18 @@
 	<link rel="stylesheet" href="/css/sweetalert.min.css" />
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="/css/bootstrap-icons.css">
+	<style type="text/css">
+		.col-lg-12{
+			position: absolute;
+			top: 19%;
+			left: 3%;
+			bottom: 35%;
+		}
+		td{
+			font-size: 40px;
+			vertical-align: middle;
+		}
+	</style>
 </head>
 <body>
 	<c:if test="${sessionScope.mid ne null}">
@@ -28,7 +40,7 @@
 	<div class="title">
 		<div class="titleFont">냠냠 다이어리</div>
 	</div>
-	<div style="margin-top: 130px;"></div>
+	<div style="margin-top: 100px;"></div>
 		<div class="cart-box-main">
 			<c:if test="${list[0].count eq null}">
 			<div class="container">
@@ -41,7 +53,7 @@
 			<div class="container">
 				<span id="diarycount" style="display: none;">${list[0].count }</span>
 				<c:if test="${id eq null || sessionScope.mid eq id }">
-					<button class="dwrite" style="width:100px;height:35px;">글쓰기</button>
+					<button class="dwrite">글쓰기</button>
 				</c:if>
 			</div>
 			<div class="container">
@@ -50,13 +62,13 @@
 						<c:forEach items="${list }" var="row">
 							<tr style="height: 150px;">
 								<td class="name-pr"
-									style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 800px;">${row.bcontent }</td>
+									style="font-weight: bolder; border: 0; border-style: dashed; width: 800px;">${row.bcontent }</td>
 								<td class="quantity-box"
-									style="border: 0; border-style: dashed; width: 120px;">${row.bdate }</td>
+									style="border: 0; border-style: dashed; width: 250px;">${row.bdate }</td>
 								<td class="bbno" style="display: none;">${row.bno }</td>
 								<td style="border: 0; border-style: dashed;">
 									<c:if test="${id eq null || sessionScope.mid eq id }">
-										<a href="/mypage/dedit/${row.bno}"><button class="dedit" style="width:100px;height:35px;">수정</button></a>
+										<a href="/mypage/dedit/${row.bno}"><button class="dedit">수정</button></a>
 									</c:if>
 								</td>
 								<td class="remove-pr" style="border: 0; border-style: dashed;">
@@ -67,29 +79,29 @@
 							</tr>
 							<tr style="border-bottom: 1px solid #c0c0c0;">
 								<td class="name-pr"
-									style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 800px;"></td>
+									style="font-weight: bolder; border: 0; border-style: dashed; width: 800px;"></td>
 								<td class="bno" style="display: none;">${row.bno }</td>
 								<td class="total-pr" style="border: 0; border-style: dashed; width: 60px;"><c:choose>
 										<c:when test="${row.mylike eq 1}">
 											<p>
 												<i class="bi bi-heart-fill"
-													style="margin-top: 5px; font-size: 32px; color: #EB5757; cursor: pointer;"></i>
+													style="margin-top: 5px;color: #EB5757; cursor: pointer;"></i>
 												&nbsp;<span class="blike">${row.blike}</span>
 											</p>
 										</c:when>
 										<c:otherwise>
 											<p>
 												<i class="bi bi-heart"
-													style="margin-top: 5px; font-size: 32px; color: #EB5757; cursor: pointer;"></i>
+													style="margin-top: 5px;color: #EB5757; cursor: pointer;"></i>
 												&nbsp;<span class="blike">${row.blike}</span>
 											</p>
 										</c:otherwise>
 									</c:choose></td>
 								<td class="total-pr"
-									style="border: 0; border-style: dashed; width: 70px;">
+									style="border: 0; border-style: dashed; width: 100px;">
 									<p>
 										<i class="bi bi-chat-dots"
-											style="font-size: 32px; color: #EB5757; cursor: pointer;"></i>&nbsp;<span class="commentcount" data-bno="${row.bno}">${row.commentcount }</span>
+											style="color: #EB5757; cursor: pointer;"></i>&nbsp;<span class="commentcount" data-bno="${row.bno}">${row.commentcount }</span>
 									</p>
 								</td>
 							</tr>
@@ -104,7 +116,7 @@
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-lg" style="width: 1300px;">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #E6E6FA;">
 					<h5 class="modal-title" id="exampleModalLabel">본문제목</h5>
@@ -168,10 +180,10 @@
 					// 업데이트된 데이터로 표 채우기
 					$.each(data.list,function(index, row) {
 						newRow = '<tr style="height: 200px;">'
-								+ '<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;">'
+								+ '<td class="name-pr" style="font-weight: bolder;border: 0; border-style: dashed; width: 800px;">'
 								+ row.bcontent
 								+ '</td>'
-								+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 120px;">'
+								+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 250px;">'
 								+ row.bdate
 								+ '</td>'
 								+ '<td class="bbno" style="display: none;">'
@@ -179,7 +191,7 @@
 								+ '</td>'
 
 						if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-							newRow += '<td style="border: 0; border-style: dashed;"><a href="/mypage/dedit/${row.bno}"><button class="dedit" style="width:100px;height:35px;">수정</button></a></td>';
+							newRow += '<td style="border: 0; border-style: dashed;"><a href="/mypage/dedit/${row.bno}"><button class="dedit">수정</button></a></td>';
 							newRow += '<td class="remove-pr" style="border: 0; border-style: dashed;">';
 							newRow += '<i style="cursor: pointer;" class="fas fa-times"></i>';
 						}
@@ -187,7 +199,7 @@
 						newRow += '</td>'
 								+ '</tr>'
 								+ '<tr style="border-bottom: 1px solid #c0c0c0;">'
-								+ '<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;"></td>'
+								+ '<td class="name-pr" style="font-weight: bolder;border: 0; border-style: dashed; width: 800px;"></td>'
 								+ '<td class="bno" style="display: none;">'
 								+ row.bno
 								+ '</td>'
@@ -198,14 +210,14 @@
 
 						if (row.mylike >= 1) {
 							newRow += '<p>'
-									+ '<i class="bi bi-heart-fill" style="margin-top: 5px; font-size: 32px; color: #EB5757; cursor: pointer;"></i>'
+									+ '<i class="bi bi-heart-fill" style="margin-top: 5px;color: #EB5757; cursor: pointer;"></i>'
 									+ '&nbsp;<span class="blike">'
 									+ row.blike
 									+ '</span>'
 									+ '</p>';
 						} else {
 							newRow += '<p>'
-									+ '<i class="bi bi-heart" style="margin-top: 5px; font-size: 32px; color: #EB5757; cursor: pointer;"></i>'
+									+ '<i class="bi bi-heart" style="margin-top: 5px;color: #EB5757; cursor: pointer;"></i>'
 									+ '&nbsp;<span class="blike">'
 									+ row.blike
 									+ '</span>'
@@ -213,7 +225,7 @@
 						}
 
 						newRow += '</td>'
-								+ '<td class="total-pr" style="border: 0; border-style: dashed; width: 70px;">'
+								+ '<td class="total-pr" style="border: 0; border-style: dashed; width: 100px;">'
 								+ '<p><i class="bi bi-chat-dots" style="font-size: 32px; color: #EB5757; cursor: pointer;"></i>&nbsp;<span class="commentcount" data-bno="${row.bno}">'
 								+ row.commentcount
 								+ '</span></p>'
@@ -270,10 +282,10 @@
 							// 업데이트된 데이터로 표 채우기
 							$.each(data.list,function(index, row) {
 								newRow = '<tr style="height: 200px;">'
-										+ '<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;">'
+										+ '<td class="name-pr" style="font-weight: bolder;border: 0; border-style: dashed; width: 800px;">'
 										+ row.bcontent
 										+ '</td>'
-										+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 120px;">'
+										+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 250px;">'
 										+ row.bdate
 										+ '</td>'
 										+ '<td class="bbno" style="display: none;">'
@@ -281,7 +293,7 @@
 										+ '</td>'
 
 								if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-									newRow += '<td style="border: 0; border-style: dashed;"><a href="/mypage/dedit/${row.bno}"><button class="dedit" style="width:100px;height:35px;">수정</button></a></td>';
+									newRow += '<td style="border: 0; border-style: dashed;"><a href="/mypage/dedit/${row.bno}"><button class="dedit>수정</button></a></td>';
 									newRow += '<td class="remove-pr" style="border: 0; border-style: dashed;">';
 									newRow += '<i style="cursor: pointer;" class="fas fa-times"></i>';
 								}
@@ -289,7 +301,7 @@
 								newRow += '</td>'
 										+ '</tr>'
 										+ '<tr style="border-bottom: 1px solid #c0c0c0;">'
-										+ '<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;"></td>'
+										+ '<td class="name-pr" style="font-weight: bolder;border: 0; border-style: dashed; width: 800px;"></td>'
 										+ '<td class="bno" style="display: none;">'
 										+ row.bno
 										+ '</td>'
@@ -315,8 +327,8 @@
 								}
 
 								newRow += '</td>'
-										+ '<td class="total-pr" style="border: 0; border-style: dashed; width: 70px;">'
-										+ '<p><i class="bi bi-chat-dots" style="font-size: 32px; color: #EB5757; cursor: pointer;"></i>&nbsp<span class="commentcount" data-bno="${row.bno}">'
+										+ '<td class="total-pr" style="border: 0; border-style: dashed; width: 100px;">'
+										+ '<p><i class="bi bi-chat-dots" style="color: #EB5757; cursor: pointer;"></i>&nbsp<span class="commentcount" data-bno="${row.bno}">'
 										+ row.commentcount
 										+ '</span></p>'
 										+ '</td>'

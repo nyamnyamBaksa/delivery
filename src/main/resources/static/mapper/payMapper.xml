@@ -123,6 +123,14 @@
 		ORDER BY totalcount DESC;
 	</select>
 	
+	<select id="recommend3" resultType="Map">
+		SELECT w.sno, simg, sname, COUNT(sname) AS count
+		FROM wishlist w, store s
+		WHERE w.sno = s.sno
+		GROUP BY sname
+		ORDER BY count DESC;	 
+	</select>
+	
 	<select id="searchcount" parameterType="Map" resultType="Integer">
 		SELECT count(subcount) AS count
 		FROM(	

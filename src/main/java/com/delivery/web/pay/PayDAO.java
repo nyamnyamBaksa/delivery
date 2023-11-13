@@ -42,4 +42,6 @@ public interface PayDAO {
 
 	int searchcount(Map<String, Object> map);
 
+	List<Map<String, Object>> recommend3();
+
 }

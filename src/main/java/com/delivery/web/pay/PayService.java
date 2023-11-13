@@ -80,4 +80,8 @@ public class PayService {
 		return payDAO.searchcount(map);
 	}
 
+	public List<Map<String, Object>> recommend3() {
+		return payDAO.recommend3();
+	}
+
 }

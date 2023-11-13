@@ -6,7 +6,7 @@
 	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 700;
-	font-size: 20px;
+	font-size: 30px;
 	line-height: 27px;
 	cursor: pointer;
 	/* or 135% */
@@ -17,6 +17,8 @@
 	 justify-content: center; /* 텍스트를 수평으로 가운데 정렬하기 위해 추가 */
      color: #FFFFFF;
      border: none; /* border를 제거하기 위해 추가 */
+     width: 150px;
+     height: 70px;
 }
 
 /* div.title-left */
@@ -24,8 +26,8 @@
 	box-sizing: border-box;
 	
 	position: absolute;
-	left: 7.78%;
-	right: 10.42%;
+	left: 7%;
+	right: 7%;
 	top: 5.47%;
 	bottom: 89.94%;
 	
@@ -40,10 +42,9 @@
 	left: 2px;
 	top: 5px;
 	position: absolute;
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 700;
-	font-size: 32px;
+	font-size: 60px;
 	line-height: 22px;
 	/* identical to box height, or 68% */
 	display: flex;

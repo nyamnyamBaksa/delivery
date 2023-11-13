@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>냠냠박사</title>
 	<link rel="stylesheet" href="/css/mypage-main.css">
+	<link rel="stylesheet" href="/css/mypage-pay.css">
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<!-- sweetalert -->
@@ -30,7 +31,7 @@
         <div class="profile"><!-- onclick="popup('${sessionScope.mid}')" 작은 따옴표로 감싸기 -->
             <img class="profile-image" src="/img/profileImg/${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
         </div>
-        <div class="nickname">${result.mname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><img src="/img/profileImg/arrow_right.png"></a></c:if></div>
+        <div class="nickname">${result.mname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><i class="bi bi-arrow-right"></i></a></c:if></div>
         <c:if test="${sessionScope.mid ne id }">
 	        <c:choose>
 	        	<c:when test="${babfriend eq 0 }">
@@ -70,7 +71,7 @@
 	        <table class="favoriteStoreComponent">
 	        	<tr>
 	        		<td style="width: 50px;">
-			        	<i class="bi bi-trophy-fill" style="color:
+			        	<i class="bi bi-trophy-fill" style="font-size:50px;color:
 				            <c:choose>
 				                <c:when test="${loopStatus.index % 3 == 0}"> gold </c:when>
 				                <c:when test="${loopStatus.index % 3 == 1}"> silver </c:when>
@@ -78,15 +79,15 @@
 				            </c:choose>
 				        "></i>
 			        </td>
-		        	<td style="width: 210px;">${row.sname }</td>
-		        	<td>${row.count }회 주문</td>
+		        	<td style="width: 270px;">${row.sname }</td>
+		        	<td style="width: 150px;">${row.count }회 주문</td>
 		    	</tr>   
 		    </table>
 		    </c:forEach>
 		    <div class="favoriteCate">
 		    	'${result.mname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
 		    </div>
-		    <div class="favoriteCateGoogleChart" style="width: 700px; height: 300px;">
+		    <div class="favoriteCateGoogleChart">
 	        	<canvas id="donutChart"></canvas>
 		    </div>    
 	    </c:if>
@@ -163,6 +164,56 @@
 	        });*/
 		
 	});
+		
+	$.imagePicker = function () {
+	      return new Promise((resolve) => {
+	        M.media.picker({
+	          mode: "SINGLE",
+	          media: "PHOTO",
+	          // path: "/media", // 값을 넘기지않아야 기본 앨범 경로를 바라본다.
+	          column: 3,
+	          callback: (status, result) => {
+	            resolve({ status, result })
+	          }
+	        });
+	      })
+	    }
+
+	    $.convertBase64ByPath = function (imagePath) {
+	      if (typeof imagePath !== 'string') throw new Error('imagePath must be string')
+	      return new Promise((resolve) => {
+	        M.file.read({
+	          path: imagePath,
+	          encoding: 'BASE64',
+	          indicator: true,
+	          callback: function (status, result) {
+	            resolve({ status, result })
+	          }
+	        });
+	      })
+	    }
+
+	    $.uploadImageByPath = function (targetImgPath, progress) {
+	      return new Promise((resolve) => {
+	        const _options = {
+	          url: `${location.origin}/file/upload`,
+	          header: {},
+	          params: {},
+	          body: [
+	            // multipart/form-data 바디 데이터
+	            { name: "file", content: targetImgPath, type: "FILE" },
+	          ],
+	          encoding: "UTF-8",
+	          finish: (status, header, body, setting) => {
+	            resolve({ status, header, body })
+	          },
+	          progress: function (total, current) {
+	            progress(total, current);
+	          }
+	        }
+	        M.net.http.upload(_options);
+	      })
+	    }
 	
 	var confirm = function(msg, title, bno) {
 		swal({
@@ -179,7 +230,7 @@
 		function(isConfirm) {
 			if (isConfirm) {
 				
-				M.media.picker({
+				M.net.http.upload()({
 				    mode: "SINGLE",
 				    media: "PHOTO",
 				    path: "/media",

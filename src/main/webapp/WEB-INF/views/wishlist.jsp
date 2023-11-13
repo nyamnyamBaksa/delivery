@@ -78,6 +78,27 @@
   -webkit-text-fill-color: #fff58c;
 }
 
+h2{
+	font-size: 40px;
+	font-weight: bolder;
+	color: black;
+}
+
+td{
+	font-size: 30px;
+	vertical-align: middle;
+}
+
+.col-lg-12{
+	position: absolute;
+	top: 19%;
+	left: 3%;
+	bottom: 35%;
+}
+
+.custom-checkbox{
+	margin-top: 22px;
+}
 </style>
 </head>
 <body>
@@ -97,7 +118,7 @@
 			<div id="mid" style="display: none;">${sessionScope.mid }</div>
 			<div id="id" style="display: none;">${id }</div>
 			<div class="container">
-				<div class="col-lg-12"><h2>총 찜 개수 : <span class="wishcount" id="wishcount">${list[0].count }</span></h2>
+				<div class="col-lg-13"><h2>총 찜 개수 : <span class="wishcount" id="wishcount">${list[0].count }</span></h2>
 					<c:if test="${id eq null || sessionScope.mid eq id }">
 						<table style="margin-bottom: 10px;">
 							<tr>
@@ -111,7 +132,7 @@
 									<span style="font-size: larger; font-weight: bolder;margin-right: 5px;"><span class="wish"></span> / <span class="wishcount">${list[0].count }</span></span>
 								</td>
 								<td>
-									<button class="delbtn" style="width: 70px;height: 40px;">삭제</button>
+									<button class="delbtn">삭제</button>
 								</td>
 							</tr>
 						</table>
@@ -129,14 +150,14 @@
 					                    </div>
 					                </c:if>
 						        </td>
-					            <td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;">
+					            <td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;">
 					                <a href="/food/storedetail?sno=${row.sno }">
-					                <img style="width: 150px;height: 130px;" src="/img/food/${row.simg }"/></a>
+					                <img style="width: 170px;height:150px;" src="/img/food/${row.simg }"/></a>
 					            </td>
-					            <td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">
-					                <a href="/food/storedetail?sno=${row.sno }">${row.sname}</a>
+					            <td class="name-pr sname" style="font-weight: bolder; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">
+					                <a href="/food/storedetail?sno=${row.sno }"><span style="font-size:30px;">${row.sname}</span></a>
 					            </td>
-					            <td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">
+					            <td class="name-pr mnname" style="font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">
 									<c:set var="i" value="0" />
 					            	<c:forEach items="${mnlist}" var="innerRow">
 									    <c:if test="${innerRow.sname.equals(row.sname)}">
@@ -250,12 +271,12 @@
 			        if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
 				        newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck wno" name="rowCheck" id="' + group.index + '" value="' + group.wno + '"><label class="custom-control-label" for="' + group.index + '"></label></div></td>';
 			        }
-				        newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;"><a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 150px;height: 130px;" src="/img/food/' + group.simg + '" /></a>';
+				        newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;"><a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 170px;height:150px;" src="/img/food/' + group.simg + '" /></a>';
 				        newTableHTML += '</td>';
-				        newTableHTML += '<td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
-				        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '">' + group.sname + '</a>';
+				        newTableHTML += '<td class="name-pr sname" style="font-weight: bolder; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
+				        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><span style="font-size:30px;">' + group.sname + '</span></a>';
 				        newTableHTML += '</td>';
-				        newTableHTML += '<td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
+				        newTableHTML += '<td class="name-pr mnname" style="font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
 				        newTableHTML += group.mnnameList.join(', ');
 				        newTableHTML += '</td>';
 				        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;vertical-align: middle;">';
@@ -569,12 +590,12 @@
 		        if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
 			        newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck wno" name="rowCheck" id="' + group.index + '" value="' + group.wno + '"><label class="custom-control-label" for="' + group.index + '"></label></div></td>';
 		        }
-			        newTableHTML += '<td class="name-pr" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 100px;"><a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 150px;height: 130px;" src="/img/food/' + group.simg + '" /></a>';
+			        newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;"><a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 170px;height:150px;" src="/img/food/' + group.simg + '" /></a>';
 			        newTableHTML += '</td>';
-			        newTableHTML += '<td class="name-pr sname" style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
-			        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '">' + group.sname + '</a>';
+			        newTableHTML += '<td class="name-pr sname" style="font-weight: bolder; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
+			        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><span style="font-size:30px;">' + group.sname + '</span></a>';
 			        newTableHTML += '</td>';
-			        newTableHTML += '<td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
+			        newTableHTML += '<td class="name-pr mnname" style="font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
 			        newTableHTML += group.mnnameList.join(', ');
 			        newTableHTML += '</td>';
 			        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;vertical-align: middle;">';

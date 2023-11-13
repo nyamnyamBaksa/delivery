@@ -203,7 +203,8 @@ public class PayController {
 		}
 		List<Map<String, Object>> rlist = payService.recommend2();
 		model.addAttribute("rlist", rlist);
-		
+		List<Map<String, Object>> wlist = payService.recommend3();
+		model.addAttribute("wlist", wlist);
 		return "/search";
 	}
 	
