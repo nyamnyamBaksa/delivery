@@ -27,7 +27,7 @@ public interface StoreDAO {
 
 	MenuDTO menuinfo(int mnno);
 
-	void cartlist(Map<String, Object> map);
+	void cartname(Map<String, Object> map);
 
 	List<MenuDTO> getMainMenu();
 
@@ -36,6 +36,8 @@ public interface StoreDAO {
 	boolean addwishlist(@Param("mno") Integer mno, @Param("sno") int sno);
 
 	boolean wishremoved(@Param("mno")Integer mno,@Param("sno") int sno);
+
+	int cartlist(String mid);
 
 	
 

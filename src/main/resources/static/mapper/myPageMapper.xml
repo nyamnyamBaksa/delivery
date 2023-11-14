@@ -340,12 +340,12 @@
 	</insert>
 	
 	<update id="updateReview" parameterType="Map">
-		update review set rcomment = #{redit}, rscore = #{starRating}
+		update review set rcomment = #{redit}, rscore = #{starRating}, rphoto=#{rphoto}
 		where rno = #{rno}
 	</update>
 	
 	<select id="findReviewByRno" parameterType="Map" resultType="Map">
-		SELECT rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, tgroup
+		SELECT rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, tgroup, rphoto
 		FROM review r, store s
 		WHERE r.sno = s.sno AND rno = #{rno}
 	</select>

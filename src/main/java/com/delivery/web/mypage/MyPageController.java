@@ -511,6 +511,50 @@ public class MyPageController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/updateReviewImg") // 모바일 전용
+	public String updateReviewImg(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> map,
+	        HttpSession session) {
+	    System.out.println(file);
+	    System.out.println(map);
+	    if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
+	        if (file != null && !file.isEmpty()) {
+	            String path = "C:\\Users\\user\\eclipse-workspace\\delivery\\src\\main\\webapp\\img\\review";
+
+	            // 이미지 저장
+	            String realFileName = file.getOriginalFilename();
+
+	            File newFileName = new File(path, realFileName);
+	            
+	            // 디렉토리가 존재하지 않으면 생성
+	            if (!newFileName.getParentFile().exists()) {
+	                newFileName.getParentFile().mkdirs();
+	            }
+
+	            try {
+	                byte[] fileBytes = file.getBytes();
+	                System.out.println(fileBytes);
+	                System.out.println("Copying to: " + newFileName.getAbsolutePath());
+	                // 파일 경로를 생성하지 않고 직접 복사
+	                FileOutputStream fos = new FileOutputStream(newFileName);
+	                fos.write(fileBytes);
+	                fos.close();
+
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	            String reviewImg = realFileName;
+	            JSONObject json = new JSONObject();
+	            json.put("reviewImg", reviewImg);
+	            return json.toString();
+	        } else {
+	            return "redirect:/mypage/main";
+	        }
+	    } else {
+	        return "redirect:/login";
+	    }
+	}
+	
+	@ResponseBody
 	@PostMapping("/editReview")
 	public String editReview(@RequestParam Map<String, Object> map, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {

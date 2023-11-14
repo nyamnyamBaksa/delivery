@@ -61,16 +61,21 @@
 
 	<select id="menudetail" parameterType="Integer"
 		resultType="com.delivery.web.store.MenuDTO">
-		SELECT mnname, mnprice, mnimg, mndesc, mnside
+		SELECT mnname, mnprice, mnimg, mndesc, mnside, sno
 		FROM menu
 		WHERE mnno =#{mnno}
 	</select>
 
-	<insert id="cartlist" parameterType="java.util.Map">
+	<insert id="cartname" parameterType="java.util.Map">
 		INSERT INTO cart (mno, mnno, camount, ctotal)
 		VALUES((select mno from member where mid = #{mid}), #{mnno}, #{camount}, #{ctotal})
 	</insert>
-
+	
+	<select id="cartlist" parameterType="String" resultType="Integer">
+		select sno from cartview
+		where mno = (select mno from member where mid = #{mid})
+	</select>
+	
 
 
 </mapper>

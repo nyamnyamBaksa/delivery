@@ -432,7 +432,7 @@ td, .rdate, .sname{
 	    });
 
     
-	
+	    const M = window.M;
 		var confirm = function(msg, title, valueArr) {
 			swal({
 				title : title,
@@ -647,6 +647,14 @@ td, .rdate, .sname{
 					var modalcontent = $(".modal-content");
 					modalcontent.empty();
 					
+					var rphotoElement = '';
+
+					if (data.review.rphoto != null) {
+					    rphotoElement = '<img class="rphoto modal-title" src="/img/review' + data.review.rphoto + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">';
+					} else {
+					    rphotoElement = '<i class="bi bi-camera-fill" style="font-size:25px;cursor:pointer;margin: 0 auto;">사진 첨부하기</i>';
+					}
+					
 					var newContent = '<div class="modal-body" style="display: flex; justify-content: space-between;background-color: #FF9C41;">' +
 		            '<div class="detail" style="margin: 0 auto;">' +
 		            '<div class="detail-date-read">' +
@@ -671,6 +679,9 @@ td, .rdate, .sname{
 		            '<div class="rnoModal" style="display:none;">' + rno + '</div>' +
 		            '<input value="' + data.review.rcomment + '" class="modal-title redit" id="exampleModalLabel" style="width:800px;height:100px;font-weight: bolder;">' +
 		            '</div>' +
+		            '<div class="modal-header">' +
+		            rphotoElement+
+		            '</div>' +
 		            '<div class="modal-header" style="margin: 0 auto;">' +
 		            '<button class="modal-title editModalbtn">등록하기</button>' +
 		            '</div>';
@@ -684,17 +695,51 @@ td, .rdate, .sname{
 			});
 		}
 		
+		$(document).on("click", ".rphoto", function() {
+			M.media.picker({
+				  mode: "SINGLE",
+				  media: "PHOTO",
+				  column: 3,
+				  callback: function( status, result ) {
+				    var fileList = [], fileCont = {};
+				    fileCont.name = "file";
+				    fileCont.content = result.path;
+				    fileCont.type = 'FILE';
+				    fileList.push(fileCont);
+				    M.net.http.upload({
+				      url: "http://172.30.1.10/mypage/updateReviewImg",
+				      header: {},
+				      params: {index : "3"},
+				      body: fileList,
+				      encoding : "UTF-8",
+				      finish : function(code, header, body, status, error) {
+				        if (status == 'SUCCESS') {
+				         	// 이미지를 업데이트
+				         	var jsonObject = JSON.parse(body);
+			                var newImageSrc = '/img/review' + jsonObject.reviewImg;
+			                $(".rphoto").attr('src', newImageSrc);
+			                swal.close();
+				        } else{
+				            // M.pop.alert( status + " / " + error );
+				        }
+				     }
+				   });
+			  	}
+			});
+		});
+		
 		$(document).on("click", ".editModalbtn", function(){
 			var rno = $('.rnoModal').text();
 			var redit = $('.redit').val();
 			var starRating = $('input[name="rating"]:checked').val();
+			var rphoto = $(".rphoto").attr("src").substring(11);
 			if(starRating == null){
 				starRating = 0;
 			}
 			$.ajax({
 				url : '/mypage/editReview',
 				type : 'post',
-				data : {rno : rno, redit:redit, starRating:starRating,offset: offset},
+				data : {rno : rno, redit:redit, starRating:starRating,offset: offset, rphoto:rphoto},
 				dataType : 'json',
 				success : function(data) {
 					swal("", "리뷰를 수정했습니다.", "success");

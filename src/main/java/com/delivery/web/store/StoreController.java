@@ -8,6 +8,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.delivery.web.mypage.Util;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @Controller
 public class StoreController {
@@ -185,21 +187,27 @@ public class StoreController {
 	}
 	
 	
-	@PostMapping("/food/menudetail")
-	public String cart (@RequestParam Map<String, Object> map, Model model, HttpSession session) {
-		
-		if (session.getAttribute("mid") != null) {
-	        
-			    map.put("sno", (String) session.getAttribute("sno"));
-		        map.put("mid", (String) session.getAttribute("mid"));
-
-		        System.out.println(map);
-
-		        storeService.cartlist(map);
-
-		        return "redirect:/cart";
-		    } else {
-		        return "redirect:/login";
-		    }
-	}
+	// 장바구니 담기
+   @ResponseBody
+   @PostMapping("/menucart2")
+   public String menucart2(@RequestParam(value = "sno", required = false) Integer sno,
+         @RequestParam Map<String, Object> map, Model model, HttpSession session) {
+      if (session.getAttribute("mid") != null) { // 로그인한 아이디가 있을 경우
+         map.put("mid", (String) session.getAttribute("mid"));
+         String mid = (String) session.getAttribute("mid");
+         int csno = storeService.cartlist(mid);
+         System.out.println(map);
+         JSONObject json = new JSONObject();
+             if (csno != sno) {
+                 json.put("result", "1");
+             } else {
+                 storeService.cartname(map);
+                 json.put("result", "2");
+             }
+             System.out.println(json.toString());
+          return json.toString();
+     } else {
+         return "redirect:/login";
+     }
+    }
 }

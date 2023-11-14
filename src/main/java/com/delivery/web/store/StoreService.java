@@ -93,9 +93,9 @@ public class StoreService {
 	}
 
 
-	public void cartlist(Map<String, Object> map) {
+	public void cartname(Map<String, Object> map) {
 		
-		storeDAO.cartlist(map);
+		storeDAO.cartname(map);
 	}
 
 
@@ -104,6 +104,13 @@ public class StoreService {
 	public boolean wishlist(String mid, int sno) {
 		
 		return false;
+	}
+
+
+
+
+	public int cartlist(String mid) {
+		return storeDAO.cartlist(mid);
 	}
 
 
