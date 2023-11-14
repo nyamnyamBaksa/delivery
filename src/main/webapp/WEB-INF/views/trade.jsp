@@ -9,7 +9,8 @@
 <link href="css/trade.css" rel="stylesheet">
 </head>
 <body>
-	<a href="/home"><-뒤로가기</a>
+
+	<a href="/">뒤로가기</a>
 	<h1>주문내역</h1>
 	<hr class="hr">
 	

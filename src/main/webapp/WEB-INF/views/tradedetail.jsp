@@ -20,10 +20,12 @@
 					<span style="color: #EB5757;" >배달이 완료되었어요</span><br>
 					<span style="color: #000000;">${row.sname }</span><br>
 				</div>
+				<a href="food/storedetail?sno=${row.sno }">
+					<button class="storedetailBtn">
+			        	<span class="storedetail">가게보기</span>
+			        </button>
+				</a>
 
-		        <button class="storedetailBtn">
-		        	<span class="storedetail">가게보기</span>
-		        </button>
 		        <c:if test="${row.cpno == 1 }">
 		           <div class="cpno">
 		           	<div class="cpnotext">2000원 할인받음</div>

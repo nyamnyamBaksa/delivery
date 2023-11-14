@@ -32,7 +32,7 @@
 	</select>
 	
 	<select id="tradedetail" resultType="Map" parameterType="String">
-		SELECT tgroup, tamount, mnname, sname, sname, total, tdate, cpno, total, ttotal
+		SELECT tgroup, tamount, mnname, sname, sname, total, tdate, cpno, total, ttotal,sno
 		FROM tradeview
 		WHERE tgroup=#{tgroup}
 	</select>
