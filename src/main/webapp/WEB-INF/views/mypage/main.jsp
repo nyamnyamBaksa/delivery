@@ -30,7 +30,7 @@
     	<div class="id" style="display: none;">${id }</div><!-- 방문자 아이디 -->
     	<div class="babfriend" style="display: none;">${babfriend }</div><!-- 밥친구 -->
         <div class="profile"><!-- onclick="popup('${sessionScope.mid}')" 작은 따옴표로 감싸기 -->
-            <img class="profile-image" src="/img/profileImg/${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
+            <img class="profile-image" src="/img/profileImg${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
         </div>
         <div class="nickname">${result.mname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><i class="bi bi-arrow-right"></i></a></c:if></div>
         <c:if test="${sessionScope.mid ne id }">
@@ -71,8 +71,8 @@
 	        <c:forEach items="${toplist }" var="row" varStatus="loopStatus">
 	        <table class="favoriteStoreComponent">
 	        	<tr>
-	        		<td style="width: 50px;">
-			        	<i class="bi bi-trophy-fill" style="font-size:50px;color:
+	        		<td style="width: 20px;">
+			        	<i class="bi bi-trophy-fill" style="font-size:30px;color:
 				            <c:choose>
 				                <c:when test="${loopStatus.index % 3 == 0}"> gold </c:when>
 				                <c:when test="${loopStatus.index % 3 == 1}"> silver </c:when>
@@ -80,8 +80,8 @@
 				            </c:choose>
 				        "></i>
 			        </td>
-		        	<td style="width: 270px;">${row.sname }</td>
-		        	<td style="width: 150px;">${row.count }회 주문</td>
+		        	<td style="width: 150px;">${row.sname }</td>
+		        	<td style="width: 80px;">${row.count }회 주문</td>
 		    	</tr>   
 		    </table>
 		    </c:forEach>
@@ -122,6 +122,7 @@
 	<script src="/js/wnInterface.js"></script>
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
+	
 	<script src="/js/sweetalert.min.js"></script>
 	<!-- 차트 라이브러리 로드 -->
 	<script src="/js/chart.js"></script>
@@ -165,56 +166,8 @@
 	        });*/
 		
 	});
-		
-	$.imagePicker = function () {
-	      return new Promise((resolve) => {
-	        M.media.picker({
-	          mode: "SINGLE",
-	          media: "PHOTO",
-	          // path: "/media", // 값을 넘기지않아야 기본 앨범 경로를 바라본다.
-	          column: 3,
-	          callback: (status, result) => {
-	            resolve({ status, result })
-	          }
-	        });
-	      })
-	    }
-
-	    $.convertBase64ByPath = function (imagePath) {
-	      if (typeof imagePath !== 'string') throw new Error('imagePath must be string')
-	      return new Promise((resolve) => {
-	        M.file.read({
-	          path: imagePath,
-	          encoding: 'BASE64',
-	          indicator: true,
-	          callback: function (status, result) {
-	            resolve({ status, result })
-	          }
-	        });
-	      })
-	    }
-
-	    $.uploadImageByPath = function (targetImgPath, progress) {
-	      return new Promise((resolve) => {
-	        const _options = {
-	          url: `${location.origin}/file/upload`,
-	          header: {},
-	          params: {},
-	          body: [
-	            // multipart/form-data 바디 데이터
-	            { name: "file", content: targetImgPath, type: "FILE" },
-	          ],
-	          encoding: "UTF-8",
-	          finish: (status, header, body, setting) => {
-	            resolve({ status, header, body })
-	          },
-	          progress: function (total, current) {
-	            progress(total, current);
-	          }
-	        }
-	        M.net.http.upload(_options);
-	      })
-	    }
+	
+	const M = window.M;
 	
 	var confirm = function(msg, title, bno) {
 		swal({
@@ -230,33 +183,37 @@
 		},
 		function(isConfirm) {
 			if (isConfirm) {
-				
-				M.net.http.upload()({
-				    mode: "SINGLE",
-				    media: "PHOTO",
-				    path: "/media",
-				    column: 3,
-				    callback: function( status, result ) {
-				        console( status + ", " + JSON.stringify(result) );
-				        $.ajax({
-				            url: '/mypage/updateProfileImg2',
-				            type: 'POST',
-				            data: result,
-				            contentType: 'json',
-				            dataType:'json',
-				            processData: false,
-				            success: function (data) {
-				            	$("#exampleModal").modal("hide");
-				            	// 이미지를 업데이트
-				                var newImageSrc = '/img/profileImg/' + data.profileImg;
-				                $("#userProfileImage").attr('src', newImageSrc);
-				            },
-				            error: function () {
-				            	swal('', '서버와 통신 중 오류 발생', "error");
-				            }
-				        });
-				    }
+				M.media.picker({
+					  mode: "SINGLE",
+					  media: "PHOTO",
+					  column: 3,
+					  callback: function( status, result ) {
+					    var fileList = [], fileCont = {};
+					    fileCont.name = "file";
+					    fileCont.content = result.path;
+					    fileCont.type = 'FILE';
+					    fileList.push(fileCont);
+					    M.net.http.upload({
+					      url: "http://172.30.1.10/mypage/updateProfileImg2",
+					      header: {},
+					      params: {index : "3"},
+					      body: fileList,
+					      encoding : "UTF-8",
+					      finish : function(code, header, body, status, error) {
+					        if (status == 'SUCCESS') {
+					         	// 이미지를 업데이트
+					         	var jsonObject = JSON.parse(body);
+				                var newImageSrc = '/img/profileImg' + jsonObject.profileImg;
+				                $(".profile-image").attr('src', newImageSrc);
+				                swal.close();
+					        } else{
+					            // M.pop.alert( status + " / " + error );
+					        }
+					     }
+					   });
+				  	}
 				});
+				
 			}
 		});
 	}
@@ -354,7 +311,7 @@
 
 	            $.each(data.list, function (index, row) {
 	                var newContent = '<div class="modal-header">' +
-	                    '<h5 class="modal-title" id="exampleModalLabel"><a style="margin-right:20px;" href="/mypage/main/' + row.mid + '"><img class="profile-image-follow profile-image" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
+	                    '<h5 class="modal-title" id="exampleModalLabel"><a style="margin-right:20px;" href="/mypage/main/' + row.mid + '"><img class="profile-image-follow profile-image" src="/img/profileImg' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
 	                    '<div class="modal-body"><div class="detail">' +
 	                    '<div class="detail-date-read"><div class="detail"><button class="followAcceptModal">+ 밥 친구 신청 수락</button><div>' +
 	                    '</div></div></div>' +
@@ -388,7 +345,7 @@
 
 	            $.each(data.list, function (index, row) {
 	                var newContent = '<div class="modal-header">' +
-	                    '<h5 class="modal-title" id="exampleModalLabel"><a href="/mypage/main/' + row.mid + '"><img style="margin-right:20px;" class="profile-image-follow profile-image" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
+	                    '<h5 class="modal-title" id="exampleModalLabel"><a href="/mypage/main/' + row.mid + '"><img style="margin-right:20px;" class="profile-image-follow profile-image" src="/img/profileImg' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
 	                    '<div class="modal-body"><div class="detail">' +
 	                    '</div></div></div>';
 	                modalContent.append(newContent);
