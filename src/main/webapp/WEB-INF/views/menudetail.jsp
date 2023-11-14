@@ -88,6 +88,8 @@
             <a href="#" class="minus">-</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='result'>1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="plus">+</a></span>
              </span>-->
             <input id="sno" type="hidden" value="${mf.sno }">
+            <input id="mnno" type="hidden" value="${mf.mnno }">
+            <input id="mnprice" type="hidden" value="${mf.mnprice }">
 
       </c:forEach>
          <button type="button" class="cart_btn" data-mnno="${mf.mnno}" data-mnprice="${mf.mnprice}" data-sno="${mf.sno }">담기</button>
@@ -113,8 +115,8 @@ $(document).ready(function() {
     });
 
     $(".cart_btn").on("click", function() {
-        const mnno = $(this).data("mnno");
-        const mnprice = $(this).data("mnprice");
+        const mnno = $("#mnno").val().trim();
+        const mnprice = $("#mnprice").val().trim();
         const camount = $(this).siblings(".camount").val();
         const ctotal = mnprice * camount;
         var sno = $("#sno").val().trim();

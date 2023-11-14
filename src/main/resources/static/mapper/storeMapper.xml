@@ -61,7 +61,7 @@
 
 	<select id="menudetail" parameterType="Integer"
 		resultType="com.delivery.web.store.MenuDTO">
-		SELECT mnname, mnprice, mnimg, mndesc, mnside, sno
+		SELECT mnname, mnprice, mnimg, mndesc, mnside, sno, mnno
 		FROM menu
 		WHERE mnno =#{mnno}
 	</select>
@@ -72,8 +72,8 @@
 	</insert>
 	
 	<select id="cartlist" parameterType="String" resultType="Integer">
-		select sno from cartview
-		where mno = (select mno from member where mid = #{mid})
+		SELECT COALESCE(sno, COUNT(*)) AS sno from cartview
+		where mno = (select mno from member where MID = #{mid})
 	</select>
 	
 

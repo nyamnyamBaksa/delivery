@@ -197,10 +197,11 @@ public class StoreController {
          String mid = (String) session.getAttribute("mid");
          int csno = storeService.cartlist(mid);
          System.out.println(map);
+         System.out.println(csno);
          JSONObject json = new JSONObject();
-             if (csno != sno) {
+             if (csno != sno && csno != 0) {
                  json.put("result", "1");
-             } else {
+             } else if(csno == 0 || csno == sno) {
                  storeService.cartname(map);
                  json.put("result", "2");
              }
