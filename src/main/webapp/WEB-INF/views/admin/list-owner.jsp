@@ -8,6 +8,9 @@
 <title>admin || 사장님관리</title>
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<link
+	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
+	rel="stylesheet">
 <link rel="stylesheet" href="../css/admin.css">
 <link rel="stylesheet" href="../css/member.css">
 <style type="text/css">
@@ -55,6 +58,7 @@ function ogradeCh(ono, name, value){
 </head>
 <body>
 	<div class="container">
+	<h1 style="text-align: center;">냠냠박사</h1>
 		<%@ include file="menubar.jsp"%>
 		<div class="main">
 			<div class="article">
