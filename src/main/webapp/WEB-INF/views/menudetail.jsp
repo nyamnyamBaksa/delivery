@@ -12,7 +12,7 @@
 	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/jquery-3.2.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link
@@ -79,7 +79,7 @@
     </c:forEach>
 				<br><br><br>
 			</c:if>
-				  <span class="camount" style="font-weight:bold; margin-left: 30px; font-size: 17px;">수량</span>
+				  <span class="cacount" style="font-weight:bold; margin-left: 30px; font-size: 17px;">수량</span>
 				  <span class="minus">-</span> 
 				  <input type="text" class="camount" name="camount" value="1">
 				   <span class="plus">+</span>
@@ -88,7 +88,7 @@
 				<a href="#" class="minus">-</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='result'>1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="plus">+</a></span>
 			    </span>-->
 			   
-			<button class="cart_btn" data-mnno="${mf.mnno}" data-mnprice="${mf.mnprice}">담기</button>
+			<button class="cart_btn" data-mnno="${mf.mnno}" data-mnprice="${mf.mnprice}" data-sno="${mf.sno }">담기</button>
 
 		</c:forEach>
 	</div>

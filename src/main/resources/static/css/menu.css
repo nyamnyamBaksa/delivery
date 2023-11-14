@@ -9,32 +9,39 @@ nav{
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	height: 60px;
-	background-color: white;
+	height: 170px;
+	background-color: #ffffff;
+	font-size: 40px;
 }
 
  nav ul li {
-         display: flex;
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
+            overflow: hidden;
+            
     }
     
 nav ul li i {
         display: block; 
-        margin-bottom: 5px; 
+        margin-top: 50px; 
+        margin-bottom: 20px;
     }
 
 nav ul{
 	margin: 0;
 	padding: 0;
 }
+
+
+
 nav li{
 	list-style: none;
 	float: left;
 	width: 20%;
-	line-height: 50px;
+	line-height: 120px;
 	font-weight:bold;
 	text-align: center;
 }

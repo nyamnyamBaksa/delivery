@@ -37,6 +37,10 @@ public interface StoreDAO {
 
 	boolean wishremoved(@Param("mno")Integer mno,@Param("sno") int sno);
 
+	Map<String, Object> getstoreinfo(int mnno);
+
+	int cartlist(String mid);
+
 	
 
 }

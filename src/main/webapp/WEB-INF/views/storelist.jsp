@@ -26,9 +26,9 @@
 <body>
 <%@ include file="menu.jsp"%>
 
-	<h1 style="text-align: center;"><a id="" href="/">냠냠박사</a></h1>
+	<h1 style="text-align: center; font-size: 70px;"><a id="" href="/">냠냠박사</a><i class="fa-solid fa-utensils fa-bounce fa-lg" style="color: #eb5757;"></i></h1>
 	<a id="cart" href="/cart"><i class="fa-solid fa-cart-shopping fa-2xl"
-		style="color: #000000; margin-left: 95%;"></i></a>
+		style="color: #000000; margin-left: 90%; font-size: 4rem;"></i></a>
 	<br>
 
 	<!-- Swiper -->
@@ -77,16 +77,16 @@
 	<div class="restraunt-list" style="">
 		<c:forEach items="${list}" var="l">
 			<div style="display: flex; align-items: center;">
-				<table  width="50%" style="text-align: left; margin-right: 10px;">
+				<table  width="70%" style="text-align: left; margin-right: 10px;">
 
 					<tr>
 						<td rowspan="3" style="width: 200px; text-align: center;">
 						<c:if test="${l.store_image == null}">
 								<i class="fa-solid fa-hammer fa-rotate-270 fa-lg"
-									style="color: #eb5757;"></i>이미지 준비중<i class="fa-solid fa-wrench fa-lg" style="color: #eb5757;"></i>
+									style="color: #eb5757;"></i>준비중<i class="fa-solid fa-wrench fa-lg" style="color: #eb5757;"></i>
 							</c:if>
-							<c:if test="${l.store_image != null}"><img style="width: 160px; height: 120px; " class="foodimg" src="/img/food/${l.store_image}"></c:if></td>
-	 					<td style="font-size: large;">${l.store_name}</td>
+							<c:if test="${l.store_image != null}"><img style="width: 230px; height: 180px; " class="foodimg" src="/img/food/${l.store_image}"></c:if></td>
+	 					<td style="font-size: 40px;">${l.store_name}</td>
 					</tr>
 					<tr>
 						<td><i class="xi-star xi-x" style="color: #ffe11c;"></i><span class="rating">${l.average_rating }</span><span class="review">(${l.review_count})</span></td>
@@ -97,7 +97,7 @@
 
 				</table>
 				<button type="button"
-					onclick="location.href='./storedetail?sno=${l.sno}'">주문하러가기</button>
+					onclick="location.href='./storedetail?sno=${l.sno}'">주문하기</button>
 			</div>
 		</c:forEach>
 	</div>

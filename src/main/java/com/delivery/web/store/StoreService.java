@@ -78,9 +78,6 @@ public class StoreService {
 	}
 
 
-
-
-
 	public List<MenuDTO> getMainMenu() {
 		
 		return storeDAO.getMainMenu();
@@ -101,9 +98,9 @@ public class StoreService {
 
 
 
-	public boolean wishlist(String mid, int sno) {
+	public int cartlist(String mid) {
 		
-		return false;
+		return storeDAO.cartlist(mid);
 	}
 
 

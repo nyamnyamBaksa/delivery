@@ -7,6 +7,9 @@ font-family: 'NanumSquareNeo';
 }
 
  .foodimg {
+width: 100%; 
+max-height: 500px;
+position: relative;
 margin-top: -60px;
 z-index: -1;
 background-repeat: no-repeat;
@@ -19,8 +22,8 @@ margin-left: 25px;
 border-spacing: 10px;
 }
 
-th {
-font-size: large;
+th, td{
+font-size: 30px;
 }
 
 a {
@@ -31,33 +34,34 @@ a {
 #storename {
 	margin-left: 25px;
 	font-weight:bold;
-	font-size: 30px;
+	font-size: 40px;
 }
 
 #storestar, #menumix {
 	margin-left: 25px;
 	font-weight:bold;
-	font-size: 20px;
+	font-size: 30px;
 }
 #menubest {
-	margin-left: 20px;
+	margin-left: 35px;
 	font-weight:normal;
-	font-size: 17px;
+	font-size: 30px;
 }
 
 #storeinfo {
 	float:right;
-	width: 130px;
-	height: 40px;
+	width: 180px;
+	height: 60px;
 	position: relative;
 	margin-right:25px;
-    top: -40px;
-	border-radius: 20px;
+    top: -70px;
+	border-radius: 30px;
 	border:none;
 	font-weight:bold;
-	font-size:15px;
+	font-size:30px;
 	color: #ffffff;
 	background-color: #EB5757;
+	font-family: 'NanumSquareNeo';
 	
 }
 

@@ -25,10 +25,10 @@
 
 	<div>
 		<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
-    <i class="fa-solid fa-arrow-left fa-xl" style="color: white;"></i>
+    <i class="fa-solid fa-arrow-left fa-xl" style="color: white; font-size: 4rem;"></i>
 </a>
 <a id="cart" href="/cart"><i class="fa-solid fa-cart-shopping fa-2xl"
-		style="color: white; margin-left: 95%; text-shadow: 2px 2px 2px gray;"></i></a>
+		style="color: white; margin-left: 90%; margin-top:30px; text-shadow: 2px 2px 2px gray; font-size: 3rem; background-color: "></i></a>
 <div id="storedetail">
     <div id="storeimg" style="text-align: center;">
         <c:if test="${detail.store_image == null}">
@@ -36,12 +36,12 @@
             <i class="fa-solid fa-wrench fa-lg" style="color: #eb5757; position: relative; z-index: -1;"></i>
         </c:if>
         <c:if test="${detail.store_image != null}">
-            <img style="width: 100%; height: 250px; position: relative; z-index: -1;" class="foodimg" src="/img/food/${detail.store_image} ">
+            <img class="foodimg" src="/img/food/${detail.store_image} ">
         </c:if>
     </div>
     <div id="wishlist" style="float: right;">
         <button type="button" id="likebutton" data-sno="${detail.sno}">
-            <i class="fa-regular fa-heart fa-2xl" style="color: #EB5757; font-size: 3rem; position: relative; z-index: 1;"></i>
+            <i class="fa-regular fa-heart fa-2xl" style="color: #EB5757; font-size: 4rem; position: relative; z-index: 1;"></i>
         </button>
     </div>
 </div>
@@ -51,10 +51,7 @@
 		<br>
 		<div id="storestar">
 			<i class="xi-star xi-x" style="color: #FFC633;"></i>${detail.average_rating}&nbsp;&nbsp;리뷰${detail.review_count}개
-			<a href="./review?sno=${detail.sno}"><i class="fa-solid fa-chevron-right fa-2xs" style="color: #000000;"></i></a>
-
-			<a href="./review?sno=${detail.sno }"><i class="fa-solid fa-chevron-right fa-2xs"
-				style="color: #000000;"></i></a>
+			<a href="./review?sno=${detail.sno}"><i class="fa-solid fa-chevron-right fa-xs" style="color: #000000;"></i></a>
 
 		</div>
 		<button id="storeinfo"
@@ -72,7 +69,7 @@
 		</div>
 
         <br>
-		<h3 style="margin-left: 25px;">
+		<h3 style="margin-left: 25px; font-size: 30px;">
 			<i class="fa-solid fa-utensils fa-lg" style="color: #eb5757;"></i>&nbsp;&nbsp;메뉴
 		</h3>
 		<div id="menulist">
@@ -80,12 +77,8 @@
 				<table width="100%" style="text-align: left; margin-right: 10px;">
 					<tr>
 						<th style=""><a href="./menudetail?mnno=${menu.mnno}">${menu.mnname}</a></th>
-						<td rowspan="3" style="width: 30%; text-align: center;"><c:if
-								test="${menu.mnimg == null}">
-								<i class="fa-solid fa-hammer fa-rotate-270 fa-lg"
-									style="color: #eb5757;"></i>이미지 준비중 <i
-									class="fa-solid fa-wrench fa-lg" style="color: #eb5757;"></i>
-							</c:if> <c:if test="${menu.mnimg != null}"><img style="width: 160px; height: 120px;" class="menuimg" src="/img/food/${menu.mnimg}"></c:if></td>
+						<td rowspan="3" style="width: 30%; text-align: center;">
+					<c:if test="${menu.mnimg != null}"><img style="width: 190px; height: 150px;" class="menuimg" src="/img/food/${menu.mnimg}"></c:if></td>
 					</tr>
 					<tr>
 						<td>${menu.mnprice}</td>
@@ -104,7 +97,11 @@
 	            let sno = likeButton.data("sno");
 	            let mno = likeButton.data("mno");
 	            let inWishlist = likeButton.data("wishlist");
-
+	            let icon = likeButton.find("i.fa-heart");
+	            
+	            sessionStorage.setItem("sno", sno);
+	            sessionStorage.setItem("mno", mno);
+	            
 	            let url = "";
 
 	            if (inWishlist) {
@@ -116,17 +113,19 @@
 	            $.ajax({
 	                type: "post",
 	                url: url,
-	                data: {sno: sno},
+	                data: {sno: sno, mno: mno},
 	                success: function(response) {
 	                    if (response.status === "success") {
-	                        likeButton.data("wishlist", !inWishlist);  
+	                        likeButton.data("wishlist", !inWishlist); 
+	                        icon.removeClass("fa-regular").addClass("fa-solid");      
 	                        Swal.fire({
 	                            icon: "success",
 	                            title: inWishlist ? "찜 취소" : "찜 추가",
 	                            text: inWishlist ? "찜이 취소되었습니다." : "찜목록에 추가되었습니다."
 	                        });
 	                    } else if (response.status === "removed") {
-	                        likeButton.data("wishlist", !inWishlist); 
+	                        likeButton.data("wishlist", !inWishlist);
+	                        icon.removeClass("fa-solid").addClass("fa-regular");
 	                        Swal.fire({
 	                            icon: "success",
 	                            title: "찜 취소",
