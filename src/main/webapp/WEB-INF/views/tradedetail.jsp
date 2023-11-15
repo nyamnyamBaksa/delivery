@@ -62,7 +62,7 @@
 					<c:when test="${row.cpno ==1 }">
 						<span style="color:red;">${tradecp.cpname} 쿠폰 -${tradecp.cpprice}원</span><br>
 						<span>총 결제금액 ${tradecp.puse}</span><br>
-							--------------------------------------------------<br>
+							-------------------------------------<br>
 						<span>남은 냠냠페이 ${tradecp.pbalance}</span>
 					</c:when>
 					<c:otherwise>
