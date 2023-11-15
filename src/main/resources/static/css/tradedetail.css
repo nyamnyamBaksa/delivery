@@ -2,11 +2,13 @@
 .hr{
 	border-top: 3px solid black;
 }
-.tradedetailBox{
-	position: relative;
-	left:30%;
-	top: 30px;
+body {
+	font-family: 'NanumSquareNeo';
+	color: #000;
+	margin: 0;
+	padding: 0;
 }
+
 .title{
 	color: #EB5757;
 	font-weight: bold;

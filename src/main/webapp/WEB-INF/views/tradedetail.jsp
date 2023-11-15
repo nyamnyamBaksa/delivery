@@ -8,7 +8,9 @@
 <title>주문내역 상세</title>
 <link href="css/tradedetail.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+<meta name="viewport"
+   content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 </head>
 <body>
 	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
@@ -50,7 +52,7 @@
 		<div class="text">
 		
 		결제금액 <br>
-		--------------------------------------------------<br>
+		-------------------------------------<br>
 	
 		
 		<c:forEach items="${tradedetail}" var="row" varStatus="loop">
