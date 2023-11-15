@@ -5,45 +5,68 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>admin || 회원관리</title>
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<link
+	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
+	rel="stylesheet">
 <link rel="stylesheet" href="../css/admin.css">
 <link rel="stylesheet" href="../css/member.css">
 <style type="text/css">
-.div-table {
-	margin: 0 auto;
-	display: table;
-	width: 900px;
-	height: auto;
-}
+body {
+            background-color: white;
+        }
 
-.div-row {
-	display: table-row;
-	height: 30px;
-	line-height: 30px;
-}
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
-.div-cell {
-	display: table-cell;
-	border-bottom: 1px solid gray;
-	text-align: center;
-}
+        .main {
+            padding: 20px;
+            margin-left: 0;
+        }
 
-.table-head {
-	background-color: #EB5757;
-	height: 40px;
-	font-weight: bold;
-	text-align: center;
-}
+        .article {
+            margin-bottom: 20px;
+        }
 
-.gray {
-	background-color: #c0c0c0;
-}
+        .table-head {
+            background-color: #EB5757;
+            height: 40px;
+            font-weight: bold;
+            text-align: center;
+        }
 
-.yellow {
-	background-color: yellow;
-}
+        .div-table {
+            width: 100%;
+            display: table;
+            margin-bottom: 15px;
+        }
+
+        .div-row {
+            display: table-row;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .div-cell {
+            display: table-cell;
+            border-bottom: 1px solid gray;
+            text-align: center;
+        }
+
+        .grade {
+            width: 110%;
+            padding: 5px;
+        }
+
+        .btn-delete {
+            background-color: #EB5757;
+        }
+        
 </style>
 <script type="text/javascript">
 function gradeCh(mno, name, value){
@@ -55,6 +78,7 @@ function gradeCh(mno, name, value){
 </head>
 <body>
 	<div class="container">
+		<h1 style="text-align: center; margin-top: 20px;">냠냠박사</h1>
 		<%@ include file="menubar.jsp"%>
 		<div class="main">
 			<div class="article">
@@ -74,7 +98,7 @@ function gradeCh(mno, name, value){
 
 
 							<div class="div-cell">
-								<input type="checkbox" name="selectedMembers" value="${row.mno}"
+								<input style="zoom:1.5;" type="checkbox" name="selectedMembers" value="${row.mno}"
 									onclick="toggleSelection(${row.mno})">
 							</div>
 
@@ -154,6 +178,7 @@ function deleteSelectedMembers() {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+	 <script type="text/javascript">
 
 </body>
 </html>
