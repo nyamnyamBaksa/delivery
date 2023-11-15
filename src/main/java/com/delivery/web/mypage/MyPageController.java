@@ -564,7 +564,9 @@ public class MyPageController {
 			map.put("id", id);
 			map.put("offset", util.strToInt((String)map.get("offset")));
 			List<Map<String, Object>> list = myPageService.reviewlist(map);
+			List<Map<String, Object>> mnlist = myPageService.mnreviewlist(map);
 			json.put("list", list);
+			json.put("mnlist", mnlist);
 			return json.toString();
 		} else {
 			return "redirect:/login";

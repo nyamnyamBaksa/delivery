@@ -196,7 +196,7 @@ td, .rdate, .sname{
 					            </c:if>
 					        </tr>
 					        <tr style="border-bottom: 1px solid #c0c0c0;">
-					            <td class="name-pr mnname" style="font-size:17px;border: 0; border-style: dashed; width: 100px;vertical-align: middle;">
+					            <td class="name-pr mnname" style="font-size: large; font-weight: bold;border: 0; border-style: dashed; width: 100px;vertical-align: middle;">
 					                <c:set var="menuNames" value="" />
 					                <c:forEach var="mn" items="${mnlist}" varStatus="loop">
 					                    <c:if test="${mn.rno eq row.rno}">
@@ -310,7 +310,7 @@ td, .rdate, .sname{
    				                rcomment: row.rcomment,
    				                rno: rno,
    				                mnnameList: [],
-   				                rsocre: row.rsocre,
+   				                rscore: row.rscore,
    				                rphoto: row.rphoto,
    				                index:index
    				            };
@@ -325,7 +325,7 @@ td, .rdate, .sname{
    				 	// 그룹화된 데이터로 테이블 생성
    				    $.each(groupedData, function(rno, group) {
    				            newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
-   				            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 800px;">';
+   				            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 500px;">';
    				         if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
    			                newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + group.index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + group.index + '"></label></div>';
    				         }
@@ -338,7 +338,7 @@ td, .rdate, .sname{
    				            newTableHTML += '</tr>';
 
    				            newTableHTML += '<tr>';
-   				            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
+   				            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 70px;">';
    				            newTableHTML += '<div class="star-ratings">';
    				            newTableHTML += '<div class="rscore" style="display: none;">' + group.rscore + '</div>';
    				            newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.rscore * 20) + '%;">';
@@ -820,7 +820,7 @@ td, .rdate, .sname{
 		                rcomment: row.rcomment,
 		                rno: rno,
 		                mnnameList: [],
-		                rsocre: row.rsocre,
+		                rscore: row.rscore,
 		                rphoto: row.rphoto,
 		                index:index
 		            };
@@ -836,11 +836,10 @@ td, .rdate, .sname{
 		    var sortedGroupedData = Object.values(groupedData).sort(function (a, b) {
 		        return b.rno - a.rno;
 		    });
-
 		 	// 그룹화된 데이터로 테이블 생성
 		    $.each(sortedGroupedData, function(rno, group) {
 		            newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
-		            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 800px;">';
+		            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 500px;">';
 	            
 		        if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
 	                newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + group.index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + group.index + '"></label></div>';
@@ -854,7 +853,7 @@ td, .rdate, .sname{
 		            newTableHTML += '</tr>';
 
 		            newTableHTML += '<tr>';
-		            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
+		            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 70px;">';
 		            newTableHTML += '<div class="star-ratings">';
 		            newTableHTML += '<div class="rscore" style="display: none;">' + group.rscore + '</div>';
 		            newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.rscore * 20) + '%;">';
@@ -881,7 +880,7 @@ td, .rdate, .sname{
 
 		    // 테이블 업데이트
 		    $('.table').html(newTableHTML);
-
+		    
 		    editok();
 		}
 
