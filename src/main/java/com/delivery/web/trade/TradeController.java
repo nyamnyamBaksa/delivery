@@ -23,19 +23,14 @@ public class TradeController {
 		Model model, HttpSession session,@RequestParam Map<String, Object> map) {
 		
 		map.put("id", (String) session.getAttribute("mid"));
-
-		System.out.println(map);
 		
 		List<Map<String, Object>> trade = tradeSerivce.trade(map);
 		model.addAttribute("trade", trade);
 
 		List<Map<String, Object>> tradegroup = tradeSerivce.tradegroup(map);
-		System.out.println(tradegroup);
+		//System.out.println(tradegroup);
 		model.addAttribute("tradegroup", tradegroup);
 	       
-	        
-	    List<Map<String, Object>> reviewWhether = tradeSerivce.reviewWhether(map);
-	    System.out.println(reviewWhether);
 	    
 	    return "trade";	
 	}

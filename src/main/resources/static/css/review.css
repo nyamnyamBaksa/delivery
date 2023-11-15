@@ -34,7 +34,7 @@
 	border-style:hidden;
 	outline:none;
 	width:420px;
-	left:25%;
+	left:30%;
 	position:relative;
 	top: -150px;
 }
@@ -136,5 +136,5 @@
 }
 .chart{
 	position:relative;
-	left :300px;
+	left :450px;
 }

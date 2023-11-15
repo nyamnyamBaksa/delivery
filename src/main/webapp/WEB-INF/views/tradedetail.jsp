@@ -7,9 +7,13 @@
 <meta charset="UTF-8">
 <title>주문내역 상세</title>
 <link href="css/tradedetail.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
 </head>
 <body>
-	<a href="/trade"><-뒤로가기</a>
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+    <i class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
+</a>
 	<h1>주문상세</h1>
 	<hr class="hr">
 	<div class="tradedetailBox">
@@ -20,10 +24,12 @@
 					<span style="color: #EB5757;" >배달이 완료되었어요</span><br>
 					<span style="color: #000000;">${row.sname }</span><br>
 				</div>
+				<a href="food/storedetail?sno=${row.sno }">
+					<button class="storedetailBtn">
+			        	<span class="storedetail">가게보기</span>
+			        </button>
+				</a>
 
-		        <button class="storedetailBtn">
-		        	<span class="storedetail">가게보기</span>
-		        </button>
 		        <c:if test="${row.cpno == 1 }">
 		           <div class="cpno">
 		           	<div class="cpnotext">2000원 할인받음</div>

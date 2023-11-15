@@ -7,11 +7,14 @@
 <meta charset="UTF-8">
 <title>리뷰쓰기</title>
 <link href="css/reviewwrite.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
 <script src="./js/wnInterface.js"></script> 
 <script src="./js/mcore.min.js"></script> 
 <script src="./js/mcore.extends.js"></script> 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-/* function M.net.http.upload({
+$(function() M.net.http.upload{
 	alert("클리댐");
     url: "http://lab.morpheus.kr/api/test/file/upload",
     header: {},
@@ -29,7 +32,7 @@
     progress : function(total, current) {
     console.log(total, current);
     }
-}); */
+});
 $(function () {
 
     $.imagePicker = function () {
@@ -82,20 +85,102 @@ $(function () {
       })
     }
 
+  })
+
+
+$(function () {
+
+    let selectImagePath = '';
+    let $previewImg = null;
+    let $uploadImg = null;
+    const $box = $('#box');
+    const $uploadBox = $('#upload-box');
+    const $progress = $('#progress');
+    const $picker = $('#picker');
+    const $upload = $('#upload');
+
+
+
+    $picker.on('click', () => {
+      if ($previewImg !== null) {
+        $previewImg.remove();
+        $previewImg = null;
+      }
+      selectImagePath = '';
+      $.imagePicker()
+        .then(({ status, result }) => {
+          if (status === 'SUCCESS') {
+            selectImagePath = result.path;
+            return $.convertBase64ByPath(selectImagePath)
+          } else {
+            return Promise.reject('이미지 가져오기 실패')
+          }
+        })
+        .then(({ status, result }) => {
+          if (status === 'SUCCESS') {
+            $previewImg = $(document.createElement('img'))
+            $previewImg.attr('height', '200px')
+            $previewImg.attr('src', "data:image/png;base64," + result.data)
+            $box.append($previewImg);
+          } else {
+            return Promise.reject('BASE64 변환 실패')
+          }
+        })
+        .catch((err) => {
+          if (typeof err === 'string') alert(err)
+          console.error(err)
+        })
+    })
+
+    $upload.on('click', () => {
+      if (selectImagePath === '') return alert('이미지를 선택해주세요.')
+      if ($uploadImg) {
+        $uploadImg.remove();
+        $uploadImg = null;
+      }
+      $progress.text('')
+      $.uploadImageByPath(selectImagePath, (total, current) => {
+        console.log(`total: ${total} , current: ${current}`)
+        $progress.text(`${current}/${total}`)
+      })
+        .then(({
+          status, header, body
+        }) => {
+          // status code
+          if (status === '200') {
+            $progress.text('업로드 완료')
+            const bodyJson = JSON.parse(body)
+            $uploadImg = $(document.createElement('img'))
+            $uploadImg.attr('height', '200px')
+            $uploadImg.attr('src', bodyJson.fullpath)
+            $uploadBox.append($uploadImg)
+          } else {
+            return Promise.reject('업로드를 실패하였습니다.')
+          }
+        })
+        .catch((err) => {
+          if (typeof err === 'string') alert(err)
+          console.error(err)
+        })
+    })
   });
 </script>
 </head>
 <body>
-	<a href="/trade">뒤로가기</a>
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+    <i class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
+</a>
 	<h1>리뷰쓰기</h1>
 	<hr class="hr">
 	<c:choose>
+	
 	<c:when test="${sessionScope.mname ne null }">
 	
 	<div class="reviewBox">
 		<div>
 			<c:forEach items="${reviewgroup}" var="row" varStatus="loop">
 				<c:if test="${loop.first || row.sno ne reviewgroup[loop.index - 1].sno}">
+				<br>
 				<div class="sname">${row.sname }</div>
 					<form action="/reviewwrite" method="post">
 						 <fieldset class="rate">
