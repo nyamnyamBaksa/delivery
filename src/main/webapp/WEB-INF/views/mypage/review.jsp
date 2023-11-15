@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>냠냠박사</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/css/mypage-pay.css">
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -81,20 +82,27 @@
 
 .col-lg-12{
 	position: absolute;
-	top: 20%;
+	top: 24%;
 	left: 3%;
 	right: 3%;
 	bottom: 35%;
 }
 
+.col-lg-13{
+	position: absolute;
+	top: 12%;
+	left: 10%;
+	right: 3%;
+}
+
 h2, h1{
-	font-size: 40px;
-	font-weight: bolder;
+	font-size: 20px;
+	font-weight: bold;
 	color: black;
 }
 
 td, .rdate, .sname{
-	font-size: 30px;
+	font-size: 20px;
 	vertical-align: middle;
 }
 
@@ -112,11 +120,12 @@ td, .rdate, .sname{
 	<div class="title">
 		<div class="titleFont">리뷰관리</div>
 	</div>
-	<div style="margin-top: 120px;"></div>
 		<div class="cart-box-main">
 		<c:if test="${list[0].count eq null}">
 			<div class="container">
-				<h1 style="text-align: center;">리뷰가 없습니다.</h1>
+				<div class="col-lg-13">
+					<h1 style="text-align: center;">리뷰가 없습니다.</h1>
+				</div>
 			</div>
 		</c:if>
 		<c:if test="${list[0].count ne null}">
@@ -147,7 +156,7 @@ td, .rdate, .sname{
 					<table class="table">
 						 <c:forEach var="row" items="${list}" varStatus="loop">
 					        <tr style="border-top: 1px solid #c0c0c0;">
-					            <td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 800px;">
+					            <td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 500px;">
 									<c:if test="${id eq null || sessionScope.mid eq id}">
 					                <div class="custom-control custom-checkbox" style="display: inline-block;">
 					                    <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="${loop.index}" value="${row.rno}">
@@ -155,14 +164,18 @@ td, .rdate, .sname{
 					                </div>
 									</c:if>
 					                &nbsp;<a href="/food/storedetail?sno=${row.sno}"><span class="sname">${row.sname}</span></a>
-					                &nbsp;<span class="rdate">${row.rdate}</span>
+			                	</td>
+			                </tr>
+			                <tr>
+			                	<td class="name-pr" style="border: 0; border-style: dashed; width: 70px;">
+					                <span class="rdate">${row.rdate}</span>
 					                <c:if test="${id eq null || sessionScope.mid eq id }">
-					                	<button class="editbtn" style="float:right; margin-left:10px; margin-right:10px;">수정</button>
+					                	<button class="editbtn" style="float:right; margin-left:7px; margin-right:7px;">수정</button>
 					            	</c:if>
 					            </td>
 					        </tr>
 					        <tr>
-					            <td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">
+					            <td class="name-pr" style="border: 0; border-style: dashed; width: 70px;">
 					                <div class="star-ratings">
 					                    <div class="rscore" style="display: none;">${row.rscore}</div>
 					                    <div class="star-ratings-fill space-x-2 text-lg" style="width: ${(row.rscore * 20)}%;">
@@ -176,9 +189,14 @@ td, .rdate, .sname{
 					        </tr>
 					        <tr>
 					            <td class="name-pr" style="border: 0; border-style: dashed;font-weight: bolder;">${row.rcomment}</td>
+					            <c:if test="${row.rphoto != null}">
+						            <td class="name-pr" style="border: 0; border-style: dashed;">
+						            	<img class="rphoto modal-title" src="/img/review' + ${row.rphoto} + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">
+						            </td>
+					            </c:if>
 					        </tr>
 					        <tr style="border-bottom: 1px solid #c0c0c0;">
-					            <td class="name-pr mnname" style="font-size:25px;border: 0; border-style: dashed; width: 200px;vertical-align: middle;">
+					            <td class="name-pr mnname" style="font-size:17px;border: 0; border-style: dashed; width: 100px;vertical-align: middle;">
 					                <c:set var="menuNames" value="" />
 					                <c:forEach var="mn" items="${mnlist}" varStatus="loop">
 					                    <c:if test="${mn.rno eq row.rno}">
@@ -199,14 +217,14 @@ td, .rdate, .sname{
 					    </c:forEach>
 					</table>
 					<button style="margin: 0 auto;" class="morebtn">+ 더보기</button>
+					<div class="mouse">
+					<a href="#" class="mouse-icon">
+						<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
+					</a>
 				</div>
 			</div>
 			</c:if>
 		</div>
-		<div class="mouse" style="text-align: center;">
-		<a href="#" class="mouse-icon">
-			<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
-		</a>
 	</div>
 	</c:if>
 	<!-- Modal -->
@@ -230,6 +248,9 @@ td, .rdate, .sname{
 	</div>
 	<!-- ALL JS FILES -->
 	<script src="/js/jquery-3.2.1.min.js"></script>
+	<script src="/js/mcore.extends.js"></script>
+	<script src="/js/mcore.min.js"></script>
+	<script src="/js/wnInterface.js"></script>
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="js/scrollax.min.js"></script>
@@ -290,6 +311,7 @@ td, .rdate, .sname{
    				                rno: rno,
    				                mnnameList: [],
    				                rsocre: row.rsocre,
+   				                rphoto: row.rphoto,
    				                index:index
    				            };
    				        }
@@ -307,8 +329,8 @@ td, .rdate, .sname{
    				         if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
    			                newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + group.index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + group.index + '"></label></div>';
    				         }
-   			                newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname">' + group.sname + '</span></a>';
-   			                newTableHTML += '&nbsp;<span class="rdate">' + group.rdate + '</span>';
+   			                newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname">' + group.sname + '</span></a></td></tr>';
+   			                newTableHTML += ' <tr><td class="name-pr" style="border: 0; border-style: dashed; width: 70px;"><span class="rdate">' + group.rdate + '</span>';
    			             if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
    			                newTableHTML += '<button class="editbtn" style="float:right; margin-left:10px; margin-right:10px;">수정</button>';
    			             }
@@ -330,6 +352,9 @@ td, .rdate, .sname{
    				            newTableHTML += '</tr>';
    				            newTableHTML += '<tr>';
    				            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed;">' + group.rcomment + '</td>';
+   				         if (group.rphoto != null){
+   				            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed;"><img class="rphoto modal-title" src="/img/review' + group.rphoto + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto"></td>';
+   				         }
    				            newTableHTML += '</tr>';
    				            newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"><td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
    					        newTableHTML += group.mnnameList.join(', ');
@@ -432,7 +457,6 @@ td, .rdate, .sname{
 	    });
 
     
-	    const M = window.M;
 		var confirm = function(msg, title, valueArr) {
 			swal({
 				title : title,
@@ -611,7 +635,7 @@ td, .rdate, .sname{
 		}
 
 		$(document).on("click", ".editbtn, .delbtn", function(){
-			var rno = $(this).closest('tr').find('.rno').val();
+			var rno = $(this).closest('tr').prev().find('.rno').val();
 			let $icon = $(this);
 			if ($icon.hasClass('editbtn')) {
 				updateReview(rno);
@@ -677,6 +701,7 @@ td, .rdate, .sname{
 		            '</div></div>' +
 		            '<div class="modal-header">' +
 		            '<div class="rnoModal" style="display:none;">' + rno + '</div>' +
+		            '<div class="imgSrc" style="display:none;"></div>' +
 		            '<input value="' + data.review.rcomment + '" class="modal-title redit" id="exampleModalLabel" style="width:800px;height:100px;font-weight: bolder;">' +
 		            '</div>' +
 		            '<div class="modal-header">' +
@@ -695,7 +720,8 @@ td, .rdate, .sname{
 			});
 		}
 		
-		$(document).on("click", ".rphoto", function() {
+		const M = window.M;
+		$(document).on("click", ".rphoto, .bi-camera-fill", function() {
 			M.media.picker({
 				  mode: "SINGLE",
 				  media: "PHOTO",
@@ -716,8 +742,13 @@ td, .rdate, .sname{
 				        if (status == 'SUCCESS') {
 				         	// 이미지를 업데이트
 				         	var jsonObject = JSON.parse(body);
-			                var newImageSrc = '/img/review' + jsonObject.reviewImg;
-			                $(".rphoto").attr('src', newImageSrc);
+				         	var reviewImg = jsonObject.reviewImg;
+				         	var imgSrc = $('.imgSrc').text(reviewImg); 
+			                var newImageSrc = '/img/review' + reviewImg;
+			                var rphotoElement = '<img class="rphoto modal-title" src="' + newImageSrc + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">';
+
+                            // 기존 rphotoElement을 대체
+                            $(".rphoto").replaceWith(rphotoElement);
 			                swal.close();
 				        } else{
 				            // M.pop.alert( status + " / " + error );
@@ -732,7 +763,7 @@ td, .rdate, .sname{
 			var rno = $('.rnoModal').text();
 			var redit = $('.redit').val();
 			var starRating = $('input[name="rating"]:checked').val();
-			var rphoto = $(".rphoto").attr("src").substring(11);
+			var rphoto = $(".imgSrc").text();
 			if(starRating == null){
 				starRating = 0;
 			}
@@ -790,6 +821,7 @@ td, .rdate, .sname{
 		                rno: rno,
 		                mnnameList: [],
 		                rsocre: row.rsocre,
+		                rphoto: row.rphoto,
 		                index:index
 		            };
 		        }
@@ -813,8 +845,8 @@ td, .rdate, .sname{
 		        if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
 	                newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + group.index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + group.index + '"></label></div>';
 	            }
-	                newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname">' + group.sname + '</span></a>';
-	                newTableHTML += '&nbsp;<span class="rdate">' + group.rdate + '</span>';
+		        	newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname">' + group.sname + '</span></a></td></tr>';
+	                newTableHTML += ' <tr><td class="name-pr" style="border: 0; border-style: dashed; width: 70px;"><span class="rdate">' + group.rdate + '</span>';
                 if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
 	                newTableHTML += '<button class="editbtn" style="float:right; margin-left:10px; margin-right:10px;">수정</button>';
                 }
@@ -836,6 +868,9 @@ td, .rdate, .sname{
 		            newTableHTML += '</tr>';
 		            newTableHTML += '<tr>';
 		            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed;">' + group.rcomment + '</td>';
+		            if (group.rphoto != null){
+				            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed;"><img class="rphoto modal-title" src="/img/review' + group.rphoto + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto"></td>';
+				    }
 		            newTableHTML += '</tr>';
 		            newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"><td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
 			        newTableHTML += group.mnnameList.join(', ');

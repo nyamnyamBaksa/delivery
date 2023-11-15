@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>냠냠박사</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/mypage-pay.css">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -24,24 +25,31 @@
 <style type="text/css">
 .col-lg-12{
 	position: absolute;
-	top: 11%;
+	top: 24%;
 	left: 5%;
 	right: 5%;
 	bottom: 50%;
 }
 
+#table{
+	position: absolute;
+	left: 7%;
+	right: 7%;
+	top: 12%;
+}
+
 td{
-	font-size: 40px;
+	font-size: 17px;
 	vertical-align: middle;
 	text-align: center;
 }
 
 .selectpicker, .show-tick , .form-control{
 	font-weight: 700;
-	font-size: 40px;
+	font-size: 17px;
 	line-height: 27px;
-	width:200px;
-	height:70px;
+	width:80px;
+	height:40px;
 }
 </style>
 </head>
@@ -56,11 +64,10 @@ td{
 	       		<button class="againpurchase">결제페이지로</button>
 	       	</c:if>
 		</div>
-		<div style="margin-top: 100px;"></div>
 		<div class="cart-box-main">
 			<div class="container">
-				<div class="col-lg-12">
-				<table>
+				
+				<table id="table">
 					<tr>
 						<td>
 					       	<div class="count toolbar-sorter-right">
@@ -72,8 +79,8 @@ td{
 								</select>
 					       	</div>
 						</td>
-						<td style="width: 550px;text-align: left;">
-							<span style="font-weight: bolder;font-size: larger;color: black;">
+						<td style="width: 230px;text-align: left;">
+							<span style="font-weight: bold;color: black;">
 								<c:if test="${list[0].pbalance eq null }">
 									보유금액&nbsp;:&nbsp;0원
 								</c:if>
@@ -82,7 +89,6 @@ td{
 								</c:if>
 							</span>
 						</td>
-						<td></td>
 					</tr>
 					<tr>
 						<td>
@@ -97,43 +103,44 @@ td{
 							</div>
 						</td>
 						<td>
-							<input type="text" style="width: 550px;display: none;border: 2px solid #EB5757;border-radius: 50px;font-weight: bold;" id="pchargeInput" placeholder="10만원 이상의 금액을 숫자만 입력하세요.">
+							<input type="text" style="width: 150px;display: none;border: 2px solid #EB5757;border-radius: 50px;font-weight: bold;" id="pchargeInput" placeholder="10만원 이상의 금액을 숫자만 입력하세요.">
 						</td>
 						<td>
-							<button class="charge">충전하기</button>
+							<button class="charge">충전</button>
 						</td>
 					</tr>
 				</table>
+				<div class="col-lg-12">
 					<div class="pbalance" style="display: none;">${list[0].pbalance }</div>
 					<div style="display: none;" class="paycount">${paycount }</div>
 					<table class="table">
 						<c:forEach items="${list }" var="row">
 							<tr style="border-bottom: 1px solid #EB5757;">
-								<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">${row.pcdate }</td>
+								<td class="quantity-box" style="border: 0; border-style: dashed; width: 170px;">${row.pcdate }</td>
 								<c:if test="${row.pcharge ne null }">
 									<td class="name-pr"
-										style="border: 0; border-style: dashed; width: 500px;font-weight: bolder;"></td>
+										style="border: 0; border-style: dashed; width: 450px;font-weight: bolder;"></td>
 									<td class="name-pr"
-										style="border: 0; border-style: dashed; width: 300px;font-weight: bolder; color: #EB5757;">${row.pcharge }원 충전</td>
+										style="border: 0; border-style: dashed; width: 230px;font-weight: bolder; color: #EB5757;">${row.pcharge }원 충전</td>
 								</c:if>
 								<c:if test="${row.tgroup ne null}">
 									<td class="name-pr"
-										style="border: 0; border-style: dashed; width: 500px;font-weight: bolder;">${row.sname }</td>
+										style="border: 0; border-style: dashed; width: 450px;font-weight: bolder;">${row.sname }</td>
 									<td class="name-pr"
-										style="border: 0; border-style: dashed; width: 300px;font-weight: bolder;">${row.puse }원 차감</td>
+										style="border: 0; border-style: dashed; width: 230px;font-weight: bolder;">${row.puse }원 차감</td>
 								</c:if>
 							</tr>
 						</c:forEach>
 					</table>
 					<button style="margin: 0 auto;" class="morebtn">+ 더보기</button>
-				</div>
-			</div>
-		</div>
 		<div class="mouse" style="text-align: center;">
 		<a href="#" class="mouse-icon">
 			<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
 		</a>
 	</div>
+				</div>
+			</div>
+		</div>
 	</c:if>
 	<!-- ALL JS FILES -->
 	<script src="/js/jquery-3.2.1.min.js"></script>

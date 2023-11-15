@@ -80,8 +80,8 @@
 				            </c:choose>
 				        "></i>
 			        </td>
-		        	<td style="width: 150px;">${row.sname }</td>
-		        	<td style="width: 80px;">${row.count }회 주문</td>
+		        	<td style="width: 180px;">${row.sname }</td>
+		        	<td style="width: 100px;">${row.count }회 주문</td>
 		    	</tr>   
 		    </table>
 		    </c:forEach>

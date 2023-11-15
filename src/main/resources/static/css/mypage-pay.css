@@ -1,12 +1,17 @@
 @charset "UTF-8";
-
+.mouse{
+	position: relative;
+	top: 95%;
+	text-align: center;
+	font-size: 30px;
+}
 .charge, .delbtn, .editbtn, .editModalbtn, .againpurchase, .morebtn {
 	background: #EB5757;
 	border-radius: 50px;
 	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 700;
-	font-size: 40px;
+	font-size: 20px;
 	line-height: 27px;
 	cursor: pointer;
 	/* or 135% */
@@ -17,8 +22,8 @@
 	 justify-content: center; /* 텍스트를 수평으로 가운데 정렬하기 위해 추가 */
      color: #FFFFFF;
      border: none; /* border를 제거하기 위해 추가 */
-     width:200px;
-	 height:70px;
+     width:90px;
+	 height:45px;
 }
 
 /* div.title-left */
@@ -44,7 +49,7 @@
 	position: absolute;
 	font-style: normal;
 	font-weight: 700;
-	font-size: 60px;
+	font-size: 40px;
 	line-height: 22px;
 	/* identical to box height, or 68% */
 	display: flex;

@@ -78,22 +78,30 @@
   -webkit-text-fill-color: #fff58c;
 }
 
-h2{
-	font-size: 40px;
-	font-weight: bolder;
+h2, h1{
+	font-size: 20px;
+	font-weight: bold;
 	color: black;
 }
 
 td{
-	font-size: 30px;
+	font-size: 17px;
 	vertical-align: middle;
 }
 
 .col-lg-12{
 	position: absolute;
-	top: 19%;
+	top: 24%;
 	left: 3%;
+	right: 3%;
 	bottom: 35%;
+}
+
+.col-lg-13{
+	position: absolute;
+	top: 12%;
+	left: 10%;
+	right: 3%;
 }
 
 .custom-checkbox{
@@ -110,10 +118,12 @@ td{
 	<div class="title">
 		<div class="titleFont">찜</div>
 	</div>
-	<div style="margin-top: 110px;"></div>
 		<div class="cart-box-main">
 		<c:if test="${list[0].count eq null}">
-			<div class="container"><h1 style="text-align: center;">찜한 가게가 없습니다.</h1></div>
+			<div class="container">
+			<div class="col-lg-13">
+				<h1 style="text-align: center;">찜한 가게가 없습니다.</h1></div>
+			</div>
 		</c:if>
 		<c:if test="${list[0].count ne null}">
 			<div id="mid" style="display: none;">${sessionScope.mid }</div>
@@ -142,8 +152,8 @@ td{
 				<div class="col-lg-12">
 					<table class="table">
 						<c:forEach items="${list}" var="row" varStatus="loop">
-					        <tr style="border-top: 1px solid #c0c0c0;border-bottom: 1px solid #c0c0c0;">
-						        <td class="name-pr" style="border: 0; border-style: dashed; width: 5px;vertical-align: middle;">
+					        <tr style="border-top: 1px solid #c0c0c0;">
+						        <td class="name-pr" style="border: 0; border-style: dashed; width: 2px;">
 					                <c:if test="${id eq null || sessionScope.mid eq id}">
 					                	<div class="custom-control custom-checkbox" style="display: inline-block;">
 						                    <input type="checkbox" class="custom-control-input rowCheck wno" name="rowCheck" id="${loop.index }" value="${row.wno}">
@@ -151,14 +161,28 @@ td{
 					                    </div>
 					                </c:if>
 						        </td>
-					            <td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;">
+					            <td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 70px;">
 					                <a href="/food/storedetail?sno=${row.sno }">
-					                <img style="width: 170px;height:150px;" src="/img/food/${row.simg }"/></a>
+					                <img style="width: 150px;height:150px;" src="/img/food/${row.simg }"/></a>
 					            </td>
-					            <td class="name-pr sname" style="font-weight: bolder; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">
-					                <a href="/food/storedetail?sno=${row.sno }"><span style="font-size:30px;">${row.sname}</span></a>
+					            <td class="name-pr" style="border: 0; border-style: dashed; width: 70px;vertical-align: middle;">
+					                <div class="star-ratings">
+					                    <div class="rscore" style="display: none;">${row.average_rating}</div>
+					                    <div class="star-ratings-fill space-x-2 text-lg" style="width: ${score}%;">
+					                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+					                    </div>
+					                    <div class="star-ratings-base space-x-2 text-lg">
+					                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+					                    </div>
+					                </div>&nbsp;(${row.average_rating})
 					            </td>
-					            <td class="name-pr mnname" style="font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">
+				            </tr>
+				            <tr style="border-bottom: 1px solid #c0c0c0;">
+				            	<td style="border: 0; border-style: dashed; width: 2px;"></td>
+					            <td class="name-pr sname" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;vertical-align: middle;">
+					                <a href="/food/storedetail?sno=${row.sno }"><span style="font-size:20px;">${row.sname}</span></a>
+					            </td>
+					            <td class="name-pr mnname" style="font-weight: bold; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">
 									<c:set var="i" value="0" />
 					            	<c:forEach items="${mnlist}" var="innerRow">
 									    <c:if test="${innerRow.sname.equals(row.sname)}">
@@ -174,30 +198,19 @@ td{
 									    </c:if>
 									</c:forEach>
 					            </td>
-					            <td class="name-pr" style="border: 0; border-style: dashed; width: 100px;vertical-align: middle;">
-					                <div class="star-ratings">
-					                    <div class="rscore" style="display: none;">${row.average_rating}</div>
-					                    <div class="star-ratings-fill space-x-2 text-lg" style="width: ${score}%;">
-					                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-					                    </div>
-					                    <div class="star-ratings-base space-x-2 text-lg">
-					                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-					                    </div>
-					                </div>&nbsp;(${row.average_rating})
-					            </td>
 					        </tr>
 						</c:forEach>
 					</table>
 					<button style="margin: 0 auto;" class="morebtn">+ 더보기</button>
+					<div class="mouse" style="text-align: center;">
+					<a href="#" class="mouse-icon">
+						<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
+					</a>
 				</div>
 			</div>
+	</div>
 		</c:if>
 		</div>
-		<div class="mouse" style="text-align: center;">
-		<a href="#" class="mouse-icon">
-			<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
-		</a>
-	</div>
 	</c:if>
 	<!-- ALL JS FILES -->
 	<script src="/js/jquery-3.2.1.min.js"></script>
@@ -271,22 +284,15 @@ td{
 				        });
 				    });
 				    
-				    // 그룹화된 데이터로 테이블 생성
+				 // 그룹화된 데이터로 테이블 생성
 				    $.each(groupedData, function(sno, group) {
-				        newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;border-bottom: 1px solid #c0c0c0;">';
-				        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 5px;vertical-align: middle;">';
-			        if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-				        newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck wno" name="rowCheck" id="' + group.index + '" value="' + group.wno + '"><label class="custom-control-label" for="' + group.index + '"></label></div></td>';
-			        }
-				        newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;"><a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 170px;height:150px;" src="/img/food/' + group.simg + '" /></a>';
-				        newTableHTML += '</td>';
-				        newTableHTML += '<td class="name-pr sname" style="font-weight: bolder; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
-				        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><span style="font-size:30px;">' + group.sname + '</span></a>';
-				        newTableHTML += '</td>';
-				        newTableHTML += '<td class="name-pr mnname" style="font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
-				        newTableHTML += group.mnnameList.join(', ');
-				        newTableHTML += '</td>';
-				        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;vertical-align: middle;">';
+				        newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
+				        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 2px;">';
+				        if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
+				            newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck wno" name="rowCheck" id="' + group.index + '" value="' + group.wno + '"><label class="custom-control-label" for="' + group.index + '"></label></div>';
+				        }
+				        newTableHTML += '</td><td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 70px;"><a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 150px;height:150px;" src="/img/food/' + group.simg + '" /></a>';
+				        newTableHTML += '</td><td class="name-pr" style="border: 0; border-style: dashed; width: 70px;vertical-align: middle;">';
 				        newTableHTML += '<div class="star-ratings">';
 				        newTableHTML += '<div class="rscore" style="display: none;">' + group.average_rating + '</div>';
 				        newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.average_rating * 20) + '%;">';
@@ -296,6 +302,13 @@ td{
 				        newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
 				        newTableHTML += '</div>';
 				        newTableHTML += '</div>&nbsp;(' + group.average_rating + ')';
+				        newTableHTML += '</td>';
+				        newTableHTML += '</tr>';
+				        newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"><td style="border: 0; border-style: dashed; width: 2px;"></td><td class="name-pr sname" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;vertical-align: middle;">';
+				        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><span style="font-size:20px;">' + group.sname + '</span></a>';
+				        newTableHTML += '</td>';
+				        newTableHTML += '<td class="name-pr mnname" style="font-weight: bold; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
+				        newTableHTML += group.mnnameList.join(', ');
 				        newTableHTML += '</td>';
 				        newTableHTML += '</tr>';
 				    });
@@ -590,22 +603,15 @@ td{
 			        });
 			    });
 			    
-			    // 그룹화된 데이터로 테이블 생성
+			 	// 그룹화된 데이터로 테이블 생성
 			    $.each(groupedData, function(sno, group) {
-			        newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;border-bottom: 1px solid #c0c0c0;">';
-			        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 5px;vertical-align: middle;">';
-		        if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-			        newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck wno" name="rowCheck" id="' + group.index + '" value="' + group.wno + '"><label class="custom-control-label" for="' + group.index + '"></label></div></td>';
-		        }
-			        newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;"><a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 170px;height:150px;" src="/img/food/' + group.simg + '" /></a>';
-			        newTableHTML += '</td>';
-			        newTableHTML += '<td class="name-pr sname" style="font-weight: bolder; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
-			        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><span style="font-size:30px;">' + group.sname + '</span></a>';
-			        newTableHTML += '</td>';
-			        newTableHTML += '<td class="name-pr mnname" style="font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
-			        newTableHTML += group.mnnameList.join(', ');
-			        newTableHTML += '</td>';
-			        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;vertical-align: middle;">';
+			        newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
+			        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 2px;">';
+			        if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
+			            newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck wno" name="rowCheck" id="' + group.index + '" value="' + group.wno + '"><label class="custom-control-label" for="' + group.index + '"></label></div>';
+			        }
+			        newTableHTML += '</td><td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 70px;"><a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 150px;height:150px;" src="/img/food/' + group.simg + '" /></a>';
+			        newTableHTML += '</td><td class="name-pr" style="border: 0; border-style: dashed; width: 70px;vertical-align: middle;">';
 			        newTableHTML += '<div class="star-ratings">';
 			        newTableHTML += '<div class="rscore" style="display: none;">' + group.average_rating + '</div>';
 			        newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.average_rating * 20) + '%;">';
@@ -615,6 +621,13 @@ td{
 			        newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
 			        newTableHTML += '</div>';
 			        newTableHTML += '</div>&nbsp;(' + group.average_rating + ')';
+			        newTableHTML += '</td>';
+			        newTableHTML += '</tr>';
+			        newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"><td style="border: 0; border-style: dashed; width: 2px;"></td><td class="name-pr sname" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;vertical-align: middle;">';
+			        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><span style="font-size:20px;">' + group.sname + '</span></a>';
+			        newTableHTML += '</td>';
+			        newTableHTML += '<td class="name-pr mnname" style="font-weight: bold; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
+			        newTableHTML += group.mnnameList.join(', ');
 			        newTableHTML += '</td>';
 			        newTableHTML += '</tr>';
 			    });
