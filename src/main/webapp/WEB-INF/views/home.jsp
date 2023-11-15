@@ -20,25 +20,25 @@
 </head>
 <body>
 	<%@ include file="menu.jsp"%>
-	<h1 style="text-align: center; font-size: 70px;">냠냠박사<i class="fa-solid fa-utensils fa-bounce fa-lg" style="color: #eb5757;"></i></h1>
+	<h1 style="text-align: center; font-size: 30px;">냠냠박사<i class="fa-solid fa-utensils fa-bounce fa-lg" style="color: #eb5757;"></i></h1>
 
 	<div id="location">
 		<div>
-			<a href="/location"><i class="fa-solid fa-location-dot fa-2xl" style="color: #ffffff;"></i>
-			<span style="font-size: 35px; color: white;'">대표 주소를 설정해주세요</span></a>
+			<a href="/location"><i class="fa-solid fa-location-dot fa-lg" style="color: #ffffff;"></i>
+			<span style="font-size: 13px; color: white;'">대표 주소를<br>설정해주세요</span></a>
 			
 		</div>
 	</div>
 	<br>
 <div id="randomfood" style="float: right;">
-    <h2 id="menutext" style="display: inline; font-size: 35px; font-weight: bold;">오늘 뭐먹지?</h2>&nbsp;&nbsp;&nbsp;
+    <h2 id="menutext" style="display: inline; font-size: 15px; font-weight: bold;">오늘 뭐먹지?</h2>&nbsp;&nbsp;&nbsp;
     <button type="button" onclick="randommenu()" style="display: inline;">선택</button>
 </div>
 
     <script type="text/javascript">
     let menulist = ["칼국수", "감베리크레마", "교자만두", "시골야채된장비빔밥",
         "목살김치된장", "햄버거", "새우샤오룽바오", "꿔바로우", "보슬키토",
-        "생돼지 김치찌개식 두루치기", "돼지갈비찜", "완당떡국", "스시"];
+        "두루치기", "돼지갈비찜", "완당떡국", "스시", "김치찌개"];
 
     function randommenu() {
         let randomindex = Math.floor(Math.random() * menulist.length);
@@ -87,18 +87,18 @@
 	<br>
 
 <div class="restraunt-list" style=" ">
-	<h2 class="bestname" style="font-size: 50px;">냠냠박사 Best 맛집 <i class="fa-solid fa-crown fa-lg" style="color: #ff9c41; margin-bottom: -5px;"></i></h2>
+	<h2 class="bestname" style="font-size: 20px;">냠냠박사 Best 맛집 <i class="fa-solid fa-crown fa-lg" style="color: #ff9c41; margin-bottom: -5px;"></i></h2>
 	<br>
 		<c:forEach items="${list}" var="l">
 			<div style="display: flex; align-items: center;">
-				<table  width="100%" style="text-align: left; ">
+				<table  width="70%" style="text-align: left; ">
 
 					<tr>
-						<td rowspan="3" style="width: 200px; text-align: left;">
+						<td rowspan="3" style="width: 100px; text-align: left;">
 						<c:if test="${l.store_image == null}">
 						<div class="imgready">이미지<br>준비중</div>
 							</c:if>
-							<c:if test="${l.store_image != null}"><img style="width: 210px; height: 180px; " class="foodimg" src="/img/food/${l.store_image}"></c:if></td>
+							<c:if test="${l.store_image != null}"><img style="width: 80px; height: 70px; " class="foodimg" src="/img/food/${l.store_image}"></c:if></td>
 	 					<td>${l.store_name}</td>
 					</tr>
 					<tr>
@@ -109,7 +109,7 @@
 					</tr>
 
 				</table>
-				<a href="food/storedetail?sno=${l.sno}"><button id="nowbutton" type="button">주문하기 <i class="fa-solid fa-face-grin-stars fa-lg" style="color: #ffffff;"></i></button></a>
+				<a href="food/storedetail?sno=${l.sno}"><button id="nowbutton" type="button">주문하기</button></a>
 			</div>
 		</c:forEach>
 	</div>

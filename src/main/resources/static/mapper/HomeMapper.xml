@@ -12,7 +12,8 @@
 		GROUP BY s.sno, s.store_name, s.store_image, s.average_rating,
 		s.review_count
 		HAVING order_count > 0 OR s.average_rating > 0
-		ORDER BY order_count DESC;
+		ORDER BY order_count DESC
+		limit 5;
 	</select>
 
 	<select id="detail" parameterType="Integer"
