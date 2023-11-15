@@ -40,7 +40,7 @@
 	
 <Script>	
 function link(url) {
-		location.href = "./" + url;
+		location.href = "/" + url;
 	}	
 </Script>	
 	
