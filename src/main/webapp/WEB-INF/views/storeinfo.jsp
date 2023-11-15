@@ -6,7 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>가게정보</title>
-
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+<link rel="stylesheet" href="/css/storeinfo.css">
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <link rel="stylesheet"
@@ -17,28 +19,9 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=95bbf6af936a9f2f64e3c60c91399bfd&libraries=services"></script>
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 </head>
-<style>
-
-body {
-font-family: 'NanumSquareNeo';
-}
-
-
-table {
-border-spacing: 20px;
-}
-
-th {
-font-size: 20px;
-
-}
-
-</style>
-
-
 
 <a href="javascript:history.back()"> <i 
-	class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
+	class="fa-solid fa-arrow-left fa-xl" style="color: black; margin-top: 30px;"></i>
 </a>
 
 
@@ -47,13 +30,13 @@ font-size: 20px;
 <br>
 <c:forEach items="${storeinfo}" var="s">
 
-<h2 style="margin-left: 30px;">가게소개</h2>
-<div style="margin-left: 30px;">${s.sdesc}</div>
+<h2 style="margin-left: 25px;">가게소개</h2>
+<div style="margin-left: 25px;">${s.sdesc}</div>
 
-<h2 style="margin-left: 30px">영업정보</h2>
-<table width="50%" style="margin-left: 25px; text-align: left;" >
+<h2 style="margin-left: 20px">영업정보</h2>
+<table width="95%" style="margin-left: 5px; text-align: left;" >
       <tr>
-        <th>상호명</th>
+        <th style="width: 70px;">상호명</th>
         <td>${s.sname}</td>
       </tr>
       <tr>
@@ -69,7 +52,7 @@ font-size: 20px;
         <td>${s.saddr}</td>
       </tr>
     </table>
-	<div id="map" style="margin-left: 150px; width:40%;height:250px;"></div>
+	<div id="map" style="margin-left: 7px; width:95%;height:220px;"></div>
 </c:forEach>
 
 <script>

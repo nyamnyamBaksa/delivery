@@ -3,8 +3,22 @@
 
 body {
 font-family: 'NanumSquareNeo';
-
+	margin: 0;
+	padding: 0;
 }
+
+.camount {
+	/*margin-left:230px;*/
+	font-family: 'NanumSquareNeo';
+	font-weight:bold;
+	text-align:center;
+	width: 80px;
+	height: 25px;
+	border-radius: 20px;
+	border: 1px solid black;
+	font-size: 20px;
+}
+
     
 #menuname {
 	font-weight:bold;
@@ -55,6 +69,8 @@ button {
 }
 
 .menuimg {
+width: 100%; 
+max-height: 250px;
 margin-top: -60px;
 z-index: -1;
 background-repeat: no-repeat;

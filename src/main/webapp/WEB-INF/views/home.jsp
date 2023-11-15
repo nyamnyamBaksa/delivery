@@ -91,10 +91,10 @@
 	<br>
 		<c:forEach items="${list}" var="l">
 			<div style="display: flex; align-items: center;">
-				<table  width="70%" style="text-align: left; ">
+				<table  width="80%" style="text-align: left; ">
 
 					<tr>
-						<td rowspan="3" style="width: 100px; text-align: left;">
+						<td rowspan="3" style="width: 80px; text-align: center;">
 						<c:if test="${l.store_image == null}">
 						<div class="imgready">이미지<br>준비중</div>
 							</c:if>

@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>메뉴 상세페이지</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 <link rel="stylesheet" href="/css/menudetail.css">
 
 <link rel="stylesheet"
@@ -27,21 +29,15 @@
 <body>
 
    <div>
-      <a href="javascript:history.back()"> <i
-         class="fa-solid fa-arrow-left fa-lg"
-         style="color: white; z-index: 1;"></i>
-      </a>
+    <a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 3px 3px 3px gray;">
+    <i class="fa-solid fa-arrow-left fa-xl" style="color: white; font-size: 2rem;  margin-top: 30px; margin-left: 10px;"></i>
+</a>
    </div>
 <form name="cartbutton" method="post">
    <div id="storedetail">
       <c:forEach items="${menudetail}" var="mf">
          <div id="menuimg" style="text-align: center;">
-            <c:if test="${mf.mnimg == null}">
-               <i class="fa-solid fa-hammer fa-rotate-270 fa-lg"
-                  style="color: #eb5757;"></i>이미지 준비중
-                <i class="fa-solid fa-wrench fa-lg"
-                  style="color: #eb5757;"></i>
-            </c:if>
+            
             <c:if test="${mf.mnimg != null}">
                <img class="menuimg"
                   style="width: 100%; height: 250px; position: relative; z-index: -1;"
@@ -61,7 +57,7 @@
 
          <br>
          <br>
-         <!-- 메인 메뉴인 경우에만 사이드 추가 선택 표시 -->
+         <!-- 메인 메뉴인 경우에만 사이드 추가 선택 표시 
          <c:if test="${isMain == true}">
             <div id="sidecheck">
                <i class="fa-solid fa-plus fa-xl" style="color: #eb5757;"></i> 사이드 추가 선택
@@ -69,7 +65,7 @@
             <br>
 
             <c:forEach items="${menudetail}" var="sm">
-        <!-- 메인 메뉴에 해당하는 경우만 출력 -->
+        <!-- 메인 메뉴에 해당하는 경우만 출력 
         <c:if test="${sm.mnside == 1}">
             <input id="sidecheckbox" type="checkbox" name="sidemenu"
                 value="${sm.mnno}">
@@ -78,11 +74,11 @@
         </c:if>
     </c:forEach>
             <br><br><br>
-         </c:if>
-              <span class="cacount" style="font-weight:bold; margin-left: 30px; font-size: 17px;">수량</span>
-              <span class="minus">-</span> 
-              <input type="text" class="camount" name="camount" value="1">
-               <span class="plus">+</span>
+         </c:if>-->
+              <span class="cacount" style="font-weight:bold; margin-left: 30px; font-size: 25px;">수량</span>
+              &nbsp;<span class="minus" style="font-weight:bold; font-size: 20px;">-</span>&nbsp; 
+              <input type="text" class="camount" name="camount" value="1">&nbsp;
+               &nbsp;<span class="plus" style="font-weight:bold; font-size: 20px;" >+</span>&nbsp;
               <input type="hidden" name="ctotal" value="${mf.mnprice}">
               <!--  <span name="camount"  class="mcount" style="float: right;"> 
             <a href="#" class="minus">-</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='result'>1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="plus">+</a></span>

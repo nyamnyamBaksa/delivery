@@ -6,14 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 <meta charset="UTF-8">
 <title>상세카테고리</title>
 <link rel="stylesheet" href="/css/storelist.css">
 <link rel="stylesheet" href="/css/menu.css">
 
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+	href="/css/all.min.css" />
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 <link rel="stylesheet"
@@ -26,9 +27,9 @@
 <body>
 <%@ include file="menu.jsp"%>
 
-	<h1 style="text-align: center; font-size: 70px;"><a id="" href="/">냠냠박사</a><i class="fa-solid fa-utensils fa-bounce fa-lg" style="color: #eb5757;"></i></h1>
+	<h1 style="text-align: center; font-size: 30px;"><a href="/">냠냠박사</a><i class="fa-solid fa-utensils fa-bounce fa-lg" style="color: #eb5757;"></i></h1>
 	<a id="cart" href="/cart"><i class="fa-solid fa-cart-shopping fa-2xl"
-		style="color: #000000; margin-left: 90%; font-size: 4rem;"></i></a>
+		style="color: #000000; margin-left: 90%; font-size: 2rem;"></i></a>
 	<br>
 
 	<!-- Swiper -->
@@ -64,7 +65,7 @@
 	<hr style="width: 95%; border: solid 2px #eb5757;" />
 
 	<br>
-	<form name="search " method="get" action="/storelist" style="margin-left: 30px">
+	<form name="search " method="get" action="/storelist" style="margin-left: 20px">
 		<label id="list-option"></label>
 		<select id="select_option" onchange="sortoption()">
 			<option value="기본순">기본순</option>
@@ -77,15 +78,15 @@
 	<div class="restraunt-list" style="">
 		<c:forEach items="${list}" var="l">
 			<div style="display: flex; align-items: center;">
-				<table  width="70%" style="text-align: left; margin-right: 10px;">
+				<table width="70%" style="text-align: left; margin-right: 10px;">
 
 					<tr>
-						<td rowspan="3" style="width: 200px; text-align: center;">
+						<td rowspan="3" style="width: 80px; text-align: center;">
 						<c:if test="${l.store_image == null}">
 								이미지<br>준비중
 							</c:if>
-							<c:if test="${l.store_image != null}"><img style="width: 230px; height: 180px; " class="foodimg" src="/img/food/${l.store_image}"></c:if></td>
-	 					<td style="font-size: 40px;">${l.store_name}</td>
+							<c:if test="${l.store_image != null}"><img style="width: 80px; height: 70px; " class="foodimg" src="/img/food/${l.store_image}"></c:if></td>
+	 					<td style="font-size: 13px;">${l.store_name}</td>
 					</tr>
 					<tr>
 						<td><i class="xi-star xi-x" style="color: #ffe11c;"></i><span class="rating">${l.average_rating }</span><span class="review">(${l.review_count})</span></td>
@@ -145,14 +146,14 @@
 	<script>
 		var swiper = new Swiper('.swiper', {
 			slidesPerView : 6,
-			direction : getDirection(),
+			direction :'horizontal',
 			navigation : {
 				nextEl : '.swiper-button-next',
 				prevEl : '.swiper-button-prev',
 			},
 			on : {
 				resize : function() {
-					swiper.changeDirection(getDirection());
+					swiper.changeDirection('horizontal');
 				},
 			},
 		});

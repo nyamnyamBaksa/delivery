@@ -9,7 +9,6 @@ body {
 	font-family: 'NanumSquareNeo';
 	margin: 0;
     padding: 0;
-    background-color: white;
 }
 
 td {
@@ -21,12 +20,14 @@ table {
 }
 #location {
     float : left;
+    display: flex;
+    align-items: center;
 	width:110px;
 	height: 40px;
 	background: #EB5757;
 	border-radius: 60px;
 	margin-top: 40px;
-	margin-left: 30px; 
+	margin-left: 10px; 
 	align-items: center;
 	color:white;
 	font-weight:bold;
@@ -72,7 +73,7 @@ button {
 #nowbutton {
 	display: block;
 	margin: 0 auto;
-	margin-top:-20px;
+	margin-top:-30px;
 	width: 70px;
 	height: 30px;
 	border-radius: 40px;
@@ -100,7 +101,7 @@ a {
 	font-size: 30px;
 }
 .imgready{
-	width: 80px;
+	width: 70px;
 	height: 70px;
 	display: flex;
     flex-direction: column;
@@ -111,8 +112,8 @@ a {
 
 
 #foodcategory {
-	margin-left: 60px;
-	margin-top: 50px;
+	margin-left: 10px;
+	margin-top: 40px;
 	line-height: 4.0;
 	font-size : 15px;
 	font-weight:bold;

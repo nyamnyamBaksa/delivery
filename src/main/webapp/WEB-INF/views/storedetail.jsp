@@ -7,7 +7,8 @@
 <meta charset="UTF-8">
 <title>가게상세페이지</title>
 <link rel="stylesheet" href="/css/storedetail.css">
-
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
@@ -24,11 +25,11 @@
 <body>
 
 	<div>
-		<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
-    <i class="fa-solid fa-arrow-left fa-xl" style="color: white; font-size: 4rem;"></i>
+		<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 3px 3px 3px gray;">
+    <i class="fa-solid fa-arrow-left fa-xl" style="color: white; font-size: 2rem;  margin-top: 30px; margin-left: 10px;"></i>
 </a>
-<a id="cart" href="/cart"><i class="fa-solid fa-cart-shopping fa-2xl"
-		style="color: white; margin-left: 90%; margin-top:30px; text-shadow: 2px 2px 2px gray; font-size: 3rem; background-color: "></i></a>
+<a id="cart" href="/cart" style="position: relative; z-index: 1; text-shadow: 3px 3px 3px gray;"><i class="fa-solid fa-cart-shopping fa-2xl"
+		style="color: white; margin-left: 90%; vertical-align: top;"></i></a>
 <div id="storedetail">
     <div id="storeimg" style="text-align: center;">
         <c:if test="${detail.store_image == null}">
@@ -56,7 +57,7 @@
 		</div>
 		<button id="storeinfo"
 			onclick="location.href='./storeinfo?sno=${detail.sno}'">가게정보</button>
-		<hr style="width: 97%; border: solid 2px #eb5757;" />
+		<hr style="width: 95%; border: solid 2px #eb5757;" />
 		<br>
 		<!-- <hr style="width: 95%; border: solid 2px #eb5757;" />  -->
 
@@ -79,11 +80,11 @@
 		</h3>
 		<div id="menulist">
 			<c:forEach items="${menulist}" var="menu">
-				<table width="100%" style="text-align: left; margin-right: 10px;">
+				<table width="95%" style="text-align: left; margin-right: 10px;">
 					<tr>
 						<th style=""><a href="./menudetail?mnno=${menu.mnno}">${menu.mnname}</a></th>
 						<td rowspan="3" style="width: 30%; text-align: center;">
-					<c:if test="${menu.mnimg != null}"><img style="width: 190px; height: 150px;" class="menuimg" src="/img/food/${menu.mnimg}"></c:if></td>
+					<c:if test="${menu.mnimg != null}"><img style="width: 160px; height: 110px;" class="menuimg" src="/img/food/${menu.mnimg}"></c:if></td>
 					</tr>
 					<tr>
 						<td>${menu.mnprice}</td>

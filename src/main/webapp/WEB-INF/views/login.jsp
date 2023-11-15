@@ -5,7 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 <link href="css/login.css" rel="stylesheet">
+
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){	
