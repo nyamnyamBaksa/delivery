@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>admin || 사장님관리</title>
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
@@ -14,39 +15,57 @@
 <link rel="stylesheet" href="../css/admin.css">
 <link rel="stylesheet" href="../css/member.css">
 <style type="text/css">
-.div-table {
-	margin: 0 auto;
-	display: table;
-	width: 900px;
-	height: auto;
-}
+body {
+            background-color: white;
+        }
 
-.div-row {
-	display: table-row;
-	height: 30px;
-	line-height: 30px;
-}
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
-.div-cell {
-	display: table-cell;
-	border-bottom: 1px solid gray;
-	text-align: center;
-}
+        .main {
+            padding: 20px;
+            margin-left: 0;
+        }
 
-.table-head {
-	background-color: #EB5757;
-	height: 40px;
-	font-weight: bold;
-	text-align: center;
-}
+        .article {
+            margin-bottom: 20px;
+        }
 
-.gray {
-	background-color: #c0c0c0;
-}
+        .table-head {
+            background-color: #EB5757;
+            height: 40px;
+            font-weight: bold;
+            text-align: center;
+        }
 
-.yellow {
-	background-color: yellow;
-}
+        .div-table {
+            width: 100%;
+            display: table;
+            margin-bottom: 15px;
+        }
+
+        .div-row {
+            display: table-row;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .div-cell {
+            display: table-cell;
+            border-bottom: 1px solid gray;
+            text-align: center;
+        }
+
+        .grade {
+            width: 90%;
+            padding: 5px;
+        }
+
+        .btn-delete {
+            background-color: #EB5757;
+        }
 </style>
 <script type="text/javascript">
 function ogradeCh(ono, name, value){
@@ -58,7 +77,7 @@ function ogradeCh(ono, name, value){
 </head>
 <body>
 	<div class="container">
-	<h1 style="text-align: center;">냠냠박사</h1>
+	<h1 style="text-align: center; margin-top: 20px;">냠냠박사</h1>
 		<%@ include file="menubar.jsp"%>
 		<div class="main">
 			<div class="article">
@@ -77,7 +96,7 @@ function ogradeCh(ono, name, value){
 						<div class="div-row">
 
 							<div class="div-cell">
-								<input type="checkbox" name="selectedMembers" value="${row.ono}"
+								<input style="zoom:1.5;" type="checkbox" name="selectedMembers" value="${row.ono}"
 									onclick="toggleSelection(${row.ono})">
 							</div>
 
@@ -90,17 +109,17 @@ function ogradeCh(ono, name, value){
 
 								<select class="grade"
 									onchange="ogradeCh(${row.ono}, '${row.oname}', this.value)">
-									<optgroup label="탈퇴">
+									<optgroup label="폐점">
 										<option value="0"
-											<c:if test="${row.ograde eq 0}">selected="selected"</c:if>>탈퇴</option>
+											<c:if test="${row.ograde eq 0}">selected="selected"</c:if>>폐점</option>
 									</optgroup>
 									<optgroup label="일반">
 										<option value="1"
 											<c:if test="${row.ograde eq 1}">selected="selected"</c:if>>일반</option>
 									</optgroup>
-									<optgroup label="관리자">
+									<optgroup label="우수식당">
 										<option value="2"
-											<c:if test="${row.ograde eq 2}">selected="selected"</c:if>>관리자</option>
+											<c:if test="${row.ograde eq 2}">selected="selected"</c:if>>우수식당</option>
 									</optgroup>
 
 								</select>
@@ -149,6 +168,6 @@ function deleteSelectedMembers() {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-
+	<script type="text/javascript">
 </body>
 </html>
