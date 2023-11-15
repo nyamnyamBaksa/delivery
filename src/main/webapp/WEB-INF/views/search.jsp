@@ -80,8 +80,8 @@
 }
 
 .hov-in {
-	font-size: larger;
-	font-weight: bolder;
+	font-size: large;
+	font-weight: bold;
 	background-color: rgba(255, 156, 65, 0.5);
 }
 
@@ -95,23 +95,23 @@
 	right: 5%;
 	top: 9.77%;
 	bottom: 85.55%;
-	height: 90px;
+	height: 50px;
 	background: #EB5757;
 	border: 1px solid #E8E8E8;
 	border-radius: 50px;
 	padding-left: 10px;
 	color: white;
-	font-size: 45px;
-	font-weight: bolder;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 .h2{
 	position: absolute;
 	left: 20%;
 	right: 20%;
-	top: 31%;
+	top: 25%;
 	bottom: 73%;
-	font-size: 40px;
+	font-size: 20px;
 	font-weight: bolder;
 	color: black;
 }
@@ -120,9 +120,9 @@
 	position: absolute;
 	left: 20%;
 	right: 20%;
-	top: 58%;
+	top: 55%;
 	bottom: 73%;
-	font-size: 40px;
+	font-size: 20px;
 	font-weight: bolder;
 }
 
@@ -130,7 +130,7 @@
 	position: absolute;
 	left: 5%;
 	right: 5%;
-	top: 33%;
+	top: 26.5%;
 	bottom: 50%;
 }
 
@@ -138,7 +138,7 @@
 	position: absolute;
 	left: 5%;
 	right: 5%;
-	top: 60%;
+	top: 56.5%;
 	bottom: 80%;
 }
 
@@ -153,24 +153,31 @@
 .search::placeholder {
 	padding-left: 5px;
 	color: white;
-	font-size: larger;
-	font-weight: bolder;
+	font-size: large;
+	font-weight: bold;
 }
 
 .fa-search{
 	position: absolute;
-	left: 87%;
+	left: 85%;
 	right: 17%;
-	top: 10%;
+	top: 10.5%;
 	bottom: 85%;
 	cursor: pointer;
 	color: white;
-	font-size: 50px;
+	font-size: 25px;
 	margin-top: 8.5px;
 }
 
 td{
-	font-size: 30px;
+	font-size: 20px;
+}
+
+.mouse {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 </style>
 </head>
@@ -182,11 +189,10 @@ td{
 		<div class="container">
 			<input type="text" class="search" required="required" placeholder="검색어를 입력해주세요.">
 			<i class="fa fa-search"></i>
-			<div style="margin-top: 60px;"></div>
 		    <div id="searchcount" style="display: none;">${searchcount }</div>
 			<div class="col-lg-12">
 				<div class="searchcate toolbar-sorter-right" style="width:250px;">
-		       		<select  class="cate selectpicker show-tick form-control" id="cate">
+		       		<select class="cate selectpicker show-tick form-control" id="cate">
 						<option selected="selected" value="0"> 기본순 ▼</option>
 						<option value="1">주문 많은 순 ▼</option>
 						<option value="2">별점 높은 순 ▼</option>
@@ -206,7 +212,7 @@ td{
 						<c:forEach items="${list}" var="row">
 							<div class="item">
 								<div class="ins-inner-box">
-									<img style="width: 250px;height: 230px;" src="/img/food/${row.simg }" alt="" />
+									<img style="width: 170px;height: 150px;" src="/img/food/${row.simg }" alt="" />
 									<div class="hov-in">
 										<a class="hover" href="/food/storedetail?sno=${row.sno }">${row.sname }</a>
 									</div>
@@ -223,7 +229,7 @@ td{
 						<c:forEach items="${rlist}" var="row">
 							<div class="item">
 								<div class="ins-inner-box">
-									<img style="width: 250px;height: 230px;" src="/img/food/${row.simg }" alt="" />
+									<img style="width: 170px;height: 150px;" src="/img/food/${row.simg }" alt="" />
 									<div class="hov-in">
 										<a class="hover" href="/food/storedetail?sno=${row.sno }">${row.sname }</a>
 									</div>
@@ -239,7 +245,7 @@ td{
 					<c:forEach items="${wlist}" var="row">
 						<div class="item">
 							<div class="ins-inner-box">
-								<img style="width: 250px;height: 230px;" src="/img/food/${row.simg }" alt="" />
+								<img style="width: 170px;height: 150px;" src="/img/food/${row.simg }" alt="" />
 								<div class="hov-in">
 									<a class="hover" href="/food/storedetail?sno=${row.sno }">${row.sname }</a>
 								</div>
@@ -249,12 +255,12 @@ td{
 				</div>
 				</div>
 			</div>
+		<div class="mouse" style="text-align: center;">
+			<a href="#" class="mouse-icon">
+				<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
+			</a>
 		</div>
-	</div>
-	<div class="mouse" style="text-align: center;">
-		<a href="#" class="mouse-icon">
-			<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
-		</a>
+		</div>
 	</div>
 	<!-- ALL JS FILES -->
 	<script src="/js/jquery-3.2.1.min.js"></script>
@@ -310,6 +316,10 @@ td{
 				success: function (data) {
 					if(data.search == ''){
 						swal("", "검색 결과가 없습니다.", "warning");
+						var table = $('.table');
+						if(table.length === 0 || (table.length > 0 && $.trim(table.html()) === "")){
+							$('.searchcate').hide();
+						}
 					} else {
 						var placeholder = search + '  ' + data.search[0].count + '개';
 						$('.search').val('');
@@ -377,6 +387,10 @@ td{
 				success:function(data){
 					if(data.search == ''){
 						swal("", "검색 결과가 없습니다.", "warning");
+						var table = $('.table');
+						if(table.length === 0 || (table.length > 0 && $.trim(table.html()) === "")){
+							$('.searchcate').hide();
+						}
 					} else {
 						var placeholder = search + '  ' + data.search[0].count + '개';
 						$('.search').val('');
@@ -441,7 +455,6 @@ td{
 		}
 		
 		$(document).on('click', '.fa-search', function(){
-			$('.searchcate').show();
 			search = $('.search').val().trim();
 			
 			if(search == '') return;
@@ -454,7 +467,12 @@ td{
 				success:function(data){
 					if(data.search == ''){
 						swal("", "검색 결과가 없습니다.", "warning");
+						var table = $('.table');
+						if(table.length === 0 || (table.length > 0 && $.trim(table.html()) === "")){
+							$('.searchcate').hide();
+						}
 					} else {
+						$('.searchcate').show();
 						var placeholder = search + '  ' + data.search[0].count + '개';
 						$('.search').val('');
 						$('.search').attr('placeholder', placeholder);
@@ -534,18 +552,11 @@ td{
 
 		    // 그룹화된 데이터로 테이블 생성
 		    $.each(groupedData, function(sno, group) {
-		        newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;border-bottom: 1px solid #c0c0c0;">';
+		        newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
 		        newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 95px;vertical-align: middle;">';
 		        newTableHTML += '<input class="sno" type="hidden" value="' + group.sno + '">';
 		        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 170px;height:150px;" src="/img/food/' + group.simg + '" /></a>';
-		        newTableHTML += '</td>';
-		        newTableHTML += '<td class="name-pr sname" style="font-weight: bolder; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
-		        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><span style="font-size:30px;" class="ssname">' + group.sname + '</span></a>';
-		        newTableHTML += '</td>';
-		        newTableHTML += '<td class="name-pr mnname" style="font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
-		        newTableHTML += group.mnnameList.join(', ');
-		        newTableHTML += '</td>';
-		        newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;vertical-align: middle;">';
+		        newTableHTML += '</td><td class="name-pr" style="border: 0; border-style: dashed; width: 70px;vertical-align: middle;">';
 		        newTableHTML += '<div class="star-ratings">';
 		        newTableHTML += '<div class="rscore" style="display: none;">' + group.average_rating + '</div>';
 		        newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.average_rating * 20) + '%;">';
@@ -555,6 +566,13 @@ td{
 		        newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
 		        newTableHTML += '</div>';
 		        newTableHTML += '</div>&nbsp;(' + group.average_rating + ')';
+		        newTableHTML += '</td>';
+		        newTableHTML += '</tr>';
+		        newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"></td><td class="name-pr sname" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;vertical-align: middle;">';
+		        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><span style="font-size:20px;">' + group.sname + '</span></a>';
+		        newTableHTML += '</td>';
+		        newTableHTML += '<td class="name-pr mnname" style="font-weight: bold; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
+		        newTableHTML += group.mnnameList.join(', ');
 		        newTableHTML += '</td>';
 		        newTableHTML += '</tr>';
 		    });

@@ -22,12 +22,20 @@
 	<style type="text/css">
 		.col-lg-12{
 			position: absolute;
-			top: 19%;
+			top: 24%;
 			left: 3%;
+			right: 3%;
 			bottom: 35%;
 		}
+		
+		.col-lg-13{
+			position: absolute;
+			top: 12%;
+			left: 10%;
+			right: 3%;
+		}
 		td{
-			font-size: 40px;
+			font-size: 20px;
 			vertical-align: middle;
 		}
 	</style>
@@ -40,11 +48,12 @@
 	<div class="title">
 		<div class="titleFont">냠냠 다이어리</div>
 	</div>
-	<div style="margin-top: 100px;"></div>
 		<div class="cart-box-main">
 			<c:if test="${list[0].count eq null}">
 			<div class="container">
-				<h1 style="text-align: center;">다이어리 글이 없습니다.</h1>
+				<div class="col-lg-13">
+					<h1 style="text-align: center;">다이어리 글이 없습니다.</h1>
+				</div>	
 			</div>
 		</c:if>
 		<c:if test="${list[0].count ne null}">
@@ -60,11 +69,9 @@
 				<div class="col-lg-12">
 					<table class="table">
 						<c:forEach items="${list }" var="row">
-							<tr style="height: 150px;">
+							<tr style="height: 100px;">
 								<td class="name-pr"
-									style="font-weight: bolder; border: 0; border-style: dashed; width: 800px;">${row.bcontent }</td>
-								<td class="quantity-box"
-									style="border: 0; border-style: dashed; width: 250px;">${row.bdate }</td>
+									style="font-weight: bolder; border: 0; border-style: dashed; width: 300px;">${row.bcontent }</td>
 								<td class="bbno" style="display: none;">${row.bno }</td>
 								<td style="border: 0; border-style: dashed;">
 									<c:if test="${id eq null || sessionScope.mid eq id }">
@@ -78,8 +85,8 @@
 								</td>
 							</tr>
 							<tr style="border-bottom: 1px solid #c0c0c0;">
-								<td class="name-pr"
-									style="font-weight: bolder; border: 0; border-style: dashed; width: 800px;"></td>
+								<td class="quantity-box"
+									style="border: 0; border-style: dashed; width: 100px;">${row.bdate }</td>
 								<td class="bno" style="display: none;">${row.bno }</td>
 								<td class="total-pr" style="border: 0; border-style: dashed; width: 60px;"><c:choose>
 										<c:when test="${row.mylike eq 1}">
@@ -108,15 +115,15 @@
 						</c:forEach>
 					</table>
 					<button style="margin: 0 auto;" class="morebtn">+ 더보기</button>
-				</div>
-			</div>
-			</c:if>
-		</div>
 		<div class="mouse" style="text-align: center;">
 		<a href="#" class="mouse-icon">
 			<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
 		</a>
-	</div>
+		</div>
+				</div>
+			</div>
+			</c:if>
+		</div>
 	</c:if>
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -186,11 +193,8 @@
 					// 업데이트된 데이터로 표 채우기
 					$.each(data.list,function(index, row) {
 						newRow = '<tr style="height: 200px;">'
-								+ '<td class="name-pr" style="font-weight: bolder;border: 0; border-style: dashed; width: 800px;">'
+								+ '<td class="name-pr" style="font-weight: bolder;border: 0; border-style: dashed; width: 300px;">'
 								+ row.bcontent
-								+ '</td>'
-								+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 250px;">'
-								+ row.bdate
 								+ '</td>'
 								+ '<td class="bbno" style="display: none;">'
 								+ row.bno
@@ -205,7 +209,9 @@
 						newRow += '</td>'
 								+ '</tr>'
 								+ '<tr style="border-bottom: 1px solid #c0c0c0;">'
-								+ '<td class="name-pr" style="font-weight: bolder;border: 0; border-style: dashed; width: 800px;"></td>'
+								+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 100px;">'
+								+ row.bdate
+								+ '</td>'
 								+ '<td class="bno" style="display: none;">'
 								+ row.bno
 								+ '</td>'
@@ -291,9 +297,6 @@
 										+ '<td class="name-pr" style="font-weight: bolder;border: 0; border-style: dashed; width: 800px;">'
 										+ row.bcontent
 										+ '</td>'
-										+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 250px;">'
-										+ row.bdate
-										+ '</td>'
 										+ '<td class="bbno" style="display: none;">'
 										+ row.bno
 										+ '</td>'
@@ -307,7 +310,9 @@
 								newRow += '</td>'
 										+ '</tr>'
 										+ '<tr style="border-bottom: 1px solid #c0c0c0;">'
-										+ '<td class="name-pr" style="font-weight: bolder;border: 0; border-style: dashed; width: 800px;"></td>'
+										+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 250px;">'
+										+ row.bdate
+										+ '</td>'
 										+ '<td class="bno" style="display: none;">'
 										+ row.bno
 										+ '</td>'
@@ -431,7 +436,6 @@
 					updateComment(data, bno);
 					var count = data.comment[0].count;
 					var commentcount = $('.commentcount[data-bno="' + bno + '"]').text(count);
-					alert(count + '   '+commentcount);
 				},
 				error : function(err) {
 					swal("실패", "작업수행에 실패하였습니다.", "error");

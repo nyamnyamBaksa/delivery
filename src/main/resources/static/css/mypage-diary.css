@@ -25,7 +25,7 @@ body{
 	position: absolute;
 	font-style: normal;
 	font-weight: 700;
-	font-size: 60px;
+	font-size: 40px;
 	line-height: 22px;
 	/* identical to box height, or 68% */
 	display: flex;
@@ -174,10 +174,10 @@ body{
 	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 700;
-	font-size: 40px;
+	font-size: 20px;
 	line-height: 27px;
-	width:300px;
-	height:70px;
+	width:90px;
+	height:45px;
 	/* or 135% */
 	display: flex;
 	align-items: center;

@@ -29,13 +29,13 @@
 		}
 		
 		h2, h1{
-			font-size: 40px;
+			font-size: 20px;
 			font-weight: bolder;
 			color: black;
 		}
 		
 		td{
-			font-size: 30px;
+			font-size: 20px;
 			vertical-align: middle;
 		}
 	</style>
@@ -57,15 +57,17 @@
 				</c:if>
 				<c:if test="${list[0].count ne null }">
 					<div class="count"><h2>보유쿠폰 ${list[0].count }장</h2></div><br>
-					<table class="table" style="border-left: 3px solid #EB5757;border-right: 3px solid #EB5757;">
+					<table class="table" style="width:300px;border-left: 3px solid #EB5757;border-right: 3px solid #EB5757;">
 						<c:forEach items="${list }" var="row">
 							<tr style="border-top: 3px solid #EB5757;height: 30px;">
-								<td class="name-pr" style="font-weight: bold;border: 0; border-style: dashed; width: 800px;">${row.cpid }</td>
+								<td class="name-pr" style="font-weight: bold;border: 0; border-style: dashed;">${row.cpid }</td>
 							</tr>
-							<tr style="height: 100px;border-bottom: 3px solid #EB5757;">
-								<td class="name-pr" style="border: 0; border-style: dashed; width: 700px;"><h1 style="font-weight: bolder;">${row.cpname }&nbsp;${row.cpprice }원 할인 쿠폰</h1></td>
-								<td class="quantity-box" style="border: 0; border-style: dashed; width: 500px;">사용기한 : ${row.cpedate }</td>
+							<tr style="height: 70px;">
+								<td class="name-pr" style="border: 0; border-style: dashed;"><h1 style="font-weight: bolder;">${row.cpname }&nbsp;${row.cpprice }원 할인 쿠폰</h1></td>
 								<td class="bbno" style="display: none;">${row.cpno }</td>
+							</tr>
+							<tr style="border-bottom: 3px solid #EB5757;">
+								<td class="quantity-box" style="border: 0; border-style: dashed;">사용기한 : ${row.cpedate }</td>
 							</tr>
 						</c:forEach>
 					</table>

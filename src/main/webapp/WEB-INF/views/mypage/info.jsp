@@ -21,17 +21,24 @@
 <link rel="stylesheet" href="/css/bootstrap-icons.css">
 
 <style type="text/css">
+.col-lg-13{
+	position: absolute;
+	top: 12%;
+	left: 5%;
+	right: 5%;
+}
+
 .form-group{
 	position: relative;
 }
 .input{
-	width: 350px;
+	width: 250px;
 	height: 50px;
 	
 	background: #FFFFFF;
 	border: 4px solid #EB5757;
 	border-radius: 10px;
-	font-size: larger;
+	font-size: large;
 	font-weight: bolder;
 	
 }
@@ -63,9 +70,8 @@
 	<div class="title">
 		<div class="titleFont">회원정보수정</div>
 	</div>
-	<div style="margin-top: 230px;"></div>
 		<div class="container" style="margin: 0 auto;width: 520px;">
-			<div class="col-lg-15">
+			<div class="col-lg-13">
 				<div class="form-group">
 					<div>
 						<input class="id input" type="text" placeholder="아이디를 입력하세요." />
