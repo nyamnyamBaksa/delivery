@@ -71,10 +71,10 @@
                 value="${sm.mnno}">
             <span id="sidemenu">${sm.mnname}</span>
             <span class="price"> + ${sm.mnprice}원</span>
-        </c:if>
+        </c:if>-->
     </c:forEach>
-            <br><br><br>
-         </c:if>-->
+          <!--   <br><br><br>
+         </c:if>--> 
               <span class="cacount" style="font-weight:bold; margin-left: 30px; font-size: 25px;">수량</span>
               &nbsp;<span class="minus" style="font-weight:bold; font-size: 20px;">-</span>&nbsp; 
               <input type="text" class="camount" name="camount" value="1">&nbsp;

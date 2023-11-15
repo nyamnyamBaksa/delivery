@@ -25,10 +25,31 @@
 	<div id="location">
 		<div>
 			<a href="/location"><i class="fa-solid fa-location-dot fa-lg" style="color: #ffffff;"></i>
-			<span style="font-size: 13px; color: white;'">대표 주소를<br>설정해주세요</span></a>
+			<span style="font-size: 13px; color: white; align-items: center; word-spacing:10px">대표주소를<br>설정해주세요</span></a>
 			
 		</div>
 	</div>
+	
+	<script>
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  window.onload = function() {
+    var address = getParameterByName('address');
+    if (address) {
+    	document.getElementById("location").innerHTML = address;
+    	alert(address);
+    }
+  };
+</script>
+	
 	<br>
 <div id="randomfood" style="float: right;">
     <h2 id="menutext" style="display: inline; font-size: 15px; font-weight: bold;">오늘 뭐먹지?</h2>&nbsp;&nbsp;&nbsp;

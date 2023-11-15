@@ -22,7 +22,7 @@ table {
     float : left;
     display: flex;
     align-items: center;
-	width:110px;
+	width:120px;
 	height: 40px;
 	background: #EB5757;
 	border-radius: 60px;
@@ -42,14 +42,20 @@ table {
 }
 
 #location i {
-    margin-right: 10px; 
+    margin-top: 10px;
 }
 
 #randomfood {
 	margin-right: 40px;
 	margin-top: 20px; 
 }
-
+#location span {
+	margin-left:1px;
+	line-height: 1.5;
+    display: inline-block;
+    word-spacing:15px;
+    vertical-align: middle;
+}
 
 button {
 	display: block;
