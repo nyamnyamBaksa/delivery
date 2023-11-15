@@ -233,27 +233,27 @@ public class StoreController {
 	
 	
 	// 장바구니 담기
-	   @ResponseBody
-	   @PostMapping("/menucart2")
-	   public String menucart2(@RequestParam(value = "sno", required = false) Integer sno,
-	         @RequestParam Map<String, Object> map, Model model, HttpSession session) {
-	      if (session.getAttribute("mid") != null) { // 로그인한 아이디가 있을 경우
-	         map.put("mid", (String) session.getAttribute("mid"));
-	         String mid = (String) session.getAttribute("mid");
-	         int csno = storeService.cartlist(mid);
-	         System.out.println(map);
-	         System.out.println(csno);
-	         JSONObject json = new JSONObject();
-	             if (csno != sno && csno != 0) {
-	                 json.put("result", "1");
-	             } else if(csno == 0 || csno == sno) {
-	                 storeService.cartname(map);
-	                 json.put("result", "2");
-	             }
-	             System.out.println(json.toString());
-	          return json.toString();
-	     } else {
-	         return "redirect:/login";
-	     }
-	    } 
+   @ResponseBody
+   @PostMapping("/menucart2")
+   public String menucart2(@RequestParam(value = "sno", required = false) Integer sno,
+         @RequestParam Map<String, Object> map, Model model, HttpSession session) {
+      if (session.getAttribute("mid") != null) { // 로그인한 아이디가 있을 경우
+         map.put("mid", (String) session.getAttribute("mid"));
+         String mid = (String) session.getAttribute("mid");
+         int csno = storeService.cartlist(mid);
+         System.out.println(map);
+         System.out.println(csno);
+         JSONObject json = new JSONObject();
+             if (csno != sno && csno != 0) {
+                 json.put("result", "1");
+             } else if(csno == 0 || csno == sno) {
+                 storeService.cartname(map);
+                 json.put("result", "2");
+             }
+             System.out.println(json.toString());
+          return json.toString();
+     } else {
+         return "redirect:/login";
+     }
+    }
 }
