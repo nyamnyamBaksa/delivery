@@ -7,10 +7,13 @@
 <meta charset="UTF-8">
 <title>주문내역</title>
 <link href="css/trade.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 </head>
 <body>
 
-	<a href="/">뒤로가기</a>
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+    <i class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
+</a>
 	<h1>주문내역</h1>
 	<hr class="hr">
 	

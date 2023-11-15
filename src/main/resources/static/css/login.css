@@ -2,10 +2,10 @@
 
 .id{
 	position: absolute;
-	right: 39.86%;
-	bottom: 87.48%;
+	right: 10.5%;
+	bottom: 73.48%;
 	height:48px;
-	width:370px;
+	width:300px;
 	
 	background: #FFFFFF;
 	border: 4px solid #EB5757;
@@ -15,10 +15,10 @@
 
 .pw{
 	position: absolute;
-	right: 39.86%;
-	bottom: 83.01%;
+	right: 10.5%;
+	bottom: 64.01%;
 	height:48px;
-	width:370px;
+	width:300px;
 	
 	background: #FFFFFF;
 	border: 4px solid #EB5757;
@@ -26,9 +26,9 @@
 }
 .loginBtn{
 	position: absolute;
-	right: 39.86%;
-	bottom: 77.6%;
-	width: 380px;
+	right: 10.5%;
+	bottom: 52.6%;
+	width: 310px;
 	height: 58px;
 
 	background: #EB5757;
@@ -50,9 +50,9 @@
 
 .joinBtn{
 	position: absolute;
-	right: 39.86%;
-	bottom: 73.6%;
-	width: 380px;
+	right: 10.5%;
+	bottom: 43.6%;
+	width: 310px;
 	height: 58px;
 
 	background: #EB5757;

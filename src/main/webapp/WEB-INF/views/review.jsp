@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>리뷰내역</title>
 <link href="/css/review.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script src="https://www.gstatic.com/charts/loader.js"></script>
@@ -61,7 +63,7 @@ class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
 </head>
 <body>
 <a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
-    <i class="fa-solid fa-arrow-left fa-xl" style="color: black;">뒤로가기</i>
+    <i class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
 </a>
 	<h1>리뷰보기</h1>
 	<hr class="hr">
