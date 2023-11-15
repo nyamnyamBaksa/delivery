@@ -9,10 +9,11 @@
 <link href="/css/review.css" rel="stylesheet">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+<meta name="viewport"
+   content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <script src="https://www.gstatic.com/charts/loader.js"></script>
-
 <script>
 
 // 구글 시각화 API를 로딩하는 메소드
@@ -62,9 +63,13 @@ class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
 
 </head>
 <body>
-<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
-    <i class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
-</a>
+<c:forEach items="${reviewview}" var="row" varStatus="loop" >
+		<c:if test="${loop.first || row.sno ne reviewview[loop.index - 1].sno}">
+			<a href="/food/storedetail?sno=${row.sno }" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+			    <i class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
+			</a>
+	</c:if>
+</c:forEach>
 	<h1>리뷰보기</h1>
 	<hr class="hr">
 	
@@ -74,7 +79,7 @@ class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
 	<c:forEach items="${reviewview}" var="row" varStatus="loop" >
 		<c:if test="${loop.first || row.sno ne reviewview[loop.index - 1].sno}">
 			<div class="totalrscore">${row.totalrscore }</div>
-<fieldset class="rate">
+<fieldset class="rate1">
   <input type="checkbox" id="rating5" name="rating" value="5" ${row.totalrscore >= 5 ? 'checked' : ''} disabled />
   <label for="rating5" title="5점">★</label>
   <input type="checkbox" id="rating4_half" name="rating" value="4.5" ${row.totalrscore >= 4 ? 'checked' : ''} disabled />
@@ -96,7 +101,9 @@ class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
 	<div class="reviewview">
 	  <c:forEach items="${reviewview}" var="row">
 	    <div class="mnickname"><a href="/mypage/main/${row.mid}">${row.mnickname} ></a></div>
-	    <img src="/img/${row.mprofile}" alt="프로필" class="profile">
+	    <c:if test="${row.mprofile ne null }">
+	    	<img src="/img/profileiImg${row.mprofile}" alt="프로필" class="profile">
+		</c:if>	
 			<fieldset class="rate">
 			  <input type="checkbox" id="rating5" name="rating" value="5" ${row.rscore == 5 ? 'checked' : ''} disabled />
 			  <label for="rating5" title="5점">★</label>

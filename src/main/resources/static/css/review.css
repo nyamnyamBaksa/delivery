@@ -2,6 +2,12 @@
 .hr{
 	border-top: 3px solid black;
 }
+body {
+	font-family: 'NanumSquareNeo';
+	color: #000;
+	margin: 0;
+	padding: 0;
+}
 .totalcount{
 	color:#1f1f1f;
 	text-align:left;
@@ -15,14 +21,7 @@
 	font-weight: bold;
 	margin:10px;
 	position:relative;
-	top: 200px;
-}
-.profile{
-	width:76px;
-	height:78px;
-	top:640px;;
-	position:absolute;
-	margin: 10px;
+	top: 400px;
 }
 .examine{
 	color:rgba(31, 31, 31, 0.5899999737739563);
@@ -40,11 +39,11 @@
 }
 .mnickname{
 	text-align:left;
-	font-size:28px;
+	font-size:23px;
 	font-family:Dosis;
 	position:absolute;
 	font-weight: bold;
-	left:100px;
+	left:39px;
 	margin:10px;
 }
 .mnickname a {
@@ -55,14 +54,14 @@
 	position: relative;
  	display: flex;
   	flex-direction: row-reverse;
-  	font-size: 2.25rem;
+  	font-size: 1.55rem;
   	line-height: 2.5rem;
   	padding: 0 0.2em;
   	text-align: center;
   	width: 20em;
   	border: none;
-  	left: -400px;
-  	top: 60px;
+  	left: -55%;
+  	top: 40px;
   	justify-content: flex-start;
 }
 .rate input {
@@ -85,28 +84,28 @@
 	color:#000000;
 	text-align:left;
 	vertical-align:text-middle;
-	font-size:20px;
+	font-size:15px;
 	font-family:Dosis;
 	line-height:21.600000381469727px;
 	border-style:hidden;
 	outline:none;
 	position:relative;
-	left : 350px;
-	top :20px;
+	left : 44%;
+	top :15px;
 }
 .rcomment{
 	color:#000000;
 	text-align:left;
 	vertical-align:text-middle;
-	font-size:24px;
+	font-size:22px;
 	font-family:Dosis;
 	line-height:21.600000381469727px;
 	border-style:hidden;
 	outline:none;
-	margin:50px;
+	margin:20px;
 	position:relative;
-	left :60px;
-	top: 40px;
+	left :40px;
+	top: 30px;
 }
 .rphoto{
 	height:211px;
@@ -131,10 +130,49 @@
 }
 .stroeAvg{
 	margin:5px;
-	position:relative;
-	top : -240px;
+	position:absolute;
+	top : 130px;
 }
 .chart{
-	position:relative;
-	left :450px;
+	position:absolute;
+	top: 37%;
+	left: -15%;
+}
+.reviewview{
+	position:absolute;
+	top: 80%;
+}
+.rate1{
+	position: relative;
+ 	display: flex;
+  	flex-direction: row-reverse;
+  	font-size: 2.25rem;
+  	line-height: 2.5rem;
+  	padding: 0 0.2em;
+  	text-align: center;
+  	width: 20em;
+  	border: none;
+  	left: -410px;
+  	top: 60px;
+  	justify-content: flex-start;
+}
+.rate1 input {
+  	display: none;
+}
+.rate1 label{
+	order: 1;
+  	-webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  	-webkit-text-stroke-width: 2.3px;
+  	-webkit-text-stroke-color: #2b2a29;
+  	cursor: pointer;
+  	margin-right: 10px; /* 별들 사이의 간격을 조절합니다. */
+}
+.rate1 :checked ~ label {
+  	-webkit-text-fill-color: gold;
+}
+.profile{
+	position: relative;
+	top:14px;;
+	width: 5px;
+	height: 5px;
 }
