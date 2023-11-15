@@ -6,6 +6,7 @@ import lombok.Data;
 public class MenuDTO {
 
 	private String mnname, mnimg, mncatename, mncate, mndesc;
+
 	private int sno, mnno, mnprice, mnside;
-	
+
 }

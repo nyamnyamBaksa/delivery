@@ -63,9 +63,14 @@
 		<div id="menumix">
 			<i class="fa-solid fa-heart fa-lg" style="color: #eb5757;"></i> 메뉴 추천
 			조합 <br> <br>
-			<c:forEach items="${bestmenu}" var="best">
-				<div id="menubest">&nbsp;${bestmenu}</div>
-			</c:forEach>
+			<c:choose>
+        <c:when test="${bestmenu == null or bestmenu eq ''}">
+            <div id="menubest">준비중</div>
+        </c:when>
+        <c:otherwise>
+            <div id="menubest">&nbsp;${bestmenu}</div>
+        </c:otherwise>
+    </c:choose>
 		</div>
 
         <br>

@@ -96,8 +96,7 @@
 					<tr>
 						<td rowspan="3" style="width: 200px; text-align: left;">
 						<c:if test="${l.store_image == null}">
-								<i class="fa-solid fa-hammer fa-rotate-270 fa-lg"
-									style="color: #eb5757;"></i>이미지 준비중<i class="fa-solid fa-wrench fa-lg" style="color: #eb5757;"></i>
+						<div class="imgready">이미지<br>준비중</div>
 							</c:if>
 							<c:if test="${l.store_image != null}"><img style="width: 210px; height: 180px; " class="foodimg" src="/img/food/${l.store_image}"></c:if></td>
 	 					<td>${l.store_name}</td>
@@ -110,7 +109,7 @@
 					</tr>
 
 				</table>
-				<a href="food/storedetail?sno=${l.sno}"><button id="nowbutton" type="button">주문하기</button></a>
+				<a href="food/storedetail?sno=${l.sno}"><button id="nowbutton" type="button">주문하기 <i class="fa-solid fa-face-grin-stars fa-lg" style="color: #ffffff;"></i></button></a>
 			</div>
 		</c:forEach>
 	</div>

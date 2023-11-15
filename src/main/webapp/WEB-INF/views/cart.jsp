@@ -21,6 +21,42 @@
 	<link rel="stylesheet" href="/css/sweetalert.css" />
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="/css/bootstrap-icons.css">
+	<style type="text/css">
+		 thead{
+		 	background-color: #EB5757;
+		 	color: white;
+		 	font-size: 15px;
+		 	font-weight: bolder;
+		 	height: 50px;
+		 	text-align: center;
+		 	vertical-align: middle;
+		 }
+		 
+		 td{
+		 	font-size: 13px;
+		 	font-weight: bold;
+		 	text-align: center;
+		 }
+		 
+		 .qtyChange{
+		 	margin-top: 10px;
+		 	width:60px;
+			height: 25px;
+			background: black;
+			border-radius: 50px;
+			font-style: normal;
+			font-weight: 700;
+			font-size: 12px;
+			line-height: 27px;
+			/* or 135% */
+			align-items: center;
+			text-align: center;
+			cursor:pointer;
+			 justify-content: center; /* 텍스트를 수평으로 가운데 정렬하기 위해 추가 */
+		     color: #FFFFFF;
+		     border: none; /* border를 제거하기 위해 추가 */
+		 }
+	</style>
 </head>
 
 <body>
@@ -29,53 +65,49 @@
     	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
 	</a>
 	<div class="mypage">
-		<div class="mypageFont">장바구니</div>
+		<div class="mypageFont" style="font-size: 23px;">장바구니</div>
 	</div>
     <!-- Start Cart  -->
     <div class="cart-box-main">
     <c:if test="${list[0].sname eq null }">
-    	<div style="margin-bottom: 100px;"></div>
-    	<h1 style="text-align: center;font-size: 50px;color: #EB5757;"><i class="bi bi-cart-x"></i>장바구니가 비었어요</h1>
+    	<h1 style="text-align: center;font-size: 30px;color: #EB5757;"><i class="bi bi-cart-x"></i>장바구니가 비었어요</h1>
     </c:if>
     <c:if test="${list[0].sname ne null }">
         <div class="container">
             <div class="row">
-            <div style="margin: 10px;"></div>
             	<div class="col-lg-12"><h1>${list[0].sname }</h1></div>
                 <div class="col-lg-12">
-                    <div class="table-main table-responsive">
                         <table class="table">
-                            <thead style="background-color: #EB5757;">
+                            <thead>
                                 <tr>
-                                    <th></th>
-                                    <th>메뉴 이름</th>
+                                    <th>메뉴</th>
                                     <th>가격</th>
                                     <th>수량</th>
-                                    <th>총 가격</th>
-                                    <th></th>
+                                    <th>총가격</th>
+                                    <th style="width: 5px;"></th>
                                 </tr>
                             </thead>
                             <tbody>
                             	<c:forEach items="${list }" var="row">
 	                                <tr>
-	                                    <td class="thumbnail-img">
+	                                    <td class="thumbnail-img" style="vertical-align: middle;width: 100px;">
 	                                        <a href="food/storedetail?sno=${list[0].sno}">
-												<img class="img-fluid" src="/img/food/${row.mnimg}" alt="" />
+												<img class="img-fluid" src="/img/food/${row.mnimg}" alt="" /><br>
+												${row.mnname }
 											</a>
 	                                    </td>
-	                                    <td class="name-pr">${row.mnname }</td>
-	                                    <td class="price-pr">
+	                                    <td class="price-pr" style="vertical-align: middle;width: 67px;">
 	                                        <span class="mnprice">${row.mnprice }</span>원
 	                                    </td>
-	                                    <td class="quantity-box">
+	                                    <td class="quantity-box" style="vertical-align: middle;width: 55px;">
 											<div class="cno" style="display: none;">${row.cno }</div>
-	                                    	<input style="width: 50px;margin-bottom: 15px;" type="number" value="${row.camount }" min="1" step="1" class="c-input-text qty text">
-						                    &nbsp;<button class="qtyChange" style="background-color: black;">수량변경</button>
+	                                    	<input style="width: 50px;" type="number" value="${row.camount }" min="1" step="1" class="c-input-text qty text">
+						                    <button class="qtyChange">수량변경</button>
 	                                    </td>
-	                                    <td class="price-pr">
+	                                    <td class="price-pr" style="vertical-align: middle;width: 67px;">
 	                                        <span class="ctotal">${row.ctotal }</span>원
 	                                    </td>
-	                                    <td class="remove-pr">
+	                                    <td class="remove-pr" style="width: 5px;vertical-align: middle;">
 											<i style="cursor:pointer;" class="fas fa-times cartdel"></i>
 	                                    </td>
 	                                </tr>
@@ -84,9 +116,8 @@
                         </table>
                         <hr style="border: 1px solid black;">
                         <div>
-                        	<h2 onclick="location.href='/food/storedetail?sno=${list[0].sno}'" style="font-weight:bold;text-align: center;cursor: pointer;">+ 더 담으러 가기</h2>
+                        	<h3 onclick="location.href='/food/storedetail?sno=${list[0].sno}'" style="font-weight:bold;text-align: center;cursor: pointer;">+ 더 담으러 가기</h3>
                         </div>
-                    </div>
                 </div>
             </div>
 

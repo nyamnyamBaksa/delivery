@@ -61,22 +61,20 @@
 
 	<select id="menudetail" parameterType="Integer"
 		resultType="com.delivery.web.store.MenuDTO">
-		SELECT mnname, mnprice, mnimg, mndesc, mnside, mnno,sno
+		SELECT mnname, mnprice, mnimg, mndesc, mnside, mnno, sno
 		FROM menu
 		WHERE mnno =#{mnno}
 	</select>
 
-	<insert id="cartlist" parameterType="java.util.Map">
+	<insert id="cartname" parameterType="java.util.Map">
 		INSERT INTO cart (mno, mnno, camount, ctotal)
 		VALUES((select mno from member where mid = #{mid}), #{mnno}, #{camount}, #{ctotal})
 	</insert>
-
- <!--  <select id="cartlist" parameterType="String" resultType="Integer">
-    SELECT DISTINCT sno
-    FROM cartview WHERE mno = (select mno from member where mid = #{mid})
-
-</select>-->
-
+	
+	<select id="cartlist" parameterType="String" resultType="Integer">
+		SELECT COALESCE(sno, COUNT(*)) AS sno from cartview
+      where mno = (select mno from member where MID = #{mid})
+	</select>
 
 
 </mapper>

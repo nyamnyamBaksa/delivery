@@ -102,7 +102,15 @@ a {
 	margin-top: 150px;
 	font-size: 30px;
 }
-
+.imgready{
+	width: 210px;
+	height: 180px;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 
 
 #foodcategory {

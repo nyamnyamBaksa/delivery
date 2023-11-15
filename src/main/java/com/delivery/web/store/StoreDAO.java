@@ -27,7 +27,7 @@ public interface StoreDAO {
 
 	MenuDTO menuinfo(int mnno);
 
-	void cartlist(Map<String, Object> map);
+	void cartname(Map<String, Object> map);
 
 	List<MenuDTO> getMainMenu();
 

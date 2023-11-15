@@ -9,6 +9,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.delivery.web.mypage.Util;
+
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @Controller
@@ -65,7 +68,7 @@ public class StoreController {
 			}
 		}
 
-		String bestmenu = "";
+		String bestmenu = null;
 
 		// 사이드 메뉴 있을 때
 		if (!sideMenuList.isEmpty()) {
@@ -74,7 +77,7 @@ public class StoreController {
 
 			bestmenu = randomMain.getMnname() + " + " + randomSide.getMnname();
 			// 사이드 메뉴 없을 때
-		} else {
+		} else if(!mainMenuList.isEmpty()){
 			MenuDTO randomMain = RandomMenu(mainMenuList);
 			bestmenu = randomMain.getMnname();
 		}
@@ -207,6 +210,7 @@ public class StoreController {
 
 	}
 
+
 	// 장바구니 담기
 	@PostMapping("/food/menudetail")
 	public String cart (@RequestParam Map<String, Object> map, Model model, HttpSession session) {
@@ -218,12 +222,38 @@ public class StoreController {
 
 		        System.out.println(map);
 
-		        storeService.cartlist(map);
+		        storeService.cartname(map);
 
 		        return "redirect:/cart";
 		    } else {
 		        return "redirect:/login";
 		    }
 	}
-}
+
 	
+	
+	// 장바구니 담기
+	   @ResponseBody
+	   @PostMapping("/menucart2")
+	   public String menucart2(@RequestParam(value = "sno", required = false) Integer sno,
+	         @RequestParam Map<String, Object> map, Model model, HttpSession session) {
+	      if (session.getAttribute("mid") != null) { // 로그인한 아이디가 있을 경우
+	         map.put("mid", (String) session.getAttribute("mid"));
+	         String mid = (String) session.getAttribute("mid");
+	         int csno = storeService.cartlist(mid);
+	         System.out.println(map);
+	         System.out.println(csno);
+	         JSONObject json = new JSONObject();
+	             if (csno != sno && csno != 0) {
+	                 json.put("result", "1");
+	             } else if(csno == 0 || csno == sno) {
+	                 storeService.cartname(map);
+	                 json.put("result", "2");
+	             }
+	             System.out.println(json.toString());
+	          return json.toString();
+	     } else {
+	         return "redirect:/login";
+	     }
+	    } 
+}

@@ -82,8 +82,7 @@
 					<tr>
 						<td rowspan="3" style="width: 200px; text-align: center;">
 						<c:if test="${l.store_image == null}">
-								<i class="fa-solid fa-hammer fa-rotate-270 fa-lg"
-									style="color: #eb5757;"></i>준비중<i class="fa-solid fa-wrench fa-lg" style="color: #eb5757;"></i>
+								이미지<br>준비중
 							</c:if>
 							<c:if test="${l.store_image != null}"><img style="width: 230px; height: 180px; " class="foodimg" src="/img/food/${l.store_image}"></c:if></td>
 	 					<td style="font-size: 40px;">${l.store_name}</td>

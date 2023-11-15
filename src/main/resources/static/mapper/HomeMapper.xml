@@ -8,13 +8,14 @@
 		s.store_image, s.average_rating, s.review_count, COUNT(t.tno) AS
 		order_count
 		FROM storeview s
-		JOIN trade t ON s.sno = t.mno
+		LEFT JOIN trade t ON s.sno = t.mno
 		GROUP BY s.sno, s.store_name, s.store_image, s.average_rating,
 		s.review_count
+		HAVING order_count > 0 OR s.average_rating > 0
 		ORDER BY order_count DESC;
 	</select>
 
- <select id="detail" parameterType="Integer"
+	<select id="detail" parameterType="Integer"
 		resultType="com.delivery.web.home.HomeDTO">
 		SELECT sno, store_name, store_image, average_rating,
 		review_count
@@ -23,7 +24,7 @@
 	</select>
 
 
-<select id="menulist" parameterType="Integer"
+	<select id="menulist" parameterType="Integer"
 		resultType="com.delivery.web.home.HomeDTO">
 		SELECT mnno, mnname, mnprice, mnimg, mnside
 		FROM menu

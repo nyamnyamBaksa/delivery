@@ -6,7 +6,7 @@
 	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 700;
-	font-size: 30px;
+	font-size: 40px;
 	line-height: 27px;
 	cursor: pointer;
 	/* or 135% */
@@ -17,8 +17,8 @@
 	 justify-content: center; /* 텍스트를 수평으로 가운데 정렬하기 위해 추가 */
      color: #FFFFFF;
      border: none; /* border를 제거하기 위해 추가 */
-     width: 150px;
-     height: 70px;
+     width:200px;
+	 height:70px;
 }
 
 /* div.title-left */

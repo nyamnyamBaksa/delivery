@@ -90,16 +90,15 @@ public class StoreService {
 	}
 
 
-	public void cartlist(Map<String, Object> map) {
+	public void cartname(Map<String, Object> map) {
 		
-		storeDAO.cartlist(map);
+		storeDAO.cartname(map);
 	}
 
 
 
 
 	public int cartlist(String mid) {
-		
 		return storeDAO.cartlist(mid);
 	}
 

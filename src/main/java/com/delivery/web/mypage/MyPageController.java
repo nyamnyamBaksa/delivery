@@ -1,7 +1,10 @@
 package com.delivery.web.mypage;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -19,6 +22,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -73,7 +77,7 @@ public class MyPageController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/updateProfileImg")// 본인만 프로필 사진 바꿀 수 있음
+	@PostMapping("/updateProfileImg")// 웹 전용
 	public String updateProfileImg(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> map, HttpSession session) {
 		if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
 	        if (file != null && !file.isEmpty()) {
@@ -111,6 +115,58 @@ public class MyPageController {
 	        return "redirect:/login";
 	    }
 	}
+	
+	@ResponseBody
+	@PostMapping("/updateProfileImg2") // 모바일 전용
+	public String updateProfileImg2(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> map,
+	        HttpSession session) {
+	    System.out.println(file);
+	    System.out.println(map);
+	    if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
+	        if (file != null && !file.isEmpty()) {
+	            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+	                    .getRequest();
+	            String path = "C:\\Users\\user\\eclipse-workspace\\delivery\\src\\main\\webapp\\img\\profileImg"; // 원하는 디렉토리로 수정하세요
+
+	            // 이미지 저장
+	            String realFileName = file.getOriginalFilename();
+
+	            File newFileName = new File(path, realFileName);
+	            
+	            // 디렉토리가 존재하지 않으면 생성
+	            if (!newFileName.getParentFile().exists()) {
+	                newFileName.getParentFile().mkdirs();
+	            }
+
+	            try {
+	                byte[] fileBytes = file.getBytes();
+	                System.out.println(fileBytes);
+	                System.out.println("Copying to: " + newFileName.getAbsolutePath());
+	                // 파일 경로를 생성하지 않고 직접 복사
+	                FileOutputStream fos = new FileOutputStream(newFileName);
+	                fos.write(fileBytes);
+	                fos.close();
+
+	                System.out.println("aaa");
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	                System.out.println("bbb");
+	            }
+	            map.put("mid", session.getAttribute("mid"));
+	            map.put("file", realFileName);
+	            myPageService.updateProfileImg(map);
+	            String profileImg = myPageService.profileImg(map);
+	            JSONObject json = new JSONObject();
+	            json.put("profileImg", profileImg);
+	            return json.toString();
+	        } else {
+	            return "redirect:/mypage/main";
+	        }
+	    } else {
+	        return "redirect:/login";
+	    }
+	}
+
 	
 	@GetMapping({"/diary", "/diary/{id}"})
 	public String diary(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session,
@@ -452,6 +508,50 @@ public class MyPageController {
 		} else {
 			return "redirect:/login";
 		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateReviewImg") // 모바일 전용
+	public String updateReviewImg(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> map,
+	        HttpSession session) {
+	    System.out.println(file);
+	    System.out.println(map);
+	    if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
+	        if (file != null && !file.isEmpty()) {
+	            String path = "C:\\Users\\user\\eclipse-workspace\\delivery\\src\\main\\webapp\\img\\review";
+
+	            // 이미지 저장
+	            String realFileName = file.getOriginalFilename();
+
+	            File newFileName = new File(path, realFileName);
+	            
+	            // 디렉토리가 존재하지 않으면 생성
+	            if (!newFileName.getParentFile().exists()) {
+	                newFileName.getParentFile().mkdirs();
+	            }
+
+	            try {
+	                byte[] fileBytes = file.getBytes();
+	                System.out.println(fileBytes);
+	                System.out.println("Copying to: " + newFileName.getAbsolutePath());
+	                // 파일 경로를 생성하지 않고 직접 복사
+	                FileOutputStream fos = new FileOutputStream(newFileName);
+	                fos.write(fileBytes);
+	                fos.close();
+
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	            String reviewImg = realFileName;
+	            JSONObject json = new JSONObject();
+	            json.put("reviewImg", reviewImg);
+	            return json.toString();
+	        } else {
+	            return "redirect:/mypage/main";
+	        }
+	    } else {
+	        return "redirect:/login";
+	    }
 	}
 	
 	@ResponseBody
