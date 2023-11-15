@@ -5,14 +5,18 @@
 	<select id="findById" parameterType="String" resultType="Integer">
 		select count(*)
 		from member
-		where mid = #{id} and mgrade = 1
+		where mid = #{id} and mgrade >= 1
 	</select>
 	
 	<select id="toplist" parameterType="String" resultType="Map">
-		SELECT sname, COUNT(*) AS count
-		from tradeview
-		where MID = #{id}
-		group by sname
+		SELECT tgroup, SUM(sname_count) AS count, sname
+		FROM (
+		    SELECT tgroup, sno, COUNT(DISTINCT sname) AS sname_count, sname
+		    FROM tradeview
+		    WHERE MID = #{id}
+		    GROUP BY tgroup, sno
+		) subquery
+		GROUP BY sno
 		ORDER BY COUNT desc
 		LIMIT 3
 	</select>
@@ -30,8 +34,8 @@
 	            ELSE '카페/디저트'
 	        END) AS mncatename,
 	        COUNT(*) AS count
-	    FROM tradeview t, menu m
-	    WHERE t.mnno = m.mnno AND mid = #{id}
+	    FROM tradeview
+	    WHERE mid = #{id}
 	    GROUP BY mncate
 	    ORDER BY count DESC
 	    limit 3;
@@ -53,9 +57,8 @@
 		        END) AS mncatename,
 		        mncate,
 		        COUNT(*) AS count
-		    FROM tradeview t
-		    JOIN menu m ON t.mnno = m.mnno
-		    WHERE t.MID = 'aaaa'
+		    FROM tradeview
+		    WHERE MID = 'aaaa'
 		    GROUP BY mncate
 		    ORDER BY count DESC
 		    LIMIT 3
@@ -128,11 +131,13 @@
 	</select>
 	
 	<select id="boardlist" parameterType="Map" resultType="Map">
-		SELECT b.bno, b.bcontent, COALESCE(COUNT(l.lno), 0) AS mylike, b.bdate, b.commentcount, b.blike
+		SELECT b.bno, b.bcontent, COALESCE(COUNT(l.lno), 0) AS mylike, b.bdate, b.commentcount, b.blike,
+			(select count(*) as count from boardview where mid = #{id}) as count
 		FROM boardview b LEFT JOIN bblike l
 			ON b.bno = l.bno AND l.mno = (SELECT mno FROM member WHERE MID = #{mid})
 		WHERE b.mid = #{id}
 		GROUP BY b.bno, b.bcontent, b.bdate, b.commentcount, b.blike
+		limit #{offset}, 7
 	</select>
 	
 	<update id="bdelete" parameterType="Integer">
@@ -157,7 +162,8 @@
 	</select>
 	
 	<select id="comment" parameterType="Integer" resultType="Map">
-		select cmno, cmcontent, mid, mname, cmdate
+		select cmno, cmcontent, mid, mname, cmdate, mnickname,
+			(select commentcount from boardview where bno = #{bno}) as count
 		FROM commentview
 		where bno = #{bno}
 	</select>
@@ -277,7 +283,14 @@
 		        AND DATE_FORMAT(pcdate, '%y-%m-%d') BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 6 MONTH), '%y-%m-%d') AND DATE_FORMAT(NOW(), '%y-%m-%d')
 		    </when>
 		</choose>
-	    ORDER BY pno desc;
+	    ORDER BY pno desc
+	    limit #{offset}, 10
+	</select>
+	
+	<select id="paycount" parameterType="Map" resultType="Integer">
+		select count(*)
+		from point
+		where mno = (SELECT mno FROM member where MID = #{mid})
 	</select>
 	
 	<insert id="charge" parameterType="Map">
@@ -285,13 +298,21 @@
 		values (#{pcharge}, #{pbalance}, (select mno from member where mid = #{mid}))
 	</insert>
 	
-	<select id="reviewlist" parameterType="String" resultType="Map">
-		SELECT rno, rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, mnname, r.sno,
+	<select id="reviewlist" parameterType="Map" resultType="Map">
+		SELECT rno, rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, r.sno, r.tgroup, rphoto,
 			(select count(*) from review where mno = (SELECT mno FROM member WHERE MID = #{id}) AND rdel = 1) as count
 		FROM review r, tradeview t
-		WHERE r.tno = t.tno AND r.mno = (SELECT mno FROM member WHERE MID = #{id})
+		WHERE r.tgroup = t.tgroup AND r.mno = (SELECT mno FROM member WHERE MID = #{id})
 			AND rdel = 1
+		GROUP BY r.tgroup
 		order by rno desc
+		limit #{offset}, 7
+	</select>
+	
+	<select id="mnreviewlist" parameterType="Map" resultType="Map">
+		select mnname, rno
+		FROM review r, tradeview t
+		WHERE r.tgroup = t.tgroup AND r.mno = (SELECT mno FROM member WHERE MID = #{id})
 	</select>
 	
 	<update id="rdelete" parameterType="Map">
@@ -319,14 +340,14 @@
 	</insert>
 	
 	<update id="updateReview" parameterType="Map">
-		update review set rcomment = #{redit}, rscore = #{starRating}
+		update review set rcomment = #{redit}, rscore = #{starRating}, rphoto=#{rphoto}
 		where rno = #{rno}
 	</update>
 	
 	<select id="findReviewByRno" parameterType="Map" resultType="Map">
-		SELECT rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, mnname
-		FROM review r, tradeview t
-		WHERE r.tno = t.tno AND rno = #{rno}
+		SELECT rcomment, date_format(rdate, '%Y-%m-%d') as rdate, rscore, sname, tgroup, rphoto
+		FROM review r, store s
+		WHERE r.sno = s.sno AND rno = #{rno}
 	</select>
 	
 	<select id="info" parameterType="String" resultType="Map">
@@ -365,5 +386,6 @@
 		update member set mphone = #{phone}
 		where mno = #{mno}
 	</update>
+	
 	
 </mapper>

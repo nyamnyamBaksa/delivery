@@ -10,7 +10,7 @@
 	
 	<insert id="saveReview" parameterType="MAP">
 		INSERT INTO review (sno, rcomment, mno, tgroup, rscore)
-		VALUES (#{sno}, #{review}, #{mno}, #{tgrouop}, #{rscore})
+		VALUES (#{sno}, #{review}, #{mno}, #{tgroup}, #{rscore})
 	</insert>
 	
 	<select id="revivew" resultType="Map">

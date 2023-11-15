@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+
+body {
+font-family: 'NanumSquareNeo';
+	margin: 0;
+	padding: 0;
+}
+
+table {
+border-spacing: 20px;
+}
+
+th {
+font-size: 17px;
+
+}

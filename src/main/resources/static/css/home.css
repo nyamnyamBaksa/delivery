@@ -5,46 +5,29 @@ html,body {
       height: 100%;
     }
 
-
-
 body {
 	font-family: 'NanumSquareNeo';
 	margin: 0;
     padding: 0;
 }
 
- swiper-container {
-      float: right;
-      margin-right: 40px; 
-      width: 50%;
-      height: 50%;
-    }
-
-    swiper-slide {
-      text-align: center;
-      font-size: 18px;
-      background: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    swiper-slide img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-
+td {
+	font-weight: bold;
+	font-size: 13px;
+}
+table {
+	margin-bottom: 20px;
+}
 #location {
     float : left;
-	width:25%;
-	height: 45px;
+    display: flex;
+    align-items: center;
+	width:110px;
+	height: 40px;
 	background: #EB5757;
 	border-radius: 60px;
-	margin: 20px auto;
-	margin-left: 30px; 
+	margin-top: 40px;
+	margin-left: 10px; 
 	align-items: center;
 	color:white;
 	font-weight:bold;
@@ -63,41 +46,84 @@ body {
 }
 
 #randomfood {
-	margin-right: 40px; 
+	margin-right: 40px;
+	margin-top: 20px; 
 }
 
-#randomfood  h1{
-	margin-right: 10px; 
-}
 
 button {
+	display: block;
 	margin: 0 auto; 
-	width: 80px;
-	height: 35px;
-	border-radius: 20px;
+	width: 50px;
+	height: 30px;
+	border-radius: 30px;
 	border: none;
 	font-weight: bold;
-	font-size: 17px;
-	display: block; 
+	font-size: 15px; 
 	color: #ffffff;
 	background-color: #EB5757;
+	font-family: 'NanumSquareNeo';
 }
 
+#ordername{
+	font-size: 13px;
+}
+
+
+#nowbutton {
+	display: block;
+	margin: 0 auto;
+	margin-top:-30px;
+	width: 70px;
+	height: 30px;
+	border-radius: 40px;
+	border: none;
+	font-weight: bold;
+	font-size: 13px; 
+	color: #ffffff;
+	background-color: #EB5757;
+	font-family: 'NanumSquareNeo';
+	
+	
+}
 a {
 	font-weight: bold;
 	text-decoration: none;
 	color: black;
 }
 
+.restraunt-list {
+	flex-wrap: wrap; 
+	justify-content: space-between;
+	display: flex;
+	margin-left:-10px;
+	margin-top: 30px;
+	font-size: 30px;
+}
+.imgready{
+	width: 70px;
+	height: 70px;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 
 #foodcategory {
-	margin-left: 60px;
-	line-height: 3.5;
-	font-size : 17px;
+	margin-left: 10px;
+	margin-top: 40px;
+	line-height: 4.0;
+	font-size : 15px;
+	font-weight:bold;
 	clear: both; 
     float: left;
 }
 
+.foodimg {
+	border-radius: 10px;
+}
 
 
 

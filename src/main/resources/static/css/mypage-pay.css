@@ -1,6 +1,11 @@
 @charset "UTF-8";
-
-.charge, .delbtn, .editbtn, .editModalbtn, .againpurchase {
+.mouse{
+	position: relative;
+	top: 95%;
+	text-align: center;
+	font-size: 30px;
+}
+.charge, .delbtn, .editbtn, .editModalbtn, .againpurchase, .morebtn {
 	background: #EB5757;
 	border-radius: 50px;
 	font-family: 'Dosis';
@@ -17,6 +22,8 @@
 	 justify-content: center; /* 텍스트를 수평으로 가운데 정렬하기 위해 추가 */
      color: #FFFFFF;
      border: none; /* border를 제거하기 위해 추가 */
+     width:90px;
+	 height:45px;
 }
 
 /* div.title-left */
@@ -24,8 +31,8 @@
 	box-sizing: border-box;
 	
 	position: absolute;
-	left: 7.78%;
-	right: 10.42%;
+	left: 7%;
+	right: 7%;
 	top: 5.47%;
 	bottom: 89.94%;
 	
@@ -36,15 +43,13 @@
 
 /* Heading 3 → Shipping Method */
 .titleFont{
-	position: absolute;
 	height: 22px;
 	left: 2px;
 	top: 5px;
-	
-	font-family: 'Dosis';
+	position: absolute;
 	font-style: normal;
 	font-weight: 700;
-	font-size: 32px;
+	font-size: 40px;
 	line-height: 22px;
 	/* identical to box height, or 68% */
 	display: flex;
@@ -52,4 +57,9 @@
 	
 	color: #1F1F1F;
 	
+}
+
+.againpurchase{
+	position: absolute;
+	left: 150px;
 }

@@ -1,7 +1,10 @@
 package com.delivery.web.mypage;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -19,6 +22,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,12 +45,6 @@ public class MyPageController {
 	@Autowired
 	private SmsUtil smsUtil;
 	
-	// 나중에 수정
-	@GetMapping("/sample")
-	public String sample(HttpSession session){
-		return "/mypage/sample";
-	}
-	
 	@GetMapping({"/main","/main/{id}"})
 	public String main(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
@@ -55,7 +53,7 @@ public class MyPageController {
 			} else {// 다른 사람 계정 or 본인 계정
 				String myid = (String) session.getAttribute("mid");
 				model.addAttribute("id", id);
-				if(myid != id) {
+				if(!myid.equals(id)) {
 					int babfriend = myPageService.babfriend(myid, id);
 					model.addAttribute("babfriend", babfriend);
 				}
@@ -79,7 +77,7 @@ public class MyPageController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/updateProfileImg")// 본인만 프로필 사진 바꿀 수 있음
+	@PostMapping("/updateProfileImg")// 웹 전용
 	public String updateProfileImg(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> map, HttpSession session) {
 		if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
 	        if (file != null && !file.isEmpty()) {
@@ -118,16 +116,70 @@ public class MyPageController {
 	    }
 	}
 	
+	@ResponseBody
+	@PostMapping("/updateProfileImg2") // 모바일 전용
+	public String updateProfileImg2(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> map,
+	        HttpSession session) {
+	    System.out.println(file);
+	    System.out.println(map);
+	    if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
+	        if (file != null && !file.isEmpty()) {
+	            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+	                    .getRequest();
+	            String path = "C:\\Users\\user\\eclipse-workspace\\delivery\\src\\main\\webapp\\img\\profileImg"; // 원하는 디렉토리로 수정하세요
+
+	            // 이미지 저장
+	            String realFileName = file.getOriginalFilename();
+
+	            File newFileName = new File(path, realFileName);
+	            
+	            // 디렉토리가 존재하지 않으면 생성
+	            if (!newFileName.getParentFile().exists()) {
+	                newFileName.getParentFile().mkdirs();
+	            }
+
+	            try {
+	                byte[] fileBytes = file.getBytes();
+	                System.out.println(fileBytes);
+	                System.out.println("Copying to: " + newFileName.getAbsolutePath());
+	                // 파일 경로를 생성하지 않고 직접 복사
+	                FileOutputStream fos = new FileOutputStream(newFileName);
+	                fos.write(fileBytes);
+	                fos.close();
+
+	                System.out.println("aaa");
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	                System.out.println("bbb");
+	            }
+	            map.put("mid", session.getAttribute("mid"));
+	            map.put("file", realFileName);
+	            myPageService.updateProfileImg(map);
+	            String profileImg = myPageService.profileImg(map);
+	            JSONObject json = new JSONObject();
+	            json.put("profileImg", profileImg);
+	            return json.toString();
+	        } else {
+	            return "redirect:/mypage/main";
+	        }
+	    } else {
+	        return "redirect:/login";
+	    }
+	}
+
+	
 	@GetMapping({"/diary", "/diary/{id}"})
-	public String diary(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
+	public String diary(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session,
+			@RequestParam Map<String, Object> map) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			String mid = (String) session.getAttribute("mid");
+			map.put("mid", mid);
 			if(id == null) {// 본인 계정
 				id = (String) session.getAttribute("mid");
 			} else {// 다른 사람 계정 or 본인 계정
 				String myid = (String) session.getAttribute("mid");
 				model.addAttribute("id", id);
-				if(myid != id) {
+				if(!myid.equals(id)) {// 서로 친구 아니면 못 보게함
 					int babfriend = myPageService.babfriend(myid, id);
 					model.addAttribute("babfriend", babfriend);
 					if(babfriend != 3) {
@@ -135,11 +187,13 @@ public class MyPageController {
 					}
 				}
 			}
+			map.put("id", id);
+			map.put("offset", 0);
 			int findById = myPageService.findById(id);
 			if(findById == 0) {
 				return "redirect:/";
 			}
-			List<Map<String, Object>> list = myPageService.boardlist(mid, id);
+			List<Map<String, Object>> list = myPageService.boardlist(map);
 			model.addAttribute("list", list);
 			return "/mypage/diary";
 		} else {
@@ -148,14 +202,32 @@ public class MyPageController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/moreDiary")
+	public String moreDiary(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			System.out.println(map);
+			map.put("offset", util.strToInt((String)map.get("offset")));
+			List<Map<String, Object>> list = myPageService.boardlist(map);
+			JSONObject json = new JSONObject();
+			json.put("list", list);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
 	@PostMapping("/bdelete")
-	public String bdelete(Model model, HttpSession session,
+	public String bdelete(Model model, HttpSession session, @RequestParam Map<String, Object> map,
 			@RequestParam(value = "bno", required = true, defaultValue = "0") int bno) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			myPageService.bdelete(bno);
 			String mid = (String) session.getAttribute("mid");
 			String id = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = myPageService.boardlist(mid, id);
+			map.put("mid", mid);
+			map.put("id", id);
+			map.put("offset", util.strToInt((String)map.get("offset")));
+			List<Map<String, Object>> list = myPageService.boardlist(map);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
 			return json.toString();
@@ -211,7 +283,7 @@ public class MyPageController {
 			}
 			int result = myPageService.updateFollow(map);
 			int babfriend = myPageService.babfriend(myid, id);
-			Map<String, Object> follow = myPageService.follow(myid);
+			Map<String, Object> follow = myPageService.follow(id);
 			JSONObject json = new JSONObject();
 			json.put("result", result);
 			json.put("i", map.get("i"));
@@ -263,12 +335,15 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/pay")
-	public String pay(Model model, HttpSession session,
+	public String pay(Model model, HttpSession session,@RequestParam Map<String, Object> map,
 			@RequestParam(name="cate", required = false, defaultValue = "0") int cate) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
-			String mid = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = myPageService.pay(mid, cate);
+			map.put("mid", (String) session.getAttribute("mid"));
+			map.put("offset", 0);
+			List<Map<String, Object>> list = myPageService.pay(map);
+			int paycount = myPageService.paycount(map);
 			model.addAttribute("list", list);
+			model.addAttribute("paycount", paycount);
 			return "/mypage/pay";
 		} else {
 			return "redirect:/login";
@@ -276,11 +351,32 @@ public class MyPageController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/cateChange")
-	public String cateChange( HttpSession session, @RequestParam(name="cate", required = false, defaultValue = "0") int cate) {
+	@PostMapping("/morePay")
+	public String morePay(@RequestParam Map<String, Object> map, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
-			String mid = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = myPageService.pay(mid, cate);
+			map.put("mid", (String) session.getAttribute("mid"));
+			map.put("offset", util.strToInt((String)map.get("offset")));
+			List<Map<String, Object>> list = myPageService.pay(map);
+			int paycount = myPageService.paycount(map);
+			JSONObject json = new JSONObject();
+			json.put("list", list);
+			json.put("paycount", paycount);
+			return json.toString();
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/cateChange")
+	public String cateChange(HttpSession session, @RequestParam(name="cate", required = false, defaultValue = "0") int cate,
+			@RequestParam Map<String, Object> map) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			if(map.get("offset") == null) {
+				map.put("offset", 0);
+			}
+			map.put("mid", (String) session.getAttribute("mid"));
+			List<Map<String, Object>> list = myPageService.pay(map);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
 			return json.toString();
@@ -295,6 +391,12 @@ public class MyPageController {
 			@RequestParam(name="cate", required = false, defaultValue = "0") int cate) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			// System.out.println(map);// {pcharge=10000, pbalance=14500}
+			if(map.get("offset") == null) {
+				map.put("offset", 0);
+			} else {
+				map.put("offset", util.strToInt((String)map.get("offset")));
+			}
+			
 			if(map.get("pbalance") == null || map.get("pbalance").equals("")) {
 				map.put("pbalance", util.strToInt((String)map.get("pcharge")));
 			} else {
@@ -303,9 +405,11 @@ public class MyPageController {
 			String mid = (String) session.getAttribute("mid");
 			map.put("mid", mid);
 			myPageService.charge(map);
-			List<Map<String, Object>> list = myPageService.pay(mid, cate);
+			List<Map<String, Object>> list = myPageService.pay(map);
+			int paycount = myPageService.paycount(map);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
+			json.put("paycount", paycount);
 			return json.toString();
 		} else {
 			return "redirect:/login";
@@ -313,7 +417,7 @@ public class MyPageController {
 	}
 	
 	@GetMapping({"/review", "/review/{id}"})
-	public String review(@PathVariable(name = "id", required = false) String id,Model model, HttpSession session) {
+	public String review(@RequestParam Map<String, Object> map, @PathVariable(name = "id", required = false) String id,Model model, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			if(id == null) {// 본인 계정
 				id = (String) session.getAttribute("mid");
@@ -324,9 +428,30 @@ public class MyPageController {
 			if(findById == 0) {
 				return "redirect:/";
 			}
-			List<Map<String, Object>> list = myPageService.reviewlist(id);
+			map.put("id", id);
+			map.put("offset", 0);
+			List<Map<String, Object>> list = myPageService.reviewlist(map);
+			List<Map<String, Object>> mnlist = myPageService.mnreviewlist(map);
 			model.addAttribute("list", list);
+			model.addAttribute("mnlist", mnlist);
 			return "/mypage/review";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/moreReview")
+	public String moreReview(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			System.out.println(map);// {id=aaaa, offset=7, endIndex=13}
+			map.put("offset", util.strToInt((String)map.get("offset")));
+			List<Map<String, Object>> list = myPageService.reviewlist(map);
+			List<Map<String, Object>> mnlist = myPageService.mnreviewlist(map);
+			JSONObject json = new JSONObject();
+			json.put("list", list);
+			json.put("list", mnlist);
+			return json.toString();
 		} else {
 			return "redirect:/login";
 		}
@@ -349,7 +474,8 @@ public class MyPageController {
 	
 	@ResponseBody
 	@PostMapping("/rdelete")
-	public String rdelete(@RequestParam(value="valueArr") String[] del, HttpSession session) {
+	public String rdelete(@RequestParam(value="valueArr") String[] del, HttpSession session,
+			@RequestParam(name="offset", required = false) int offset) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			JSONObject json = new JSONObject();
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -359,8 +485,12 @@ public class MyPageController {
 				int result = myPageService.rdelete(map);
 			}
 			String id = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = myPageService.reviewlist(id);
+			map.put("id", id);
+			map.put("offset", offset);
+			List<Map<String, Object>> list = myPageService.reviewlist(map);
+			List<Map<String, Object>> mnlist = myPageService.mnreviewlist(map);
 			json.put("list", list);
+			json.put("mnlist", mnlist);
 			return json.toString();
 		} else {
 			return "redirect:/login";
@@ -381,13 +511,59 @@ public class MyPageController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/updateReviewImg") // 모바일 전용
+	public String updateReviewImg(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> map,
+	        HttpSession session) {
+	    System.out.println(file);
+	    System.out.println(map);
+	    if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
+	        if (file != null && !file.isEmpty()) {
+	            String path = "C:\\Users\\user\\eclipse-workspace\\delivery\\src\\main\\webapp\\img\\review";
+
+	            // 이미지 저장
+	            String realFileName = file.getOriginalFilename();
+
+	            File newFileName = new File(path, realFileName);
+	            
+	            // 디렉토리가 존재하지 않으면 생성
+	            if (!newFileName.getParentFile().exists()) {
+	                newFileName.getParentFile().mkdirs();
+	            }
+
+	            try {
+	                byte[] fileBytes = file.getBytes();
+	                System.out.println(fileBytes);
+	                System.out.println("Copying to: " + newFileName.getAbsolutePath());
+	                // 파일 경로를 생성하지 않고 직접 복사
+	                FileOutputStream fos = new FileOutputStream(newFileName);
+	                fos.write(fileBytes);
+	                fos.close();
+
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	            String reviewImg = realFileName;
+	            JSONObject json = new JSONObject();
+	            json.put("reviewImg", reviewImg);
+	            return json.toString();
+	        } else {
+	            return "redirect:/mypage/main";
+	        }
+	    } else {
+	        return "redirect:/login";
+	    }
+	}
+	
+	@ResponseBody
 	@PostMapping("/editReview")
 	public String editReview(@RequestParam Map<String, Object> map, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			JSONObject json = new JSONObject();
 			myPageService.updateReview(map);
 			String id = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = myPageService.reviewlist(id);
+			map.put("id", id);
+			map.put("offset", util.strToInt((String)map.get("offset")));
+			List<Map<String, Object>> list = myPageService.reviewlist(map);
 			json.put("list", list);
 			return json.toString();
 		} else {

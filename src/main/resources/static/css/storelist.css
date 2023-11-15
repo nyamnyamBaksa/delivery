@@ -6,9 +6,7 @@ html, body {
 }
 
 body {
-	background-color: white;
 	font-family: 'NanumSquareNeo';
-	font-size: 14px;
 	color: #000;
 	margin: 0;
 	padding: 0;
@@ -26,8 +24,9 @@ border-radius: 10px;
 
 
 table {
-	margin-left: 30px;
-	font-size: 15px;
+	margin-left: 20px;
+	margin-bottom: 20px;
+	font-size: 13px;
 	font-weight: bold;
 	border-spacing: 10px;
 }
@@ -43,66 +42,46 @@ table {
 }
 
 button {
-	display: block; 
-    margin: 0 auto; 
-	width: 130px;
-	height: 40px;
-	border-radius: 20px;
+	display: block;
+	margin-top:-26px;
+	width: 70px;
+	height: 30px;
+	border-radius: 40px;
 	border: none;
 	font-weight: bold;
-	font-size: 15px;
+	font-size: 13px; 
 	color: #ffffff;
 	background-color: #EB5757;
+	font-family: 'NanumSquareNeo';
 }
 
 .swiper {
+	display: flex;
+	justify-content: space-between;
 	width: 100%;
-	height: 10%;
+	height: 7%;
 }
 
 .swiper-slide {
-	text-align: center;
-	font-size: 18px;
+	font-size: 15px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex: 0 0 auto;
 }
 
-.swiper-slide.active-slide a {
-	background-color: #EB5757;
-	color: white;
-	border-radius: 99px;
-	height: 54px;
-	width: 120px;
-}
-
-.swiper-slide {
-	
-	font-size: 18px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
 
 .swiper-slide a {
 	display: flex;
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center;
-    height: 100%;
-}
-
-.swiper-slide.active-slide a {
-	background-color: #EB5757;
-	color: white;
-	border-radius: 99px;
-	height: 54px;
-	width: 120px;
+  font-weight: bolder;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 #select_option {
 	border: none;
-	font-size:medium;
+	font-size:13px;
 	font-weight:bold;
 	font-family: 'NanumSquareNeo';
 }
