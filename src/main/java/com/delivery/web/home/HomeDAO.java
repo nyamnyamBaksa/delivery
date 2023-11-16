@@ -17,7 +17,7 @@ public interface HomeDAO {
 
 	List<HomeDTO> menulist(int sno);
 
-	List<HomeDTO> address();
+	List<HomeDTO> address(int mno);
     
 	
 }

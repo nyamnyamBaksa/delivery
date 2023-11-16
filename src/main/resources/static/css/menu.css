@@ -10,10 +10,11 @@ nav{
 	box-sizing: border-box;
 	bottom: 0;
 	width: 100%;
-	height: 90px;
+	height: 100px;
 	background-color: white;
-	font-size: 15px;
+	font-size: 14px;
 	 margin: 0;
+	 box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2); /* 그림자 추가 부분 */
 }
 
  nav ul li {
@@ -28,7 +29,7 @@ nav{
     
 nav ul li i {
         display: block; 
-        margin-top: 20px; 
+        margin-top: 28px; 
     }
 
 nav ul{
@@ -39,9 +40,11 @@ nav ul{
 
 
 nav li{
+	margin: 0;
+    padding: 0;
 	list-style: none;
 	float: left;
-	width: 20%;
+	width: 19.5%;
 	line-height: 100px;
 	font-weight:bold;
 	text-align: center;

@@ -24,12 +24,12 @@
 
 	<div id="location">
 	<c:forEach items="${address}" var="a">
-			<a href="/location"><i class="fa-solid fa-location-dot fa-lg" style="color: #ffffff;"></i>
-			<span style="font-size: 13px; color: white; align-items: center; word-spacing:10px">${a.maddr}</span></a>
-		</c:forEach>
+			<a href="/location"><i class="fa-solid fa-location-dot fa-lg" style="color: #EB5757;"></i>
+			<span style="font-size: 15px; color: black; align-items: center; margin-top: -5px;">${a.maddr}</span></a>
+		      </c:forEach>
 		</div>
 	
-	<script>
+<!-- 	<script>
   function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -46,7 +46,7 @@
     	document.getElementById("location").innerHTML = address;
     }
   };
-</script>
+</script> -->
 	
 	<br>
 <div id="randomfood" style="float: right;">
@@ -107,7 +107,7 @@
 
 <div class="restraunt-list" style=" ">
 	<h2 class="bestname" style="font-size: 20px;">냠냠박사 Best 맛집 <i class="fa-solid fa-crown fa-lg" style="color: #ff9c41; margin-bottom: -5px;"></i></h2>
-	<br>
+	<br><br>
 		<c:forEach items="${list}" var="l">
 			<div style="display: flex; align-items: center;">
 				<table  width="80%" style="text-align: left; ">

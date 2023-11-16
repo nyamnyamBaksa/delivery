@@ -20,9 +20,9 @@ public class HomeService {
 		return homeDAO.list();
 	}
 
-	public List<HomeDTO> address() {
+	public List<HomeDTO> address(int mno) {
 		
-		return homeDAO.address();
+		return homeDAO.address(mno);
 	} 
 
 	
