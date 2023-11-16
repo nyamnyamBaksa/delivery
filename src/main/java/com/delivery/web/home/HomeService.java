@@ -23,7 +23,7 @@ public class HomeService {
 	public List<HomeDTO> address() {
 		
 		return homeDAO.address();
-	}
+	} 
 
 	
 
