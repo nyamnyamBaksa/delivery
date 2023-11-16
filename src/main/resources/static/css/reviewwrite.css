@@ -74,8 +74,7 @@ body {
 	height:51px;
 	width:118.58000183105469px;
 	border-radius:50px;
-	left:40px;
-	top:-40x;
+	left:60%;
 	position:relative;
 	border: none;
 }
@@ -113,3 +112,7 @@ hr {
     border: 1px solid #000; /* 실선 스타일로 변경, 원하는 선 스타일로 수정 가능 */
     font-weight: bold; /* 볼드(Bold) 텍스트 스타일 적용 */
   }
+ .cameraimg{
+ position:relative;
+ top: -50px;
+ }

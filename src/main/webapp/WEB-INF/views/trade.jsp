@@ -26,7 +26,7 @@
 				<c:when test="${!empty tradegroup}">
 					<form action="./trade" method="get">
 						<div class="search-container">
-							<select name="searchN" class="serchN">
+							<select name="searchN" class="searchN">
 								<option value="sname">가게명</option>
 								<option value="mnname">메뉴명</option>
 							</select> <input name="search" class="search" type="text"
