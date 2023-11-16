@@ -124,7 +124,7 @@ img{
 /* 쿠폰함 */
 .coupon{
 	position: absolute;
-	left: 7%;
+	left: 22%;
 	top: 51%;
 	bottom: 45.7%;
 	
@@ -147,7 +147,7 @@ img{
 /* 냠냠페이 */
 .pay{
 	position: absolute;
-	left: 40%;
+	left: 55%;
 	top: 50%;
 	bottom: 45.7%;
 	

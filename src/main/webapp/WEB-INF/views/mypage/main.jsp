@@ -96,7 +96,7 @@
     <!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg" style="width: 500px;">
+		<div class="modal-dialog modal-lg" style="width: 400px;">
 			<div class="modal-content">
 				<div class="modal-header" style="color: blue;">
 					<!-- 프로필 이미지 업로드 폼 -->

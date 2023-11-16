@@ -208,11 +208,7 @@ td, .rdate, .sname{
 					            </c:if>
 					        </tr>
 					        <tr style="border-bottom: 1px solid #c0c0c0;">
-<<<<<<< HEAD
 					            <td colspan='2' class="name-pr mnname" style="font-size:17px;border: 0; border-style: dashed; width: 100px;vertical-align: middle;">
-=======
-					            <td class="name-pr mnname" style="font-size: large; font-weight: bold;border: 0; border-style: dashed; width: 100px;vertical-align: middle;">
->>>>>>> branch 'master' of https://github.com/nyamnyamBaksa/delivery.git
 					                <c:set var="menuNames" value="" />
 					                <c:forEach var="mn" items="${mnlist}" varStatus="loop">
 					                    <c:if test="${mn.rno eq row.rno}">
@@ -326,11 +322,7 @@ td, .rdate, .sname{
    				                rcomment: row.rcomment,
    				                rno: rno,
    				                mnnameList: [],
-<<<<<<< HEAD
    				             	rscore: row.rscore,
-=======
-   				                rscore: row.rscore,
->>>>>>> branch 'master' of https://github.com/nyamnyamBaksa/delivery.git
    				                rphoto: row.rphoto,
    				                index:index
    				            };
@@ -344,7 +336,6 @@ td, .rdate, .sname{
 
    				 	// 그룹화된 데이터로 테이블 생성
    				    $.each(groupedData, function(rno, group) {
-<<<<<<< HEAD
 	   				    	newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
 	   					    newTableHTML += '<td colspan="2" class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 500px;">';
 	   					    if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
@@ -385,43 +376,6 @@ td, .rdate, .sname{
 		   					if (group.rphoto != null || group.rphoto == '') {
 		   					    element.classList.add('height'); // 'height' 클래스를 추가
 		   					}
-=======
-   				            newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
-   				            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 500px;">';
-   				         if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-   			                newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + group.index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + group.index + '"></label></div>';
-   				         }
-   			                newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname">' + group.sname + '</span></a></td></tr>';
-   			                newTableHTML += ' <tr><td class="name-pr" style="border: 0; border-style: dashed; width: 70px;"><span class="rdate">' + group.rdate + '</span>';
-   			             if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-   			                newTableHTML += '<button class="editbtn" style="float:right; margin-left:10px; margin-right:10px;">수정</button>';
-   			             }
-   				            newTableHTML += '</td>';
-   				            newTableHTML += '</tr>';
-
-   				            newTableHTML += '<tr>';
-   				            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 70px;">';
-   				            newTableHTML += '<div class="star-ratings">';
-   				            newTableHTML += '<div class="rscore" style="display: none;">' + group.rscore + '</div>';
-   				            newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.rscore * 20) + '%;">';
-   				            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
-   				            newTableHTML += '</div>';
-   				            newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
-   				            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
-   				            newTableHTML += '</div>';
-   				            newTableHTML += '</div>';
-   				            newTableHTML += '</td>';
-   				            newTableHTML += '</tr>';
-   				            newTableHTML += '<tr>';
-   				            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed;">' + group.rcomment + '</td>';
-   				         if (group.rphoto != null){
-   				            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed;"><img class="rphoto modal-title" src="/img/review' + group.rphoto + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto"></td>';
-   				         }
-   				            newTableHTML += '</tr>';
-   				            newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"><td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
-   					        newTableHTML += group.mnnameList.join(', ');
-   					        newTableHTML += '</td></tr>';
->>>>>>> branch 'master' of https://github.com/nyamnyamBaksa/delivery.git
    					    });
 
 	   			    newTableHTML += '';
@@ -893,47 +847,13 @@ td, .rdate, .sname{
 		    var sortedGroupedData = Object.values(groupedData).sort(function (a, b) {
 		        return b.rno - a.rno;
 		    });
+
 		 	// 그룹화된 데이터로 테이블 생성
-<<<<<<< HEAD
 		    $.each(sortedGroupedData, function(index, group) {
 		    	newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
 				    newTableHTML += '<td colspan="2" class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 500px;">';
 				    if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
 				        newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + index + '"></label></div>';
-=======
-		    $.each(sortedGroupedData, function(rno, group) {
-		            newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
-		            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 500px;">';
-	            
-		        if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-	                newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + group.index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + group.index + '"></label></div>';
-	            }
-		        	newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname">' + group.sname + '</span></a></td></tr>';
-	                newTableHTML += ' <tr><td class="name-pr" style="border: 0; border-style: dashed; width: 70px;"><span class="rdate">' + group.rdate + '</span>';
-                if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-	                newTableHTML += '<button class="editbtn" style="float:right; margin-left:10px; margin-right:10px;">수정</button>';
-                }
-		            newTableHTML += '</td>';
-		            newTableHTML += '</tr>';
-
-		            newTableHTML += '<tr>';
-		            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 70px;">';
-		            newTableHTML += '<div class="star-ratings">';
-		            newTableHTML += '<div class="rscore" style="display: none;">' + group.rscore + '</div>';
-		            newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.rscore * 20) + '%;">';
-		            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
-		            newTableHTML += '</div>';
-		            newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
-		            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
-		            newTableHTML += '</div>';
-		            newTableHTML += '</div>';
-		            newTableHTML += '</td>';
-		            newTableHTML += '</tr>';
-		            newTableHTML += '<tr>';
-		            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed;">' + group.rcomment + '</td>';
-		            if (group.rphoto != null){
-				            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed;"><img class="rphoto modal-title" src="/img/review' + group.rphoto + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto"></td>';
->>>>>>> branch 'master' of https://github.com/nyamnyamBaksa/delivery.git
 				    }
 				    newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname">' + group.sname + '</span></a></td></tr>';
 				    newTableHTML += ' <tr><td colspan="2" class="name-pr" style="border: 0; border-style: dashed; width: 500px;"><span class="rdate">' + group.rdate + '</span>';
@@ -976,7 +896,7 @@ td, .rdate, .sname{
 
 		    // 테이블 업데이트
 		    $('.table').html(newTableHTML);
-		    
+
 		    editok();
 		    
 		}
