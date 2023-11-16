@@ -136,11 +136,9 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(result) {
                if (result.result === '1') {
-                    Swal.fire("Error", "장바구니에 추가하지 못했습니다.", "error");
+            	   Swal.fire("Info", "장바구니에 이미 추가되었습니다.", "info");
                 } else if (result.result === '2') {
                     Swal.fire("Success", "장바구니에 추가되었습니다.", "success");
-                } else if (result.result === '2') {
-                    Swal.fire("Info", "장바구니에 이미 추가되었습니다.", "info");
                 } else if (result.result === '5') {
                     Swal.fire("Info", "로그인이 필요합니다.", "info");
                     window.location.href = '/login';

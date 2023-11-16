@@ -81,7 +81,7 @@
 		from wishlistview w, storeview s
 		where w.sno = s.sno AND w.mno = (SELECT mno FROM member WHERE MID = #{id})
 		GROUP BY sno
-		LIMIT #{offset}, 7;
+		LIMIT #{offset}, #{count};
 	</select>
 	
 	<select id="mnwishlist" parameterType="Map" resultType="Map">

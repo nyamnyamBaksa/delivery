@@ -1,4 +1,8 @@
 @charset "UTF-8";
+@import url('https://webfontworld.github.io/NanumSquareNeo/NanumSquareNeo.css');
+body{
+	font-family: 'NanumSquareNeo';
+}
 .mouse{
 	position: relative;
 	top: 95%;

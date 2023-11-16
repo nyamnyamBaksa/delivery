@@ -130,6 +130,7 @@ public class PayController {
 			}
 			map.put("id", id);
 			map.put("offset", 0);
+			map.put("count", 7);
 			List<Map<String, Object>> list = payService.wishlist(map);
 			List<Map<String, Object>> mnlist = payService.mnwishlist(map);
 			model.addAttribute("list", list);
@@ -146,6 +147,7 @@ public class PayController {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			System.out.println(map);// {id=aaaa, offset=7, endIndex=13}
 			map.put("offset", util.strToInt((String)map.get("offset")));
+			map.put("count", 7);
 			List<Map<String, Object>> wlist = payService.wishlist(map);
 			List<Map<String, Object>> mnlist = payService.mnwishlist(map);
 			JSONObject json = new JSONObject();
@@ -173,7 +175,7 @@ public class PayController {
 	@ResponseBody
 	@PostMapping("/wdelete")
 	public String wdelete(@RequestParam(value="valueArr") String[] del, HttpSession session,
-			@RequestParam(name="offset", required = false) int offset) {
+			@RequestParam(name="count", required = false) int count) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			JSONObject json = new JSONObject();
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -183,7 +185,8 @@ public class PayController {
 			}
 			String id = (String) session.getAttribute("mid");
 			map.put("id", id);
-			map.put("offset", offset);
+			map.put("offset", 0);
+			map.put("count", count);
 			List<Map<String, Object>> wlist = payService.wishlist(map);
 			List<Map<String, Object>> mnlist = payService.mnwishlist(map);
 			json.put("wlist", wlist);

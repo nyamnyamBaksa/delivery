@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="css/join.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 $(function() {
@@ -110,9 +112,12 @@ $(function() {
 	    });
 	}
 	</script>
+	
 </head>
 <body>
-
+<a href="javascript:history.back()"> <i 
+class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
+</a>
 	<h1>회원가입</h1>
 	<hr class="hr">
 	<div class=joinBox>

@@ -106,7 +106,7 @@ td{
 
 .custom-checkbox{
 	vertical-align: middle;
-	margin-top: 22px;
+	margin-top: 7.5px;
 }
 </style>
 </head>
@@ -383,7 +383,7 @@ td{
 						}
 				    }
 					// 더보기 버튼 삭제
-					if(offset + count >= wishcount){
+					if(offset + 7 >= wishcount){
 						$('.morebtn').remove();
 					}
 				 	
@@ -450,21 +450,23 @@ td{
 			function(isConfirm) {
 				if (isConfirm) {
 					var wish = $('.wish').text();
-					if(offset > 0){
-						offset = offset - wish;
-						for(var i = 1; offset <= 7 * i && offset > 7 * (i - 1); i++){
-							offset = i - 1;
-						}
+					wishcount -=  wish;
+					if((offset + 7 >= wishcount && offset < wishcount) || (offset + 7 < wishcount && offset < wishcount)){
+						count = offset + 7;
+					} else if(offset >= wishcount){
+						count = offset;
 					}
 					$.ajax({
 						url : '/wdelete',
 						type : 'post',
 						traditional : true,// valueArr=[1, 2, 3] -> valueArr=1&valueArr=2&valueArr=3
 						data : {
-							valueArr : valueArr,offset: offset
+							valueArr : valueArr,offset: offset, count:count
 						},
 						dataType: 'json',
 						success: function(data) {
+							offset = count - 7;
+							count = 7;
 						    swal("", "찜을 삭제했습니다.", "success");
 						    updateTable(data);
 						    
@@ -637,8 +639,8 @@ td{
 			    $('.table').html(newTableHTML);
 
 			    // 찜 개수 업데이트
-			    var count = data.wlist[0].count;
-			    wishcount = $('.wishcount').text(count);
+			    wishcount = data.wlist[0].count;
+			    $('.wishcount').text(wishcount);
 			    $('.wish').text('0');
 			    
 			    var check = document.getElementsByName("rowCheck");// var check = $(".rowCheck");
