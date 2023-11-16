@@ -49,6 +49,12 @@ public class AdminService {
 	
 	
 	
+	public List<Map<String, Object>> searchMembers(String keyword) {
+	    return adminDAO.searchMembers(keyword);
+	}
 
+	public List<Map<String, Object>> searchOwners(String keyword) {
+	    return adminDAO.searchOwners(keyword);
+	}
 
 }

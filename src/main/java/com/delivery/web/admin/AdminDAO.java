@@ -24,6 +24,10 @@ public interface AdminDAO {
 
 	int deleteOwners(List<Integer> onoList);
 
+	List<Map<String, Object>> searchMembers(String keyword);
+
+	List<Map<String, Object>> searchOwners(String keyword);
+
 
 
 }

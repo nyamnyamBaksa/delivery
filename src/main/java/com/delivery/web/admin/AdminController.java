@@ -90,7 +90,22 @@ public class AdminController {
 		return "redirect:/admin/list-owner";
 	}
 	
-	//
+	//search-member
+	@GetMapping("/search-member")
+	public ModelAndView searchMember(@RequestParam("keyword") String keyword) {
+	    ModelAndView mv = new ModelAndView("admin/list-member");
+	    mv.addObject("memberList", adminService.searchMembers(keyword));
+	    return mv;
+	}
+	
+	//search-owner
+	@GetMapping("/search-owner")
+	public ModelAndView searchOwner(@RequestParam("keyword") String keyword) {
+	    ModelAndView mv = new ModelAndView("admin/list-owner");
+	    mv.addObject("ownerList", adminService.searchOwners(keyword));
+	    return mv;
+	}
+	
 	
 
 }

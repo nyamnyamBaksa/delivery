@@ -15,6 +15,22 @@
 		FROM owner
 	</select>
 
+<select id="searchMembers" resultType="Map" parameterType="String">
+    SELECT mno, mid, mname, mnickname, mjoindate, mgrade, maddr, mphone, mprofile
+    FROM member
+    WHERE mid LIKE CONCAT('%', #{keyword}, '%') OR mnickname LIKE CONCAT('%', #{keyword}, '%') OR maddr LIKE CONCAT('%', #{keyword}, '%')
+</select>
+
+
+<select id="searchOwners" resultType="Map" parameterType="String">
+    SELECT ono, oid, oname, ojoindate, ograde, ophone, obiz, ocertificate, obank
+    FROM owner
+    WHERE oid LIKE CONCAT('%', #{keyword}, '%') OR oname LIKE CONCAT('%', #{keyword}, '%') OR obiz LIKE CONCAT('%', #{keyword}, '%')
+</select>
+
+
+
+
 	<update id="gradeChange" parameterType="Map">
 		UPDATE member SET
 		mgrade=#{grade} WHERE mno=#{mno}
