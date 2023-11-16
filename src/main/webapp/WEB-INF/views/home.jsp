@@ -23,10 +23,19 @@
 	<h1 style="text-align: center; font-size: 30px;">냠냠박사<i class="fa-solid fa-utensils fa-bounce fa-lg" style="color: #eb5757;"></i></h1>
 
 	<div id="location">
-	<c:forEach items="${address}" var="a">
-			<a href="/location"><i class="fa-solid fa-location-dot fa-lg" style="color: #EB5757;"></i>
-			<span style="font-size: 15px; color: black; align-items: center; margin-top: -5px;">${a.maddr}</span></a>
-		      </c:forEach>
+	<c:choose>
+        <c:when test="${empty address}">
+           <span style="color:black; font-size: 15px; color: black; align-items: center; margin-top: -3px; margin-left: 15px;">대표 주소를 설정해주세요</span>
+        </c:when>
+        <c:otherwise>
+            <c:forEach items="${address}" var="a">
+                <a href="/location">
+                    <i class="fa-solid fa-location-dot fa-lg" style="color: #EB5757;"></i>
+                    <span style="font-size: 15px; color: black; align-items: center; margin-top: -5px;">${a.maddr}</span>
+                </a>
+            </c:forEach>
+        </c:otherwise>
+    </c:choose>
 		</div>
 	
 <!-- 	<script>

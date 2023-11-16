@@ -1,12 +1,18 @@
 @charset "UTF-8";
-.hr{
-	border-top: 3px solid black;
+
+* {
+	font-family: 'NanumSquareNeo';	
 }
+
 body {
-	font-family: 'NanumSquareNeo';
+
 	color: #000;
 	margin: 0;
 	padding: 0;
+}
+
+.hr{
+	border-top: 3px solid black;
 }
 .totalcount{
 	color:#1f1f1f;

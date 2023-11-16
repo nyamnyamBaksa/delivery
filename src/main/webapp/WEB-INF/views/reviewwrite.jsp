@@ -57,7 +57,7 @@ $(document).on("click", ".cameraimg", function() {
 </script>
 </head>
 <body>
-	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+	<a href="javascript:history.back()" style="position: relative; z-index: 1;">
     <i class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
 </a>
 	<h1>리뷰쓰기</h1>

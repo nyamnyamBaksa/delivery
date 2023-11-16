@@ -25,7 +25,7 @@
 			<li onclick="link('trade')"><i
 				class="fa-solid fa-clipboard-list fa-2xl" style="color: #eb5757;"></i>
 				주문내역</li>
-				<c:choose>
+    <c:choose>
     <c:when test="${sessionScope.mgrade ne null }">
         <c:choose>
             <c:when test="${sessionScope.mgrade eq '2'}">
@@ -42,6 +42,12 @@
             </c:otherwise>
         </c:choose>
     </c:when>
+    <c:otherwise>
+        <li onclick="link('mypage/main')">
+            <i class="fa-regular fa-face-smile-wink fa-2xl" style="color: #eb5757;"></i>
+            마이페이지
+        </li>
+    </c:otherwise>
 </c:choose>
 		</ul>
 	</nav>

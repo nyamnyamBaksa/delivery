@@ -56,9 +56,8 @@ function drawChart() {
 }
 </script>
 <script>
-<a href="javascript:history.back()"> <i 
-class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
-</a>
+<a href="javascript:history.back()" style="position: relative; z-index: 1;">
+<i class="fa-solid fa-arrow-left fa-xl" style="color: black;font-size: 2rem; margin-left: 10px; margin-top: 30px;"></i>
 </script>
 
 </head>

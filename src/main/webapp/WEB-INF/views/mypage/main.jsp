@@ -8,6 +8,8 @@
 <title>냠냠박사</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+	<!-- 폰트 -->
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 	<link rel="stylesheet" href="/css/mypage-main.css">
 	<link rel="stylesheet" href="/css/mypage-pay.css">
 	<!-- Bootstrap CSS -->
@@ -16,24 +18,26 @@
 	<link rel="stylesheet" href="/css/sweetalert.min.css" />
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="/css/bootstrap-icons.css">
+	<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+	
 	
 </head>
 <body>
     <c:if test="${sessionScope.mid ne null}">
-	    <a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
-	    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	    <a href="javascript:history.back()" style="position: relative; z-index: 1;">
+    	<i class="fa-solid fa-arrow-left fa-xl" style="color: black;font-size: 2rem; margin-left: 10px; margin-top: 20px;"></i>
 		</a>
 		<div class="mypage">
 			<div class="mypageFont">마이페이지</div>
 		</div>
-		
     	<div class="myid" style="display: none;">${sessionScope.mid }</div><!-- 내 아이디 -->
     	<div class="id" style="display: none;">${id }</div><!-- 방문자 아이디 -->
     	<div id="babfriend" class="babfriend" style="display: none;">${babfriend }</div><!-- 밥친구 -->
         <div class="profile"><!-- onclick="popup('${sessionScope.mid}')" 작은 따옴표로 감싸기 -->
             <img class="profile-image" src="/img/profileImg/${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
         </div>
-        <div class="nickname">${result.mnickname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><i class="bi bi-arrow-right"></i></a></c:if></div>
+        <div class="nickname">${result.mnickname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><i class="fa-solid fa-arrow-right" style="color: #eb5757; "></i></a></c:if></div>
         <c:if test="${sessionScope.mid ne id }">
 	        <c:choose>
 	        	<c:when test="${babfriend eq 0 }">

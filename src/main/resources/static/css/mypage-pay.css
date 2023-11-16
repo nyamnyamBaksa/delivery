@@ -1,5 +1,7 @@
 @charset "UTF-8";
 @import url('https://webfontworld.github.io/NanumSquareNeo/NanumSquareNeo.css');
+
+
 body{
 	font-family: 'NanumSquareNeo';
 }
@@ -9,10 +11,10 @@ body{
 	text-align: center;
 	font-size: 30px;
 }
+
 .charge, .delbtn, .editbtn, .editModalbtn, .againpurchase, .morebtn {
 	background: #EB5757;
 	border-radius: 50px;
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 20px;
@@ -61,6 +63,22 @@ body{
 	
 	color: #1F1F1F;
 	
+}
+
+.charge-btn-container {
+    text-align: left;
+}
+
+.charge-input-container {
+    text-align: left;
+}
+
+#pchargeInput {
+    width: 150px;
+    display: none;
+    border: 2px solid #EB5757;
+    border-radius: 50px;
+    font-weight: bold;
 }
 
 .againpurchase{

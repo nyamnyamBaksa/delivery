@@ -22,26 +22,33 @@
 <link rel="stylesheet" href="/css/sweetalert.min.css" />
 <!-- 아이콘 -->
 <link rel="stylesheet" href="/css/bootstrap-icons.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+	<!-- 폰트 -->
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 <style type="text/css">
+* {
+font-family: 'NanumSquareNeo';
+margin: 0;
+padding: 0;
+}
 .col-lg-12{
 	position: absolute;
 	top: 24%;
-	left: 5%;
-	right: 5%;
+	right: 4%;
 	bottom: 50%;
 }
 
 #table{
-	position: absolute;
-	left: 7%;
-	right: 7%;
-	top: 12%;
+width:95%;
+top: 12%;
 }
 
 td{
+text-align:left;
 	font-size: 17px;
-	vertical-align: middle;
-	text-align: center;
+	line-height: 2.0;
+	max-width: 100%;
 }
 
 .selectpicker, .show-tick , .form-control{
@@ -55,8 +62,8 @@ td{
 </head>
 <body>
 	<c:if test="${sessionScope.mid ne null}">
-	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
-    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	<a href="javascript:history.back()" style="position: relative; z-index: 1;">
+    	<i class="fa-solid fa-arrow-left fa-xl" style="color: black;font-size: 2rem; margin-left: 10px; margin-top: 20px;"></i>
 	</a>
 		<div class="title">
 			<div style="display: inline-block;" class="titleFont">냠냠페이</div>
@@ -71,7 +78,7 @@ td{
 					<tr>
 						<td>
 					       	<div class="count toolbar-sorter-right">
-					       		<select class="cate selectpicker show-tick form-control" id="cate">
+					       		<select class="cate selectpicker show-tick form-control" id="cate" >
 									<option selected="selected" value="0">전체 보기</option>
 									<option value="1">최근 1개월</option>
 									<option value="3">최근 3개월</option>
@@ -79,7 +86,8 @@ td{
 								</select>
 					       	</div>
 						</td>
-						<td style="width: 230px;text-align: left;">
+						
+						<td>
 							<span style="font-weight: bold;color: black;">
 								<c:if test="${list[0].pbalance eq null }">
 									보유금액&nbsp;:&nbsp;0원
@@ -88,6 +96,9 @@ td{
 									보유금액&nbsp;:&nbsp;${list[0].pbalance }원
 								</c:if>
 							</span>
+						</td>
+						<td>
+							<button class="charge" style="margin-top: -20px;">충전</button>
 						</td>
 					</tr>
 					<tr>
@@ -102,12 +113,11 @@ td{
 								</select>
 							</div>
 						</td>
+						
 						<td>
 							<input type="text" style="width: 150px;display: none;border: 2px solid #EB5757;border-radius: 50px;font-weight: bold;" id="pchargeInput" placeholder="10만원 이상의 금액을 숫자만 입력하세요.">
 						</td>
-						<td>
-							<button class="charge">충전</button>
-						</td>
+						
 					</tr>
 				</table>
 				<div class="col-lg-12">

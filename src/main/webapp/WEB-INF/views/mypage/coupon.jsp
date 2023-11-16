@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>냠냠박사</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/css/mypage-diary.css">
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -19,7 +20,14 @@
 	<link rel="stylesheet" href="/css/sweetalert.min.css" />
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="/css/bootstrap-icons.css">
+	<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+	<!-- 폰트 -->
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 	<style type="text/css">
+	* {
+	font-family: 'NanumSquareNeo';
+	}
 		.col-lg-12{
 			position: absolute;
 			top: 15%;
@@ -42,8 +50,8 @@
 </head>
 <body>
 	<c:if test="${sessionScope.mid ne null}">
-	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
-    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	<a href="javascript:history.back()" style="position: relative; z-index: 1;">
+    	<i class="fa-solid fa-arrow-left fa-xl" style="color: black;font-size: 2rem; margin-left: 10px; margin-top: 20px;"></i>
 	</a>
 	<div class="title">
 		<div class="titleFont">쿠폰함</div>
