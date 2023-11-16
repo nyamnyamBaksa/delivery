@@ -416,7 +416,7 @@ td{
 						});
 	
 						  
-					      $('.ssname').each(function() {
+					      $('.sname').each(function() {
 					    	  if ($(this).text().includes(search)) {
 							        var text = $(this).text();
 							        var modifiedText = '';
@@ -497,7 +497,7 @@ td{
 						});
 	
 						  
-					      $('.ssname').each(function() {
+					      $('.sname').each(function() {
 					    	  if ($(this).text().includes(search)) {
 							        var text = $(this).text();
 							        var modifiedText = '';
@@ -513,16 +513,13 @@ td{
 							    }
 					      });
 					}
+					
 				},
 				error:function(error){
 					swal("실패", "작업수행에 실패하였습니다.", "error");
 				}
 			});
 		});
-		
-		function strToColor(str, search) {
-			
-		}
 		
 		function updateTable(data) {
 		    var newTableHTML = '<table class="table">';
@@ -568,8 +565,8 @@ td{
 		        newTableHTML += '</div>&nbsp;(' + group.average_rating + ')';
 		        newTableHTML += '</td>';
 		        newTableHTML += '</tr>';
-		        newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"></td><td class="name-pr sname" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;vertical-align: middle;">';
-		        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><span style="font-size:20px;">' + group.sname + '</span></a>';
+		        newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"></td><td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;vertical-align: middle;">';
+		        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname" style="font-size:20px;">' + group.sname + '</span></a>';
 		        newTableHTML += '</td>';
 		        newTableHTML += '<td class="name-pr mnname" style="font-weight: bold; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
 		        newTableHTML += group.mnnameList.join(', ');

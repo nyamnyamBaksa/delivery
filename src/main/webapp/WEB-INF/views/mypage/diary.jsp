@@ -53,7 +53,10 @@
 			<div class="container">
 				<div class="col-lg-13">
 					<h1 style="text-align: center;">다이어리 글이 없습니다.</h1>
-				</div>	
+				</div>
+				<c:if test="${id eq null || sessionScope.mid eq id }">
+					<button class="dwrite">글쓰기</button>
+				</c:if>	
 			</div>
 		</c:if>
 		<c:if test="${list[0].count ne null}">

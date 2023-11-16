@@ -180,6 +180,7 @@
 									<h5 style="color: #EB5757;">포인트 잔액</h5>
 									<div class="ml-auto h5">
 										<span class="pbalance"></span>원
+										<span style="color: #EB5757;font-size: large;font-weight: bold;" id="pbalance2"></span>
 									</div>
 								</div>
 							</div>
@@ -232,6 +233,8 @@
 		
 		if(pbalance < 0){
 			$('.pointempty').css('display', 'inline');
+			$('#pbalance').text('결제불가');
+			$('.pbalance').hide();
 		} else {
 			$('.pointempty').css('display', 'none');
 		}
