@@ -120,9 +120,6 @@ class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
 	    <div class="rcomment">${row.rcomment }</div> <br>
 	    <c:if test="${row.rphoto !=null }">
 	    	<img class="rphoto" src="/img/review/${row.rphoto}" style="width:150px;height:150px;margin: 0 auto">
-	    	<img class="rphoto" src="\img\review\20231116175919\data\user\0\mcore.edu.study\files\mcore_temp_file\storage\emulated\0\Download\화면 캡처 2023-11-16 175617 (1).png" style="width:150px;height:150px;margin: 0 auto">
-	   ${row.rphoto}
-	   \img\review\20231116175919\data\user\0\mcore.edu.study\files\mcore_temp_file\storage\emulated\0\Download
 	    </c:if>
 	    <br><br>
 	    <hr>

@@ -69,20 +69,14 @@ public class ReviewController {
 	@PostMapping("/reviewwrite/img") // 모바일 전용
 	public String updateReviewImg(@RequestParam("file") MultipartFile file, @RequestParam Map<String, Object> map,
 	        HttpSession session) {
-    	
-    	System.out.println("여기까진 왔어");
+    
 	    System.out.println(file);
 	    System.out.println(map);
 	    
-	    if (file.isEmpty()) {
-	        System.out.println("파일이 전송되지 않았습니다.");
-	        return "파일이 전송되지 않았습니다.";
-	    }
 	    
 	    if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {  
 	        if (file != null && !file.isEmpty()) {
-	        	System.out.println("여기까지도 왔니?");
-	            String path = "C:\\Users\\user\\eclipse-workspace\\delivery\\src\\main\\webapp\\img\\review";
+	            String path = "src/main/webapp/img/review";
 
 	            LocalDateTime ldt = LocalDateTime.now();
 				String format = ldt.format(DateTimeFormatter.ofPattern("YYYYMMddHHmmss"));

@@ -41,7 +41,6 @@ $(document).on("click", ".cameraimg", function() {
 		         	// 이미지를 업데이트
 		         	var jsonObject = JSON.parse(body);
 		         	var reviewImg = jsonObject.reviewImg;
-		         	alert(reviewImg);
 		         	var imgSrc = $('.imgSrc').val(reviewImg); 
 	                var newImageSrc = '/img/review' + reviewImg;
 	                alert(newImageSrc);
@@ -90,7 +89,7 @@ $(document).on("click", ".cameraimg", function() {
 					  	<span class="reviewBtntext">완료</span>
 					  </button>
 					</form>
-					<div>
+					
 					<button class="cameraimg" onclick="M.net.http.upload()">사진 업로드</button>
 					  <hr>
 					  <img class="rphoto" src="" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">
