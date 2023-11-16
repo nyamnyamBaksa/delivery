@@ -74,14 +74,14 @@ body {
             margin-top: 20px;
             width:110px;
             height:50px;
-             padding: 10% 20%;
+            padding: 10% 20%;
            
         }
         
         .MSearch {
         
         height: 40px;
-        width: 400px;
+        width: 300px;
         border: 1px solid #EB5757;
         background: #ffffff;
         
@@ -90,7 +90,7 @@ body {
         .MSearchInput {
         
         font-size: 16px;
-        width: 325px;
+        width: 225px;
         padding: 10px;
         border: 0px;
         outline: none;
@@ -125,6 +125,24 @@ function gradeCh(mno, name, value){
       <div class="main">
          <div class="article">
             <h1>회원관리</h1>
+            
+         <div class="moveBottomBtn">
+            <img alt="" src="/img/down_icon_32.png">
+           </div>
+            
+			
+            
+            <script type="text/javascript">
+            const $bottomBtn = document.querySelector(".moveBottomBtn");
+
+         // 버튼 클릭 시 페이지 하단으로 이동
+         $bottomBtn.onclick = () => {
+           window.scrollTo({ 
+             top: document.body.scrollHeight, // <- 페이지 총 Height
+             behavior: "smooth" 
+           });
+         };
+            </script>
             <div class="div-table">
                <div class="div-row table-head">
                   <div class="div-cell table-head">선택</div>

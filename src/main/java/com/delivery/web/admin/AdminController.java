@@ -86,6 +86,7 @@ public class AdminController {
 		List<Integer> onoList1 = Arrays.stream(onoArray).map(Integer::parseInt).collect(Collectors.toList());
 
 		int result = adminService.deleteOwners(onoList1);
+		int result2 = adminService.deleteStores(onoList1);
 		System.out.println(result);
 		return "redirect:/admin/list-owner";
 	}

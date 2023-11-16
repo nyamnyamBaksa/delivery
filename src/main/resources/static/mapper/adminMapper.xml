@@ -13,6 +13,7 @@
 		SELECT ono, oid, oname,
 		ojoindate, ograde, ophone, obiz, ocertificate, obank
 		FROM owner
+		where ograde in(1,0)
 	</select>
 
 <select id="searchMembers" resultType="Map" parameterType="String">
@@ -57,8 +58,8 @@
 
 	</delete>
 	
-	<delete id="deleteOwners" parameterType="java.util.List">
-		DELETE FROM owner
+	<update id="deleteOwners" parameterType="java.util.List">
+		UPDATE owner set ograde = 2
 		WHERE ono IN
 
 
@@ -70,6 +71,17 @@
 		</foreach>
 
 
-	</delete>
+	</update>
+	<update id="deleteStores">
+		UPDATE store set sgrade = 0
+		WHERE ono IN
+
+
+
+		<foreach collection="list" item="ono" open="(" separator=","
+			close=")">
+			#{ono}
+			</foreach>
+	</update>
 	
 </mapper>

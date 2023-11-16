@@ -57,4 +57,9 @@ public class AdminService {
 	    return adminDAO.searchOwners(keyword);
 	}
 
+	public int deleteStores(List<Integer> onoList1) {
+		// TODO Auto-generated method stub
+		return adminDAO.deleteStores(onoList1);
+	}
+
 }

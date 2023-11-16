@@ -28,6 +28,8 @@ public interface AdminDAO {
 
 	List<Map<String, Object>> searchOwners(String keyword);
 
+	int deleteStores(List<Integer> onoList1);
+
 
 
 }
