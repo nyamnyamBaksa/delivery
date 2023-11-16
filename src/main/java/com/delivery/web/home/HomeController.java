@@ -23,8 +23,10 @@ public class HomeController {
 	public String home(Model model) {
 		
 		List<HomeDTO> list = homeService.list();
-
+		List<HomeDTO> address = homeService.address();
+		
 		model.addAttribute("list", list);
+		model.addAttribute("address", address);
 		
 		return "home";
 	}

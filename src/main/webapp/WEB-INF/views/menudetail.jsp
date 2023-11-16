@@ -33,6 +33,7 @@
     <i class="fa-solid fa-arrow-left fa-xl" style="color: white; font-size: 2rem;  margin-top: 30px; margin-left: 10px;"></i>
 </a>
    </div>
+   <br>
 <form name="cartbutton" method="post">
    <div id="storedetail">
       <c:forEach items="${menudetail}" var="mf">
@@ -45,17 +46,13 @@
             </c:if>
          </div>
          <br>
-         <div id="menuname">${mf.mnname}</div>
-         <br>
-         <div id="menudesc">${mf.mndesc}</div>
-         <br>
+         <div id="menuname">${mf.mnname}</div><br><br>
+         <div id="menudesc" style="font-size: 20px;">${mf.mndesc}</div><br><br>
 
             <div id="menuprice">
                가격
                <div name="price" style="text-align: right;">${mf.mnprice}</div>
             </div>
-
-         <br>
          <br>
          <!-- 메인 메뉴인 경우에만 사이드 추가 선택 표시 
          <c:if test="${isMain == true}">
@@ -73,12 +70,15 @@
             <span class="price"> + ${sm.mnprice}원</span>
         </c:if>-->
     </c:forEach>
-          <!--   <br><br><br>
-         </c:if>--> 
-              <span class="cacount" style="font-weight:bold; margin-left: 30px; font-size: 25px;">수량</span>
-              &nbsp;<span class="minus" style="font-weight:bold; font-size: 20px;">-</span>&nbsp; 
+          <!--
+         </c:if>-->
+          <hr style="border: solid 5px #f0eded;"><br>
+              <span class="cacount" style="font-weight:bold; margin-left: 30px; font-size: 30px; white-space: pre;">수량</span>
+              <span class="spacer" style="margin-left: 155px;"></span> 
+             <span class="minus" style="font-weight:bold; font-size: 25px;">-</span>&nbsp; 
               <input type="text" class="camount" name="camount" value="1">&nbsp;
-               &nbsp;<span class="plus" style="font-weight:bold; font-size: 20px;" >+</span>&nbsp;
+              <span class="spacer"></span>
+               &nbsp;<span class="plus" style="font-weight:bold; font-size: 25px;" >+</span>&nbsp;
               <input type="hidden" name="ctotal" value="${mf.mnprice}">
               <!--  <span name="camount"  class="mcount" style="float: right;"> 
             <a href="#" class="minus">-</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='result'>1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="plus">+</a></span>
@@ -88,7 +88,7 @@
             <input id="mnprice" type="hidden" value="${mf.mnprice }">
 
       </c:forEach>
-         <button type="button" class="cart_btn" data-mnno="${mf.mnno}" data-mnprice="${mf.mnprice}" data-sno="${mf.sno }">담기</button>
+         <br><br><button type="button" class="cart_btn" data-mnno="${mf.mnno}" data-mnprice="${mf.mnprice}" data-sno="${mf.sno }">담기</button>
    </div>
    </form>
    <br>

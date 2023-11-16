@@ -12,6 +12,9 @@
 	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
 	rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<script src="./js/wnInterface.js"></script> 
+<script src="./js/mcore.min.js"></script> 
+<script src="./js/mcore.extends.js"></script>
 <style>
    
 </style>
@@ -48,9 +51,40 @@
 
 <div id="location">
 <i class="fa-regular fa-map fa-2xl" style="color: #eb5757; "></i><span style="font-size: 17px; font-weight: bold;">&nbsp;현재 위치로 설정</span><a href="/"><i class="fa-solid fa-chevron-right fa-s" style="color: #000000;"></i></a>
-
-
 </div>
+
+<script>
+
+M.plugin("location").current({
+    timeout: 10000,
+    maximumAge: 1,
+    callback: function( result ) {
+        if ( result.status === 'NS' ) {
+            console.log('This Location Plugin is not supported');
+        }
+        else if ( result.status !== 'SUCCESS' ) {
+            if ( result.message ) {
+                console.log( result.status + ":" + result.message );
+            }
+            else {
+                console.log( 'Getting GPS coords is failed' );
+            }
+        }
+        else {
+            if ( result.coords ) {
+                console.log( JSON.stringify(result.coords) );
+            }
+            else {
+                console.log( 'It cann\'t get GPS Coords.' );
+            }
+        }
+    }
+});
+
+
+
+</script>
+
 
 
 

@@ -23,12 +23,11 @@
 	<h1 style="text-align: center; font-size: 30px;">냠냠박사<i class="fa-solid fa-utensils fa-bounce fa-lg" style="color: #eb5757;"></i></h1>
 
 	<div id="location">
-		<div>
+	<c:forEach items="${address}" var="a">
 			<a href="/location"><i class="fa-solid fa-location-dot fa-lg" style="color: #ffffff;"></i>
-			<span style="font-size: 13px; color: white; align-items: center; word-spacing:10px">대표주소를<br>설정해주세요</span></a>
-			
+			<span style="font-size: 13px; color: white; align-items: center; word-spacing:10px">${a.maddr}</span></a>
+		</c:forEach>
 		</div>
-	</div>
 	
 	<script>
   function getParameterByName(name, url) {
@@ -45,7 +44,6 @@
     var address = getParameterByName('address');
     if (address) {
     	document.getElementById("location").innerHTML = address;
-    	alert(address);
     }
   };
 </script>
