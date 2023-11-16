@@ -31,24 +31,26 @@
 font-family: 'NanumSquareNeo';
 margin: 0;
 padding: 0;
+
 }
 .col-lg-12{
 	position: absolute;
-	top: 24%;
-	right: 4%;
+	top: 30%;
+	right: 1%;
 	bottom: 50%;
 }
 
 #table{
+position: absolute;
 width:95%;
 top: 12%;
 }
 
 td{
-text-align:left;
+max-width: 50%;
+margin-right:30px;
 	font-size: 17px;
 	line-height: 2.0;
-	max-width: 100%;
 }
 
 .selectpicker, .show-tick , .form-control{
@@ -89,11 +91,14 @@ text-align:left;
 						
 						<td>
 							<span style="font-weight: bold;color: black;">
+
+						<td style="width: 230px;text-align: left;">
+							<span style="font-weight: bolder;font-size: larger;color: black;">
 								<c:if test="${list[0].pbalance eq null }">
-									보유금액&nbsp;:&nbsp;0원
+									보유금액&nbsp;:&nbsp;<span class="pbalance">0</span>원
 								</c:if>
 								<c:if test="${list[0].pbalance ne null }">
-									보유금액&nbsp;:&nbsp;${list[0].pbalance }원
+									보유금액&nbsp;:&nbsp;<span class="pbalance">${list[0].pbalance }</span>원
 								</c:if>
 							</span>
 						</td>
@@ -121,7 +126,6 @@ text-align:left;
 					</tr>
 				</table>
 				<div class="col-lg-12">
-					<div class="pbalance" style="display: none;">${list[0].pbalance }</div>
 					<div style="display: none;" class="paycount">${paycount }</div>
 					<table class="table">
 						<c:forEach items="${list }" var="row">
@@ -205,14 +209,14 @@ text-align:left;
 					var tableHtml = '';
 				    $.each(data.list, function (index, row) {
 				        tableHtml += '<tr style="border-bottom: 1px solid #EB5757;">';
-				        tableHtml += '<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">' + row.pcdate + '</td>';
+				        tableHtml += '<td class="quantity-box" style="border: 0; border-style: dashed; width: 170px;">' + row.pcdate + '</td>';
 				        if (row.pcharge != null) {
-				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 500px;font-weight: bolder;"></td>';
-				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 300px;font-weight: bolder; color: #EB5757;">' + row.pcharge + '원 충전</td>';
+				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 450px;font-weight: bolder;"></td>';
+				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 230px;font-weight: bolder; color: #EB5757;">' + row.pcharge + '원 충전</td>';
 				        }
 				        if (row.tgroup != null) {
-				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 500px;font-weight: bolder;">' + row.sname + '</td>';
-				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 300px;font-weight: bolder;">' + row.puse + '원 차감</td>';
+				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 450px;font-weight: bolder;">' + row.sname + '</td>';
+				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 230px;font-weight: bolder;">' + row.puse + '원 차감</td>';
 				        }
 				        tableHtml += '</tr>';
 				    });
@@ -327,11 +331,9 @@ text-align:left;
 					// 테이블 업데이트
 		            updateTable(data.list);
 					
-		         	// 보유금액의 내용을 삭제
-	 		        var h2 = $(".h2");
-	 		        h2.empty();
 		            // 보유금액 업데이트
-		            updateBalance(data.list[0].pbalance);
+		            var pbalance2 = data.list[0].pbalance;
+		            $(".pbalance").text(pbalance2);
 		            
 		            var count = data.paycount;
 		            paycount = $('.paycount').text(count);
@@ -352,24 +354,19 @@ text-align:left;
 		    var tableHtml = '<table class="table">';
 		    $.each(list, function (index, row) {
 		        tableHtml += '<tr style="border-bottom: 1px solid #EB5757;">';
-		        tableHtml += '<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">' + row.pcdate + '</td>';
+		        tableHtml += '<td class="quantity-box" style="border: 0; border-style: dashed; width: 170px;">' + row.pcdate + '</td>';
 		        if (row.pcharge != null) {
-		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 500px;font-weight: bolder;"></td>';
-		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 300px;font-weight: bolder; color: #EB5757;">' + row.pcharge + '원 충전</td>';
+		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 450px;font-weight: bolder;"></td>';
+		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 230px;font-weight: bolder; color: #EB5757;">' + row.pcharge + '원 충전</td>';
 		        }
 		        if (row.tgroup != null) {
-		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 500px;font-weight: bolder;">' + row.sname + '</td>';
-		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 300px;font-weight: bolder;">' + row.puse + '원 차감</td>';
+		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 450px;font-weight: bolder;">' + row.sname + '</td>';
+		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 230px;font-weight: bolder;">' + row.puse + '원 차감</td>';
 		        }
 		        tableHtml += '</tr>';
 		    });
 		    tableHtml += '</table>';
 		    $('.table').html(tableHtml);
-		}
-
-		function updateBalance(pbalance) {
-		    var pbalanceHtml = '<span style="font-weight: bolder;font-size: larger;color: black;">보유금액 : ' + pbalance + '원</span>';
-		    $('.h2').html(pbalanceHtml);
 		}
 	</script>
 </body>

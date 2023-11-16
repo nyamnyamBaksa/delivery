@@ -136,7 +136,9 @@
 	
 		function babdiary(){
 			var babdiary = $('#babfriend').text();
-			if(babdiary != 3){
+			var myid = $(".myid").text();
+			var id = $(".id").text();
+			if(babdiary != 3 && myid != id && id != ''){
 				swal('', '밥친구가 아니면 다이어리를 볼 수 없어요.', 'info');
 				return false;
 			}
