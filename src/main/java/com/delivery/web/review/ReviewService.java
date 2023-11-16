@@ -31,4 +31,9 @@ public class ReviewService {
 		return reviewDAO.countrscore(sno);
 	}
 
+
+	public void img(String reviewImg) {
+		reviewDAO.img(reviewImg);
+	}
+
 }

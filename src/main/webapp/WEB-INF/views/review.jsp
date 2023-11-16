@@ -102,7 +102,7 @@ class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
 	  <c:forEach items="${reviewview}" var="row">
 	    <div class="mnickname"><a href="/mypage/main/${row.mid}">${row.mnickname} ></a></div>
 	    <c:if test="${row.mprofile ne null }">
-	    	<img src="/img/profileiImg${row.mprofile}" alt="프로필" class="profile">
+	    	<img class="profile" src="/img/profileImg/${row.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
 		</c:if>	
 			<fieldset class="rate">
 			  <input type="checkbox" id="rating5" name="rating" value="5" ${row.rscore == 5 ? 'checked' : ''} disabled />
@@ -119,7 +119,10 @@ class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
 	    <div class="rddate">${row.rdate }</div>
 	    <div class="rcomment">${row.rcomment }</div> <br>
 	    <c:if test="${row.rphoto !=null }">
-	    	<img alt="리뷰사진" src="/img/${row.rphoto} " class="rphoto">
+	    	<img class="rphoto" src="/img/review/${row.rphoto}" style="width:150px;height:150px;margin: 0 auto">
+	    	<img class="rphoto" src="\img\review\20231116175919\data\user\0\mcore.edu.study\files\mcore_temp_file\storage\emulated\0\Download\화면 캡처 2023-11-16 175617 (1).png" style="width:150px;height:150px;margin: 0 auto">
+	   ${row.rphoto}
+	   \img\review\20231116175919\data\user\0\mcore.edu.study\files\mcore_temp_file\storage\emulated\0\Download
 	    </c:if>
 	    <br><br>
 	    <hr>

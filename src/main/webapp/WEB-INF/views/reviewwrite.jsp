@@ -8,6 +8,7 @@
 <title>리뷰쓰기</title>
 <link href="css/reviewwrite.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
 <meta name="viewport"
    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 <script src="./js/wnInterface.js"></script> 
@@ -15,156 +16,45 @@
 <script src="./js/mcore.extends.js"></script> 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-$(function() M.net.http.upload{
-	alert("클리댐");
-    url: "http://lab.morpheus.kr/api/test/file/upload",
-    header: {},
-    params: {},
-    body: [
-    { content: "파일업로드", type: "TEXT" },
-    { name: "imgs", content: "test.zip", type: "FILE" },
-    { name: "imgs", content: "test/test1.txt", type: "FILE" },
-    { name: "imgs", content: "test/test2.txt", type: "FILE" }
-    ],
-    encoding : "UTF-8",
-    finish : function(status, header, body, setting) {
-    console.log(status);
-    },
-    progress : function(total, current) {
-    console.log(total, current);
-    }
+const M = window.M;
+$(document).on("click", ".cameraimg", function() {
+	M.media.picker({
+		  mode: "SINGLE",
+		  media: "PHOTO",
+		  column: 3,
+		  callback: function( status, result ) {
+	            console.log("Picker callback executed with status:", status);
+	            console.log("Selected file path:", result.path);
+		    var fileList = [], fileCont = {};
+		    fileCont.name = "file";
+		    fileCont.content = result.path;
+		    fileCont.type = 'FILE';
+		    fileList.push(fileCont);
+		    M.net.http.upload({
+		      url: "http://172.30.1.87/reviewwrite/img",
+		      header: {},
+		      params: {index : "3"},
+		      body: fileList,
+		      encoding : "UTF-8",
+		      finish : function(code, header, body, status, error) {
+		        if (status == 'SUCCESS') {
+		         	// 이미지를 업데이트
+		         	var jsonObject = JSON.parse(body);
+		         	var reviewImg = jsonObject.reviewImg;
+		         	alert(reviewImg);
+		         	var imgSrc = $('.imgSrc').val(reviewImg); 
+	                var newImageSrc = '/img/review' + reviewImg;
+	                alert(newImageSrc);
+                    var rphotoElement = '<img class="rphoto" src="' + newImageSrc + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">';
+                    $(".rphoto").replaceWith(rphotoElement);
+		        } else{
+		            M.pop.alert( status + " / " + error );
+		        }
+		     }
+		   });
+	  	}
+	});
 });
-$(function () {
-
-    $.imagePicker = function () {
-      return new Promise((resolve) => {
-        M.media.picker({
-          mode: "SINGLE",
-          media: "PHOTO",
-          // path: "/media", // 값을 넘기지않아야 기본 앨범 경로를 바라본다.
-          column: 3,
-          callback: (status, result) => {
-            resolve({ status, result })
-          }
-        });
-      })
-    }
-
-    $.convertBase64ByPath = function (imagePath) {
-      if (typeof imagePath !== 'string') throw new Error('imagePath must be string')
-      return new Promise((resolve) => {
-        M.file.read({
-          path: imagePath,
-          encoding: 'BASE64',
-          indicator: true,
-          callback: function (status, result) {
-            resolve({ status, result })
-          }
-        });
-      })
-    }
-
-    $.uploadImageByPath = function (targetImgPath, progress) {
-      return new Promise((resolve) => {
-        const _options = {
-          url: `${location.origin}/file/upload`,
-          header: {},
-          params: {},
-          body: [
-            // multipart/form-data 바디 데이터
-            { name: "file", content: targetImgPath, type: "FILE" },
-          ],
-          encoding: "UTF-8",
-          finish: (status, header, body, setting) => {
-            resolve({ status, header, body })
-          },
-          progress: function (total, current) {
-            progress(total, current);
-          }
-        }
-        M.net.http.upload(_options);
-      })
-    }
-
-  })
-
-
-$(function () {
-
-    let selectImagePath = '';
-    let $previewImg = null;
-    let $uploadImg = null;
-    const $box = $('#box');
-    const $uploadBox = $('#upload-box');
-    const $progress = $('#progress');
-    const $picker = $('#picker');
-    const $upload = $('#upload');
-
-
-
-    $picker.on('click', () => {
-      if ($previewImg !== null) {
-        $previewImg.remove();
-        $previewImg = null;
-      }
-      selectImagePath = '';
-      $.imagePicker()
-        .then(({ status, result }) => {
-          if (status === 'SUCCESS') {
-            selectImagePath = result.path;
-            return $.convertBase64ByPath(selectImagePath)
-          } else {
-            return Promise.reject('이미지 가져오기 실패')
-          }
-        })
-        .then(({ status, result }) => {
-          if (status === 'SUCCESS') {
-            $previewImg = $(document.createElement('img'))
-            $previewImg.attr('height', '200px')
-            $previewImg.attr('src', "data:image/png;base64," + result.data)
-            $box.append($previewImg);
-          } else {
-            return Promise.reject('BASE64 변환 실패')
-          }
-        })
-        .catch((err) => {
-          if (typeof err === 'string') alert(err)
-          console.error(err)
-        })
-    })
-
-    $upload.on('click', () => {
-      if (selectImagePath === '') return alert('이미지를 선택해주세요.')
-      if ($uploadImg) {
-        $uploadImg.remove();
-        $uploadImg = null;
-      }
-      $progress.text('')
-      $.uploadImageByPath(selectImagePath, (total, current) => {
-        console.log(`total: ${total} , current: ${current}`)
-        $progress.text(`${current}/${total}`)
-      })
-        .then(({
-          status, header, body
-        }) => {
-          // status code
-          if (status === '200') {
-            $progress.text('업로드 완료')
-            const bodyJson = JSON.parse(body)
-            $uploadImg = $(document.createElement('img'))
-            $uploadImg.attr('height', '200px')
-            $uploadImg.attr('src', bodyJson.fullpath)
-            $uploadBox.append($uploadImg)
-          } else {
-            return Promise.reject('업로드를 실패하였습니다.')
-          }
-        })
-        .catch((err) => {
-          if (typeof err === 'string') alert(err)
-          console.error(err)
-        })
-    })
-  });
 </script>
 </head>
 <body>
@@ -195,21 +85,15 @@ $(function () {
 					  <textarea class="reviewtextarea" name="review" placeholder="음식에 대한 솔직한 리뷰를 남겨주세요."></textarea>
 					  <input type="hidden" value="${row.sno }" name="sno">
 					  <input type="hidden" value="${row.tgroup}" name="tgroup">
+					  <input name="rphoto" class="imgSrc" style="display:none;">
 					  <button type="submit" class="reviewBtn">
 					  	<span class="reviewBtntext">완료</span>
 					  </button>
 					</form>
 					<div>
-    <button id="picker">M.media.picker</button>
-  </div>
-  <div id="box"></div>
-  <div>
-    <button id="upload">Upload Current Image</button>
-  </div>
-  <div id="progress"></div>
-  <div id="upload-box"></div>
-					<button class="cemeraimg" onclick="M.net.http.upload()">사진 업로드</button>
+					<button class="cameraimg" onclick="M.net.http.upload()">사진 업로드</button>
 					  <hr>
+					  <img class="rphoto" src="" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">
 					  <div class="menutitle">추천하고 싶은 메뉴가 있나요?</div>
 				</c:if>
 					<div class="mnname">${row.mnname }<img alt="추천엄지" src="/img/thumbs.png" style="height:15px; width:15px;"></div>
@@ -223,6 +107,9 @@ $(function () {
 		
 		<c:otherwise>
 			<li>로그인을 해주세요.</li>
+			<a href="login">
+        		<button>로그인하러 가기</button>
+        	</a>
 		</c:otherwise>
 	</c:choose>
 </body>
