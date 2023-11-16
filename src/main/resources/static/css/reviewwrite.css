@@ -2,20 +2,24 @@
 .hr{
 	border-top: 3px solid black;
 }
-
+body {
+	font-family: 'NanumSquareNeo';
+	color: #000;
+	margin: 0;
+	padding: 0;
+}
 .rate{
 	position: relative;
  	display: flex;
   	flex-direction: row-reverse;
-  	font-size: 2.25rem;
-  	line-height: 2.5rem;
+  	font-size: 1.8rem;
   	justify-content: space-around;
   	padding: 0 0.2em;
   	text-align: center;
   	width: 20em;
   	border: none;
-  	left: 12%;
-  	top: -42px;
+  	left: 30%;
+  	top: -35px;
 }
 .rate input {
   	display: none;
@@ -48,8 +52,8 @@
 	margin:5px;
 }
 .reviewtextarea{
-	width: 600px;
-    height: 300px;
+	width: 350px;
+    height: 200px;
     border:2px solid #000000;
     resize: none;
 }
@@ -92,7 +96,7 @@
 .menutitle{
 	color:#000000;
 	text-align:center;
-	font-size:18px;
+	font-size:15px;
 	font-family:Dosis;
 	line-height:27px;
 	border-style:hidden;
@@ -100,7 +104,7 @@
 }
 .mnname{
 	color:#000000;
-	font-size:18px;
+	font-size:13px;
 	font-family:Dosis;
 	line-height:27px;
 	margin: 20px;
