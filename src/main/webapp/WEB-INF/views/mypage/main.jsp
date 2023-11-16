@@ -28,7 +28,7 @@
 		
     	<div class="myid" style="display: none;">${sessionScope.mid }</div><!-- 내 아이디 -->
     	<div class="id" style="display: none;">${id }</div><!-- 방문자 아이디 -->
-    	<div class="babfriend" style="display: none;">${babfriend }</div><!-- 밥친구 -->
+    	<div id="babfriend" class="babfriend" style="display: none;">${babfriend }</div><!-- 밥친구 -->
         <div class="profile"><!-- onclick="popup('${sessionScope.mid}')" 작은 따옴표로 감싸기 -->
             <img class="profile-image" src="/img/profileImg/${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
         </div>
@@ -61,7 +61,7 @@
 	        <div class="pay"><a href="/mypage/pay"><img src="/img/profileImg/credit_card.png"></a><p>냠냠페이</p></div>
         </c:if>
         <c:if test="${sessionScope.mid ne id }">
-        	<div class="diary"><a href="/mypage/diary/${id }"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
+       	 	<div class="diary"><a onclick="return babdiary()" href="/mypage/diary/${id }"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
         	<div class="zzim"><a href="/wishlist/${id }"><img src="/img/profileImg/heart.png"></a><p>나의 찜</p></div>
         	<div class="review"><a href="/mypage/review/${id }"><img src="/img/profileImg/review.png"></a><p>리뷰관리</p></div>
         </c:if>
@@ -128,6 +128,14 @@
 	<script src="/js/chart.js"></script>
 	
 	<script type="text/javascript">
+	
+		function babdiary(){
+			var babdiary = $('#babfriend').text();
+			if(babdiary != 3){
+				swal('', '밥친구가 아니면 다이어리를 볼 수 없어요.', 'info');
+				return false;
+			}
+		}
 	
 	$(document).on("click", ".profile", function() {
 		var myid = $(".myid").text();
