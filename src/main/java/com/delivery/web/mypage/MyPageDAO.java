@@ -15,7 +15,7 @@ public interface MyPageDAO {
 
 	Map<String, Object> follow(String id);
 
-	List<Map<String, Object>> boardlist(@Param("mid") String mid, @Param("id") String id);
+	List<Map<String, Object>> boardlist(Map<String, Object> map);
 
 	void bdelete(int bno);
 
@@ -39,13 +39,13 @@ public interface MyPageDAO {
 
 	List<Map<String, Object>> coupon(String mid);
 
-	List<Map<String, Object>> pay(@Param("mid") String mid, @Param("cate") int cate);
+	List<Map<String, Object>> pay(Map<String, Object> map);
 
 	int findById(String id);
 
 	void charge(Map<String, Object> map);
 
-	List<Map<String, Object>> reviewlist(String id);
+	List<Map<String, Object>> reviewlist(Map<String, Object> map);
 
 	int rdelete(Map<String, Object> map);
 
@@ -80,5 +80,11 @@ public interface MyPageDAO {
 	void dupdate(Map<String, Object> map);
 
 	List<Map<String, Object>> friendcount(Map<String, Object> map);
+
+	int oldListCnt(Map<String, Object> map);
+
+	int paycount(Map<String, Object> map);
+
+	List<Map<String, Object>> mnreviewlist(Map<String, Object> map);
 
 }

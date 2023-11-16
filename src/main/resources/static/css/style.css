@@ -1179,7 +1179,7 @@
 }
  .instagram-box::before{
      width: 100%;
-     height: 100%;
+     height: 200%;
      left: 0px;
      top: 0px;
      content: "" ;
@@ -1191,7 +1191,7 @@
      z-index: 1;
      display: block;
      height: 100%;
-     width: 50px;
+     width: 100px;
      line-height: 0px;
      font-size: 24px;
      cursor: pointer;
@@ -1210,7 +1210,7 @@
      z-index: 1;
      display: block;
      height: 100%;
-     width: 50px;
+     width: 100px;
      line-height: 0px;
      font-size: 24px;
      cursor: pointer;
@@ -1223,9 +1223,6 @@
      -webkit-transition: all 0.3s ease;
      -o-transition: all 0.3s ease;
      transition: all 0.3s ease;
-}
- .main-instagram.owl-carousel .owl-nav button.owl-next:hover, .main-instagram.owl-carousel .owl-nav button.owl-prev:hover{
-     background: #b0b435;
 }
  .ins-inner-box{
      position: relative;
@@ -1917,33 +1914,36 @@
 }
  .toolbar-sorter-right{
      float: left;
+     width: 150px;
 }
  .toolbar-sorter-right .bootstrap-select.form-control:not([class*="col-"]){
-     width: 77%;
      float: right;
+     text-align: center;
 }
  .toolbar-sorter-right .bootstrap-select.btn-group > .dropdown-toggle{
      padding: 0px;
-     border-radius: 0px;
+     border-radius: 50px;
      border: none;
 }
  .toolbar-sorter-right .bootstrap-select.btn-group .dropdown-toggle .filter-option{
-     padding-left: 15px;
+     text-align: center;
 }
  .toolbar-sorter-right .btn-light{
-     background: #000000;
+     background: #EB5757;
      color: #ffffff;
+     font-weight: bold;
+     font-size: large;
 }
  .toolbar-sorter-right .btn-light:hover{
-     background: #b0b435;
+     background: #EB5757;
      border-radius: 0px;
      border: none;
 }
  .toolbar-sorter-right .show > .btn-light.dropdown-toggle{
-     background-color: #b0b435;
+     background-color: #EB5757;
 }
  .toolbar-sorter-right .bootstrap-select .dropdown-toggle:focus{
-     background: #b0b435;
+     background: #EB5757;
 }
  .toolbar-sorter-right .dropup .dropdown-toggle::after{
      position: absolute;
@@ -2047,12 +2047,11 @@
      font-size: 16px;
 }
  .quantity-box input{
-     width: 60px;
      border: 2px solid #000000;
      text-align: center;
 }
  .quantity-box input:focus{
-     border-color: #b0b435;
+     border-color: #EB5757;
 }
  .name-pr a{
      font-weight: 700;
@@ -2175,11 +2174,11 @@
      font-size: 14px;
 }
  .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
-     background-color: #b0b435;
+     background-color: #EB5757;
      box-shadow: none;
 }
  .custom-radio .custom-control-input:checked ~ .custom-control-label::before {
-     background-color: #b0b435;
+     background-color: #EB5757;
      box-shadow: none;
 }
  .new-account-login h5 {

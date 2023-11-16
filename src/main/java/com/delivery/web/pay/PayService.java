@@ -44,8 +44,8 @@ public class PayService {
 		return payDAO.tgroup(map);
 	}
 
-	public List<Map<String, Object>> wishlist(String id) {
-		return payDAO.wishlist(id);
+	public List<Map<String, Object>> wishlist(Map<String, Object> map) {
+		return payDAO.wishlist(map);
 	}
 
 	public List<Map<String, Object>> mnname(String sname) {
@@ -66,6 +66,22 @@ public class PayService {
 
 	public List<Map<String, Object>> search(Map<String, Object> map) {
 		return payDAO.search(map);
+	}
+
+	public List<Map<String, Object>> mnwishlist(Map<String, Object> map) {
+		return payDAO.mnwishlist(map);
+	}
+
+	public List<Map<String, Object>> mnsearch(Map<String, Object> map) {
+		return payDAO.mnsearch(map);
+	}
+
+	public int searchcount(Map<String, Object> map) {
+		return payDAO.searchcount(map);
+	}
+
+	public List<Map<String, Object>> recommend3() {
+		return payDAO.recommend3();
 	}
 
 }

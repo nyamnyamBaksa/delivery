@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="css/join.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 $(function() {
@@ -96,7 +98,6 @@ $(function() {
 
 });
 </script>
-</script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 	window.onload = function(){
@@ -111,9 +112,12 @@ $(function() {
 	    });
 	}
 	</script>
+	
 </head>
 <body>
-
+<a href="javascript:history.back()"> <i 
+class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
+</a>
 	<h1>회원가입</h1>
 	<hr class="hr">
 	<div class=joinBox>
@@ -141,7 +145,7 @@ $(function() {
         </div>
         <div class="phoneBox">
           	<input class="input" type="text" name="mphone" id="mphone" placeholder="전화번호">
-          	<button id="idCheck" type="button" class="idbutton">본인인증</button>
+
         </div>
         <div>
         <br>

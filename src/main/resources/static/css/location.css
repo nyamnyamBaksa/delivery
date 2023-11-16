@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+body {
+	font-family: 'NanumSquareNeo';
+}
+
+.search {
+	display: flex;
+	align-items: center;
+	display: flex;
+	align-items: center;
+}
+
+#location {
+	margin-left: 27px;
+	margin-top: 15px;
+}
+
+
+input {
+  width:90%;
+  height:40px;
+  margin-left:15px;
+  border: 2px solid #EB5757;
+  font-size:17px;
+  text-align:center;
+  border-radius:30px;
+  font-family: 'NanumSquareNeo';
+}

@@ -6,15 +6,33 @@
 		select  * FROM tradeview where mid=#{id}
 	</select>
 	
-	<select id="tradegroup" resultType="MAP">
-		SELECT tgroup, tamount, mnname, sname, sname, total, sno, tdate, SUM(total) OVER (PARTITION BY tgroup) AS realtotal
-		,SUM(tamount) OVER (PARTITION BY tgroup) AS totaltamount, cpno
-		FROM tradeview 
-		WHERE mid=#{id}
+	<select id="tradegroup" resultType="MAP" parameterType="map">
+		WITH DistinctRnoCount AS (
+		    SELECT t.tgroup, COUNT(DISTINCT r.rno) AS distinctRnoCount
+		    FROM tradeview t
+		    LEFT JOIN review r ON t.tgroup = r.tgroup
+		    WHERE t.mid = #{id}
+		    GROUP BY t.tgroup
+		)
+		SELECT
+		    t.tgroup, t.tamount, mnname, sname, total, t.sno, tdate, SUM(total) OVER (PARTITION BY t.tgroup) AS realtotal,
+		    SUM(tamount) OVER (PARTITION BY t.tgroup) AS totaltamount, cpno, drc.distinctRnoCount AS count
+		FROM
+		    tradeview t
+		LEFT JOIN
+		    review r ON t.tgroup = r.tgroup
+		LEFT JOIN
+		    DistinctRnoCount drc ON t.tgroup = drc.tgroup
+		<where>t.mid=#{id}
+				<choose>
+					<when test="serchN == 'sname'">AND sname LIKE CONCAT('%', #{serch}, '%')</when>
+					<when test="serchN == 'mnname'">AND mnname LIKE CONCAT('%', #{serch}, '%')</when>
+				</choose>
+		</where>
 	</select>
 	
 	<select id="tradedetail" resultType="Map" parameterType="String">
-		SELECT tgroup, tamount, mnname, sname, sname, total, tdate, cpno, total, ttotal
+		SELECT tgroup, tamount, mnname, sname, sname, total, tdate, cpno, total, ttotal,sno
 		FROM tradeview
 		WHERE tgroup=#{tgroup}
 	</select>
@@ -36,4 +54,5 @@
 		INSERT INTO review (sno, rcomment, mno, tno, rscore)
 		VALUES (#{sno}, #{review}, #{mno}, #{tno}, #{rscore})
 	</insert>
+	
 </mapper>

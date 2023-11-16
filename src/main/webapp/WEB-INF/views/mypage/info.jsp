@@ -21,17 +21,24 @@
 <link rel="stylesheet" href="/css/bootstrap-icons.css">
 
 <style type="text/css">
+.col-lg-13{
+	position: absolute;
+	top: 12%;
+	left: 5%;
+	right: 5%;
+}
+
 .form-group{
 	position: relative;
 }
 .input{
-	width: 350px;
+	width: 250px;
 	height: 50px;
 	
 	background: #FFFFFF;
 	border: 4px solid #EB5757;
 	border-radius: 10px;
-	font-size: larger;
+	font-size: large;
 	font-weight: bolder;
 	
 }
@@ -56,13 +63,15 @@
 </style>
 </head>
 <body>
+	<c:if test="${sessionScope.mid ne null}">
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	</a>
 	<div class="title">
 		<div class="titleFont">회원정보수정</div>
 	</div>
-	<div style="margin-top: 120px;"></div>
-	<c:if test="${sessionScope.mid ne null}">
 		<div class="container" style="margin: 0 auto;width: 520px;">
-			<div class="col-lg-15">
+			<div class="col-lg-13">
 				<div class="form-group">
 					<div>
 						<input class="id input" type="text" placeholder="아이디를 입력하세요." />
@@ -462,13 +471,11 @@
 					
 					var detailElement = '<div class="detail">' +
 				    '<input class="input" type="tel" id="phone" name="phone" placeholder="전화번호를 입력하세요.">' +
-				    '<input class="infobtn" type="button" id="phoneChk" style="float: right; background: #FF9C41;" value="인증번호 받기"><br><br>' +
-				    '<input class="input" id="phone2" type="text" disabled required />' +
-				    '<input class="infobtn" type="button" id="phoneChk2" style="float: right; background: #FF9C41;" value="본인인증" disabled="disabled">' +
-				    '<br><button class="phonechbtn infobtn" style="float: right;">전화번호 변경</button>' +
-				    '<div>' +
+				    '<button class="phonechbtn infobtn" style="float: right;">전화번호 변경</button><br>' +
+				    '<input class="infobtn" type="button" id="phoneChk" style="background: #FF9C41;" value="인증번호 받기">' +
+				    '<input style="margin-top: 5px;" class="input" id="phone2" type="text" disabled required /><br>' +
+				    '<input class="infobtn" type="button" id="phoneChk2" style="background: #FF9C41;display: inline-block;" value="본인인증" disabled="disabled">' +
 				    '<span style="color: red;" class="point successPhoneChk">휴대폰 번호 입력후 인증번호 보내기를 해주십시오.</span>' +
-				    '</div>' +
 				    '<input type="hidden" id="phoneDoubleChk" />' +
 				    '</div>';
 				    

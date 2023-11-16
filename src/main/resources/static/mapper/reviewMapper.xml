@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.delivery.web.review.ReviewDAO">
+	
+	<select id="reviewgroup" resultType="Map" parameterType="Integer">
+		SELECT *
+		FROM tradeview
+		WHERE sno=#{sno}
+	</select>
+	
+	<insert id="saveReview" parameterType="MAP">
+		INSERT INTO review (sno, rcomment, mno, tgroup, rscore)
+		VALUES (#{sno}, #{review}, #{mno}, #{tgroup}, #{rscore})
+	</insert>
+	
+	<select id="revivew" resultType="Map">
+		SELECT *
+		FROM reviewview
+		WHERE sno = #{sno}
+	</select>
+	
+	<select id="countrscore" resultType="Map">
+		SELECT
+		    SUM(rscore = 5) AS countrscore5,
+		    SUM(rscore = 4) AS countrscore4,
+		    SUM(rscore = 3) AS countrscore3,
+		    SUM(rscore = 2) AS countrscore2,
+		    SUM(rscore = 1) AS countrscore1
+		FROM
+		    reviewview
+		WHERE
+		    sno = #{sno}
+		GROUP BY
+		    sno;
+	</select>
+</mapper>

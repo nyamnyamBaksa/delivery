@@ -6,31 +6,31 @@ body{
 /* profile */
 .profile{
 	position: absolute;
-	left: 8.61%;
+	left: 3.5%;
 	right: 83.54%;
-	top: 7.91%;
+	top: 11%;
 	bottom: 81.45%;
 	
 }
 
 .profile-image{
-	width: 128px;
-	height: 128px;
-	border-radius: 60px;
+	width: 150px;
+	height: 150px;
+	border-radius: 80px;
 }
 
 
 /* 닉네임 */
 .nickname{
 	position: absolute;
-	left: 17.5%;
-	right: 75.42%;
-	top: 9.38%;
-	bottom: 82.91%;
-	
+	left: 41%;
+	right: 85%;
+	top: 13%;
+	bottom: 25%;
+	height: 33px;
 	font-style: normal;
-	font-weight: 700;
-	font-size: 18px;
+	font-weight: 800;
+	font-size: 20px;
 	line-height: 27px;
 	/* or 150% */
 	display: flex;
@@ -45,10 +45,8 @@ body{
 /* 냠냠 다이어리 */
 .diary{
 	position: absolute;
-	left: 16.46%;
-	right: 76.04%;
-	top: 25%;
-	bottom: 64.84%;
+	left: 6%;
+	top: 35%;
 	display: flex;
     flex-direction: column; /* 요소 내의 요소들을 수직으로 나열합니다. */
     align-items: center; /* 요소를 수직으로 중앙 정렬합니다. */
@@ -59,8 +57,8 @@ body{
 .diary p {
 	font-family: 'Dosis';
 	font-style: normal;
-	font-weight: 400;
-	font-size: 18px;
+	font-weight: 600;
+	font-size: 20px;
 	line-height: 27px;
 	/* identical to box height, or 150% */
 	
@@ -72,13 +70,12 @@ body{
 /* 나의 찜 */
 .zzim{
 	position: absolute;
-	left: 46.74%;
-	right: 47.99%;
-	top: 25%;
+	left: 38%;
+	top: 35%;
 	bottom: 64.84%;
 	display: flex;
-    flex-direction: column; /* 요소 내의 요소들을 수직으로 나열합니다. */
-    align-items: center; /* 요소를 수직으로 중앙 정렬합니다. */
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 	
 }
@@ -86,22 +83,25 @@ body{
 .zzim p{
 	font-family: 'Dosis';
 	font-style: normal;
-	font-weight: 400;
-	font-size: 18px;
+	font-weight: 600;
+	font-size: 20px;
 	line-height: 27px;
-	/* identical to box height, or 150% */
 	
 	color: #000000;
 }
 
+img{
+	width: 100px;
+	height: 100px; 
+}
 
 
 /* 리뷰관리 */
 .review{
 	position: absolute;
-	left: 75%;
-	right: 19.72%;
-	top: 25%;
+	left: 72%;
+	right: 7%;
+	top: 35%;
 	bottom: 64.26%;
 	
 	/* identical to box height, or 150% */
@@ -114,8 +114,8 @@ body{
 
 .review p{
 	font-style: normal;
-	font-weight: 400;
-	font-size: 18px;
+	font-weight: 600;
+	font-size: 20px;
 	line-height: 27px;
 }
 
@@ -124,9 +124,8 @@ body{
 /* 쿠폰함 */
 .coupon{
 	position: absolute;
-	left: 17.5%;
-	right: 77.22%;
-	top: 45%;
+	left: 7%;
+	top: 51%;
 	bottom: 45.7%;
 	
 	/* identical to box height, or 150% */
@@ -138,8 +137,8 @@ body{
 
 .coupon p{
 	font-style: normal;
-	font-weight: 400;
-	font-size: 18px;
+	font-weight: 600;
+	font-size: 20px;
 	line-height: 27px;
 }
 
@@ -148,11 +147,9 @@ body{
 /* 냠냠페이 */
 .pay{
 	position: absolute;
-	left: 46.46%;
-	right: 48.26%;
-	top: 45%;
+	left: 40%;
+	top: 50%;
 	bottom: 45.7%;
-	
 	
 	/* identical to box height, or 150% */
 	display: flex;
@@ -163,8 +160,8 @@ body{
 
 .pay p{
 	font-style: normal;
-	font-weight: 400;
-	font-size: 18px;
+	font-weight: 600;
+	font-size: 20px;
 	line-height: 27px;
 }
 
@@ -173,11 +170,12 @@ body{
 /* + 밥친구 추가 네모 */
 .follow, .unfollow1, .followAccept, .unfollow3 {
 	position: absolute;
-	left: 28.06%;
-	right: 58.26%;
-	top: 11.23%;
-	bottom: 84.77%;
-	
+	left: 41%;
+	right: 57%;
+	top: 20%;
+	bottom: 82%;
+	width: 165px;
+	height: 33px;
 	background: #EB5757;
 	border-radius: 50px;
 	font-style: normal;
@@ -188,13 +186,13 @@ body{
 	display: flex;
 	align-items: center;
 	text-align: center;
-	
+	cursor: pointer;
 	 justify-content: center; /* 텍스트를 수평으로 가운데 정렬하기 위해 추가 */
      color: #FFFFFF;
      border: none; /* border를 제거하기 위해 추가 */
 }
 
-.followAcceptModal, .cartbtn, .qtyChange, .cpbtn, .purchasebtn{
+.followAcceptModal, .cartbtn, .cpbtn, .purchasebtn{
 	margin-top: 30px;
 	height: 33px;
 	background: #EB5757;
@@ -216,14 +214,13 @@ body{
 /* 밥친구 6 | 친구 요청 10 */
 .HowManyfollow{
 	position: absolute;
-	left: 45.97%;
-	right: 32.08%;
-	top: 10.55%;
+	left: 41%;
+	top: 27%;
 	bottom: 84.77%;
 	
 	font-style: normal;
 	font-weight: 700;
-	font-size: 18px;
+	font-size: 20px;
 	line-height: 27px;
 	/* or 150% */
 	display: flex;
@@ -238,14 +235,13 @@ body{
 /* {닉네임}님의 최애 맛집은? */
 .favoriteStore{
 	position: absolute;
-	left: 14.44%;
-	right: 62.43%;
-	top: 70%;
+	left: 25%;
+	top: 73%;
 	bottom: 35.64%;
-	
+	margin: 0 auto;
 	font-style: normal;
-	font-weight: 700;
-	font-size: 18px;
+	font-weight: 600;
+	font-size: 20px;
 	line-height: 27px;
 	/* or 150% */
 	display: flex;
@@ -260,80 +256,30 @@ body{
 /* 최애맛집 */
 .favoriteStoreComponent{
 	position: relative;
-	width: 350px;
+	width: 300px;
 	height: 50px;
-	left: 181px;
-	top: 700px;
+	left: 45px;
+	top: 600px;
 	margin:1px;
 	background: #FF9C41;
 	border-radius: 10px;
-}
-
-
-/* 메가커피 강남점 */
-.favoriteStoreComponentFont{
-	
-	font-style: normal;
-	font-weight: 400;
-	font-size: 18px;
-	line-height: 27px;
-	/* or 150% */
+	margin: 5px;
+	font-size:20px;
 	display: flex;
 	align-items: center;
 	text-align: center;
-	
-	color: #000000;
-}
-
-
-
-/* 8회 주문 */
-.favoriteStoreComponentTrade{
-	position: absolute;
-	left: 63.1%;
-	right: 9.05%;
-	top: 16%;
-	bottom: 18%;
-	
-	font-style: normal;
-	font-weight: 400;
-	font-size: 18px;
-	line-height: 27px;
-	/* or 150% */
-	display: flex;
-	align-items: center;
-	text-align: center;
-	
-	color: #263238;
-	
-}
-
-
-
-/* 728972_gold_medal_award_badge_prize_icon 1 */
-.favoriteStoreComponentMedal{
-	position: absolute;
-	left: 5.48%;
-	right: 86.9%;
-	top: 18%;
-	bottom: 18%;
-	
-	background: url(728972_gold_medal_award_badge_prize_icon.png);
-	
 }
 
 
 /* {닉네임}님은 카페/디저트 러버! */
 .favoriteCate{
 	position: absolute;
-	left: 55.76%;
-	right: 21.11%;
-	top: 70%;
+	left: 27%;
+	top: 103%;
 	bottom: 36.33%;
-	
 	font-style: normal;
-	font-weight: 700;
-	font-size: 18px;
+	font-weight: 600;
+	font-size: 20px;
 	line-height: 27px;
 	/* or 150% */
 	display: flex;
@@ -349,11 +295,10 @@ body{
 /* image 3 */
 .favoriteCateGoogleChart{
 	position: absolute;
-	width: 296px;
-	height: 278px;
-	left: 53%;
-	top: 680px;
-	
+	left: 67px;
+	top: 105%;
+	width: 270px;
+	height: 270px;
 }
 
 
@@ -363,10 +308,10 @@ body{
 	box-sizing: border-box;
 	
 	position: absolute;
-	left: 5.49%;
-	right: 12.71%;
-	top: 2.73%;
-	bottom: 92.68%;
+	left: 7%;
+	right: 7%;
+	top: 5.47%;
+	bottom: 89.94%;
 	
 	border-bottom: 3px solid #000000;
 	
@@ -376,14 +321,13 @@ body{
 /* Heading 3 → Shipping Method */
 .mypageFont{
 	position: absolute;
-	width: 164px;
 	height: 22px;
 	left: 2px;
 	top: 5px;
 	
 	font-style: normal;
 	font-weight: 700;
-	font-size: 32px;
+	font-size: 40px;
 	line-height: 22px;
 	/* identical to box height, or 68% */
 	display: flex;

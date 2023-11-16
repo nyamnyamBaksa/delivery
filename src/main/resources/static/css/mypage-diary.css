@@ -7,8 +7,8 @@ body{
 	box-sizing: border-box;
 	
 	position: absolute;
-	left: 7.78%;
-	right: 10.42%;
+	left: 7%;
+	right: 7%;
 	top: 5.47%;
 	bottom: 89.94%;
 	
@@ -19,15 +19,13 @@ body{
 
 /* Heading 3 → Shipping Method */
 .titleFont{
-	position: absolute;
 	height: 22px;
 	left: 2px;
 	top: 5px;
-	
-	font-family: 'Dosis';
+	position: absolute;
 	font-style: normal;
 	font-weight: 700;
-	font-size: 32px;
+	font-size: 40px;
 	line-height: 22px;
 	/* identical to box height, or 68% */
 	display: flex;
@@ -169,7 +167,7 @@ body{
 
 
 /* Link */
-.dwrite, .cbtn, .dedit{
+.dwrite, .cbtn, .dedit, .morebtn{
 	background: #EB5757;
 	border-radius: 50px;
 	border: none;
@@ -178,10 +176,14 @@ body{
 	font-weight: 700;
 	font-size: 20px;
 	line-height: 27px;
+	width:90px;
+	height:45px;
 	/* or 135% */
+	display: flex;
 	align-items: center;
 	text-align: center;
-	
+	justify-content: center;
+	cursor: pointer;
 	color: #FFFFFF;
 	
 }

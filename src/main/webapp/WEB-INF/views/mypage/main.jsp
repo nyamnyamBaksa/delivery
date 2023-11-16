@@ -6,7 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>냠냠박사</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/css/mypage-main.css">
+	<link rel="stylesheet" href="/css/mypage-pay.css">
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<!-- sweetalert -->
@@ -17,6 +19,9 @@
 </head>
 <body>
     <c:if test="${sessionScope.mid ne null}">
+	    <a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+	    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+		</a>
 		<div class="mypage">
 			<div class="mypageFont">마이페이지</div>
 		</div>
@@ -27,7 +32,7 @@
         <div class="profile"><!-- onclick="popup('${sessionScope.mid}')" 작은 따옴표로 감싸기 -->
             <img class="profile-image" src="/img/profileImg/${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
         </div>
-        <div class="nickname">${result.mname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><img src="/img/profileImg/arrow_right.png"></a></c:if></div>
+        <div class="nickname">${result.mnickname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><i class="bi bi-arrow-right"></i></a></c:if></div>
         <c:if test="${sessionScope.mid ne id }">
 	        <c:choose>
 	        	<c:when test="${babfriend eq 0 }">
@@ -52,7 +57,7 @@
         	<div class="diary"><a href="/mypage/diary"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
         	<div class="zzim"><a href="/wishlist"><img src="/img/profileImg/heart.png"></a><p>나의 찜</p></div>
         	<div class="review"><a href="/mypage/review"><img src="/img/profileImg/review.png"></a><p>리뷰관리</p></div>
-        	<div class="coupon"><a href="/mypage/coupon"><img src="/img/profileImg/coupon.png"></a><p>쿠폰함</p></div>
+        	<div class="coupon"><a href="/mypage/coupon"><img style="height: 95px;" src="/img/profileImg/coupon.png"></a><p>쿠폰함</p></div>
 	        <div class="pay"><a href="/mypage/pay"><img src="/img/profileImg/credit_card.png"></a><p>냠냠페이</p></div>
         </c:if>
         <c:if test="${sessionScope.mid ne id }">
@@ -62,24 +67,28 @@
         </c:if>
         
         <c:if test="${toplist[0].sname ne null }">
-	        <div class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
+	        <div id="favoriteStore" class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
 	        <c:forEach items="${toplist }" var="row" varStatus="loopStatus">
-		        <div class="favoriteStoreComponent">
-		        	&nbsp;<i class="bi bi-trophy-fill" style="color:
-			            <c:choose>
-			                <c:when test="${loopStatus.index % 3 == 0}"> gold </c:when>
-			                <c:when test="${loopStatus.index % 3 == 1}"> silver </c:when>
-			                <c:when test="${loopStatus.index % 3 == 2}"> #cd7f32 </c:when>
-			            </c:choose>
-			        "></i>&nbsp;
-		        	<span style="font-size:large;font-weight:bold;">${row.sname }</span>
-		        	<span style="float:right;font-size:large;font-weight:bold;">${row.count }회 주문</span>
-		        </div>
+	        <table id="favoriteStoreComponent" class="favoriteStoreComponent">
+	        	<tr>
+	        		<td style="width: 20px;">
+			        	<i class="bi bi-trophy-fill" style="font-size:30px;color:
+				            <c:choose>
+				                <c:when test="${loopStatus.index % 3 == 0}"> gold </c:when>
+				                <c:when test="${loopStatus.index % 3 == 1}"> silver </c:when>
+				                <c:when test="${loopStatus.index % 3 == 2}"> #cd7f32 </c:when>
+				            </c:choose>
+				        "></i>
+			        </td>
+		        	<td style="width: 180px;">${row.sname }</td>
+		        	<td style="width: 100px;">${row.count }회 주문</td>
+		    	</tr>   
+		    </table>
 		    </c:forEach>
-		    <div class="favoriteCate">
+		    <div id="favoriteCate" class="favoriteCate">
 		    	'${result.mname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
 		    </div>
-		    <div class="favoriteCateGoogleChart" style="width: 700px; height: 300px;">
+		    <div id="favoriteCateGoogleChart" class="favoriteCateGoogleChart">
 	        	<canvas id="donutChart"></canvas>
 		    </div>    
 	    </c:if>
@@ -113,6 +122,7 @@
 	<script src="/js/wnInterface.js"></script>
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
+	
 	<script src="/js/sweetalert.min.js"></script>
 	<!-- 차트 라이브러리 로드 -->
 	<script src="/js/chart.js"></script>
@@ -157,6 +167,8 @@
 		
 	});
 	
+	const M = window.M;
+	
 	var confirm = function(msg, title, bno) {
 		swal({
 			title : title,
@@ -171,33 +183,37 @@
 		},
 		function(isConfirm) {
 			if (isConfirm) {
-				
 				M.media.picker({
-				    mode: "SINGLE",
-				    media: "PHOTO",
-				    path: "/media",
-				    column: 3,
-				    callback: function( status, result ) {
-				        console( status + ", " + JSON.stringify(result) );
-				        $.ajax({
-				            url: '/mypage/updateProfileImg',
-				            type: 'POST',
-				            data: result,
-				            contentType: 'json',
-				            dataType:'json',
-				            processData: false,
-				            success: function (data) {
-				            	$("#exampleModal").modal("hide");
-				            	// 이미지를 업데이트
-				                var newImageSrc = '/img/profileImg/' + data.profileImg;
-				                $("#userProfileImage").attr('src', newImageSrc);
-				            },
-				            error: function () {
-				            	swal('', '서버와 통신 중 오류 발생', "error");
-				            }
-				        });
-				    }
+					  mode: "SINGLE",
+					  media: "PHOTO",
+					  column: 3,
+					  callback: function( status, result ) {
+					    var fileList = [], fileCont = {};
+					    fileCont.name = "file";
+					    fileCont.content = result.path;
+					    fileCont.type = 'FILE';
+					    fileList.push(fileCont);
+					    M.net.http.upload({
+					      url: "http://172.30.1.10/mypage/updateProfileImg2",
+					      header: {},
+					      params: {index : "3"},
+					      body: fileList,
+					      encoding : "UTF-8",
+					      finish : function(code, header, body, status, error) {
+					        if (status == 'SUCCESS') {
+					         	// 이미지를 업데이트
+					         	var jsonObject = JSON.parse(body);
+				                var newImageSrc = '/img/profileImg/' + jsonObject.profileImg;
+				                $(".profile-image").attr('src', newImageSrc);
+				                swal.close();
+					        } else{
+					            // M.pop.alert( status + " / " + error );
+					        }
+					     }
+					   });
+				  	}
 				});
+				
 			}
 		});
 	}
@@ -205,6 +221,9 @@
 	$(document).on("click", ".follow, .unfollow1, .followAccept, .unfollow3 , .followAcceptModal", function() {
 		var myid = $(".myid").text();
 		var id = $('.id').text();
+	    if(id == ''){
+	    	id = $(".myid").text();
+	    }
 		var modal = $('.followerMid').text();
 		let i = 0;
 	    let $icon = $(this);
@@ -220,9 +239,6 @@
 	    	i = 3;
 	    }
 	    
-	    if(id == ''){
-	    	id = 'String';
-	    }
 	    
 		$.ajax({
             url: '/mypage/updateFollow',
@@ -230,6 +246,7 @@
             data: {myid:myid, id:id, i:i, modal:modal},
             dataType:'json',
             success: function (data) {
+                var $howManyFollow = $(".HowManyfollow");
             	if(data.result == 1){
             		if(data.i == 0){
 	            		swal('', '밥친구 신청을 완료했어요.', "success");
@@ -239,14 +256,16 @@
             			swal('', '밥친구가 되었어요.', "success");
             		} else if(data.i == 4){
             			swal('', '밥친구가 되었어요.', "success");
-                        $("#exampleModal").modal("hide");
-            			// HowManyfollow 업데이트
-                        var $howManyFollow = $(".HowManyfollow");
-                        $howManyFollow.html('밥 친구 ' + data.follow.friend + ' ');
-                        $howManyFollow.append('|&nbsp;<span class="followAsk">친구 요청 ' + data.follow.friendreq + '</span>');
+            			$("#exampleModal").modal("hide");
             		} else {
             			swal('', '밥친구를 취소했어요.', "success");
             		}
+            		
+           			// HowManyfollow 업데이트
+                    $howManyFollow.html('<span style="cursor: pointer;" class="friendcount">밥 친구 ' + data.follow.friend + '</span>&nbsp;');
+           			if(id == myid){
+                    	$howManyFollow.append('&nbsp;|&nbsp;<span class="followAsk">친구 요청 ' + data.follow.friendreq + '</span>');
+           			}
             		
             		$('.babfriend').text(data.babfriend);
             		var button = $('.babfriend-btn');
@@ -292,7 +311,7 @@
 
 	            $.each(data.list, function (index, row) {
 	                var newContent = '<div class="modal-header">' +
-	                    '<h5 class="modal-title" id="exampleModalLabel"><a href="/mypage/main/' + row.mid + '"><img class="profile-image-follow" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
+	                    '<h5 class="modal-title" id="exampleModalLabel"><a style="margin-right:20px;" href="/mypage/main/' + row.mid + '"><img class="profile-image-follow profile-image" src="/img/profileImg' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
 	                    '<div class="modal-body"><div class="detail">' +
 	                    '<div class="detail-date-read"><div class="detail"><button class="followAcceptModal">+ 밥 친구 신청 수락</button><div>' +
 	                    '</div></div></div>' +
@@ -326,7 +345,7 @@
 
 	            $.each(data.list, function (index, row) {
 	                var newContent = '<div class="modal-header">' +
-	                    '<h5 class="modal-title" id="exampleModalLabel"><a href="/mypage/main/' + row.mid + '"><img class="profile-image-follow" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
+	                    '<h5 class="modal-title" id="exampleModalLabel"><a href="/mypage/main/' + row.mid + '"><img style="margin-right:20px;" class="profile-image-follow profile-image" src="/img/profileImg' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
 	                    '<div class="modal-body"><div class="detail">' +
 	                    '</div></div></div>';
 	                modalContent.append(newContent);
@@ -353,18 +372,21 @@
 	        data.labels.push('${item.mncatename}');
 	        data.datasets[0].data.push(${item.count});
 	    </c:forEach>
-	
 	    // 차트 생성
 	    var ctx = document.getElementById('donutChart').getContext('2d');
 	    var myChart = new Chart(ctx, {
 	        type: 'doughnut',
 	        data: data,
 	        options: {
-	            cutoutPercentage: 50, // 도넛 차트로 만들기 위해 구멍 크기를 조절합니다.
+	            cutoutPercentage: 50, // 도넛 차트로 만들기 위해 구멍 크기를 조절
 	            title: {
 	                display: false, // 제목 숨김
 	            },
-	        }
+	            labels: {
+                   fontSize: 100,
+                   fontStyle: 'bolder'
+                }
+           	}
 	    });
     </script>
 </body>

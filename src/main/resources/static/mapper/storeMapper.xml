@@ -34,13 +34,13 @@
 	</select>
 
 	<!-- 찜버튼 누르기 -->
-	<insert id="wishlist">
+	<insert id="addwishlist">
 		INSERT INTO wishlist (mno, sno)
 		VALUES (#{mno}, #{sno})
 	</insert>
 
 	<!-- 찜버튼 취소하기 -->
-	<delete id="wishremove">
+	<delete id="wishremoved">
 		DELETE FROM wishlist WHERE sno = #{sno}
 	</delete>
 
@@ -61,16 +61,22 @@
 
 	<select id="menudetail" parameterType="Integer"
 		resultType="com.delivery.web.store.MenuDTO">
-		SELECT mnname, mnprice, mnimg, mndesc, mnside
+		SELECT mnname, mnprice, mnimg, mndesc, mnside, mnno, sno
+
 		FROM menu
 		WHERE mnno =#{mnno}
 	</select>
 
-	<insert id="cartlist">
-		INSERT INTO cart (mno, mnno, camount, mnprice, ctotal, camount)
-		VALUES(#{mno}, #{mnno}, #{camount}, #{price}, #{ctotal}, #{camount})
+	<insert id="cartname" parameterType="java.util.Map">
+		INSERT INTO cart (mno, mnno, camount, ctotal)
+		VALUES((select mno from member where mid = #{mid}), #{mnno}, #{camount}, #{ctotal})
 	</insert>
+	
+	<select id="cartlist" parameterType="String" resultType="Integer">
 
+		SELECT COALESCE(sno, COUNT(*)) AS sno from cartview
+		where mno = (select mno from member where MID = #{mid})
+	</select>
 
 
 </mapper>

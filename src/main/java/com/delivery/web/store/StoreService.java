@@ -18,6 +18,8 @@ public class StoreService {
 		return storeDAO.list(mncate);
 	}
 
+	
+	
 
 	public StoreDTO detail(int sno) {
 		
@@ -48,37 +50,59 @@ public class StoreService {
 	}
 	
 	
-
+	//찜버튼 누르기
 	@Transactional
-	public boolean wishlist(String mid, Integer mno) {
-		
-		boolean addwishlist = storeDAO.wishlist(mno);
-		
+	public boolean wishlist(Integer mno, int sno) {
+	    
+		boolean addwishlist = storeDAO.addwishlist(mno, sno);
+	    
 		return addwishlist;
 	
 	}
 
-
+	//찜버튼 취소하기
 	@Transactional
-	public boolean wishremove(String mid, Integer mno) {
+	public boolean wishremove(Integer mno, int sno) {
 		
-		boolean removed = storeDAO.wishremove(mno);
+		 boolean wishremoved = storeDAO.wishremoved(mno, sno);
 		
-		return removed;
+		return wishremoved;
 	
 	}
 
 
-	public List<MenuDTO> cartlist(Map<String, Object> map) {
+
+	public MenuDTO menuinfo(int mnno) {
 		
-		return storeDAO.cartlist(map);
+		return storeDAO.menuinfo(mnno);
+	}
+
+
+	public List<MenuDTO> getMainMenu() {
+		
+		return storeDAO.getMainMenu();
+	}
+
+
+	public List<MenuDTO> getSideMenu() {
+		
+		return storeDAO.getSideMenu();
+	}
+
+
+	public void cartname(Map<String, Object> map) {
+		
+		storeDAO.cartname(map);
 	}
 
 
 
 
+	public int cartlist(String mid) {
+		return storeDAO.cartlist(mid);
+	}
 
-	
+
 
 
 }

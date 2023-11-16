@@ -3,13 +3,35 @@
 <mapper namespace="com.delivery.web.home.HomeDAO">
 
 
-	<select id="list" parameterType="Integer" resultType="com.delivery.web.home.HomeDTO">
-		SELECT DISTINCT s.*
+	<select id="list" resultType="com.delivery.web.home.HomeDTO">
+		SELECT s.sno, s.store_name,
+		s.store_image, s.average_rating, s.review_count, COUNT(t.tno) AS
+		order_count
 		FROM storeview s
-		JOIN menu m ON s.sno = m.sno
-		WHERE m.mncate = #{mncate};
+		LEFT JOIN trade t ON s.sno = t.mno
+		GROUP BY s.sno, s.store_name, s.store_image, s.average_rating,
+		s.review_count
+		HAVING order_count > 0 OR s.average_rating > 0
+		ORDER BY order_count DESC
+		limit 5;
 	</select>
 
+	<select id="detail" parameterType="Integer"
+		resultType="com.delivery.web.home.HomeDTO">
+		SELECT sno, store_name, store_image, average_rating,
+		review_count
+		FROM storeview
+		WHERE sno = #{sno}
+	</select>
+
+
+	<select id="menulist" parameterType="Integer"
+		resultType="com.delivery.web.home.HomeDTO">
+		SELECT mnno, mnname, mnprice, mnimg, mnside
+		FROM menu
+		WHERE
+		sno =#{sno}
+	</select>
 
 
 

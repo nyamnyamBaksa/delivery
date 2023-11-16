@@ -120,16 +120,40 @@ public class PayController {
 	}
 	
 	@GetMapping({"/wishlist","/wishlist/{id}"})
-	public String wishlist(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
+	public String wishlist(@RequestParam Map<String, Object> map,
+			@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
 		if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
 			if(id == null) {// 본인 계정
 				id = (String) session.getAttribute("mid");
 			} else {// 다른 사람 계정 or 본인 계정
 				model.addAttribute("id", id);
 			}
-			List<Map<String, Object>> list = payService.wishlist(id);
+			map.put("id", id);
+			map.put("offset", 0);
+			map.put("count", 7);
+			List<Map<String, Object>> list = payService.wishlist(map);
+			List<Map<String, Object>> mnlist = payService.mnwishlist(map);
 			model.addAttribute("list", list);
+			model.addAttribute("mnlist", mnlist);
 			return "/wishlist";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/moreWishlist")
+	public String moreWishlist(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			System.out.println(map);// {id=aaaa, offset=7, endIndex=13}
+			map.put("offset", util.strToInt((String)map.get("offset")));
+			map.put("count", 7);
+			List<Map<String, Object>> wlist = payService.wishlist(map);
+			List<Map<String, Object>> mnlist = payService.mnwishlist(map);
+			JSONObject json = new JSONObject();
+			json.put("wlist", wlist);
+			json.put("mnlist", mnlist);
+			return json.toString();
 		} else {
 			return "redirect:/login";
 		}
@@ -150,18 +174,23 @@ public class PayController {
 	
 	@ResponseBody
 	@PostMapping("/wdelete")
-	public String wdelete(@RequestParam(value="valueArr") String[] del, HttpSession session) {
+	public String wdelete(@RequestParam(value="valueArr") String[] del, HttpSession session,
+			@RequestParam(name="count", required = false) int count) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			JSONObject json = new JSONObject();
 			Map<String, Object> map = new HashMap<String, Object>();
 			for (int i = 0; i < del.length; i++) {
 				map.put("del", del[i]);
-				map.put("mid", session.getAttribute("mid"));
 				int result = payService.wdelete(map);
 			}
 			String id = (String) session.getAttribute("mid");
-			List<Map<String, Object>> list = payService.wishlist(id);
-			json.put("wlist", list);
+			map.put("id", id);
+			map.put("offset", 0);
+			map.put("count", count);
+			List<Map<String, Object>> wlist = payService.wishlist(map);
+			List<Map<String, Object>> mnlist = payService.mnwishlist(map);
+			json.put("wlist", wlist);
+			json.put("mnlist", mnlist);
 			return json.toString();
 		} else {
 			return "redirect:/login";
@@ -173,25 +202,55 @@ public class PayController {
 		if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
 			String id = (String) session.getAttribute("mid");
 			List<Map<String, Object>> list = payService.recommend(id);
-			List<Map<String, Object>> rlist = payService.recommend2();
 			model.addAttribute("list", list);
-			model.addAttribute("rlist", rlist);
-			return "/search";
-		} else {
-			return "redirect:/login";
 		}
+		List<Map<String, Object>> rlist = payService.recommend2();
+		model.addAttribute("rlist", rlist);
+		List<Map<String, Object>> wlist = payService.recommend3();
+		model.addAttribute("wlist", wlist);
+		return "/search";
 	}
 	
 	@ResponseBody
 	@PostMapping("/search")
-	public String search(@RequestParam Map<String, Object> map, HttpSession session) {
-		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
-			List<Map<String, Object>> search = payService.search(map);
-			JSONObject json = new JSONObject();
-			json.put("search", search);
-			return json.toString();
-		} else {
-			return "redirect:/login";
+	public String search(@RequestParam Map<String, Object> map, @RequestParam(name="cate", required = false, defaultValue = "0") int cate, HttpSession session) {
+		if(!map.containsKey("cate") || map.get("cate").equals(null) || map.get("cate").equals("")) {
+			map.put("cate", 0);
 		}
+		if(map.get("offset") == null) {
+			map.put("offset", 0);
+		} else {
+			map.put("offset", util.strToInt((String)map.get("offset")));
+		}
+		List<Map<String, Object>> search = payService.search(map);
+		List<Map<String, Object>> mnsearch = payService.mnsearch(map);
+		int searchcount = payService.searchcount(map);
+		JSONObject json = new JSONObject();
+		json.put("search", search);
+		json.put("mnsearch", mnsearch);
+		json.put("searchcount", searchcount);
+		return json.toString();
+	}
+	
+	@ResponseBody
+	@PostMapping("/cateChange")
+	public String cateChange(HttpSession session, @RequestParam(name="cate", required = false, defaultValue = "0") int cate,
+		@RequestParam Map<String, Object> map) {
+		if(!map.containsKey("cate") || map.get("cate").equals(null) || map.get("cate").equals("")) {
+			map.put("cate", 0);
+		}
+		if(map.get("offset") == null) {
+			map.put("offset", 0);
+		} else {
+			map.put("offset", util.strToInt((String)map.get("offset")));
+		}
+		List<Map<String, Object>> search = payService.search(map);
+		List<Map<String, Object>> mnsearch = payService.mnsearch(map);
+		int searchcount = payService.searchcount(map);
+		JSONObject json = new JSONObject();
+		json.put("search", search);
+		json.put("mnsearch", mnsearch);
+		json.put("searchcount", searchcount);
+		return json.toString();
 	}
 }

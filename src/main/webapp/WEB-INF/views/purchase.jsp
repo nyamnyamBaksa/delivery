@@ -28,8 +28,12 @@
 </head>
 
 <body>
+	<c:if test="${sessionScope.mid ne null}">
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	</a>
 	<div class="mypage">
-		<div class="mypageFont">주문하기</div>
+		<div class="mypageFont" style="font-size: 23px;">주문하기</div>
 	</div>
 	<!-- Start Cart  -->
 	<div class="cart-box-main">
@@ -135,18 +139,19 @@
 								<div class="title-left">
 									<h3>주문금액</h3>
 								</div>
-								<div class="d-flex gr-total" onclick="location.href='/mypage/pay?pbalance=charge'" style="cursor: pointer;">
+								<a href="/mypage/pay?pbalance=charge"><div class="d-flex gr-total" style="cursor: pointer;">
 									<h5 style="color: #EB5757;display: none;" class="pointempty">
 										<i class="bi bi-credit-card"></i>
 										포인트가 부족합니다. 충전하시려면 클릭하세요.
 									</h5>
 								</div>
-								<div class="d-flex gr-total" onclick="location.href='/mypage/pay?pbalance=charge'" style="cursor: pointer;">
+								<div class="d-flex gr-total" style="cursor: pointer;">
 									<h5 style="color: #EB5757;">포인트</h5>
 									<div class="ml-auto h5">
 										<span class="point">${pbalance }</span>원
 									</div>
 								</div>
+								</a>
 								<hr>
 								<div class="d-flex">
 									<h4>주문금액</h4>
@@ -188,6 +193,12 @@
 
 		</div>
 	</div>
+	<div class="mouse" style="text-align: center;">
+		<a href="#" class="mouse-icon">
+			<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
+		</a>
+	</div>
+	</c:if>
 	<!-- End Cart -->
 
 
@@ -196,6 +207,8 @@
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<!-- ALL PLUGINS -->
+	<script src="js/jquery.min.js"></script>
+    <script src="js/scrollax.min.js"></script>
 	<script src="/js/jquery.superslides.min.js"></script>
 	<script src="/js/bootstrap-select.js"></script>
 	<script src="/js/inewsticker.js"></script>

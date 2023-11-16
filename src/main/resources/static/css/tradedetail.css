@@ -2,22 +2,24 @@
 .hr{
 	border-top: 3px solid black;
 }
-.tradedetailBox{
-	position: relative;
-	left: 35%;
-	top: 30px;
+body {
+	font-family: 'NanumSquareNeo';
+	color: #000;
+	margin: 0;
+	padding: 0;
 }
+
 .title{
 	color: #EB5757;
 	font-weight: bold;
-	font-size:31px;
+	font-size:28px;
 	font-family:Dosis;
 	margin: 10px;
 }
 .storedetailBtn{
 	background-color: #EB5757;
-	height:51px;
-	width:192px;
+	height:48px;
+	width:180px;
 	border-radius:50px;
 	padding:0px;
 	border: none;
@@ -33,8 +35,8 @@
 	line-height:27px;
 	border-style:hidden;
 	outline:none;
-	top:12px;
-	left:-4px;
+	top:10px;
+	left:-9px;
 	position:absolute;
 	width:196px;
 	font-weight: bold;
@@ -43,29 +45,29 @@
 	position:relative;
 	color:#6C757D;
 	font-family:SemiBold;
-	font-size:25px;
+	font-size:22px;
 	left:10px;
 }
 .tradeMnname{
 	font-family:SemiBold;
-	font-size:25px;
+	font-size:22px;
 	font-weight: bold;
 	margin: 10px;
 }
 .text{
 	font-family:SemiBold;
-	font-size:25px;
+	font-size:22px;
 	font-weight: bold;
 	margin: 10px;
 }
 .cpno{
 	position:relative;
 	background-color:#ff9b40;
-	height:51px;
-	width:192px;
+	height:48px;
+	width:180px;
 	border-radius:50px;
-	top:-61px;
-	left: 280px;
+	top:-58px;
+	left: 200px;
 }
 .cpnotext{
 	color:#ffffff;

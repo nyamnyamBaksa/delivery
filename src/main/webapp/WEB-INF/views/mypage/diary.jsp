@@ -19,76 +19,116 @@
 	<link rel="stylesheet" href="/css/sweetalert.min.css" />
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="/css/bootstrap-icons.css">
+	<style type="text/css">
+		.col-lg-12{
+			position: absolute;
+			top: 24%;
+			left: 3%;
+			right: 3%;
+			bottom: 35%;
+		}
+		
+		.col-lg-13{
+			position: absolute;
+			top: 12%;
+			left: 10%;
+			right: 3%;
+		}
+		td{
+			font-size: 20px;
+			vertical-align: middle;
+		}
+	</style>
 </head>
 <body>
+	<c:if test="${sessionScope.mid ne null}">
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	</a>
 	<div class="title">
 		<div class="titleFont">냠냠 다이어리</div>
 	</div>
-	<div style="margin-top: 50px;"></div>
-	<c:if test="${sessionScope.mid ne null}">
 		<div class="cart-box-main">
+			<c:if test="${list[0].count eq null}">
 			<div class="container">
+				<div class="col-lg-13">
+					<h1 style="text-align: center;">다이어리 글이 없습니다.</h1>
+				</div>	
+			</div>
+		</c:if>
+		<c:if test="${list[0].count ne null}">
+			<div id="mid" style="display: none;">${sessionScope.mid }</div>
+			<div id="id" style="display: none;">${id }</div>
+			<div class="container">
+				<span id="diarycount" style="display: none;">${list[0].count }</span>
 				<c:if test="${id eq null || sessionScope.mid eq id }">
-					<button class="dwrite" style="width:100px;height:35px;cursor:pointer;">글쓰기</button>
+					<button class="dwrite">글쓰기</button>
 				</c:if>
 			</div>
 			<div class="container">
 				<div class="col-lg-12">
 					<table class="table">
 						<c:forEach items="${list }" var="row">
-							<tr style="height: 200px;">
+							<tr style="height: 100px;">
 								<td class="name-pr"
-									style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 800px;">${row.bcontent }</td>
+									style="font-weight: bolder; border: 0; border-style: dashed; width: 300px;">${row.bcontent }</td>
+								<td class="bbno" style="display: none;">${row.bno }</td>
+								<td style="border: 0; border-style: dashed;">
+									<c:if test="${id eq null || sessionScope.mid eq id }">
+										<a href="/mypage/dedit/${row.bno}"><button class="dedit">수정</button></a>
+									</c:if>
+								</td>
+								<td class="remove-pr" style="border: 0; border-style: dashed;">
+									<c:if test="${id eq null || sessionScope.mid eq id }">
+										<i style="cursor: pointer;align-items: center;" class="fas fa-times"></i>
+									</c:if>
+								</td>
+							</tr>
+							<tr style="border-bottom: 1px solid #c0c0c0;">
 								<td class="quantity-box"
 									style="border: 0; border-style: dashed; width: 100px;">${row.bdate }</td>
-								<td class="bbno" style="display: none;">${row.bno }</td>
-								<c:if test="${id eq null || sessionScope.mid eq id }">
-									<td style="border: 0; border-style: dashed;">
-										<a href="/mypage/dedit/${row.bno}"><button class="dedit" style="width:100px;height:35px;cursor:pointer;">수정</button></a>
-									</td>
-									<td class="remove-pr" style="border: 0; border-style: dashed;">
-										<i style="cursor: pointer;align-items: center;" class="fas fa-times"></i>
-									</td>
-								</c:if>
-							</tr>
-							<tr style="border-bottom: 1px solid black;">
-								<td class="name-pr"
-									style="font-size: larger; font-weight: bolder; border: 0; border-style: dashed; width: 800px;"></td>
 								<td class="bno" style="display: none;">${row.bno }</td>
 								<td class="total-pr" style="border: 0; border-style: dashed; width: 60px;"><c:choose>
 										<c:when test="${row.mylike eq 1}">
 											<p>
 												<i class="bi bi-heart-fill"
-													style="margin-top: 5px; font-size: 32px; color: #EB5757; cursor: pointer;"></i>
+													style="margin-top: 5px;color: #EB5757; cursor: pointer;"></i>
 												&nbsp;<span class="blike">${row.blike}</span>
 											</p>
 										</c:when>
 										<c:otherwise>
 											<p>
 												<i class="bi bi-heart"
-													style="margin-top: 5px; font-size: 32px; color: #EB5757; cursor: pointer;"></i>
+													style="margin-top: 5px;color: #EB5757; cursor: pointer;"></i>
 												&nbsp;<span class="blike">${row.blike}</span>
 											</p>
 										</c:otherwise>
 									</c:choose></td>
 								<td class="total-pr"
-									style="border: 0; border-style: dashed; width: 60px;">
+									style="border: 0; border-style: dashed; width: 100px;">
 									<p>
 										<i class="bi bi-chat-dots"
-											style="font-size: 32px; color: #EB5757; cursor: pointer;"></i>&nbsp;${row.commentcount }
+											style="color: #EB5757; cursor: pointer;"></i>&nbsp;<span class="commentcount" data-bno="${row.bno}">${row.commentcount }</span>
 									</p>
 								</td>
 							</tr>
 						</c:forEach>
 					</table>
+					<button style="margin: 0 auto;" class="morebtn">+ 더보기</button>
+		<div class="mouse" style="text-align: center;">
+		<a href="#" class="mouse-icon">
+			<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
+		</a>
+		</div>
 				</div>
 			</div>
+			</c:if>
 		</div>
 	</c:if>
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-lg" style="width: 500px;">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #E6E6FA;">
 					<h5 class="modal-title" id="exampleModalLabel">본문제목</h5>
@@ -107,10 +147,118 @@
 	<!-- ALL JS FILES -->
 	<script src="/js/jquery-3.2.1.min.js"></script>
 	<script src="/js/popper.min.js"></script>
+	<script src="js/scrollax.min.js"></script>
 	<script src="/js/sweetalert.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	
 	<script type="text/javascript">
+	
+		// 총 개수
+		var diarycount = $('#diarycount').text();
+		// 조회 인덱스
+		var offset = 0;	// 인덱스 초기값
+		var count = 7;	// 7개씩 로딩
+		
+		// 더보기 버튼 삭제
+		if(offset + 7 >= diarycount){
+			$('.morebtn').remove();
+		}
+
+		// 더보기 클릭시
+		$(document).on("click", ".morebtn", function(){
+			offset += 7;
+			readOldNotify(offset);
+		});
+			
+		// 더보기 실행함수
+		function readOldNotify(offset){
+			var id = $("#id").text();
+			var mid = $("#mid").text();
+			if(id == ''){
+				id = $('#mid').text();
+			}
+			let endIndex = offset+count-1;	// endIndex설정
+			$.ajax({
+				url: "/mypage/moreDiary",
+				type: "post",
+				async: "true",
+				dataType: "json",
+				data: {
+					id: id,mid:mid,
+					offset: offset,
+					endIndex: endIndex
+				},
+				success: function (data) {
+					var newRow = '';
+					// 업데이트된 데이터로 표 채우기
+					$.each(data.list,function(index, row) {
+						newRow = '<tr style="height: 100px;">'
+								+ '<td class="name-pr" style="font-weight: bolder;border: 0; border-style: dashed; width: 300px;">'
+								+ row.bcontent
+								+ '</td>'
+								+ '<td class="bbno" style="display: none;">'
+								+ row.bno
+								+ '</td><td style="border: 0; border-style: dashed;">'
+
+						if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
+							newRow += '<a href="/mypage/dedit/${row.bno}"><button class="dedit">수정</button></a>';
+						}
+						newRow += '</td><td class="remove-pr" style="border: 0; border-style: dashed;">';
+						
+						if('${sessionScope.mid}' === '${id}' || '${id}' == ''){
+							newRow += '<i style="cursor: pointer;" class="fas fa-times"></i>';
+						}
+
+						newRow += '</td>'
+								+ '</tr>'
+								+ '<tr style="border-bottom: 1px solid #c0c0c0;">'
+								+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 100px;">'
+								+ row.bdate
+								+ '</td>'
+								+ '<td class="bno" style="display: none;">'
+								+ row.bno
+								+ '</td>'
+								+ '<td class="myid" style="display: none;">'
+								+ '${sessionScope.mid}'
+								+ '</td>'
+								+ '<td class="total-pr" style="border: 0; border-style: dashed; width: 60px;">';
+
+						if (row.mylike >= 1) {
+							newRow += '<p>'
+									+ '<i class="bi bi-heart-fill" style="margin-top: 5px;color: #EB5757; cursor: pointer;"></i>'
+									+ '&nbsp;<span class="blike">'
+									+ row.blike
+									+ '</span>'
+									+ '</p>';
+						} else {
+							newRow += '<p>'
+									+ '<i class="bi bi-heart" style="margin-top: 5px;color: #EB5757; cursor: pointer;"></i>'
+									+ '&nbsp;<span class="blike">'
+									+ row.blike
+									+ '</span>'
+									+ '</p>';
+						}
+
+						newRow += '</td>'
+								+ '<td class="total-pr" style="border: 0; border-style: dashed; width: 100px;">'
+								+ '<p><i class="bi bi-chat-dots" style="color: #EB5757; cursor: pointer;"></i>&nbsp;<span class="commentcount" data-bno="${row.bno}">'
+								+ row.commentcount
+								+ '</span></p>'
+								+ '</td>'
+								+ '</tr>';
+					
+						$(newRow).appendTo($(".table")).slideDown();
+					});
+				 	
+					// 더보기 버튼 삭제
+					if(offset + 7 >= diarycount){
+						$('.morebtn').remove();
+					}
+				 	
+				}
+			});
+		}	
+	
 		$(document).on("click", ".dwrite", function() {
 			location.href = "/mypage/dwrite";
 		});
@@ -129,40 +277,50 @@
 				},
 				function(isConfirm) {
 					if (isConfirm) {
+						diarycount -=  1;
+						if((offset + 7 >= diarycount && offset < diarycount) || (offset + 7 < diarycount && offset < diarycount)){
+							count = offset + 7;
+						} else if(offset >= diarycount){
+							count = offset;
+						}
 						$.ajax({
-						url : './bdelete',
+						url : '/mypage/bdelete',
 						type : 'post',
 						data : {
-							bno : bno
+							bno : bno, offset:offset, count:count
 						},
 						dataType : 'json',
 						success : function(data) {
+							offset = count - 7;
+							count = 7;
 							// 표의 내용을 삭제
 							var table = $(".table");
 							table.empty();
-
 							// 업데이트된 데이터로 표 채우기
 							$.each(data.list,function(index, row) {
-								var newRow = '<tr style="height: 200px;">'
-										+ '<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;">'
+								newRow = '<tr style="height: 100px;">'
+										+ '<td class="name-pr" style="font-weight: bolder;border: 0; border-style: dashed; width: 300px;">'
 										+ row.bcontent
-										+ '</td>'
-										+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 100px;">'
-										+ row.bdate
 										+ '</td>'
 										+ '<td class="bbno" style="display: none;">'
 										+ row.bno
-										+ '</td>'
-										+ '<td class="remove-pr" style="border: 0; border-style: dashed;">';
-
-								if ('${sessionScope.mid}' === '${id}') {
+										+ '</td><td style="border: 0; border-style: dashed;">'
+		
+								if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
+									newRow += '<a href="/mypage/dedit/${row.bno}"><button class="dedit">수정</button></a>';
+								}
+								newRow += '</td><td class="remove-pr" style="border: 0; border-style: dashed;">';
+								
+								if('${sessionScope.mid}' === '${id}' || '${id}' == ''){
 									newRow += '<i style="cursor: pointer;" class="fas fa-times"></i>';
 								}
-
+		
 								newRow += '</td>'
 										+ '</tr>'
-										+ '<tr style="border-bottom: 1px solid black;">'
-										+ '<td class="name-pr" style="font-size: larger; font-weight: bolder;border: 0; border-style: dashed; width: 800px;"></td>'
+										+ '<tr style="border-bottom: 1px solid #c0c0c0;">'
+										+ '<td class="quantity-box" style="border: 0; border-style: dashed; width: 100px;">'
+										+ row.bdate
+										+ '</td>'
 										+ '<td class="bno" style="display: none;">'
 										+ row.bno
 										+ '</td>'
@@ -170,35 +328,41 @@
 										+ '${sessionScope.mid}'
 										+ '</td>'
 										+ '<td class="total-pr" style="border: 0; border-style: dashed; width: 60px;">';
-
+		
 								if (row.mylike >= 1) {
 									newRow += '<p>'
-											+ '<i class="bi bi-heart-fill" style="margin-top: 5px; font-size: 32px; color: #EB5757; cursor: pointer;"></i>'
+											+ '<i class="bi bi-heart-fill" style="margin-top: 5px;color: #EB5757; cursor: pointer;"></i>'
 											+ '&nbsp;<span class="blike">'
 											+ row.blike
 											+ '</span>'
 											+ '</p>';
 								} else {
 									newRow += '<p>'
-											+ '<i class="bi bi-heart" style="margin-top: 5px; font-size: 32px; color: #EB5757; cursor: pointer;"></i>'
+											+ '<i class="bi bi-heart" style="margin-top: 5px;color: #EB5757; cursor: pointer;"></i>'
 											+ '&nbsp;<span class="blike">'
 											+ row.blike
 											+ '</span>'
 											+ '</p>';
 								}
-
+		
 								newRow += '</td>'
-										+ '<td class="total-pr" style="border: 0; border-style: dashed; width: 60px;">'
-										+ '<p><i class="bi bi-chat-dots" style="font-size: 32px; color: #EB5757; cursor: pointer;"></i>&nbsp;'
+										+ '<td class="total-pr" style="border: 0; border-style: dashed; width: 100px;">'
+										+ '<p><i class="bi bi-chat-dots" style="color: #EB5757; cursor: pointer;"></i>&nbsp;<span class="commentcount" data-bno="${row.bno}">'
 										+ row.commentcount
-										+ '</p>'
+										+ '</span></p>'
 										+ '</td>'
 										+ '</tr>';
-
+							
 								table.append(newRow);
 							});
 
 							swal('', '삭제되었습니다.', "success");
+							diarycount = data.list[0].count;
+							$('#diarycount').text(diarycount);
+							// 더보기 버튼 삭제
+							if(offset + count >= diarycount){
+								$('.morebtn').remove();
+							}
 						},
 						error : function(err) {
 							swal("실패", "작업수행에 실패하였습니다.", "error");
@@ -207,6 +371,7 @@
 				}
 			});
 		}
+		
 
 		$(document).on("click", ".fa-times", function() {
 			let bno = $(this).closest('tr').find('.bbno').text();
@@ -251,15 +416,15 @@
 		$(document).on("click",".bi-chat-dots",function() {
 			let bno = $(this).closest('tr').find('.bno').text();
 			$.ajax({
-						url : '/mypage/comment',
-						type : 'post',
-						data : {
-							bno : bno
-						},
-						dataType : 'json',
-						success : function(data) {
-							updateComment(data, bno);
-						},
+				url : '/mypage/comment',
+				type : 'post',
+				data : {
+					bno : bno
+				},
+				dataType : 'json',
+				success : function(data) {
+					updateComment(data, bno);
+				},
 				error : function(error) {
 					swal("실패", "작업수행에 실패하였습니다.", "error");
 				}
@@ -277,6 +442,8 @@
 				dataType : 'json',
 				success : function(data) {
 					updateComment(data, bno);
+					var count = data.comment[0].count;
+					var commentcount = $('.commentcount[data-bno="' + bno + '"]').text(count);
 				},
 				error : function(err) {
 					swal("실패", "작업수행에 실패하였습니다.", "error");
@@ -290,9 +457,9 @@
 			
 			if(data.comment.length == 0){
 				var newContent = '<div class="modal-body" style="display: flex; justify-content: space-between;background-color: #FF9C41;">'
-				+ '<div class="detail">'
+				+ '<div class="detail" style="margin: 0 auto;">'
 				+ '<div class="detail-date-read">'
-				+ '<div class="detail-read" style="fon-size:large;font-weight:bold;"><i class="bi bi-pencil"></i>&nbsp;댓글쓰기</div>'
+				+ '<div class="detail-read" style="font-size:large;font-weight:bold;text-align:center;"><i class="bi bi-pencil"></i>&nbsp;댓글쓰기</div>'
 				+ '</div>'
 				+ '</div>'
 				+ '</div>'
@@ -300,46 +467,48 @@
 				+ '<div class="bbbno" style="display:none;">' + bno + '</div>'
 				+ '<input placeholder="댓글을 작성하세요" class="modal-title cwrite" id="exampleModalLabel" style="width:800px;height:100px;font-weight: bolder;">'
 				+ '</div>'
-				+ '<div class="modal-header">'
+				+ '<div class="modal-header" style="margin: 0 auto;">'
 				+ '<button class="modal-title cbtn" style="width:100px;height:35px;cursor:pointer;">댓글쓰기</button>'
 				+ '</div>';
 				
 				modalcontent.append(newContent);
+			} else {
+				$.each(data.comment, function(index, row) {
+					var newContent = '<div class="modal-body" style="display: flex; justify-content: space-between;background-color: #FF9C41;">'
+							+ '<div class="detail" style="margin: 0 auto;">'
+							+ '<div class="detail-date-read">'
+							+ '<a href="/mypage/main/' + row.mid + '"><div class="detail-read" style="fon-size:large;font-weight:bold;">'
+							+ row.mnickname
+							+ '</a>&nbsp;('
+							+ row.cmdate
+							+ ')</div>'
+							+ '</div>'
+							+ '</div>'
+							+ '</div>'
+							+ '<div class="modal-header" style="margin: 0 auto;">'
+							+ '<h5 class="modal-title" id="exampleModalLabel" style="font-weight: bolder;">'
+							+ row.cmcontent
+							+ '</h5>'
+							+ '</div>'
+					modalcontent.append(newContent);
+				});
+				 newContent = '<div class="modal-body" style="display: flex; justify-content: space-between;background-color: #FF9C41;">'
+							+ '<div class="detail" style="margin: 0 auto;">'
+							+ '<div class="detail-date-read">'
+							+ '<div class="detail-read" style="fon-size:large;font-weight:bold;"><i class="bi bi-pencil"></i>&nbsp;댓글쓰기</div>'
+							+ '</div>'
+							+ '</div>'
+							+ '</div>'
+							+ '<div class="modal-header">'
+							+ '<div class="bbbno" style="display:none;">' + bno + '</div>'
+							+ '<input class="modal-title cwrite" id="exampleModalLabel" style="width:800px;height:100px;font-weight: bolder;">'
+							+ '</div>'
+							+ '<div class="modal-header" style="margin: 0 auto;">'
+							+ '<button class="modal-title cbtn" style="width:100px;height:35px;cursor:pointer;">댓글쓰기</button>'
+							+ '</div>';
+				modalcontent.append(newContent);
 			}
 
-			$.each(data.comment, function(index, row) {
-				var newContent = '<div class="modal-body" style="display: flex; justify-content: space-between;background-color: #FF9C41;">'
-						+ '<div class="detail">'
-						+ '<div class="detail-date-read">'
-						+ '<div class="detail-read" style="fon-size:large;font-weight:bold;">'
-						+ row.mname
-						+ '&nbsp;('
-						+ row.cmdate
-						+ ')</div>'
-						+ '</div>'
-						+ '</div>'
-						+ '</div>'
-						+ '<div class="modal-header">'
-						+ '<h5 class="modal-title" id="exampleModalLabel" style="font-weight: bolder;">'
-						+ row.cmcontent
-						+ '</h5>'
-						+ '</div>'
-						+ '<div class="modal-body" style="display: flex; justify-content: space-between;background-color: #FF9C41;">'
-						+ '<div class="detail">'
-						+ '<div class="detail-date-read">'
-						+ '<div class="detail-read" style="fon-size:large;font-weight:bold;"><i class="bi bi-pencil"></i>&nbsp;댓글쓰기</div>'
-						+ '</div>'
-						+ '</div>'
-						+ '</div>'
-						+ '<div class="modal-header">'
-						+ '<div class="bbbno" style="display:none;">' + bno + '</div>'
-						+ '<input class="modal-title cwrite" id="exampleModalLabel" style="width:800px;height:100px;font-weight: bolder;">'
-						+ '</div>'
-						+ '<div class="modal-header">'
-						+ '<button class="modal-title cbtn" style="width:100px;height:35px;cursor:pointer;">댓글쓰기</button>'
-						+ '</div>';
-				modalcontent.append(newContent);
-			});
 			$("#exampleModal").modal("show");
 		}
 	</script>
