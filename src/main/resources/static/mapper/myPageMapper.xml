@@ -66,7 +66,7 @@
 	</select>
 	
 	<select id="profile" parameterType="String" resultType="Map">
-		select mname, mprofile
+		select mname, mprofile, mnickname
 		FROM member
 		WHERE mid = #{id}
 	</select>
@@ -137,7 +137,7 @@
 			ON b.bno = l.bno AND l.mno = (SELECT mno FROM member WHERE MID = #{mid})
 		WHERE b.mid = #{id}
 		GROUP BY b.bno, b.bcontent, b.bdate, b.commentcount, b.blike
-		limit #{offset}, 7
+		limit #{offset}, #{count}
 	</select>
 	
 	<update id="bdelete" parameterType="Integer">
@@ -306,7 +306,7 @@
 			AND rdel = 1
 		GROUP BY r.tgroup
 		order by rno desc
-		limit #{offset}, 7
+		limit #{offset}, #{count}
 	</select>
 	
 	<select id="mnreviewlist" parameterType="Map" resultType="Map">
@@ -340,7 +340,10 @@
 	</insert>
 	
 	<update id="updateReview" parameterType="Map">
-		update review set rcomment = #{redit}, rscore = #{starRating}, rphoto=#{rphoto}
+		update review set rcomment = #{redit}, rscore = #{starRating}
+		<if test="rphoto != null and rphoto != ''">
+			, rphoto=#{rphoto}
+		</if>
 		where rno = #{rno}
 	</update>
 	

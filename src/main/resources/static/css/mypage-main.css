@@ -6,9 +6,9 @@ body{
 /* profile */
 .profile{
 	position: absolute;
-	left: 8%;
+	left: 3.5%;
 	right: 83.54%;
-	top: 12%;
+	top: 11%;
 	bottom: 81.45%;
 	
 }
@@ -23,14 +23,14 @@ body{
 /* 닉네임 */
 .nickname{
 	position: absolute;
-	left: 37%;
-	right: 40%;
+	left: 41%;
+	right: 85%;
 	top: 13%;
-	bottom: 82.91%;
-	
+	bottom: 25%;
+	height: 33px;
 	font-style: normal;
 	font-weight: 800;
-	font-size: 23px;
+	font-size: 20px;
 	line-height: 27px;
 	/* or 150% */
 	display: flex;
@@ -46,7 +46,7 @@ body{
 .diary{
 	position: absolute;
 	left: 6%;
-	top: 30%;
+	top: 35%;
 	display: flex;
     flex-direction: column; /* 요소 내의 요소들을 수직으로 나열합니다. */
     align-items: center; /* 요소를 수직으로 중앙 정렬합니다. */
@@ -58,7 +58,7 @@ body{
 	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 600;
-	font-size: 23px;
+	font-size: 20px;
 	line-height: 27px;
 	/* identical to box height, or 150% */
 	
@@ -71,7 +71,7 @@ body{
 .zzim{
 	position: absolute;
 	left: 38%;
-	top: 30%;
+	top: 35%;
 	bottom: 64.84%;
 	display: flex;
     flex-direction: column;
@@ -84,15 +84,15 @@ body{
 	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 600;
-	font-size: 23px;
+	font-size: 20px;
 	line-height: 27px;
 	
 	color: #000000;
 }
 
 img{
-	width: 120px;
-	height: 120px; 
+	width: 100px;
+	height: 100px; 
 }
 
 
@@ -101,7 +101,7 @@ img{
 	position: absolute;
 	left: 72%;
 	right: 7%;
-	top: 30%;
+	top: 35%;
 	bottom: 64.26%;
 	
 	/* identical to box height, or 150% */
@@ -115,7 +115,7 @@ img{
 .review p{
 	font-style: normal;
 	font-weight: 600;
-	font-size: 23px;
+	font-size: 20px;
 	line-height: 27px;
 }
 
@@ -125,7 +125,7 @@ img{
 .coupon{
 	position: absolute;
 	left: 7%;
-	top: 50%;
+	top: 51%;
 	bottom: 45.7%;
 	
 	/* identical to box height, or 150% */
@@ -138,7 +138,7 @@ img{
 .coupon p{
 	font-style: normal;
 	font-weight: 600;
-	font-size: 23px;
+	font-size: 20px;
 	line-height: 27px;
 }
 
@@ -161,7 +161,7 @@ img{
 .pay p{
 	font-style: normal;
 	font-weight: 600;
-	font-size: 23px;
+	font-size: 20px;
 	line-height: 27px;
 }
 
@@ -170,11 +170,12 @@ img{
 /* + 밥친구 추가 네모 */
 .follow, .unfollow1, .followAccept, .unfollow3 {
 	position: absolute;
-	left: 55%;
-	right: 10%;
-	top: 13%;
+	left: 41%;
+	right: 57%;
+	top: 20%;
 	bottom: 82%;
-	
+	width: 165px;
+	height: 33px;
 	background: #EB5757;
 	border-radius: 50px;
 	font-style: normal;
@@ -214,12 +215,12 @@ img{
 .HowManyfollow{
 	position: absolute;
 	left: 41%;
-	top: 20%;
+	top: 27%;
 	bottom: 84.77%;
 	
 	font-style: normal;
 	font-weight: 700;
-	font-size: 23px;
+	font-size: 20px;
 	line-height: 27px;
 	/* or 150% */
 	display: flex;
@@ -234,13 +235,13 @@ img{
 /* {닉네임}님의 최애 맛집은? */
 .favoriteStore{
 	position: absolute;
-	left: 7%;
+	left: 25%;
 	top: 73%;
 	bottom: 35.64%;
-	
+	margin: 0 auto;
 	font-style: normal;
 	font-weight: 600;
-	font-size: 23px;
+	font-size: 20px;
 	line-height: 27px;
 	/* or 150% */
 	display: flex;
@@ -257,13 +258,13 @@ img{
 	position: relative;
 	width: 300px;
 	height: 50px;
-	left: 30px;
+	left: 45px;
 	top: 600px;
 	margin:1px;
 	background: #FF9C41;
 	border-radius: 10px;
 	margin: 5px;
-	font-size:23px;
+	font-size:20px;
 	display: flex;
 	align-items: center;
 	text-align: center;
@@ -273,13 +274,12 @@ img{
 /* {닉네임}님은 카페/디저트 러버! */
 .favoriteCate{
 	position: absolute;
-	left: 30px;
-	top: 100%;
+	left: 27%;
+	top: 103%;
 	bottom: 36.33%;
-	
 	font-style: normal;
 	font-weight: 600;
-	font-size: 23px;
+	font-size: 20px;
 	line-height: 27px;
 	/* or 150% */
 	display: flex;
@@ -295,7 +295,7 @@ img{
 /* image 3 */
 .favoriteCateGoogleChart{
 	position: absolute;
-	left: 35px;
+	left: 67px;
 	top: 105%;
 	width: 270px;
 	height: 270px;

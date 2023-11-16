@@ -30,9 +30,9 @@
     	<div class="id" style="display: none;">${id }</div><!-- 방문자 아이디 -->
     	<div class="babfriend" style="display: none;">${babfriend }</div><!-- 밥친구 -->
         <div class="profile"><!-- onclick="popup('${sessionScope.mid}')" 작은 따옴표로 감싸기 -->
-            <img class="profile-image" src="/img/profileImg${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
+            <img class="profile-image" src="/img/profileImg/${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
         </div>
-        <div class="nickname">${result.mname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><i class="bi bi-arrow-right"></i></a></c:if></div>
+        <div class="nickname">${result.mnickname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><i class="bi bi-arrow-right"></i></a></c:if></div>
         <c:if test="${sessionScope.mid ne id }">
 	        <c:choose>
 	        	<c:when test="${babfriend eq 0 }">
@@ -57,7 +57,7 @@
         	<div class="diary"><a href="/mypage/diary"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
         	<div class="zzim"><a href="/wishlist"><img src="/img/profileImg/heart.png"></a><p>나의 찜</p></div>
         	<div class="review"><a href="/mypage/review"><img src="/img/profileImg/review.png"></a><p>리뷰관리</p></div>
-        	<div class="coupon"><a href="/mypage/coupon"><img src="/img/profileImg/coupon.png"></a><p>쿠폰함</p></div>
+        	<div class="coupon"><a href="/mypage/coupon"><img style="height: 95px;" src="/img/profileImg/coupon.png"></a><p>쿠폰함</p></div>
 	        <div class="pay"><a href="/mypage/pay"><img src="/img/profileImg/credit_card.png"></a><p>냠냠페이</p></div>
         </c:if>
         <c:if test="${sessionScope.mid ne id }">
@@ -67,9 +67,9 @@
         </c:if>
         
         <c:if test="${toplist[0].sname ne null }">
-	        <div class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
+	        <div id="favoriteStore" class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
 	        <c:forEach items="${toplist }" var="row" varStatus="loopStatus">
-	        <table class="favoriteStoreComponent">
+	        <table id="favoriteStoreComponent" class="favoriteStoreComponent">
 	        	<tr>
 	        		<td style="width: 20px;">
 			        	<i class="bi bi-trophy-fill" style="font-size:30px;color:
@@ -85,10 +85,10 @@
 		    	</tr>   
 		    </table>
 		    </c:forEach>
-		    <div class="favoriteCate">
+		    <div id="favoriteCate" class="favoriteCate">
 		    	'${result.mname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
 		    </div>
-		    <div class="favoriteCateGoogleChart">
+		    <div id="favoriteCateGoogleChart" class="favoriteCateGoogleChart">
 	        	<canvas id="donutChart"></canvas>
 		    </div>    
 	    </c:if>
@@ -203,7 +203,7 @@
 					        if (status == 'SUCCESS') {
 					         	// 이미지를 업데이트
 					         	var jsonObject = JSON.parse(body);
-				                var newImageSrc = '/img/profileImg' + jsonObject.profileImg;
+				                var newImageSrc = '/img/profileImg/' + jsonObject.profileImg;
 				                $(".profile-image").attr('src', newImageSrc);
 				                swal.close();
 					        } else{

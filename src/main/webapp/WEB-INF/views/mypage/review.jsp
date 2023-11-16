@@ -106,9 +106,21 @@ td, .rdate, .sname{
 	vertical-align: middle;
 }
 
+.rcomment{
+	width: 450px;
+}
+
+.height{
+	height: 150px;
+}
+
+.sname{
+	font-weight: bolder;
+}
+
 .custom-checkbox{
 	vertical-align: middle;
-	margin-top: 22px;
+	margin-top: 12.5px;
 }
 </style>
 </head>
@@ -156,7 +168,7 @@ td, .rdate, .sname{
 					<table class="table">
 						 <c:forEach var="row" items="${list}" varStatus="loop">
 					        <tr style="border-top: 1px solid #c0c0c0;">
-					            <td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 500px;">
+					            <td colspan='2' class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 500px;">
 									<c:if test="${id eq null || sessionScope.mid eq id}">
 					                <div class="custom-control custom-checkbox" style="display: inline-block;">
 					                    <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="${loop.index}" value="${row.rno}">
@@ -167,10 +179,10 @@ td, .rdate, .sname{
 			                	</td>
 			                </tr>
 			                <tr>
-			                	<td class="name-pr" style="border: 0; border-style: dashed; width: 70px;">
+			                	<td colspan='2' class="name-pr" style="border: 0; border-style: dashed; width: 500px;">
 					                <span class="rdate">${row.rdate}</span>
 					                <c:if test="${id eq null || sessionScope.mid eq id }">
-					                	<button class="editbtn" style="float:right; margin-left:7px; margin-right:7px;">수정</button>
+					                	<button class="editbtn" style="float:right;">수정</button>
 					            	</c:if>
 					            </td>
 					        </tr>
@@ -188,15 +200,15 @@ td, .rdate, .sname{
 					            </td>
 					        </tr>
 					        <tr>
-					            <td class="name-pr" style="border: 0; border-style: dashed;font-weight: bolder;">${row.rcomment}</td>
-					            <c:if test="${row.rphoto != null}">
-						            <td class="name-pr" style="border: 0; border-style: dashed;">
-						            	<img class="rphoto modal-title" src="/img/review' + ${row.rphoto} + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">
+					            <td class="name-pr rcomment  <c:if test="${row.rphoto != null || row.rphoto == ''}">height</c:if>" style="border: 0; border-style: dashed;font-weight: bolder;">${row.rcomment}</td>
+					            <c:if test="${row.rphoto != null || row.rphoto == ''}">
+						            <td rowspan='2' class="name-pr" style="border: 0; border-style: dashed;">
+						            	<img class="rphoto modal-title" src="/img/review/${row.rphoto}" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">
 						            </td>
 					            </c:if>
 					        </tr>
 					        <tr style="border-bottom: 1px solid #c0c0c0;">
-					            <td class="name-pr mnname" style="font-size:17px;border: 0; border-style: dashed; width: 100px;vertical-align: middle;">
+					            <td colspan='2' class="name-pr mnname" style="font-size:17px;border: 0; border-style: dashed; width: 100px;vertical-align: middle;">
 					                <c:set var="menuNames" value="" />
 					                <c:forEach var="mn" items="${mnlist}" varStatus="loop">
 					                    <c:if test="${mn.rno eq row.rno}">
@@ -218,14 +230,14 @@ td, .rdate, .sname{
 					</table>
 					<button style="margin: 0 auto;" class="morebtn">+ 더보기</button>
 					<div class="mouse">
-					<a href="#" class="mouse-icon">
-						<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
-					</a>
+						<a href="#" class="mouse-icon">
+							<div class="mouse-wheel"><i class="fa fa-chevron-up"></i></div>
+						</a>
+					</div>
 				</div>
 			</div>
 			</c:if>
 		</div>
-	</div>
 	</c:if>
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -310,7 +322,7 @@ td, .rdate, .sname{
    				                rcomment: row.rcomment,
    				                rno: rno,
    				                mnnameList: [],
-   				                rsocre: row.rsocre,
+   				             	rscore: row.rscore,
    				                rphoto: row.rphoto,
    				                index:index
    				            };
@@ -324,49 +336,55 @@ td, .rdate, .sname{
 
    				 	// 그룹화된 데이터로 테이블 생성
    				    $.each(groupedData, function(rno, group) {
-   				            newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
-   				            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 800px;">';
-   				         if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-   			                newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + group.index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + group.index + '"></label></div>';
-   				         }
-   			                newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname">' + group.sname + '</span></a></td></tr>';
-   			                newTableHTML += ' <tr><td class="name-pr" style="border: 0; border-style: dashed; width: 70px;"><span class="rdate">' + group.rdate + '</span>';
-   			             if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-   			                newTableHTML += '<button class="editbtn" style="float:right; margin-left:10px; margin-right:10px;">수정</button>';
-   			             }
-   				            newTableHTML += '</td>';
-   				            newTableHTML += '</tr>';
-
-   				            newTableHTML += '<tr>';
-   				            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
-   				            newTableHTML += '<div class="star-ratings">';
-   				            newTableHTML += '<div class="rscore" style="display: none;">' + group.rscore + '</div>';
-   				            newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.rscore * 20) + '%;">';
-   				            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
-   				            newTableHTML += '</div>';
-   				            newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
-   				            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
-   				            newTableHTML += '</div>';
-   				            newTableHTML += '</div>';
-   				            newTableHTML += '</td>';
-   				            newTableHTML += '</tr>';
-   				            newTableHTML += '<tr>';
-   				            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed;">' + group.rcomment + '</td>';
-   				         if (group.rphoto != null){
-   				            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed;"><img class="rphoto modal-title" src="/img/review' + group.rphoto + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto"></td>';
-   				         }
-   				            newTableHTML += '</tr>';
-   				            newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"><td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
-   					        newTableHTML += group.mnnameList.join(', ');
-   					        newTableHTML += '</td></tr>';
+	   				    	newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
+	   					    newTableHTML += '<td colspan="2" class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 500px;">';
+	   					    if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
+	   					        newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + index + '"></label></div>';
+	   					    }
+	   					    newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname">' + group.sname + '</span></a></td></tr>';
+	   					    newTableHTML += ' <tr><td colspan="2" class="name-pr" style="border: 0; border-style: dashed; width: 500px;"><span class="rdate">' + group.rdate + '</span>';
+	   					    if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
+	   					        newTableHTML += '<button class="editbtn" style="float:right;">수정</button>';
+	   					    }
+	   					    newTableHTML += '</td>';
+	   					    newTableHTML += '</tr>';
+	   					
+	   					    newTableHTML += '<tr>';
+	   					    newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 500px;">';
+	   					    newTableHTML += '<div class="star-ratings">';
+	   					    newTableHTML += '<div class="rscore" style="display: none;">' + group.rscore + '</div>';
+	   					    newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.rscore * 20) + '%;">';
+	   					    newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+	   					    newTableHTML += '</div>';
+	   					    newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
+	   					    newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+	   					    newTableHTML += '</div>';
+	   					    newTableHTML += '</div>';
+	   					    newTableHTML += '</td>';
+	   					    newTableHTML += '</tr>';
+	   					    newTableHTML += '<tr>';
+	   					    newTableHTML += '<td class="name-pr rcomment" style="border: 0; border-style: dashed; font-weight: bolder;">' + group.rcomment + '</td>';
+	   					    if (group.rphoto != null || group.rphoto == ''){
+	   					        newTableHTML += '<td rowspan="2" class="name-pr" style="border: 0; border-style: dashed;"><img class="rphoto modal-title" src="/img/review/' + group.rphoto + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto"></td>';
+	   					    }
+	   					    newTableHTML += '</tr>';
+	   					    newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"><td colspan="2" class="name-pr mnname" style="font-size: 17px; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
+	   					    newTableHTML += group.mnnameList.join(', ');
+	   					    newTableHTML += '</td></tr>';
+	   					    
+	   					 	var element = document.querySelector('.rcomment'); // 클래스가 'rcomment'인 요소를 선택
+		   					if (group.rphoto != null || group.rphoto == '') {
+		   					    element.classList.add('height'); // 'height' 클래스를 추가
+		   					}
    					    });
 
 	   			    newTableHTML += '';
    				 	// 테이블 업데이트
    					$(newTableHTML).appendTo($(".table")).slideDown();
    				 	
+   				 	
    					if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-					    $('.wish').text('0');
+					    $('.review').text('0');
 					    var check = document.getElementsByName("rowCheck");// var check = $(".rowCheck");
 						var checkCnt = check.length;
 	
@@ -427,7 +445,7 @@ td, .rdate, .sname{
 	
 						// 총 선택된 상품 개수를 업데이트하는 함수
 						function updateTotalCount(count) {
-							var zzimTotalElement = document.querySelector('.wish');
+							var zzimTotalElement = document.querySelector('.review');
 							zzimTotalElement.textContent = count;
 						}
 				    }
@@ -435,7 +453,7 @@ td, .rdate, .sname{
    				 	editok();
    				 	
    					// 더보기 버튼 삭제
-   					if(offset + count >= reviewcount){
+   					if(offset + 7 >= reviewcount){
    						$('.morebtn').remove();
    					}
    				 	
@@ -472,25 +490,27 @@ td, .rdate, .sname{
 			function(isConfirm) {
 				if (isConfirm) {
 					var review = $('.review').text();
-					if(offset > 0){
-						offset = offset - review;
-						for(var i = 1; offset <= 7 * i && offset > 7 * (i - 1); i++){
-							offset = i - 1;
-						}
+					reviewcount -=  review;
+					if((offset + 7 >= reviewcount && offset < reviewcount) || (offset + 7 < reviewcount && offset < reviewcount)){
+						count = offset + 7;
+					} else if(offset >= reviewcount){
+						count = offset;
 					}
 					$.ajax({
 						url : '/mypage/rdelete',
 						type : 'post',
 						traditional : true,// valueArr=[1, 2, 3] -> valueArr=1&valueArr=2&valueArr=3
 						data : {
-							valueArr : valueArr,offset: offset
+							valueArr : valueArr,offset: offset, count:count
 						},
 						dataType: 'json',
 						success : function(data) {
+							offset = count - 7;
+							count = 7;
 							swal("", "리뷰를 삭제했습니다.", "success");
 							updateTable(data);
-							var count = data.list[0].count;
-							reviewcount= $('.reviewcount').text(count);
+							reviewcount = data.list[0].count;
+							$('.reviewcount').text(reviewcount);
 							$('.review').text('0');
 							
 							var check = document.getElementsByName("rowCheck");// var check = $(".rowCheck");
@@ -673,12 +693,6 @@ td, .rdate, .sname{
 					
 					var rphotoElement = '';
 
-					if (data.review.rphoto != null) {
-					    rphotoElement = '<img class="rphoto modal-title" src="/img/review' + data.review.rphoto + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">';
-					} else {
-					    rphotoElement = '<i class="bi bi-camera-fill" style="font-size:25px;cursor:pointer;margin: 0 auto;">사진 첨부하기</i>';
-					}
-					
 					var newContent = '<div class="modal-body" style="display: flex; justify-content: space-between;background-color: #FF9C41;">' +
 		            '<div class="detail" style="margin: 0 auto;">' +
 		            '<div class="detail-date-read">' +
@@ -705,7 +719,7 @@ td, .rdate, .sname{
 		            '<input value="' + data.review.rcomment + '" class="modal-title redit" id="exampleModalLabel" style="width:800px;height:100px;font-weight: bolder;">' +
 		            '</div>' +
 		            '<div class="modal-header">' +
-		            rphotoElement+
+		            '<img id="rphoto" class="modal-title" src="/img/review/' + data.review.rphoto + '" onerror="this.src=\'/img/profileImg/camera.png\'" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">' +
 		            '</div>' +
 		            '<div class="modal-header" style="margin: 0 auto;">' +
 		            '<button class="modal-title editModalbtn">등록하기</button>' +
@@ -721,7 +735,7 @@ td, .rdate, .sname{
 		}
 		
 		const M = window.M;
-		$(document).on("click", ".rphoto, .bi-camera-fill", function() {
+		$(document).on("click", "#rphoto", function() {
 			M.media.picker({
 				  mode: "SINGLE",
 				  media: "PHOTO",
@@ -743,12 +757,9 @@ td, .rdate, .sname{
 				         	// 이미지를 업데이트
 				         	var jsonObject = JSON.parse(body);
 				         	var reviewImg = jsonObject.reviewImg;
-				         	var imgSrc = $('.imgSrc').text(reviewImg); 
-			                var newImageSrc = '/img/review' + reviewImg;
-			                var rphotoElement = '<img class="rphoto modal-title" src="' + newImageSrc + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">';
-
-                            // 기존 rphotoElement을 대체
-                            $(".rphoto").replaceWith(rphotoElement);
+                            var imgSrc = $('.imgSrc').text(reviewImg); 
+			                var newImageSrc = '/img/review/' + reviewImg;
+                            $("#rphoto").attr('src', newImageSrc);
 			                swal.close();
 				        } else{
 				            // M.pop.alert( status + " / " + error );
@@ -770,7 +781,7 @@ td, .rdate, .sname{
 			$.ajax({
 				url : '/mypage/editReview',
 				type : 'post',
-				data : {rno : rno, redit:redit, starRating:starRating,offset: offset, rphoto:rphoto},
+				data : {count:count, rno : rno, redit:redit, starRating:starRating,offset: offset, rphoto:rphoto},
 				dataType : 'json',
 				success : function(data) {
 					swal("", "리뷰를 수정했습니다.", "success");
@@ -820,7 +831,7 @@ td, .rdate, .sname{
 		                rcomment: row.rcomment,
 		                rno: rno,
 		                mnnameList: [],
-		                rsocre: row.rsocre,
+		                rscore: row.rscore,
 		                rphoto: row.rphoto,
 		                index:index
 		            };
@@ -838,44 +849,48 @@ td, .rdate, .sname{
 		    });
 
 		 	// 그룹화된 데이터로 테이블 생성
-		    $.each(sortedGroupedData, function(rno, group) {
-		            newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
-		            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 800px;">';
-	            
-		        if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-	                newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + group.index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + group.index + '"></label></div>';
-	            }
-		        	newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname">' + group.sname + '</span></a></td></tr>';
-	                newTableHTML += ' <tr><td class="name-pr" style="border: 0; border-style: dashed; width: 70px;"><span class="rdate">' + group.rdate + '</span>';
-                if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-	                newTableHTML += '<button class="editbtn" style="float:right; margin-left:10px; margin-right:10px;">수정</button>';
-                }
-		            newTableHTML += '</td>';
-		            newTableHTML += '</tr>';
-
-		            newTableHTML += '<tr>';
-		            newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 100px;">';
-		            newTableHTML += '<div class="star-ratings">';
-		            newTableHTML += '<div class="rscore" style="display: none;">' + group.rscore + '</div>';
-		            newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.rscore * 20) + '%;">';
-		            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
-		            newTableHTML += '</div>';
-		            newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
-		            newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
-		            newTableHTML += '</div>';
-		            newTableHTML += '</div>';
-		            newTableHTML += '</td>';
-		            newTableHTML += '</tr>';
-		            newTableHTML += '<tr>';
-		            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed;">' + group.rcomment + '</td>';
-		            if (group.rphoto != null){
-				            newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed;"><img class="rphoto modal-title" src="/img/review' + group.rphoto + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto"></td>';
+		    $.each(sortedGroupedData, function(index, group) {
+		    	newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
+				    newTableHTML += '<td colspan="2" class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 500px;">';
+				    if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
+				        newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + index + '"></label></div>';
 				    }
-		            newTableHTML += '</tr>';
-		            newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"><td class="name-pr mnname" style="font-size: large; font-weight: bold; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
-			        newTableHTML += group.mnnameList.join(', ');
-			        newTableHTML += '</td></tr>';
-			    });
+				    newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname">' + group.sname + '</span></a></td></tr>';
+				    newTableHTML += ' <tr><td colspan="2" class="name-pr" style="border: 0; border-style: dashed; width: 500px;"><span class="rdate">' + group.rdate + '</span>';
+				    if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
+				        newTableHTML += '<button class="editbtn" style="float:right;">수정</button>';
+				    }
+				    newTableHTML += '</td>';
+				    newTableHTML += '</tr>';
+				
+				    newTableHTML += '<tr>';
+				    newTableHTML += '<td class="name-pr" style="border: 0; border-style: dashed; width: 500px;">';
+				    newTableHTML += '<div class="star-ratings">';
+				    newTableHTML += '<div class="rscore" style="display: none;">' + group.rscore + '</div>';
+				    newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.rscore * 20) + '%;">';
+				    newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+				    newTableHTML += '</div>';
+				    newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
+				    newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+				    newTableHTML += '</div>';
+				    newTableHTML += '</div>';
+				    newTableHTML += '</td>';
+				    newTableHTML += '</tr>';
+				    newTableHTML += '<tr>';
+				    newTableHTML += '<td class="name-pr rcomment" style="border: 0; border-style: dashed; font-weight: bolder;">' + group.rcomment + '</td>';
+				    if (group.rphoto != null || group.rphoto == ''){
+				        newTableHTML += '<td rowspan="2" class="name-pr" style="border: 0; border-style: dashed;"><img class="rphoto modal-title" src="/img/review/' + group.rphoto + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto"></td>';
+				    }
+				    newTableHTML += '</tr>';
+				    newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"><td colspan="2" class="name-pr mnname" style="font-size: 17px; border: 0; border-style: dashed; width: 200px;vertical-align: middle;">';
+				    newTableHTML += group.mnnameList.join(', ');
+				    newTableHTML += '</td></tr>';
+				    
+				 	var element = document.querySelector('.rcomment'); // 클래스가 'rcomment'인 요소를 선택
+					if (group.rphoto != null || group.rphoto == '') {
+					    element.classList.add('height'); // 'height' 클래스를 추가
+					}
+			});
 
 		    newTableHTML += '</table>';
 
@@ -883,6 +898,7 @@ td, .rdate, .sname{
 		    $('.table').html(newTableHTML);
 
 		    editok();
+		    
 		}
 
 	</script>

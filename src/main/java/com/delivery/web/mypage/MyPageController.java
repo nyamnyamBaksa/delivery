@@ -127,9 +127,11 @@ public class MyPageController {
 	            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
 	                    .getRequest();
 	            String path = "C:\\Users\\user\\eclipse-workspace\\delivery\\src\\main\\webapp\\img\\profileImg"; // 원하는 디렉토리로 수정하세요
-
-	            // 이미지 저장
-	            String realFileName = file.getOriginalFilename();
+	            
+	            LocalDateTime ldt = LocalDateTime.now();
+				String format = ldt.format(DateTimeFormatter.ofPattern("YYYYMMddHHmmss"));
+				// 이미지 저장
+				String realFileName = format + file.getOriginalFilename();
 
 	            File newFileName = new File(path, realFileName);
 	            
@@ -189,6 +191,7 @@ public class MyPageController {
 			}
 			map.put("id", id);
 			map.put("offset", 0);
+			map.put("count", 7);
 			int findById = myPageService.findById(id);
 			if(findById == 0) {
 				return "redirect:/";
@@ -205,8 +208,9 @@ public class MyPageController {
 	@PostMapping("/moreDiary")
 	public String moreDiary(@RequestParam Map<String, Object> map, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
-			System.out.println(map);
 			map.put("offset", util.strToInt((String)map.get("offset")));
+			map.put("count", 7);
+			System.out.println(map);
 			List<Map<String, Object>> list = myPageService.boardlist(map);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
@@ -226,7 +230,9 @@ public class MyPageController {
 			String id = (String) session.getAttribute("mid");
 			map.put("mid", mid);
 			map.put("id", id);
-			map.put("offset", util.strToInt((String)map.get("offset")));
+			map.put("offset", 0);
+			map.put("count", util.strToInt((String)map.get("count")));
+			System.out.println(map);
 			List<Map<String, Object>> list = myPageService.boardlist(map);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
@@ -430,6 +436,7 @@ public class MyPageController {
 			}
 			map.put("id", id);
 			map.put("offset", 0);
+			map.put("count", 7);
 			List<Map<String, Object>> list = myPageService.reviewlist(map);
 			List<Map<String, Object>> mnlist = myPageService.mnreviewlist(map);
 			model.addAttribute("list", list);
@@ -446,6 +453,7 @@ public class MyPageController {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			System.out.println(map);// {id=aaaa, offset=7, endIndex=13}
 			map.put("offset", util.strToInt((String)map.get("offset")));
+			map.put("count", 7);
 			List<Map<String, Object>> list = myPageService.reviewlist(map);
 			List<Map<String, Object>> mnlist = myPageService.mnreviewlist(map);
 			JSONObject json = new JSONObject();
@@ -475,7 +483,7 @@ public class MyPageController {
 	@ResponseBody
 	@PostMapping("/rdelete")
 	public String rdelete(@RequestParam(value="valueArr") String[] del, HttpSession session,
-			@RequestParam(name="offset", required = false) int offset) {
+			@RequestParam(name="count", required = false) int count) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
 			JSONObject json = new JSONObject();
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -486,7 +494,8 @@ public class MyPageController {
 			}
 			String id = (String) session.getAttribute("mid");
 			map.put("id", id);
-			map.put("offset", offset);
+			map.put("offset", 0);
+			map.put("count", count);
 			List<Map<String, Object>> list = myPageService.reviewlist(map);
 			List<Map<String, Object>> mnlist = myPageService.mnreviewlist(map);
 			json.put("list", list);
@@ -520,8 +529,10 @@ public class MyPageController {
 	        if (file != null && !file.isEmpty()) {
 	            String path = "C:\\Users\\user\\eclipse-workspace\\delivery\\src\\main\\webapp\\img\\review";
 
-	            // 이미지 저장
-	            String realFileName = file.getOriginalFilename();
+	            LocalDateTime ldt = LocalDateTime.now();
+				String format = ldt.format(DateTimeFormatter.ofPattern("YYYYMMddHHmmss"));
+				// 이미지 저장
+				String realFileName = format + file.getOriginalFilename();
 
 	            File newFileName = new File(path, realFileName);
 	            
@@ -558,13 +569,17 @@ public class MyPageController {
 	@PostMapping("/editReview")
 	public String editReview(@RequestParam Map<String, Object> map, HttpSession session) {
 		if(session.getAttribute("mid") != null && (int)session.getAttribute("mgrade") >= 1) {
+			System.out.println(map);
 			JSONObject json = new JSONObject();
 			myPageService.updateReview(map);
 			String id = (String) session.getAttribute("mid");
 			map.put("id", id);
-			map.put("offset", util.strToInt((String)map.get("offset")));
+			map.put("offset", 0);
+			map.put("count", util.strToInt((String)map.get("count")));
 			List<Map<String, Object>> list = myPageService.reviewlist(map);
+			List<Map<String, Object>> mnlist = myPageService.mnreviewlist(map);
 			json.put("list", list);
+			json.put("mnlist", mnlist);
 			return json.toString();
 		} else {
 			return "redirect:/login";
