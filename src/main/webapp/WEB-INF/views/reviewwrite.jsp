@@ -42,8 +42,7 @@ $(document).on("click", ".cameraimg", function() {
 		         	var jsonObject = JSON.parse(body);
 		         	var reviewImg = jsonObject.reviewImg;
 		         	var imgSrc = $('.imgSrc').val(reviewImg); 
-	                var newImageSrc = '/img/review' + reviewImg;
-	                alert(newImageSrc);
+	                var newImageSrc = '/img/review/' + reviewImg;
                     var rphotoElement = '<img class="rphoto" src="' + newImageSrc + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">';
                     $(".rphoto").replaceWith(rphotoElement);
 		        } else{
@@ -92,7 +91,7 @@ $(document).on("click", ".cameraimg", function() {
 					
 					<button class="cameraimg" onclick="M.net.http.upload()">사진 업로드</button>
 					  <hr>
-					  <img class="rphoto" src="" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto; display: none;">
+					  <img class="rphoto" src="" style="width:150px;height:150px; margin: 0 auto;">
 					  <div class="menutitle">추천하고 싶은 메뉴가 있나요?</div>
 				</c:if>
 					<div class="mnname">${row.mnname }<img alt="추천엄지" src="/img/thumbs.png" style="height:15px; width:15px;"></div>
