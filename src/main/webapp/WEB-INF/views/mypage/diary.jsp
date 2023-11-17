@@ -25,12 +25,12 @@
 	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 	<style type="text/css">
 	* {
-	font-family: 'NanumSquareNeo';	
+	font-family: 'NanumSquareNeo';
 }
 		.col-lg-12{
 			position: absolute;
 			top: 24%;
-			left: 3%;
+			left: 0%;
 			right: 3%;
 			bottom: 35%;
 		}
