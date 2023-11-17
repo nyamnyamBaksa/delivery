@@ -1,6 +1,8 @@
 @charset "UTF-8";
 body{
 	font-family: 'NanumSquareNeo';
+	margin:0;
+	padding:0;
 }
 /* div.title-left */
 .title{
@@ -58,7 +60,6 @@ body{
 	top: 12.16%;
 	bottom: 32.16%;
 	
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 32px;
@@ -81,7 +82,6 @@ body{
 	top: 34.9%;
 	bottom: 44.71%;
 	
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 20px;
@@ -116,7 +116,6 @@ body{
 	top: 71.37%;
 	bottom: 16.08%;
 	
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 20px;
@@ -139,7 +138,6 @@ body{
 	top: 71.37%;
 	bottom: 15.29%;
 	
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 20px;
@@ -171,7 +169,6 @@ body{
 	background: #EB5757;
 	border-radius: 50px;
 	border: none;
-	font-family: 'Dosis';
 	font-style: normal;
 	font-weight: 700;
 	font-size: 20px;

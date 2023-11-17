@@ -16,8 +16,8 @@
 </head>
 <body>
 
-	<a href="javascript:history.back()" style="position: relative; z-index: 1; ">
-    <i class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
+<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 3px 3px 3px gray;">
+    <i class="fa-solid fa-arrow-left fa-xl" style="color: black; font-size: 2rem;  margin-top: 30px;"></i>
 </a>
 	<h1>주문내역</h1>
 	<hr class="hr">

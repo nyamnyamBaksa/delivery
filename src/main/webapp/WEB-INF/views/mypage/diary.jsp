@@ -10,6 +10,8 @@
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 <link rel="stylesheet" href="/css/mypage-diary.css">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -24,13 +26,14 @@
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="/css/bootstrap-icons.css">
 	<style type="text/css">
-		body {
-			font-family: 'NanumSquareNeo';
-		}
+
+	* {
+	font-family: 'NanumSquareNeo';
+}
 		.col-lg-12{
 			position: absolute;
 			top: 24%;
-			left: 3%;
+			left: 0%;
 			right: 3%;
 			bottom: 35%;
 		}
@@ -116,9 +119,10 @@
 									</c:choose></td>
 								<td class="total-pr"
 									style="border: 0; border-style: dashed; width: 100px;">
-									<p>
+									<p style="white-space: nowrap">
 										<i class="bi bi-chat-dots"
-											style="color: #EB5757; cursor: pointer;"></i>&nbsp;<span class="commentcount" data-bno="${row.bno}">${row.commentcount }</span>
+											style="color: #EB5757; cursor: pointer; margin-right:5px; "></i>
+											&nbsp;<span class="commentcount" data-bno="${row.bno}">${row.commentcount }</span>
 									</p>
 								</td>
 							</tr>

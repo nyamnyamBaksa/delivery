@@ -64,15 +64,15 @@ function drawChart() {
 <body>
 <c:forEach items="${reviewview}" var="row" varStatus="loop" >
 		<c:if test="${loop.first || row.sno ne reviewview[loop.index - 1].sno}">
-			<a href="/food/storedetail?sno=${row.sno }" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
-			    <i class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
-			</a>
+			<a href="/food/storedetail?sno=${row.sno }" style="position: relative; z-index: 1; text-shadow: 3px 3px 3px gray;">
+    <i class="fa-solid fa-arrow-left fa-xl" style="color: black; font-size: 2rem;  margin-top: 30px; margin-left: 10px;"></i>
+</a>
 	</c:if>
 </c:forEach>
 	<h1>리뷰보기</h1>
 	<hr class="hr">
 	
-	<div id="column_chart_div1" style="width: 500px; height: 300px;" class="chart"></div>
+	<div id="column_chart_div1" style="width: 0px; height: 250px;" class="chart"></div>
 
 	<div class="stroeAvg">
 	<c:forEach items="${reviewview}" var="row" varStatus="loop" >
@@ -119,6 +119,7 @@ function drawChart() {
 	    <div class="rcomment">${row.rcomment }</div> <br>
 	    <c:if test="${row.rphoto !=null }">
 	    	<img class="rphoto" src="/img/review/${row.rphoto}" style="width:150px;height:150px;margin: 0 auto">
+	
 	    </c:if>
 	    <br><br>
 	    <hr>
