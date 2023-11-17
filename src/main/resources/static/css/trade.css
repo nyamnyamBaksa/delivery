@@ -1,14 +1,19 @@
 @charset "UTF-8";
-.hr{
-	border-top: 3px solid black;
-}
-body {
+
+html, body {
 	font-family: 'NanumSquareNeo';
 	color: #000;
 	margin: 0;
 	padding: 0;
 }
+
+
+.hr{
+	border-top: 3px solid black;
+}
+
 .search{
+	font-family: 'NanumSquareNeo';
 	position: relative;
 	left:13px;
 	top: 30px;
@@ -38,12 +43,19 @@ body {
 	top: 40px;
 	cursor: pointer;
 }
+
+.searchBtn i {
+	margin-top: 15px;
+}
+
+
 .tradeBox{
 	position: relative;
 	top: 40px;;
 	background-color:#ffffff;
 	height:222px;
 	border:3px solid #eb5757;
+	border-radius:8px;
 	margin: 10px;
 }
 .tradedate{
@@ -51,7 +63,6 @@ body {
 	color:#000000;
 	vertical-align:text-middle;
 	font-size:15px;
-	font-family:Dosis;
 	line-height:21.600000381469727px;
 	border-style:hidden;
 	outline:none;
@@ -71,7 +82,6 @@ body {
 	color:#000000;
 	text-align:left;
 	font-size:22px;
-	font-family:Dosis;
 	line-height:21.600000381469727px;
 	border-style:hidden;
 	outline:none;
@@ -86,7 +96,6 @@ body {
 	text-align:left;
 	vertical-align:text-middle;
 	font-size:18px;
-	font-family:Dosis;
 	line-height:21.600000381469727px;
 	border-style:hidden;
 	outline:none;
@@ -113,7 +122,6 @@ body {
 	text-align:center;
 	vertical-align:text-middle;
 	font-size:18px;
-	font-family:Dosis;
 	line-height:25px;
 	border-style:hidden;
 	outline:none;
@@ -123,6 +131,7 @@ body {
 	width:196px;
 	font-weight: bold;
 	letter-spacing: 20px;
+	font-family: 'NanumSquareNeo';
 }
 .reviewBtn{
 	background-color:#eb5757;
@@ -150,7 +159,6 @@ body {
 	text-align:center;
 	vertical-align:text-middle;
 	font-size:10px;
-	font-family:Dosis;
 	line-height:27px;
 	border-style:hidden;
 	outline:none;
@@ -160,7 +168,7 @@ body {
 	width:196px;
 	font-weight: bold;
 }
-.serchN{
+.searchN{
 	position:relative;
 	background-color:#eb5757;
 	border-style:#000000;
@@ -170,11 +178,15 @@ body {
 	left: 5px;
 	top:10px;
 	cursor: pointer;
+	font-family: 'NanumSquareNeo';
 }
 .tradenull{
 	position:relative;
-	font-size:80px;
-	font-family:Dosis;
+	font-size:30px;
 	top:140px;
-	margin: 80px;
+	margin: 63px;
+}
+.fa-magnifying-glass {
+    position: relative;
+    top: -9px; 
 }

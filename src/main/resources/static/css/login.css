@@ -8,7 +8,7 @@
 .id{
 	position: absolute;
 	right: 10.5%;
-	bottom: 73.48%;
+	top: 180px;
 	height:48px;
 	width:300px;
 	
@@ -21,7 +21,7 @@
 .pw{
 	position: absolute;
 	right: 10.5%;
-	bottom: 64.01%;
+	top:260px;
 	height:48px;
 	width:300px;
 	
@@ -32,7 +32,7 @@
 .loginBtn{
 	position: absolute;
 	right: 10.5%;
-	bottom: 52.6%;
+	top:370px;
 	width: 310px;
 	height: 58px;
 
@@ -56,7 +56,7 @@
 .joinBtn{
 	position: absolute;
 	right: 10.5%;
-	bottom: 43.6%;
+	top: 450px;
 	width: 310px;
 	height: 58px;
 

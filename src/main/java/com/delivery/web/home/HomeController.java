@@ -2,6 +2,8 @@ package com.delivery.web.home;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,11 +22,17 @@ public class HomeController {
 	private HomeService homeService;
 
 	@GetMapping({ "/", "/home" })
-	public String home(Model model) {
+	public String home(Model model, HttpSession session) {
 		
 		List<HomeDTO> list = homeService.list();
-
 		model.addAttribute("list", list);
+		
+		
+		if(session.getAttribute("mid") != null) {
+			int mno = (int) session.getAttribute("mno");
+			List<HomeDTO> address = homeService.address(mno);
+			model.addAttribute("address", address);
+		}
 		
 		return "home";
 	}

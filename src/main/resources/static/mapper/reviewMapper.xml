@@ -9,8 +9,8 @@
 	</select>
 	
 	<insert id="saveReview" parameterType="MAP">
-		INSERT INTO review (sno, rcomment, mno, tgroup, rscore)
-		VALUES (#{sno}, #{review}, #{mno}, #{tgroup}, #{rscore})
+		INSERT INTO review (sno, rcomment, mno, tgroup, rscore, rphoto)
+		VALUES (#{sno}, #{review}, #{mno}, #{tgroup}, #{rscore}, #{rphoto})
 	</insert>
 	
 	<select id="revivew" resultType="Map">
@@ -32,5 +32,10 @@
 		    sno = #{sno}
 		GROUP BY
 		    sno;
+	</select>
+	
+	<select id="img" parameterType="String">
+		insert into review (rphoto)
+		values #{reviewImg}
 	</select>
 </mapper>

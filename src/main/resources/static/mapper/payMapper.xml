@@ -110,6 +110,7 @@
 		WHERE  s.sno = m.sno
 			and m.mncate IN (SELECT m.mncate FROM menu m, tradeview t WHERE t.mid=#{id} AND m.mnno = t.mnno)
 		GROUP BY s.sno
+		limit 0, 10
 	</select>
 	
 	<select id="recommend2" resultType="Map">
@@ -120,7 +121,8 @@
 		  GROUP BY tgroup, sno
 		) AS subquery
 		GROUP BY sname
-		ORDER BY totalcount DESC;
+		ORDER BY totalcount DESC
+		limit 0, 10
 	</select>
 	
 	<select id="recommend3" resultType="Map">
@@ -128,7 +130,8 @@
 		FROM wishlist w, store s
 		WHERE w.sno = s.sno
 		GROUP BY sname
-		ORDER BY count DESC;	 
+		ORDER BY count DESC
+		limit 0, 10
 	</select>
 	
 	<select id="searchcount" parameterType="Map" resultType="Integer">

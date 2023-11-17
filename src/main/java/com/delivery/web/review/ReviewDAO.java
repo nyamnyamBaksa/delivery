@@ -15,4 +15,6 @@ public interface ReviewDAO {
 	List<Map<String, Object>> revivew(int sno);
 
 	Map<String, Object> countrscore(int sno);
+
+	void img(String reviewImg);
 }

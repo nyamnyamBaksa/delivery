@@ -25,7 +25,7 @@
 <body>
 
 	<div>
-		<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 3px 3px 3px gray;">
+		<a href="1" style="position: relative; z-index: 1; text-shadow: 3px 3px 3px gray;">
     <i class="fa-solid fa-arrow-left fa-xl" style="color: white; font-size: 2rem;  margin-top: 30px; margin-left: 10px;"></i>
 </a>
 <a id="cart" href="/cart" style="position: relative; z-index: 1; text-shadow: 3px 3px 3px gray;"><i class="fa-solid fa-cart-shopping fa-2xl"

@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>냠냠박사</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 <link rel="stylesheet" href="/css/mypage-pay.css">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -19,7 +21,16 @@
 <link rel="stylesheet" href="/css/sweetalert.min.css" />
 <!-- 아이콘 -->
 <link rel="stylesheet" href="/css/bootstrap-icons.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 <style>
+body {
+font-family: 'NanumSquareNeo';
+margin: 0;
+padding: 0;
+}
+
 .star-ratings {
 	color: #aaa9a9;
 	position: relative;
@@ -143,6 +154,7 @@
 }
 
 .col-lg-12{
+padding:0;
 	position: absolute;
 	top: 17%;
 	left: 3%;
@@ -182,13 +194,13 @@ td{
 </style>
 </head>
 <body>
-	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
-    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	<a href="javascript:history.back()" style="position: relative; z-index: 1;">
+    	<i class="fa-solid fa-arrow-left fa-xl" style="color: black;font-size: 2rem; margin-left: 10px; margin-top: 30px;"></i>
 	</a>
 	<div class="cart-box-main">
 		<div class="container">
 			<input type="text" class="search" required="required" placeholder="검색어를 입력해주세요.">
-			<i class="fa fa-search"></i>
+			<i class="fa fa-search" style="margin-top: 6px;"></i>
 		    <div id="searchcount" style="display: none;">${searchcount }</div>
 			<div class="col-lg-12">
 				<div class="searchcate toolbar-sorter-right" style="width:250px;">
@@ -416,7 +428,7 @@ td{
 						});
 	
 						  
-					      $('.ssname').each(function() {
+					      $('.sname').each(function() {
 					    	  if ($(this).text().includes(search)) {
 							        var text = $(this).text();
 							        var modifiedText = '';
@@ -497,7 +509,7 @@ td{
 						});
 	
 						  
-					      $('.ssname').each(function() {
+					      $('.sname').each(function() {
 					    	  if ($(this).text().includes(search)) {
 							        var text = $(this).text();
 							        var modifiedText = '';
@@ -513,16 +525,13 @@ td{
 							    }
 					      });
 					}
+					
 				},
 				error:function(error){
 					swal("실패", "작업수행에 실패하였습니다.", "error");
 				}
 			});
 		});
-		
-		function strToColor(str, search) {
-			
-		}
 		
 		function updateTable(data) {
 		    var newTableHTML = '<table class="table">';
@@ -568,8 +577,8 @@ td{
 		        newTableHTML += '</div>&nbsp;(' + group.average_rating + ')';
 		        newTableHTML += '</td>';
 		        newTableHTML += '</tr>';
-		        newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"></td><td class="name-pr sname" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;vertical-align: middle;">';
-		        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><span style="font-size:20px;">' + group.sname + '</span></a>';
+		        newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"></td><td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;vertical-align: middle;">';
+		        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname" style="font-size:20px;">' + group.sname + '</span></a>';
 		        newTableHTML += '</td>';
 		        newTableHTML += '<td class="name-pr mnname" style="font-weight: bold; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
 		        newTableHTML += group.mnnameList.join(', ');

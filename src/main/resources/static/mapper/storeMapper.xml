@@ -8,6 +8,7 @@
 		FROM storeview s
 		JOIN menu m ON s.sno = m.sno
 		<where>
+		s.sgrade = 1
 			<if test="mncate != null">
 				AND m.mncate = #{mncate}
 			</if>

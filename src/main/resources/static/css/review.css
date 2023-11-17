@@ -1,12 +1,18 @@
 @charset "UTF-8";
-.hr{
-	border-top: 3px solid black;
+
+* {
+	font-family: 'NanumSquareNeo';	
 }
+
 body {
-	font-family: 'NanumSquareNeo';
+
 	color: #000;
 	margin: 0;
 	padding: 0;
+}
+
+.hr{
+	border-top: 3px solid black;
 }
 .totalcount{
 	color:#1f1f1f;
@@ -43,7 +49,7 @@ body {
 	font-family:Dosis;
 	position:absolute;
 	font-weight: bold;
-	left:39px;
+	left:49px;
 	margin:10px;
 }
 .mnickname a {
@@ -60,8 +66,8 @@ body {
   	text-align: center;
   	width: 20em;
   	border: none;
-  	left: -55%;
-  	top: 40px;
+  	left: -53%;
+  	top: -23px;
   	justify-content: flex-start;
 }
 .rate input {
@@ -90,8 +96,8 @@ body {
 	border-style:hidden;
 	outline:none;
 	position:relative;
-	left : 44%;
-	top :15px;
+	left : 48%;
+	top :-48px;
 }
 .rcomment{
 	color:#000000;
@@ -105,11 +111,9 @@ body {
 	margin:20px;
 	position:relative;
 	left :40px;
-	top: 30px;
+	top:-20px;
 }
 .rphoto{
-	height:211px;
-	width:297px;
 	position:relative;
 	left :100px;
 }
@@ -173,6 +177,10 @@ body {
 .profile{
 	position: relative;
 	top:14px;;
-	width: 5px;
-	height: 5px;
+	width: 50px;
+	height: 50px;
+}
+.rphoto{
+	position: relative;
+	left : 70px;
 }

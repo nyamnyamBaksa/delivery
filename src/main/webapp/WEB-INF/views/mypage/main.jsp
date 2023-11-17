@@ -6,7 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>냠냠박사</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+	<!-- 폰트 -->
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 	<link rel="stylesheet" href="/css/mypage-main.css">
 	<link rel="stylesheet" href="/css/mypage-pay.css">
 	<!-- Bootstrap CSS -->
@@ -15,24 +18,26 @@
 	<link rel="stylesheet" href="/css/sweetalert.min.css" />
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="/css/bootstrap-icons.css">
+	<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+	
 	
 </head>
 <body>
     <c:if test="${sessionScope.mid ne null}">
-	    <a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
-	    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	    <a href="javascript:history.back()" style="position: relative; z-index: 1;">
+    	<i class="fa-solid fa-arrow-left fa-xl" style="color: black;font-size: 2rem; margin-left: 10px; margin-top: 20px;"></i>
 		</a>
 		<div class="mypage">
 			<div class="mypageFont">마이페이지</div>
 		</div>
-		
     	<div class="myid" style="display: none;">${sessionScope.mid }</div><!-- 내 아이디 -->
     	<div class="id" style="display: none;">${id }</div><!-- 방문자 아이디 -->
-    	<div class="babfriend" style="display: none;">${babfriend }</div><!-- 밥친구 -->
+    	<div id="babfriend" class="babfriend" style="display: none;">${babfriend }</div><!-- 밥친구 -->
         <div class="profile"><!-- onclick="popup('${sessionScope.mid}')" 작은 따옴표로 감싸기 -->
             <img class="profile-image" src="/img/profileImg/${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
         </div>
-        <div class="nickname">${result.mnickname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><i class="bi bi-arrow-right"></i></a></c:if></div>
+        <div class="nickname">${result.mnickname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><i class="fa-solid fa-arrow-right" style="color: #eb5757; "></i></a></c:if></div>
         <c:if test="${sessionScope.mid ne id }">
 	        <c:choose>
 	        	<c:when test="${babfriend eq 0 }">
@@ -61,7 +66,7 @@
 	        <div class="pay"><a href="/mypage/pay"><img src="/img/profileImg/credit_card.png"></a><p>냠냠페이</p></div>
         </c:if>
         <c:if test="${sessionScope.mid ne id }">
-        	<div class="diary"><a href="/mypage/diary/${id }"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
+       	 	<div class="diary"><a onclick="return babdiary()" href="/mypage/diary/${id }"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
         	<div class="zzim"><a href="/wishlist/${id }"><img src="/img/profileImg/heart.png"></a><p>나의 찜</p></div>
         	<div class="review"><a href="/mypage/review/${id }"><img src="/img/profileImg/review.png"></a><p>리뷰관리</p></div>
         </c:if>
@@ -96,7 +101,7 @@
     <!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg" style="width: 500px;">
+		<div class="modal-dialog modal-lg" style="width: 400px;">
 			<div class="modal-content">
 				<div class="modal-header" style="color: blue;">
 					<!-- 프로필 이미지 업로드 폼 -->
@@ -128,6 +133,16 @@
 	<script src="/js/chart.js"></script>
 	
 	<script type="text/javascript">
+	
+		function babdiary(){
+			var babdiary = $('#babfriend').text();
+			var myid = $(".myid").text();
+			var id = $(".id").text();
+			if(babdiary != 3 && myid != id && id != ''){
+				swal('', '밥친구가 아니면 다이어리를 볼 수 없어요.', 'info');
+				return false;
+			}
+		}
 	
 	$(document).on("click", ".profile", function() {
 		var myid = $(".myid").text();

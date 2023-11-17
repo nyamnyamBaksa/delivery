@@ -32,6 +32,14 @@
 		WHERE
 		sno =#{sno}
 	</select>
+	
+	<select id="address" parameterType="Integer" resultType="com.delivery.web.home.HomeDTO">
+	SELECT maddr
+	FROM member
+	WHERE
+	mno = #{mno}
+	</select>
+	
 
 
 

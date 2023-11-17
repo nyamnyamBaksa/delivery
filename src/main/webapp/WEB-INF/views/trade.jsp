@@ -10,11 +10,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 <meta name="viewport"
    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 </head>
 <body>
 
-	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
+	<a href="javascript:history.back()" style="position: relative; z-index: 1; ">
     <i class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
 </a>
 	<h1>주문내역</h1>
@@ -26,13 +28,14 @@
 				<c:when test="${!empty tradegroup}">
 					<form action="./trade" method="get">
 						<div class="search-container">
-							<select name="searchN" class="serchN">
+							<select name="searchN" class="searchN">
 								<option value="sname">가게명</option>
 								<option value="mnname">메뉴명</option>
 							</select> <input name="search" class="search" type="text"
 								placeholder="주문했던 메뉴와 가게를 검색해 보세요">
 							<button type="submit" class="searchBtn">
-								<img src="img/searchBtn.png" alt="검색">
+							<i class="fa-solid fa-magnifying-glass fa-2xl" style="color: #ffffff;" alt="검색"></i>
+								<!--  <img src="img/searchBtn.png" alt="검색">-->
 							</button>
 						</div>
 					</form>
@@ -40,6 +43,7 @@
                 <c:forEach items="${tradegroup}" var="row" varStatus="loop">
                     <c:if test="${loop.first || row.tgroup ne tradegroup[loop.index - 1].tgroup}">
                         <div class="tradeBox">
+                  
                             <span class="tradedate">${row.tdate} 배달완료(${row.tgroup})</span>
                             <img alt="샘플이미지" src="/img/sample.png" class="sampleimg">
                             <a href="tradedetail?tgroup=${row.tgroup}">

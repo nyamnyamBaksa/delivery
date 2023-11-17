@@ -20,17 +20,10 @@ public class HomeService {
 		return homeDAO.list();
 	}
 
-
-	public HomeDTO detail(int sno) {
+	public List<HomeDTO> address(int mno) {
 		
-		return homeDAO.detail(sno);
-	}
-
-
-	public List<HomeDTO> menulist(int sno) {
-		
-		return homeDAO.menulist(sno);
-	}
+		return homeDAO.address(mno);
+	} 
 
 	
 

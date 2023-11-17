@@ -25,8 +25,8 @@
 		    DistinctRnoCount drc ON t.tgroup = drc.tgroup
 		<where>t.mid=#{id}
 				<choose>
-					<when test="serchN == 'sname'">AND sname LIKE CONCAT('%', #{serch}, '%')</when>
-					<when test="serchN == 'mnname'">AND mnname LIKE CONCAT('%', #{serch}, '%')</when>
+					<when test="searchN == 'sname'">AND sname LIKE CONCAT('%', #{search}, '%')</when>
+					<when test="searchN == 'mnname'">AND mnname LIKE CONCAT('%', #{search}, '%')</when>
 				</choose>
 		</where>
 	</select>
