@@ -25,7 +25,7 @@
 	<div id="location">
 	<c:choose>
         <c:when test="${empty address}">
-           <span style="color:black; font-size: 15px; color: black; align-items: center; margin-top: -3px; margin-left: 15px;">대표 주소를 설정해주세요</span>
+           <span style="color:black; font-size: 15px; color: black; align-items: center; margin-top: -3px; margin-left: 15px;">로그인 후 주소를 설정하세요</span>
         </c:when>
         <c:otherwise>
             <c:forEach items="${address}" var="a">
