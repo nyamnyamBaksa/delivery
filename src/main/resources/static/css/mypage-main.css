@@ -28,7 +28,7 @@ padding:0;
 
 /* 닉네임 */
 .nickname{
-	margin-left:150px;
+	margin-left:170px;
 	margin-top:70px;
 	font-style: normal;
 	font-weight: 800;
@@ -254,7 +254,7 @@ img{
 	width: 300px;
 	height: 50px;
 	left: 45px;
-	top: 600px;
+	top: 500px;
 	margin:1px;
 	background: #FF9C41;
 	border-radius: 10px;

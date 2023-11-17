@@ -8,7 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>냠냠박사</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 <link rel="stylesheet" href="/css/mypage-pay.css">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -35,20 +36,20 @@ padding: 0;
 }
 .col-lg-12{
 	position: absolute;
-	top: 30%;
+	top: 25%;
 	right: 1%;
 	bottom: 50%;
 }
 
-#table{
-position: absolute;
-width:95%;
-top: 12%;
-}
+	#table{
+		position: absolute;
+		width:95%;
+		top: 12%;
+	}
 
 td{
-max-width: 50%;
-margin-right:30px;
+	max-width: 50%;
+	margin-right:3px;
 	font-size: 17px;
 	line-height: 2.0;
 }
@@ -57,9 +58,10 @@ margin-right:30px;
 	font-weight: 700;
 	font-size: 17px;
 	line-height: 27px;
-	width:80px;
+	width:50px;
 	height:40px;
 }
+
 </style>
 </head>
 <body>
@@ -75,10 +77,9 @@ margin-right:30px;
 		</div>
 		<div class="cart-box-main">
 			<div class="container">
-				
 				<table id="table">
 					<tr>
-						<td>
+						<td style="width: 53px;">
 					       	<div class="count toolbar-sorter-right">
 					       		<select class="cate selectpicker show-tick form-control" id="cate" >
 									<option selected="selected" value="0">전체 보기</option>
@@ -88,12 +89,8 @@ margin-right:30px;
 								</select>
 					       	</div>
 						</td>
-						
-						<td>
-							<span style="font-weight: bold;color: black;">
-
-						<td style="width: 230px;text-align: left;">
-							<span style="font-weight: bolder;font-size: larger;color: black;">
+						<td colspan="1">
+							<span style="font-weight: bold;font-size: 17px;color: black;">
 								<c:if test="${list[0].pbalance eq null }">
 									보유금액&nbsp;:&nbsp;<span class="pbalance">0</span>원
 								</c:if>
@@ -102,9 +99,7 @@ margin-right:30px;
 								</c:if>
 							</span>
 						</td>
-						<td>
-							<button class="charge" style="margin-top: -20px;">충전</button>
-						</td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>
@@ -119,8 +114,11 @@ margin-right:30px;
 							</div>
 						</td>
 						
+						<td style="width: 180px;">
+							<input type="text" style="width: 130px;display: none;border: 2px solid #EB5757;border-radius: 50px;font-weight: bold;" id="pchargeInput" placeholder="10만원 이상 입력">
+						</td>
 						<td>
-							<input type="text" style="width: 150px;display: none;border: 2px solid #EB5757;border-radius: 50px;font-weight: bold;" id="pchargeInput" placeholder="10만원 이상의 금액을 숫자만 입력하세요.">
+							<button class="charge" style="">충전</button>
 						</td>
 						
 					</tr>
