@@ -5,18 +5,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"-->
 <meta name="viewport" content="initial-scale=1, width=device-width, user-scalable=no"/> 
 <title>admin || 회원관리</title>
-<link rel="stylesheet"
-   href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <link
    href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
    rel="stylesheet">
 <link rel="stylesheet" href="../css/admin.css">
 <link rel="stylesheet" href="../css/member.css">
 <style type="text/css">
-input::-ms-input-placeholder {color: #EB5757;}
 
 body {
             background-color: white;
@@ -43,7 +39,8 @@ body {
             font-weight: bold;
             text-align: center;
         }
-
+        
+       
         .div-table {
             width: 100%;
             display: table;
@@ -62,6 +59,15 @@ body {
             border-bottom: 1px solid gray;
             text-align: center;
         }
+       
+       .div-cell:nth-child(1) { width: 30px; } /* 선택 열 */
+.div-cell:nth-child(2) { width: 30px; } /* 번호 열 */
+.div-cell:nth-child(3) { width: 120px; } /* 아이디 열 */
+.div-cell:nth-child(4) { width: 190px; } /* 닉네임 열 */
+.div-cell:nth-child(5) { width: 250px; } /* 주소 열 */
+.div-cell:nth-child(6) { width: 130px; } /* 가입날짜 열 */
+.div-cell:nth-child(7) { width: 100px; } /* 고객등급 열 */ 
+        
 
         .grade {
             width: 100%;
@@ -70,11 +76,13 @@ body {
 
         .btn-delete {
             background-color: #EB5757;
+            border-color : #EB5757;
             font-family: 'NanumSquareNeo';
             margin-top: 20px;
             width:110px;
             height:50px;
             padding: 10% 20%;
+            
            
         }
         
@@ -82,7 +90,7 @@ body {
         
         height: 40px;
         width: 300px;
-        border: 1px solid #EB5757;
+        border: 2px solid #EB5757;
         background: #ffffff;
         
         }
@@ -127,7 +135,7 @@ function gradeCh(mno, name, value){
             <h1>회원관리</h1>
             
          <div class="moveBottomBtn">
-            <img alt="" src="/img/down_icon_32.png">
+            <img alt="" src="/img/down_icon.png">
            </div>
             
 			
@@ -198,7 +206,7 @@ function gradeCh(mno, name, value){
                <button type="button" class="btn-delete"
                   
                   onclick="deleteSelectedMembers()">회원삭제</button>
-               <!-- button type="button" class="btn text-white" style="background-color: #EB5757;">회원삭제</button -->
+              
 
                <script>
 // 선택된 회원을 추적하기 위한 배열

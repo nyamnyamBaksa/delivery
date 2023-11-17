@@ -5,11 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-   content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+<meta name="viewport" content="initial-scale=1, width=device-width, user-scalable=no"/> 
 <title>admin || 사장님관리</title>
-<link rel="stylesheet"
-	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <link
 	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
 	rel="stylesheet">
@@ -28,6 +25,7 @@ body {
         .main {
             padding: 20px;
             margin-left: 0;
+            margin-bottom: 50px; 
         }
 
         .article {
@@ -45,6 +43,7 @@ body {
             width: 100%;
             display: table;
             margin-bottom: 15px;
+            font-size:90%;
         }
 
         .div-row {
@@ -58,15 +57,63 @@ body {
             border-bottom: 1px solid gray;
             text-align: center;
         }
+        
+        
+        
+.div-cell:nth-child(1) { width: 30px; } /* 선택 열 */
+.div-cell:nth-child(2) { width: 30px; } /* 번호 열 */
+.div-cell:nth-child(3) { width: 150px; } /* 아이디 열 */
+.div-cell:nth-child(4) { width: 150px; } /* 점주명 열 */
+.div-cell:nth-child(5) { width: 220px; } /* 사업자번호 열 */
+.div-cell:nth-child(6) { width: 170px; } /* 등록날짜 열 */
+.div-cell:nth-child(7) { width: 100px; } /* 상호등급 열 */
 
         .grade {
-            width: 90%;
+            width: 100%;
             padding: 5px;
         }
 
         .btn-delete {
             background-color: #EB5757;
+            border-color : #EB5757;
+            font-family: 'NanumSquareNeo';
+            margin-top: 20px;
+            width:100px;
+            height:50px;
+            padding: 10% 20%;
         }
+        
+        .OSearch {
+        
+        height: 40px;
+        width: 300px;
+        border: 2px solid #EB5757;
+        background: #ffffff;
+        
+        }
+        
+        .OSearchInput {
+        
+        font-size: 16px;
+        width: 225px;
+        padding: 10px;
+        border: 0px;
+        outline: none;
+        float: left;
+        
+        }
+        
+        .OSearchBtn {
+        
+        width: 50px;
+        height: 100%;
+        border: 1px solid #EB5757;
+        background: #EB5757;
+        outline: none;
+        float: right;
+        color: #ffffff;
+        }
+        
 </style>
 <script type="text/javascript">
 function ogradeCh(ono, name, value){
@@ -83,6 +130,25 @@ function ogradeCh(ono, name, value){
 		<div class="main">
 			<div class="article">
 				<h1>사장님관리</h1>
+				
+				  <div class="moveBottomBtn">
+            <img alt="" src="/img/down_icon.png">
+           </div>
+            
+			
+            
+            <script type="text/javascript">
+            const $bottomBtn = document.querySelector(".moveBottomBtn");
+
+         // 버튼 클릭 시 페이지 하단으로 이동
+         $bottomBtn.onclick = () => {
+           window.scrollTo({ 
+             top: document.body.scrollHeight, // <- 페이지 총 Height
+             behavior: "smooth" 
+           });
+         };
+            </script>
+            
 				<div class="div-table">
 					<div class="div-row table-head">
 						<div class="div-cell table-head">선택</div>
@@ -128,8 +194,8 @@ function ogradeCh(ono, name, value){
 						</div>
 					</c:forEach>
 
-					<button type="button" class="btn btn-lg text-white float-end"
-						style="background-color: #EB5757;"
+					<button type="button" class="btn-delete"
+						
 						onclick="deleteSelectedMembers()">상점삭제</button>
 
 					<script>
@@ -161,6 +227,13 @@ function deleteSelectedMembers() {
 </script>
 
 				</div>
+				      <!-- 검색 기능 -->
+   <form action="./search-owner" method="get">
+      <div class="OSearch">
+    <input type="text" name="keyword" class="OSearchInput" placeholder="검색어 입력">
+    <button type="submit" class="OSearchBtn">검색</button>
+            </div>
+</form>
 			</div>
 		</div>
 	</div>
