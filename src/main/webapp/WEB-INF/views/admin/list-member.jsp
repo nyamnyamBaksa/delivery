@@ -62,10 +62,10 @@ body {
        
        .div-cell:nth-child(1) { width: 30px; } /* 선택 열 */
 .div-cell:nth-child(2) { width: 30px; } /* 번호 열 */
-.div-cell:nth-child(3) { width: 120px; } /* 아이디 열 */
+.div-cell:nth-child(3) { width: 100px; } /* 아이디 열 */
 .div-cell:nth-child(4) { width: 190px; } /* 닉네임 열 */
-.div-cell:nth-child(5) { width: 250px; } /* 주소 열 */
-.div-cell:nth-child(6) { width: 130px; } /* 가입날짜 열 */
+.div-cell:nth-child(5) { width: 200px; } /* 주소 열 */
+.div-cell:nth-child(6) { width: 100px; } /* 가입날짜 열 */
 .div-cell:nth-child(7) { width: 100px; } /* 고객등급 열 */ 
         
 
@@ -183,11 +183,11 @@ function gradeCh(mno, name, value){
                            onchange="gradeCh(${row.mno}, '${row.mnickname}', this.value)">
                            <optgroup label="탈퇴">
                               <option value="0"
-                                 <c:if test="${row.mgrade eq 0}">selected="selected"</c:if>>탈퇴</option>
+                                 <c:if test="${row.mgrade eq 0}">selected="selected"</c:if>>탈퇴회원</option>
                            </optgroup>
                            <optgroup label="일반">
                               <option value="1"
-                                 <c:if test="${row.mgrade eq 1}">selected="selected"</c:if>>일반</option>
+                                 <c:if test="${row.mgrade eq 1}">selected="selected"</c:if>>일반회원</option>
                            </optgroup>
                            <optgroup label="관리자">
                               <option value="2"

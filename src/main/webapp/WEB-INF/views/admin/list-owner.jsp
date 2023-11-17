@@ -154,7 +154,7 @@ function ogradeCh(ono, name, value){
 						<div class="div-cell table-head">선택</div>
 						<div class="div-cell table-head">번호</div>
 						<div class="div-cell table-head">아이디</div>
-						<div class="div-cell table-head">상호명</div>
+						<div class="div-cell table-head">점주명</div>
 						<div class="div-cell table-head">사업자번호</div>
 						<div class="div-cell table-head">등록날짜</div>
 						<div class="div-cell table-head">상호등급</div>
@@ -176,13 +176,13 @@ function ogradeCh(ono, name, value){
 
 								<select class="grade"
 									onchange="ogradeCh(${row.ono}, '${row.oname}', this.value)">
-									<optgroup label="폐점">
+									<optgroup label="폐업">
 										<option value="0"
 											<c:if test="${row.ograde eq 0}">selected="selected"</c:if>>폐점</option>
 									</optgroup>
 									<optgroup label="일반">
 										<option value="1"
-											<c:if test="${row.ograde eq 1}">selected="selected"</c:if>>일반</option>
+											<c:if test="${row.ograde eq 1}">selected="selected"</c:if>>일반식당</option>
 									</optgroup>
 									<optgroup label="우수식당">
 										<option value="2"
