@@ -1906,7 +1906,7 @@
 }
  .product-item-filter .toolbar-sorter-right span{
      line-height: 42px;
-     padding-right: 15px;
+     padding-right: 1px;
      float: left;
 }
  .product-item-filter .toolbar-sorter-right{
@@ -1917,7 +1917,6 @@
      width: 150px;
 }
  .toolbar-sorter-right .bootstrap-select.form-control:not([class*="col-"]){
-     float: right;
      text-align: center;
 }
  .toolbar-sorter-right .bootstrap-select.btn-group > .dropdown-toggle{
@@ -1947,7 +1946,7 @@
 }
  .toolbar-sorter-right .dropup .dropdown-toggle::after{
      position: absolute;
-     right: 15px;
+     right: 1px;
      top: 18px;
 }
  .product-item-filter p{
