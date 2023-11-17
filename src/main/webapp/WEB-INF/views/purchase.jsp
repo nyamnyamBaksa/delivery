@@ -34,11 +34,11 @@
 
 <body>
 	<c:if test="${sessionScope.mid ne null}">
-	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
-    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	<a href="javascript:history.back()" style="position: relative; z-index: 1;">
+    	<i class="fa-solid fa-arrow-left fa-xl" style="color: black;font-size: 2rem; margin-left: 10px; margin-top: 20px;"></i>
 	</a>
 	<div class="mypage">
-		<div class="mypageFont" style="font-size: 23px;">주문하기</div>
+		<div class="mypageFont">주문하기</div>
 	</div>
 	<!-- Start Cart  -->
 	<div class="cart-box-main">
@@ -184,7 +184,7 @@
 								<div class="d-flex gr-total">
 									<h5 style="color: #EB5757;">포인트 잔액</h5>
 									<div class="ml-auto h5">
-										<span class="pbalance"></span>원
+										<span class="pbalance"></span><span id="pbalance3">원</span>
 										<span style="color: #EB5757;font-size: large;font-weight: bold;" id="pbalance2"></span>
 									</div>
 								</div>
@@ -238,7 +238,8 @@
 		
 		if(pbalance < 0){
 			$('.pointempty').css('display', 'inline');
-			$('#pbalance').text('결제불가');
+			$('#pbalance2').text('결제불가');
+			$('#pbalance3').hide();
 			$('.pbalance').hide();
 		} else {
 			$('.pointempty').css('display', 'none');

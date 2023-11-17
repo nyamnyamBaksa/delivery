@@ -47,7 +47,7 @@ body {
 	background: #FFFFFF;
 	border: 4px solid #EB5757;
 	border-radius: 10px;
-	font-size: large;
+	font-size: 16.3px;
 	font-weight: bolder;
 	
 }

@@ -37,7 +37,7 @@
         <div class="profile"><!-- onclick="popup('${sessionScope.mid}')" 작은 따옴표로 감싸기 -->
             <img class="profile-image" src="/img/profileImg/${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
         </div>
-        <div class="nickname">${result.mnickname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><i class="fa-solid fa-arrow-right" style="color: #eb5757; "></i></a></c:if></div>
+        <div class="nickname">${result.mnickname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><i class="fa-solid fa-arrow-right" style="color: #eb5757; cursor: pointer; "></i></a></c:if></div>
         <c:if test="${sessionScope.mid ne id }">
 	        <c:choose>
 	        	<c:when test="${babfriend eq 0 }">
@@ -326,9 +326,9 @@
 
 	            $.each(data.list, function (index, row) {
 	                var newContent = '<div class="modal-header">' +
-	                    '<h5 class="modal-title" id="exampleModalLabel"><a style="margin-right:20px;" href="/mypage/main/' + row.mid + '"><img class="profile-image-follow profile-image" src="/img/profileImg' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
+	                    '<h5 style="text-align:center;" class="modal-title" id="exampleModalLabel"><a style="margin: 0 auto;" href="/mypage/main/' + row.mid + '"><img class="profile-image-follow profile-image" src="/img/profileImg' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a><span>' + row.mid + '</span></h5>' +
 	                    '<div class="modal-body"><div class="detail">' +
-	                    '<div class="detail-date-read"><div class="detail"><button class="followAcceptModal">+ 밥 친구 신청 수락</button><div>' +
+	                    '<div class="detail-date-read"><div class="detail"><button class="followAcceptModal" style="width:180px;">+ 밥 친구 신청 수락</button><div>' +
 	                    '</div></div></div>' +
 	                    '<div class="followerMid" style="display: none;">' + row.mid + '</div>';
 	                modalContent.append(newContent);

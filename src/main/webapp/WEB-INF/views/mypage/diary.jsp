@@ -142,7 +142,7 @@
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg" style="width: 500px;">
+		<div class="modal-dialog modal-lg" style="width: 400px;">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #E6E6FA;">
 					<h5 class="modal-title" id="exampleModalLabel">본문제목</h5>

@@ -51,7 +51,7 @@ body {
 	<div class="title">
 		<div class="titleFont">냠냠 다이어리 작성</div>
 	</div>
-	<div style="margin-top: 170px;"></div>
+	<div style="margin-top: 30px;"></div>
 		<div class="cart-box-main">
 			<div class="container">
 				<div class="col-lg-12">

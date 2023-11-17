@@ -66,11 +66,11 @@
 
 <body>
 <c:if test="${sessionScope.mid ne null}">
-	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
-    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	<a href="javascript:history.back()" style="position: relative; z-index: 1;">
+    	<i class="fa-solid fa-arrow-left fa-xl" style="color: black;font-size: 2rem; margin-left: 10px; margin-top: 20px;"></i>
 	</a>
 	<div class="mypage">
-		<div class="mypageFont" style="font-size: 23px;">장바구니</div>
+		<div class="mypageFont">장바구니</div>
 	</div>
     <!-- Start Cart  -->
     <div class="cart-box-main">
@@ -80,7 +80,7 @@
     <c:if test="${list[0].sname ne null }">
         <div class="container">
             <div class="row">
-            	<div class="col-lg-12"><h1>${list[0].sname }</h1></div>
+            	<div class="col-lg-12"><h1 style="font-weight: bold;">${list[0].sname }</h1></div>
                 <div class="col-lg-12">
                         <table class="table">
                             <thead>
@@ -213,7 +213,7 @@
 				data : {cno : cno},
 				dataType : 'json',
 				success : function(data) {
-					
+					location.href = "/cart";
 				},
 				error : function(error) {
 					swal("실패", "작업수행에 실패하였습니다.", "error");

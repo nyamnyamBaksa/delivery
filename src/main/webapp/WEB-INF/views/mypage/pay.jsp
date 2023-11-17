@@ -50,8 +50,9 @@ padding: 0;
 td{
 	max-width: 50%;
 	margin-right:3px;
-	font-size: 17px;
+	font-size: 15px;
 	line-height: 2.0;
+	font-weight: bold;
 }
 
 .selectpicker, .show-tick , .form-control{
@@ -72,7 +73,7 @@ td{
 		<div class="title">
 			<div style="display: inline-block;" class="titleFont">냠냠페이</div>
 			<c:if test="${param.pbalance eq 'charge' }">
-	       		<button class="againpurchase">결제페이지로</button>
+	       		<button class="againpurchase" style="width:150px;height: 35px;margin-left: 5px;">결제페이지로</button>
 	       	</c:if>
 		</div>
 		<div class="cart-box-main">
@@ -90,7 +91,7 @@ td{
 					       	</div>
 						</td>
 						<td colspan="1">
-							<span style="font-weight: bold;font-size: 17px;color: black;">
+							<span style="font-weight: bold;font-size: 15px;color: black;">
 								<c:if test="${list[0].pbalance eq null }">
 									보유금액&nbsp;:&nbsp;<span class="pbalance">0</span>원
 								</c:if>
@@ -115,7 +116,7 @@ td{
 						</td>
 						
 						<td style="width: 180px;">
-							<input type="text" style="width: 130px;display: none;border: 2px solid #EB5757;border-radius: 50px;font-weight: bold;" id="pchargeInput" placeholder="10만원 이상 입력">
+							<input type="text" style="text-align:center;width: 130px;display: none;border: 2px solid #EB5757;border-radius: 50px;font-weight: bold;" id="pchargeInput" placeholder="10만원 이상 입력">
 						</td>
 						<td>
 							<button class="charge" style="">충전</button>
@@ -128,16 +129,16 @@ td{
 					<table class="table">
 						<c:forEach items="${list }" var="row">
 							<tr style="border-bottom: 1px solid #EB5757;">
-								<td class="quantity-box" style="border: 0; border-style: dashed; width: 170px;">${row.pcdate }</td>
+								<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">${row.pcdate }</td>
 								<c:if test="${row.pcharge ne null }">
 									<td class="name-pr"
-										style="border: 0; border-style: dashed; width: 450px;font-weight: bolder;"></td>
+										style="border: 0; border-style: dashed; width: 420px;font-weight: bolder;"></td>
 									<td class="name-pr"
 										style="border: 0; border-style: dashed; width: 230px;font-weight: bolder; color: #EB5757;">${row.pcharge }원 충전</td>
 								</c:if>
 								<c:if test="${row.tgroup ne null}">
 									<td class="name-pr"
-										style="border: 0; border-style: dashed; width: 450px;font-weight: bolder;">${row.sname }</td>
+										style="border: 0; border-style: dashed; width: 420px;font-weight: bolder;">${row.sname }</td>
 									<td class="name-pr"
 										style="border: 0; border-style: dashed; width: 230px;font-weight: bolder;">${row.puse }원 차감</td>
 								</c:if>
@@ -207,13 +208,13 @@ td{
 					var tableHtml = '';
 				    $.each(data.list, function (index, row) {
 				        tableHtml += '<tr style="border-bottom: 1px solid #EB5757;">';
-				        tableHtml += '<td class="quantity-box" style="border: 0; border-style: dashed; width: 170px;">' + row.pcdate + '</td>';
+				        tableHtml += '<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">' + row.pcdate + '</td>';
 				        if (row.pcharge != null) {
-				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 450px;font-weight: bolder;"></td>';
+				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 420px;font-weight: bolder;"></td>';
 				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 230px;font-weight: bolder; color: #EB5757;">' + row.pcharge + '원 충전</td>';
 				        }
 				        if (row.tgroup != null) {
-				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 450px;font-weight: bolder;">' + row.sname + '</td>';
+				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 420px;font-weight: bolder;">' + row.sname + '</td>';
 				            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 230px;font-weight: bolder;">' + row.puse + '원 차감</td>';
 				        }
 				        tableHtml += '</tr>';
@@ -352,13 +353,13 @@ td{
 		    var tableHtml = '<table class="table">';
 		    $.each(list, function (index, row) {
 		        tableHtml += '<tr style="border-bottom: 1px solid #EB5757;">';
-		        tableHtml += '<td class="quantity-box" style="border: 0; border-style: dashed; width: 170px;">' + row.pcdate + '</td>';
+		        tableHtml += '<td class="quantity-box" style="border: 0; border-style: dashed; width: 200px;">' + row.pcdate + '</td>';
 		        if (row.pcharge != null) {
-		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 450px;font-weight: bolder;"></td>';
+		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 420px;font-weight: bolder;"></td>';
 		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 230px;font-weight: bolder; color: #EB5757;">' + row.pcharge + '원 충전</td>';
 		        }
 		        if (row.tgroup != null) {
-		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 450px;font-weight: bolder;">' + row.sname + '</td>';
+		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 420px;font-weight: bolder;">' + row.sname + '</td>';
 		            tableHtml += '<td class="name-pr" style="border: 0; border-style: dashed; width: 230px;font-weight: bolder;">' + row.puse + '원 차감</td>';
 		        }
 		        tableHtml += '</tr>';
