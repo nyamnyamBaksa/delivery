@@ -57,8 +57,8 @@ $(document).on("click", ".cameraimg", function() {
 </script>
 </head>
 <body>
-	<a href="javascript:history.back()" style="position: relative; z-index: 1;">
-    <i class="fa-solid fa-arrow-left fa-xl" style="color: black;"></i>
+<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 3px 3px 3px gray;">
+    <i class="fa-solid fa-arrow-left fa-xl" style="color: black; font-size: 2rem;  margin-top: 30px;"></i>
 </a>
 	<h1>리뷰쓰기</h1>
 	<hr class="hr">
@@ -92,7 +92,7 @@ $(document).on("click", ".cameraimg", function() {
 					
 					<button class="cameraimg" onclick="M.net.http.upload()">사진 업로드</button>
 					  <hr>
-					  <img class="rphoto" src="" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">
+					  <img class="rphoto" src="" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto; display: none;">
 					  <div class="menutitle">추천하고 싶은 메뉴가 있나요?</div>
 				</c:if>
 					<div class="mnname">${row.mnname }<img alt="추천엄지" src="/img/thumbs.png" style="height:15px; width:15px;"></div>
