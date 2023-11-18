@@ -63,7 +63,7 @@ button {
 }
 
 .swiper-slide {
-	font-size: 15px;
+	font-size: 13px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -73,7 +73,7 @@ button {
 
 .swiper-slide a {
 	display: flex;
-  font-weight: bolder;
+  font-weight: bold;
   align-items: center;
   justify-content: center;
   height: 100%;
