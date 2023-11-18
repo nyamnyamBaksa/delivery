@@ -126,7 +126,7 @@ public class MyPageController {
 	        if (file != null && !file.isEmpty()) {
 	            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
 	                    .getRequest();
-	            String path = "C:\\Users\\user\\eclipse-workspace\\delivery\\src\\main\\webapp\\img\\profileImg"; // 원하는 디렉토리로 수정하세요
+	            String path = "/src/main/webapp/img/profileImg";
 	            
 	            LocalDateTime ldt = LocalDateTime.now();
 				String format = ldt.format(DateTimeFormatter.ofPattern("YYYYMMddHHmmss"));
@@ -527,7 +527,7 @@ public class MyPageController {
 	    System.out.println(map);
 	    if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
 	        if (file != null && !file.isEmpty()) {
-	            String path = "C:\\Users\\user\\eclipse-workspace\\delivery\\src\\main\\webapp\\img\\review";
+	            String path = "/src/main/webapp/img/review";
 
 	            LocalDateTime ldt = LocalDateTime.now();
 				String format = ldt.format(DateTimeFormatter.ofPattern("YYYYMMddHHmmss"));

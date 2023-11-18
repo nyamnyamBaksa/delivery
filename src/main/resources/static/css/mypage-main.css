@@ -28,7 +28,7 @@ padding:0;
 
 /* 닉네임 */
 .nickname{
-	margin-left:150px;
+	margin-left:170px;
 	margin-top:70px;
 	font-style: normal;
 	font-weight: 800;
@@ -254,7 +254,7 @@ img{
 	width: 300px;
 	height: 50px;
 	left: 45px;
-	top: 600px;
+	top: 530px;
 	margin:1px;
 	background: #FF9C41;
 	border-radius: 10px;
@@ -292,6 +292,76 @@ img{
 	position: absolute;
 	left: 67px;
 	top: 105%;
+	width: 270px;
+	height: 270px;
+}
+
+
+/* {닉네임}님의 최애 맛집은? */
+#favoriteStore{
+	position: absolute;
+	left: 25%;
+	top: 53%;
+	bottom: 35.64%;
+	margin: 0 auto;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 20px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+}
+
+
+
+/* 최애맛집 */
+#favoriteStoreComponent{
+	position: relative;
+	width: 300px;
+	height: 50px;
+	left: 45px;
+	top: 410px;
+	margin:1px;
+	background: #FF9C41;
+	border-radius: 10px;
+	margin: 5px;
+	font-size:20px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+}
+
+
+/* {닉네임}님은 카페/디저트 러버! */
+#favoriteCate{
+	position: absolute;
+	left: 27%;
+	top: 90%;
+	bottom: 36.33%;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 20px;
+	line-height: 27px;
+	/* or 150% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+	color: #000000;
+	
+}
+
+
+
+/* image 3 */
+#favoriteCateGoogleChart{
+	position: absolute;
+	left: 67px;
+	top: 93%;
 	width: 270px;
 	height: 270px;
 }

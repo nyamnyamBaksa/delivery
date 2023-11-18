@@ -37,8 +37,8 @@
         <div class="profile"><!-- onclick="popup('${sessionScope.mid}')" 작은 따옴표로 감싸기 -->
             <img class="profile-image" src="/img/profileImg/${result.mprofile}" onerror="this.src='/img/profileImg/basic_profile.png'" id="userProfileImage"/>
         </div>
-        <div class="nickname">${result.mnickname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><i class="fa-solid fa-arrow-right" style="color: #eb5757; "></i></a></c:if></div>
-        <c:if test="${sessionScope.mid ne id }">
+        <div class="nickname">${result.mnickname }&nbsp;<c:if test="${id eq null || sessionScope.mid eq id }"><a href="/mypage/info"><i class="fa-solid fa-arrow-right" style="color: #eb5757; cursor: pointer; "></i></a></c:if></div>
+        <c:if test="${id ne null && sessionScope.mid ne id }">
 	        <c:choose>
 	        	<c:when test="${babfriend eq 0 }">
 	        		<button class="babfriend-btn follow">+ 밥 친구 신청</button>
@@ -64,17 +64,41 @@
         	<div class="review"><a href="/mypage/review"><img src="/img/profileImg/review.png"></a><p>리뷰관리</p></div>
         	<div class="coupon"><a href="/mypage/coupon"><img style="height: 95px;" src="/img/profileImg/coupon.png"></a><p>쿠폰함</p></div>
 	        <div class="pay"><a href="/mypage/pay"><img src="/img/profileImg/credit_card.png"></a><p>냠냠페이</p></div>
-        </c:if>
-        <c:if test="${sessionScope.mid ne id }">
+        	<c:if test="${toplist[0].sname ne null }">
+		        <div class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
+		        <c:forEach items="${toplist }" var="row" varStatus="loopStatus">
+		        <table class="favoriteStoreComponent">
+		        	<tr>
+		        		<td style="width: 20px;">
+				        	<i class="bi bi-trophy-fill" style="font-size:30px;color:
+					            <c:choose>
+					                <c:when test="${loopStatus.index % 3 == 0}"> gold </c:when>
+					                <c:when test="${loopStatus.index % 3 == 1}"> silver </c:when>
+					                <c:when test="${loopStatus.index % 3 == 2}"> #cd7f32 </c:when>
+					            </c:choose>
+					        "></i>
+				        </td>
+			        	<td style="width: 180px;">${row.sname }</td>
+			        	<td style="width: 100px;">${row.count }회 주문</td>
+			    	</tr>   
+			    </table>
+			    </c:forEach>
+			    <div class="favoriteCate">
+			    	'${result.mname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
+			    </div>
+			    <div class="favoriteCateGoogleChart">
+		        	<canvas id="donutChart"></canvas>
+			    </div>    
+		    </c:if>
+    	</c:if>
+        <c:if test="${id ne null && sessionScope.mid ne id }">
        	 	<div class="diary"><a onclick="return babdiary()" href="/mypage/diary/${id }"><img src="/img/profileImg/diary.png"></a><p>냠냠 다이어리</p></div>
         	<div class="zzim"><a href="/wishlist/${id }"><img src="/img/profileImg/heart.png"></a><p>나의 찜</p></div>
         	<div class="review"><a href="/mypage/review/${id }"><img src="/img/profileImg/review.png"></a><p>리뷰관리</p></div>
-        </c:if>
-        
-        <c:if test="${toplist[0].sname ne null }">
-	        <div id="favoriteStore" class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
+        	<c:if test="${toplist[0].sname ne null }">
+	        <div id="favoriteStore" >'${result.mname }'님의 최애 맛집은?</div>
 	        <c:forEach items="${toplist }" var="row" varStatus="loopStatus">
-	        <table id="favoriteStoreComponent" class="favoriteStoreComponent">
+	        <table id="favoriteStoreComponent">
 	        	<tr>
 	        		<td style="width: 20px;">
 			        	<i class="bi bi-trophy-fill" style="font-size:30px;color:
@@ -90,14 +114,17 @@
 		    	</tr>   
 		    </table>
 		    </c:forEach>
-		    <div id="favoriteCate" class="favoriteCate">
+		    <div id="favoriteCate">
 		    	'${result.mname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
 		    </div>
-		    <div id="favoriteCateGoogleChart" class="favoriteCateGoogleChart">
+		    <div id="favoriteCateGoogleChart">
 	        	<canvas id="donutChart"></canvas>
 		    </div>    
 	    </c:if>
     </c:if>
+        </c:if>
+        
+        
     <!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -326,9 +353,9 @@
 
 	            $.each(data.list, function (index, row) {
 	                var newContent = '<div class="modal-header">' +
-	                    '<h5 class="modal-title" id="exampleModalLabel"><a style="margin-right:20px;" href="/mypage/main/' + row.mid + '"><img class="profile-image-follow profile-image" src="/img/profileImg' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
+	                    '<h5 style="text-align:center;" class="modal-title" id="exampleModalLabel"><a style="margin: 0 auto;" href="/mypage/main/' + row.mid + '"><img class="profile-image-follow profile-image" src="/img/profileImg' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a><span>' + row.mid + '</span></h5>' +
 	                    '<div class="modal-body"><div class="detail">' +
-	                    '<div class="detail-date-read"><div class="detail"><button class="followAcceptModal">+ 밥 친구 신청 수락</button><div>' +
+	                    '<div class="detail-date-read"><div class="detail"><button class="followAcceptModal" style="width:180px;">+ 밥 친구 신청 수락</button><div>' +
 	                    '</div></div></div>' +
 	                    '<div class="followerMid" style="display: none;">' + row.mid + '</div>';
 	                modalContent.append(newContent);

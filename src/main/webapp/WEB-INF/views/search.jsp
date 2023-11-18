@@ -8,6 +8,7 @@
 <title>냠냠박사</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+	
 <link rel="stylesheet" href="/css/mypage-pay.css">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -191,6 +192,19 @@ td{
     left: 50%;
     transform: translateX(-50%);
 }
+
+.col-lg-12{
+	position: absolute;
+	left: 100px;
+	
+}
+
+.selectpicker{
+	font-weight: 700;
+	font-size: 17px;
+	line-height: 27px;
+	height:40px;
+}
 </style>
 </head>
 <body>
@@ -202,7 +216,7 @@ td{
 			<input type="text" class="search" required="required" placeholder="검색어를 입력해주세요.">
 			<i class="fa fa-search" style="margin-top: 6px;"></i>
 		    <div id="searchcount" style="display: none;">${searchcount }</div>
-			<div class="col-lg-12">
+			<div class="col-lg-13">
 				<div class="searchcate toolbar-sorter-right" style="width:250px;">
 		       		<select class="cate selectpicker show-tick form-control" id="cate">
 						<option selected="selected" value="0"> 기본순 ▼</option>

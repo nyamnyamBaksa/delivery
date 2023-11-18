@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>냠냠박사</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 <link rel="stylesheet" href="/css/mypage-pay.css">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -19,8 +21,15 @@
 <link rel="stylesheet" href="/css/sweetalert.min.css" />
 <!-- 아이콘 -->
 <link rel="stylesheet" href="/css/bootstrap-icons.css">
+<!-- 폰트 -->
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
 <style type="text/css">
+body {
+	font-family: 'NanumSquareNeo';
+}
 .col-lg-13{
 	position: absolute;
 	top: 12%;
@@ -38,7 +47,7 @@
 	background: #FFFFFF;
 	border: 4px solid #EB5757;
 	border-radius: 10px;
-	font-size: large;
+	font-size: 16.3px;
 	font-weight: bolder;
 	
 }

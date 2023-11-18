@@ -7,7 +7,8 @@
 <meta charset="UTF-8">
 <title>냠냠박사</title>
     <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 	<link rel="stylesheet" href="/css/mypage-main.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -21,6 +22,10 @@
 	<link rel="stylesheet" href="/css/sweetalert.css" />
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="/css/bootstrap-icons.css">
+	<!-- 폰트 -->
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 	<style type="text/css">
 		 thead{
 		 	background-color: #EB5757;
@@ -61,11 +66,11 @@
 
 <body>
 <c:if test="${sessionScope.mid ne null}">
-	<a href="javascript:history.back()" style="position: relative; z-index: 1; text-shadow: 2px 2px 2px gray;">
-    	<i class="bi bi-arrow-left" style="color: black;font-size: 2rem;"></i>
+	<a href="javascript:history.back()" style="position: relative; z-index: 1;">
+    	<i class="fa-solid fa-arrow-left fa-xl" style="color: black;font-size: 2rem; margin-left: 10px; margin-top: 20px;"></i>
 	</a>
 	<div class="mypage">
-		<div class="mypageFont" style="font-size: 23px;">장바구니</div>
+		<div class="mypageFont">장바구니</div>
 	</div>
     <!-- Start Cart  -->
     <div class="cart-box-main">
@@ -75,7 +80,7 @@
     <c:if test="${list[0].sname ne null }">
         <div class="container">
             <div class="row">
-            	<div class="col-lg-12"><h1>${list[0].sname }</h1></div>
+            	<div class="col-lg-12"><h1 style="font-weight: bold;">${list[0].sname }</h1></div>
                 <div class="col-lg-12">
                         <table class="table">
                             <thead>
@@ -208,7 +213,7 @@
 				data : {cno : cno},
 				dataType : 'json',
 				success : function(data) {
-					
+					location.href = "/cart";
 				},
 				error : function(error) {
 					swal("실패", "작업수행에 실패하였습니다.", "error");
