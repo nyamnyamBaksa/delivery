@@ -8,6 +8,7 @@
 <title>리뷰쓰기</title>
 <link href="css/reviewwrite.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 <meta name="viewport"
    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
@@ -43,7 +44,7 @@ $(document).on("click", ".cameraimg", function() {
 		         	var reviewImg = jsonObject.reviewImg;
 		         	var imgSrc = $('.imgSrc').val(reviewImg); 
 	                var newImageSrc = '/img/review/' + reviewImg;
-                    var rphotoElement = '<img class="rphoto" src="' + newImageSrc + '" style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">';
+                    var rphotoElement = '<img class="rphoto" src="' + newImageSrc + '"style="width:150px;height:150px;border-radius: 70px;margin: 0 auto">';
                     $(".rphoto").replaceWith(rphotoElement);
 		        } else{
 		            M.pop.alert( status + " / " + error );
@@ -89,7 +90,7 @@ $(document).on("click", ".cameraimg", function() {
 					  </button>
 					</form>
 					
-					<button class="cameraimg" onclick="M.net.http.upload()">사진 업로드</button>
+					<button class="cameraimg" ">사진 업로드</button>
 					  <hr>
 					  <img class="rphoto" src="" style="width:150px;height:150px; margin: 0 auto;">
 					  <div class="menutitle">추천하고 싶은 메뉴가 있나요?</div>

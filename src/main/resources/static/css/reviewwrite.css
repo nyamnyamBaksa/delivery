@@ -60,6 +60,7 @@ body {
     resize: none;
 }
 .reviewtextarea::placeholder{
+	font-family: 'NanumSquareNeo';
 	color:#6C757D;
 	font-weight: bold;
 	font-size:25px;

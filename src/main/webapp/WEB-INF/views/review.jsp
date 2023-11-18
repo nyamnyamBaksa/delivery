@@ -117,9 +117,9 @@ function drawChart() {
 			</fieldset>
 	    <div class="rddate">${row.rdate }</div>
 	    <div class="rcomment">${row.rcomment }</div> <br>
-	    <c:if test="${row.rphoto !=null }">
+	    <c:if test="${not empty row.rphoto and row.rphoto ne null}">
 	    	<img class="rphoto" src="/img/review/${row.rphoto}" style="width:150px;height:150px;margin: 0 auto">
-	
+
 	    </c:if>
 	    <br><br>
 	    <hr>
