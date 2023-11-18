@@ -315,9 +315,8 @@ td{
 		var offset = 0;	// 인덱스 초기값
 		var count = 7;	// 7개씩 로딩
 		$('.searchcate').hide();
-		$('.morebtn').hide();
 		if(offset + count >= searchcount){
-			$('.morebtn').remove();
+			$('.morebtn').hide();
 		}
 	
 		// 더보기 클릭시
@@ -330,12 +329,15 @@ td{
 		// 더보기 실행함수
 		function readOldNotify(offset){
 			let endIndex = offset+count-1;	// endIndex설정
+			var cate = $('#cate').val();
 			$.ajax({
 				url: "/search",
 				type: "post",
 				async: "true",
 				dataType: "json",
 				data: {
+					cate:cate,
+					search:search,
 					offset: offset,
 					endIndex: endIndex
 				},
@@ -350,7 +352,71 @@ td{
 						var placeholder = search + '  ' + data.search[0].count + '개';
 						$('.search').val('');
 						$('.search').attr('placeholder', placeholder);
-						updateTable(data);
+						
+						var newTableHTML = '';
+					    
+					    // 중복된 sno 값을 가진 데이터를 그룹화하기 위한 객체 생성
+					    var groupedData = {};
+
+					    // 데이터 그룹화
+					    $.each(data.search, function(index, row) {
+					        var sname = row.sname;
+					        if (!groupedData[sname]) {
+					            groupedData[sname] = {
+					            	sno: row.sno,
+					            	simg: row.simg,
+					                count: row.count,
+					                sname: sname,
+					                mnnameList: [],
+					                average_rating: row.average_rating
+					            };
+					        }
+					        $.each(data.mnsearch, function(index2, row2) {
+						        if (groupedData[sname].sname == row2.sname) {
+						            groupedData[sname].mnnameList.push(row2.mnname);
+						        }
+					        });
+					    });
+
+					    // 그룹화된 데이터로 테이블 생성
+					    $.each(groupedData, function(sno, group) {
+					        newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
+					        newTableHTML += '<td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 95px;vertical-align: middle;">';
+					        newTableHTML += '<input class="sno" type="hidden" value="' + group.sno + '">';
+					        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><img style="width: 170px;height:150px;" src="/img/food/' + group.simg + '" /></a>';
+					        newTableHTML += '</td><td class="name-pr" style="border: 0; border-style: dashed; width: 70px;vertical-align: middle;">';
+					        newTableHTML += '<div class="star-ratings">';
+					        newTableHTML += '<div class="rscore" style="display: none;">' + group.average_rating + '</div>';
+					        newTableHTML += '<div class="star-ratings-fill space-x-2 text-lg" style="width: ' + (group.average_rating * 20) + '%;">';
+					        newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+					        newTableHTML += '</div>';
+					        newTableHTML += '<div class="star-ratings-base space-x-2 text-lg">';
+					        newTableHTML += '<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>';
+					        newTableHTML += '</div>';
+					        newTableHTML += '</div>&nbsp;(' + group.average_rating + ')';
+					        newTableHTML += '</td>';
+					        newTableHTML += '</tr>';
+					        newTableHTML += '<tr style="border-bottom: 1px solid #c0c0c0;"></td><td class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 100px;vertical-align: middle;">';
+					        newTableHTML += '<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname" style="font-size:20px;">' + group.sname + '</span></a>';
+					        newTableHTML += '</td>';
+					        newTableHTML += '<td class="name-pr mnname" style="font-weight: bold; border: 0; border-style: dashed; width: 150px;vertical-align: middle;">';
+					        newTableHTML += group.mnnameList.join(', ');
+					        newTableHTML += '</td>';
+					        newTableHTML += '</tr>';
+					    });
+
+					    
+					    // 테이블 업데이트
+						$(newTableHTML).appendTo($(".table")).slideDown();
+					    searchcount = data.searchcount;
+					    $('#searchcount').text(searchcount);
+					    
+					    if(offset + count >= searchcount){
+							$('.morebtn').hide();
+						} else {
+							$('.morebtn').show();
+						}
+						
 						$('.recommend').empty();
 						
 						// mnname과 sname 텍스트를 노란색으로 변경
@@ -371,7 +437,7 @@ td{
 						});
 	
 						  
-					      $('.ssname').each(function() {
+					      $('.sname').each(function() {
 					    	  if ($(this).text().includes(search)) {
 							        var text = $(this).text();
 							        var modifiedText = '';
@@ -399,7 +465,6 @@ td{
 		// URL에서 cate 매개변수를 가져와서 기본값으로 설정
 	    var defaultCate = getParameterByName('cate');
 	    $('#cate').val(defaultCate);
-		
 	    var search = '';
 	    
 	    $('#cate').on('change', function(){
@@ -408,7 +473,7 @@ td{
 			$.ajax({
 				url:'/cateChange',
 				type:'post',
-				data:{cate:cate, search:search,offset: offset},
+				data:{cate:cate, search:search},
 				dataType:'json',
 				success:function(data){
 					if(data.search == ''){
@@ -604,10 +669,12 @@ td{
 		    
 		    // 테이블 업데이트
 		    $('.table').html(newTableHTML);
-		    $('#searchcount').text(data.searchcount);
-		    
+		    searchcount = data.searchcount;
+		    $('#searchcount').text(searchcount);
 		    if(offset + count >= searchcount){
-				$('.morebtn').remove();
+				$('.morebtn').hide();
+			} else {
+				$('.morebtn').show();
 			}
 		}
 	</script>

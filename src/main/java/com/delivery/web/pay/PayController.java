@@ -222,6 +222,7 @@ public class PayController {
 		} else {
 			map.put("offset", util.strToInt((String)map.get("offset")));
 		}
+		System.out.println(map);
 		List<Map<String, Object>> search = payService.search(map);
 		List<Map<String, Object>> mnsearch = payService.mnsearch(map);
 		int searchcount = payService.searchcount(map);
@@ -244,6 +245,7 @@ public class PayController {
 		} else {
 			map.put("offset", util.strToInt((String)map.get("offset")));
 		}
+		System.out.println(map);
 		List<Map<String, Object>> search = payService.search(map);
 		List<Map<String, Object>> mnsearch = payService.mnsearch(map);
 		int searchcount = payService.searchcount(map);
