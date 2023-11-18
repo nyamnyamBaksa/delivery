@@ -65,7 +65,7 @@
         	<div class="coupon"><a href="/mypage/coupon"><img style="height: 95px;" src="/img/profileImg/coupon.png"></a><p>쿠폰함</p></div>
 	        <div class="pay"><a href="/mypage/pay"><img src="/img/profileImg/credit_card.png"></a><p>냠냠페이</p></div>
         	<c:if test="${toplist[0].sname ne null }">
-		        <div class="favoriteStore">'${result.mname }'님의 최애 맛집은?</div>
+		        <div class="favoriteStore">'${result.mnickname }'님의 최애 맛집은?</div>
 		        <c:forEach items="${toplist }" var="row" varStatus="loopStatus">
 		        <table class="favoriteStoreComponent">
 		        	<tr>
@@ -84,7 +84,7 @@
 			    </table>
 			    </c:forEach>
 			    <div class="favoriteCate">
-			    	'${result.mname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
+			    	'${result.mnickname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
 			    </div>
 			    <div class="favoriteCateGoogleChart">
 		        	<canvas id="donutChart"></canvas>
@@ -96,7 +96,7 @@
         	<div class="zzim"><a href="/wishlist/${id }"><img src="/img/profileImg/heart.png"></a><p>나의 찜</p></div>
         	<div class="review"><a href="/mypage/review/${id }"><img src="/img/profileImg/review.png"></a><p>리뷰관리</p></div>
         	<c:if test="${toplist[0].sname ne null }">
-	        <div id="favoriteStore" >'${result.mname }'님의 최애 맛집은?</div>
+	        <div id="favoriteStore" >'${result.mnickname }'님의 최애 맛집은?</div>
 	        <c:forEach items="${toplist }" var="row" varStatus="loopStatus">
 	        <table id="favoriteStoreComponent">
 	        	<tr>
@@ -115,7 +115,7 @@
 		    </table>
 		    </c:forEach>
 		    <div id="favoriteCate">
-		    	'${result.mname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
+		    	'${result.mnickname }'님은&nbsp;<span class="topCate">${favoritecate[0].mncatename }</span>&nbsp;러버!
 		    </div>
 		    <div id="favoriteCateGoogleChart">
 	        	<canvas id="donutChart"></canvas>
