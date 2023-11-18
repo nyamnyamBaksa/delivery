@@ -32,6 +32,7 @@ public class LoginController {
 		if (String.valueOf(result.get("count")).equals("1")) {
 			session.setAttribute("mid", result.get("mid"));
 			session.setAttribute("mname", result.get("mname"));
+			session.setAttribute("mnickname", result.get("mnickname"));
 			session.setAttribute("mgrade", result.get("mgrade"));
 			session.setAttribute("mno", result.get("mno"));
 			session.setAttribute("maddr", result.get("maddr"));

@@ -232,7 +232,7 @@ td{
 			</div>
 			<div class="recommend">
 			<c:if test="${sessionScope.mid ne null && list[0].sno ne null}">
-				<h2 class="h2" style="text-align: center;">'${sessionScope.mname }'님을 위한 추천 맛집</h2>
+				<h2 class="h2" style="text-align: center;">'${sessionScope.mnickname }'님을 위한 추천 맛집</h2>
 					<div class="instagram-box">
 					<div class="main-instagram owl-carousel owl-theme">
 						<c:forEach items="${list}" var="row">

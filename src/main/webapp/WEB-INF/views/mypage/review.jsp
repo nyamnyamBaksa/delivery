@@ -348,7 +348,7 @@ td, .rdate, .sname{
 	   				    	newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
 	   					    newTableHTML += '<td colspan="2" class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 500px;">';
 	   					    if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-	   					        newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + index + '"></label></div>';
+	   					        newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + group.index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + group.index + '"></label></div>';
 	   					    }
 	   					    newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname">' + group.sname + '</span></a></td></tr>';
 	   					    newTableHTML += ' <tr><td colspan="2" class="name-pr" style="border: 0; border-style: dashed; width: 500px;"><span class="rdate">' + group.rdate + '</span>';
@@ -862,7 +862,7 @@ td, .rdate, .sname{
 		    	newTableHTML += '<tr style="border-top: 1px solid #c0c0c0;">';
 				    newTableHTML += '<td colspan="2" class="name-pr" style="font-weight: bolder; border: 0; border-style: dashed; width: 500px;">';
 				    if ('${sessionScope.mid}' === '${id}' || '${id}' == '') {
-				        newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + index + '"></label></div>';
+				        newTableHTML += '<div class="custom-control custom-checkbox" style="display: inline-block;"> <input type="checkbox" class="custom-control-input rowCheck rno" name="rowCheck" id="' + group.index + '" value="' + group.rno + '"><label class="custom-control-label" for="' + group.index + '"></label></div>';
 				    }
 				    newTableHTML += '&nbsp;<a href="/food/storedetail?sno=' + group.sno + '"><span class="sname">' + group.sname + '</span></a></td></tr>';
 				    newTableHTML += ' <tr><td colspan="2" class="name-pr" style="border: 0; border-style: dashed; width: 500px;"><span class="rdate">' + group.rdate + '</span>';

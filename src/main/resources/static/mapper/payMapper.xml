@@ -107,7 +107,7 @@
 	<select id="recommend" parameterType="String" resultType="Map">
 		select sname, simg, s.sno
 		FROM store s, menu m
-		WHERE  s.sno = m.sno
+		WHERE  s.sno = m.sno and s.sgrade = 1
 			and m.mncate IN (SELECT m.mncate FROM menu m, tradeview t WHERE t.mid=#{id} AND m.mnno = t.mnno)
 		GROUP BY s.sno
 		limit 0, 10
@@ -128,7 +128,7 @@
 	<select id="recommend3" resultType="Map">
 		SELECT w.sno, simg, sname, COUNT(sname) AS count
 		FROM wishlist w, store s
-		WHERE w.sno = s.sno
+		WHERE w.sno = s.sno and s.sgrade = 1
 		GROUP BY sname
 		ORDER BY count DESC
 		limit 0, 10
@@ -159,7 +159,7 @@
 						  WHERE m1.mnname LIKE CONCAT('%', #{search},'%')
 						) AS combined_sno) AS count
 				FROM storeview s, menu m
-				WHERE s.sno = m.sno
+				WHERE s.sno = m.sno and s.sgrade = 1
 				  AND (store_name LIKE CONCAT('%', #{search},'%') OR mnname LIKE CONCAT('%', #{search},'%'))
 				group by s.sno
 				limit #{offset}, 7
@@ -172,7 +172,7 @@
 							FROM (
 							  SELECT s1.sno
 							  FROM store s1
-							  WHERE s1.sname LIKE CONCAT('%', #{search},'%')
+							  WHERE s1.sgrade = 1 and s1.sname LIKE CONCAT('%', #{search},'%')
 							  UNION all
 							  SELECT m1.mnno
 							  FROM menu m1
@@ -181,7 +181,7 @@
 				     FROM (
 						  SELECT s.sno, store_name AS sname, store_image AS simg, average_rating
 						  FROM (storeview s join menu m ON s.sno = m.sno)
-							WHERE (store_name LIKE CONCAT('%', #{search},'%') OR m.mnname LIKE CONCAT('%', #{search},'%'))
+							WHERE s.sgrade = 1 and (store_name LIKE CONCAT('%', #{search},'%') OR m.mnname LIKE CONCAT('%', #{search},'%'))
 						  GROUP BY s.sno
 						) AS subquery LEFT JOIN tradeview t ON subquery.sno = t.sno
 					GROUP BY subquery.sno
@@ -195,7 +195,7 @@
 							FROM (
 							  SELECT s1.sno
 							  FROM store s1
-							  WHERE s1.sname LIKE CONCAT('%', #{search},'%')
+							  WHERE s1.sgrade = 1 and s1.sname LIKE CONCAT('%', #{search},'%')
 							  UNION all
 							  SELECT m1.mnno
 							  FROM menu m1
@@ -216,7 +216,7 @@
 						FROM (
 						  SELECT s1.sno
 						  FROM store s1
-						  WHERE s1.sname LIKE CONCAT('%', #{search},'%')
+						  WHERE s1.sgrade = 1 and s1.sname LIKE CONCAT('%', #{search},'%')
 						  UNION all
 						  SELECT m1.mnno
 						  FROM menu m1
@@ -238,7 +238,7 @@
 	<select id="mnsearch" parameterType="Map" resultType="Map">
 		select mnname, sname
 		from store s, menu m
-		where s.sno = m.sno
+		where s.sno = m.sno and s.sgrade = 1
 		  AND (sname LIKE CONCAT('%', #{search},'%') OR mnname LIKE CONCAT('%', #{search},'%'))
 	</select>
 	

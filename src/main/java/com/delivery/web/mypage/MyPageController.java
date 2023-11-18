@@ -126,7 +126,7 @@ public class MyPageController {
 	        if (file != null && !file.isEmpty()) {
 	            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
 	                    .getRequest();
-	            String path = "/src/main/webapp/img/profileImg";
+	            String path = "C:\\Users\\user\\eclipse-workspace\\delivery\\src\\main\\webapp\\img\\profileImg";
 	            
 	            LocalDateTime ldt = LocalDateTime.now();
 				String format = ldt.format(DateTimeFormatter.ofPattern("YYYYMMddHHmmss"));
@@ -458,7 +458,7 @@ public class MyPageController {
 			List<Map<String, Object>> mnlist = myPageService.mnreviewlist(map);
 			JSONObject json = new JSONObject();
 			json.put("list", list);
-			json.put("list", mnlist);
+			json.put("mnlist", mnlist);
 			return json.toString();
 		} else {
 			return "redirect:/login";
@@ -527,7 +527,7 @@ public class MyPageController {
 	    System.out.println(map);
 	    if (session.getAttribute("mid") != null && (int) session.getAttribute("mgrade") >= 1) {
 	        if (file != null && !file.isEmpty()) {
-	            String path = "/src/main/webapp/img/review";
+	            String path = "C:\\Users\\user\\eclipse-workspace\\delivery\\src\\main\\webapp\\img\\review";
 
 	            LocalDateTime ldt = LocalDateTime.now();
 				String format = ldt.format(DateTimeFormatter.ofPattern("YYYYMMddHHmmss"));
