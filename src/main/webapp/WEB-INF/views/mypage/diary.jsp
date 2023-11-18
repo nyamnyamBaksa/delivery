@@ -101,7 +101,7 @@
 								<td class="quantity-box"
 									style="border: 0; border-style: dashed; width: 100px;">${row.bdate }</td>
 								<td class="bno" style="display: none;">${row.bno }</td>
-								<td class="total-pr" style="border: 0; border-style: dashed; width: 60px;"><c:choose>
+								<td class="total-pr" style="border: 0; border-style: dashed; width: 100px;"><c:choose>
 										<c:when test="${row.mylike eq 1}">
 											<p>
 												<i class="bi bi-heart-fill"

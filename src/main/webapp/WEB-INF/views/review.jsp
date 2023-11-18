@@ -122,7 +122,6 @@ function drawChart() {
 
 	    </c:if>
 	    <br><br>
-	    <hr>
 	  </c:forEach>
 	</div>
 </body>

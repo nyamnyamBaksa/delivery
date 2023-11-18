@@ -128,7 +128,7 @@
     <!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg" style="width: 400px;">
+		<div class="modal-dialog modal-lg" style="width: 375px;">
 			<div class="modal-content">
 				<div class="modal-header" style="color: blue;">
 					<!-- 프로필 이미지 업로드 폼 -->
@@ -353,7 +353,7 @@
 
 	            $.each(data.list, function (index, row) {
 	                var newContent = '<div class="modal-header">' +
-	                    '<h5 style="text-align:center;" class="modal-title" id="exampleModalLabel"><a style="margin: 0 auto;" href="/mypage/main/' + row.mid + '"><img class="profile-image-follow profile-image" src="/img/profileImg' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a><span>' + row.mid + '</span></h5>' +
+	                    '<h5 style="text-align:center;" class="modal-title" id="exampleModalLabel"><a style="margin: 0 auto;" href="/mypage/main/' + row.mid + '"><img class="profile-image-follow profile-image" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a><span>' + row.mid + '</span></h5>' +
 	                    '<div class="modal-body"><div class="detail">' +
 	                    '<div class="detail-date-read"><div class="detail"><button class="followAcceptModal" style="width:180px;">+ 밥 친구 신청 수락</button><div>' +
 	                    '</div></div></div>' +
@@ -387,7 +387,7 @@
 
 	            $.each(data.list, function (index, row) {
 	                var newContent = '<div class="modal-header">' +
-	                    '<h5 class="modal-title" id="exampleModalLabel"><a href="/mypage/main/' + row.mid + '"><img style="margin-right:20px;" class="profile-image-follow profile-image" src="/img/profileImg' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
+	                    '<h5 class="modal-title" id="exampleModalLabel"><a href="/mypage/main/' + row.mid + '"><img style="margin-right:20px;" class="profile-image-follow profile-image" src="/img/profileImg/' + row.mprofile + '" onerror="this.src=\'/img/profileImg/basic_profile.png\'" /></a>' + row.mid + '</h5>' +
 	                    '<div class="modal-body"><div class="detail">' +
 	                    '</div></div></div>';
 	                modalContent.append(newContent);

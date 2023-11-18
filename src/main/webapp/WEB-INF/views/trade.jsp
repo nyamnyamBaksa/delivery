@@ -46,7 +46,7 @@
                   
                             <span class="tradedate">${row.tdate} 배달완료(${row.tgroup})</span>
                             <img alt="샘플이미지" src="/img/sample.png" class="sampleimg">
-                            <a href="tradedetail?tgroup=${row.tgroup}">
+                            <a href="food/storedetail?sno=${row.sno }">
                                 <div class="Sname">${row.sname} > </div>
                             </a> 
                             <a href="tradedetail?tgroup=${row.tgroup}">
